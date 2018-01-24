@@ -71,6 +71,11 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
+		function getAPendingEvent($eventid){
+			$strQuery="select p.eventtitle,p.date_to_be_organized,r.regionname as region,p.town,p.pending_id FROM `pending` as p INNER JOIN region as r on r.region_id = p.region where p.pending_id = '$eventid'";
+      return $this->query($strQuery);
+		}
+
 		function getRegions(){
 			$strQuery="select * from region";
       return $this->query($strQuery);
@@ -135,7 +140,6 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
-
     function toggleVerify($eventid, $verify, $verifycomments){
       //echo $verify;
       //echo $eventid;
@@ -150,14 +154,10 @@ include_once("database.php");
       return $this->query($strQuery);
     }
 
-
-
 		function getDashTopAudienceCategory(){
 			$strQuery="select audience_category, count(audience_category) as total from reports where is_approved=1 group by audience_category order by count(audience_category) desc limit 1";
 			return $this->query($strQuery);
 		}
-
-
 
 		/**
 		* get user id

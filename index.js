@@ -193,6 +193,7 @@ $().ready(function () {
 
   document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
 
+  document.getElementById('pendingverifyformdiv').appendChild = "<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='pendingadd(" + obj[0].report_id + ")' type='button' class='btn btn-success' id='addpendingConfirm' data-toggle='modal' data-target='#verifypendingEvent'>Save</button>";
 
 });
 
@@ -1018,6 +1019,97 @@ function level1viewerComplete(xhr, status) {
   }
   picValues = picValues + "</div>";
   document.getElementById('pictureContainer').innerHTML=picValues;
+
+  // $('#picture_paths').val(picture_paths);
+  // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");
+
+}
+
+function level1pendingviewer(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=23&eventid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level1pendingviewerComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level1pendingviewerComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+
+  // console.log(typeof(obj[0].picture_paths));
+  console.log(obj);
+
+  var picValues = "";
+  $('#pictureContainer').html("");
+  //console.log(obj[0].report_id);
+  var dform = new Date(obj[0].date_organized);
+
+  // $('#modalshow').click();
+  UIkit.modal('#modal-overflow').show();
+
+  //$('#report_id').val(obj[0].report_id);
+  // $('#eventtitle').innerHTML(obj[0].eventtitle);
+  document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('region').innerHTML = obj[0].region;
+  document.getElementById('town').innerHTML = obj[0].town;
+  document.getElementById('audience_category').innerHTML = obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML = obj[0].audience_attendance;
+  document.getElementById('team_challenges').innerHTML = obj[0].team_challenges;
+  document.getElementById('complaints_raised').innerHTML = obj[0].complaints_raised;
+  document.getElementById('event_summary').innerHTML = obj[0].event_summary;
+  //
+  // $('#date_organized').val(moment(dform).format('D MMMM Y'));
+  //
+  // $('#region').val(obj[0].region);
+  // $('#town').val(obj[0].town);
+  // $('#audience_category').val(obj[0].audience_category);
+  // $('#audience_attendance').val(obj[0].audience_attendance);
+  // $('#team_challenges').val(obj[0].team_challenges);
+  // $('#complaints_raised').val(obj[0].complaints_raised);
+  // $('#event_summary').val(obj[0].event_summary);
+  // $('#picture_paths').val(picture_paths);
+
+  // $('#pictureContainer').html();
+
+  picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
+
+  var jsonarray = JSON.parse(obj[0].picture_paths);
+  for (var i = 0; i < jsonarray.length; i++) {
+    var obj2 = jsonarray[i];
+
+    //obj2 contains picture names.
+    // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
+
+    var user_id = "" + obj[0].reporter;
+    var event_header = "" + obj[0].eventtitle;
+    var picture_header = "" + obj2;
+
+
+    picValues = picValues + "<div>";
+    picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/" + user_id + "_" + event_header + "/" + picture_header + "' caption='Caption 1'>";
+    picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/" + user_id + "_" + event_header + "/" + picture_header + "'/>";
+    picValues = picValues + "</a>";
+    picValues = picValues + "</div>";
+
+
+    // $('#pictureContainer').append("<div>");
+    // $('#pictureContainer').append("<a class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>");
+    // $('#pictureContainer').append("<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>");
+    // $('#pictureContainer').append("</a>");
+    // $('#pictureContainer').append("</div>");
+    // $('#pictureContainer').html("<img style='height: 30px; width: 30px' src='uploads/"+obj[0].reporter+"_"+obj[0].eventtitle+"/"+obj2+"/>");
+
+  }
+  picValues = picValues + "</div>";
+  document.getElementById('pictureContainer').innerHTML = picValues;
 
   // $('#picture_paths').val(picture_paths);
   // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");

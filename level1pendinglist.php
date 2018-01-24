@@ -52,14 +52,8 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData[] = $row['region'];
 	$nestedData[] = $row['town'];
 	$nestedData[] = $row['fname'].' '.$row['lname'];
-
-   //  if( $row['is_approved'] == "0"){
-   //      $approveLabel = "<p style='color: red'>Not Approved</p>";
-   //    } else {
-   //      $approveLabel = "<p style='color: green'>Approved</p>";
-   //    }
 	
-	$buttonshow = "<a onclick='level1viewer({$row['pending_id']})' class='btn btn-twitter btn-just-icon '><i class='material-icons'>assignment</i></a>";//chang function
+	$buttonshow = "<a onclick='level1pendingviewer({$row['pending_id']})' class='btn btn-twitter btn-just-icon '><i class='material-icons'>create</i></a>";//chang function
 	$nestedData[] = $buttonshow;
 	
 	$data[] = $nestedData;

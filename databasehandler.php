@@ -75,6 +75,9 @@
 		case 22:
 			addPendingEvent();
 			break;
+		case 23:
+			getAPendingEvent();
+			break;
 
 		default:
 			echo "wrong cmd";	//change to json message
@@ -206,7 +209,6 @@
 		}
 	}
 
-
 	function getEvents()
 	{
 			$success="";
@@ -272,6 +274,33 @@
  					$success="true";
  					// $data[]=$row;
  					array_push($data,$row);
+
+ 				}
+
+ 				echo json_encode($data);
+
+	}
+	 
+	function getAPendingEvent()
+ 	{
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+			$eventid=$_REQUEST['eventid'];
+
+ 			$result = $event->getAPendingEvent($eventid);
+
+ 			$data = array();
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+					$data['title']=$row['eventtitle'];
+					$data['date']=$row['date_to_be_organized'];
+					$data['region']=$row['region'];
+					$data['town']=$row['town'];
+					$data['id']=$row['pending_id'];
+ 					//array_push($data,$row);
 
  				}
 
@@ -582,7 +611,6 @@
 
 
 	}
-
 	//Logs user into system
 	function login(){
 		include("users.php");
