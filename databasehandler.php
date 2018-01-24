@@ -276,7 +276,6 @@
  				}
 
  				echo json_encode($data);
-
  	}
 
 	function getRegions()
