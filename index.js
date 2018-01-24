@@ -374,6 +374,7 @@ function _fetchMyEventsComplete(xhr,status){
 
 function _fetchMyEventsLevel2(userid){
 
+
     var theUrl="databasehandler.php?cmd=3";
 
     $.ajax(theUrl,
