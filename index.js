@@ -161,6 +161,52 @@ $().ready(function () {
     }
   });
 
+
+  var dataTable5 = $('#eventlogslist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '70%' },
+      { "targets": 1, width: '30%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[1, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "eventlogslist.php", // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".eventlogslist-error").html("");
+        $("#eventlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#eventlogslist_processing").css("display", "none");
+      }
+    }
+  });
+
+
+  var dataTable6 = $('#userlogslist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '70%' },
+      { "targets": 1, width: '30%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[1, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "userlogslist.php", // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".userlogslist-error").html("");
+        $("#userlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#userlogslist_processing").css("display", "none");
+      }
+    }
+  });
+
   setInterval(function () {
      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
@@ -176,6 +222,14 @@ $().ready(function () {
   setInterval(function () {
     dataTable4.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
+
+  setInterval(function () {
+    dataTable5.ajax.reload(null, false); // user paging is not reset on reload
+  }, 2000);
+
+  setInterval(function () {
+    dataTable6.ajax.reload(null, false); // user paging is not reset on reload
+  }, 2000);
 
   setInterval(function () {
     level2usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
@@ -837,7 +891,7 @@ function addlevel1user() {
       });
   } else {
 
-    var theUrl = "databasehandler.php?cmd=19&" + info + "&region=" + regionid + "&level=" + level;
+    var theUrl = "databasehandler.php?cmd=19&" + info + "&region=" + regionid + "&level=" + level + "&myid="+sessionStorage.userid;
 
     $.ajax(theUrl,
       {
@@ -850,7 +904,17 @@ function addlevel1user() {
 
 function addlevel1userComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
-  console.log(obj);
+  console.log(obj[0].userid);
+
+
+  var theUrl = "databasehandler.php?cmd=23&acted_on_id=" + obj[0].userid +"&myid="+sessionStorage.userid;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+    });
+
+
   document.getElementById('AddUserForm').reset();
   //level2usersdatatable.ajax.reload();
   $.notify({
@@ -892,7 +956,7 @@ function addlevel2user() {
       });
   } else {
 
-    var theUrl = "databasehandler.php?cmd=19&" + info;
+    var theUrl = "databasehandler.php?cmd=19&" + info  + "&myid="+sessionStorage.userid;
 
     $.ajax(theUrl,
       {
@@ -908,6 +972,15 @@ function addlevel2userComplete(xhr, status) {
   console.log(obj);
   document.getElementById('AddUserForm').reset();
   //level2usersdatatable.ajax.reload();
+  
+  var theUrl = "databasehandler.php?cmd=23&acted_on_id=" + obj[0].userid +"&myid="+sessionStorage.userid;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+    });
+
+
   $.notify({
     icon: "info_outline",
     message: "User Added Successfully."

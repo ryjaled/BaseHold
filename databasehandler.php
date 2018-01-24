@@ -75,6 +75,9 @@
 		case 22:
 			addPendingEvent();
 			break;
+		case 23:
+			fetchAddUserLog();
+			break;
 
 		default:
 			echo "wrong cmd";	//change to json message
@@ -115,7 +118,9 @@
 
 	function addLevel1User()
    {
-      include("users.php");
+
+    include("users.php");
+
 		$user = new users();
 
 		$firstname=$_REQUEST['useraddfname'];
@@ -124,10 +129,44 @@
 		$password=$_REQUEST['useraddpword'];
 		$region=$_REQUEST['region'];
 		$level=$_REQUEST['level'];
+		$myid=$_REQUEST['myid'];
 
 		$validation = $user->addNewUser($firstname,$lastname,$email,$password,$region,$level);
-		echo json_encode($validation);
+
+		$user2 = new users();
+
+		// $user_id=$_REQUEST['userid'];
+
+		$result = $user2->getID($firstname);
+
+		$usersdata = array();
+
+		// echo $row=$user->fetch();
+
+		while($row = $user2->fetch()){
+				array_push($usersdata,$row);
+		}
+
+		echo json_encode($usersdata);
+
 	}
+
+
+	function fetchAddUserLog()
+   {
+
+    include("logs.php");
+
+		$log = new logs();
+
+		$actedon=$_REQUEST['acted_on_id'];
+		$myid=$_REQUEST['myid'];
+
+		$log->addUserLog($myid,$actedon,"Added");
+
+	}
+
+
 
 	function deleteUser()
    {

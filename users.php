@@ -66,7 +66,7 @@ include_once("database.php");
 		* @return user's Id
 		*/
 		function getID($userName){
-			$strQuery="Select ID from user where username = '$userName'";
+			$strQuery="Select userid from users where firstname = '$userName'";
 			return $this->query($strQuery);
 		}
 

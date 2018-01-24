@@ -44,7 +44,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
 	$enddate = date('jS F Y', strtotime($row['date']));
-	$nestedData[] = $row['fname'].' '.$row['lname'].' '.$row['action'].' to '.$row['event_title'];
+	$nestedData[] = $row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'];
 	$nestedData[] = $enddate;
 
 	$data[] = $nestedData;
