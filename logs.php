@@ -16,10 +16,10 @@ include_once("database.php");
 		* @param [all attributes needed to create a user]
 		* @return boolean showing success or failure
 		*/
-		function addUserLog($eventid,$userid,$action){
+		function addEventLog($eventtitle,$userid,$action){
 
 			$strQuery="insert into eventlogs set
-							event_id='$eventid',
+							event_title='$eventtitle',
 							user_id='$userid',
               action='$action' ";
 
@@ -32,23 +32,23 @@ include_once("database.php");
 		* @param [all attributes needed to create a user]
 		* @return boolean showing success or failure
 		*/
-		function getLogs(){
+		function getEventLogs(){
 			$strQuery="select * from eventlogs";
       return $this->query($strQuery);
 		}
 
 
-		/**
-		* get user id
-		* @param user's name
-		* @return user's Id
-		*/
-		function getID($eventid){
-			$strQuery="Select ID from eventlogs where event_id = '$eventid'";
-			return $this->query($strQuery);
-		}
-
-
+		// /**
+		// * get user id
+		// * @param user's name
+		// * @return user's Id
+		// */
+		// function getID($eventid){
+		// 	$strQuery="Select ID from eventlogs where event_id = '$eventid'";
+		// 	return $this->query($strQuery);
+		// }
+    //
+    //
 
 
 
@@ -62,8 +62,8 @@ include_once("database.php");
 		function addUserLog($actor,$actedon,$action){
 
 			$strQuery="insert into userlogs set
-							acted_id='$eventid',
-							acted_on_id='$userid',
+							acted_id='$actor',
+							acted_on_id='$actedon',
               action='$action' ";
 							// echo $strQuery;
 			return $this->query($strQuery);
@@ -74,21 +74,11 @@ include_once("database.php");
 		* @param [all attributes needed to create a user]
 		* @return boolean showing success or failure
 		*/
-		function getLogs(){
+		function getUserLogs(){
 			$strQuery="select * from userlogs";
       return $this->query($strQuery);
 		}
 
-
-		/**
-		* get user id
-		* @param user's name
-		* @return user's Id
-		*/
-		function getID($id){
-			$strQuery="Select ID from userlogs where actor_id = '$id'";
-			return $this->query($strQuery);
-		}
 
 
 	}

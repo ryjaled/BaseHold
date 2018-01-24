@@ -132,28 +132,43 @@
 	function deleteUser()
    {
       include("users.php");
+			include("logs.php");
+
 		$user = new users();
+		$log = new logs();
 
 		$userid=$_REQUEST['userid'];
+		$myid=$_REQUEST['myid'];
 
 		$validation = $user->deleteUser($userid);
+		$log->addUserLog($myid, $userid, "Deactivated User");
+
 		echo json_encode($validation);
 	}
 
 	function reactivateUser()
    {
       include("users.php");
+			include("logs.php");
+
 		$user = new users();
+		$log = new logs();
 
 		$userid=$_REQUEST['userid'];
+		$myid=$_REQUEST['myid'];
 
 		$validation = $user->reactivateUser($userid);
+		$log->addUserLog($myid, $userid, "Activated User");
+
 		echo json_encode($validation);
 	}
 
 	function addEvent(){
 		include("events.php");
+		include("logs.php");
+
 		$event = new events();
+		$log = new logs();
 
 		$eventtitle=$_REQUEST['eventtitle'];
 		$date=$_REQUEST['date'];
@@ -174,6 +189,7 @@
 		$foldpath=$_REQUEST['foldpath'];
 
 		$verify=$event->addEvent($eventtitle,$final_date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath);
+		$log->addEventLog($eventtitle,$reporter,"Added a completed event");
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -185,7 +201,10 @@
 
 	function addPendingEvent(){
 		include("events.php");
+		include("logs.php");
+
 		$event = new events();
+		$log = new logs();
 
 		$eventtitle=$_REQUEST['eventtitle'];
 		$date=$_REQUEST['date'];
@@ -197,6 +216,8 @@
 		$reporter=$_REQUEST['reporter'];
 
 		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$audiencecat,$reporter);
+		$log->addEventLog($eventtitle,$reporter,"Added a pending event");
+
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}

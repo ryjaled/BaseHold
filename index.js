@@ -167,11 +167,11 @@ $().ready(function () {
 
   setInterval(function () {
     dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-  }, 10000);
+  }, 4000);
 
   setInterval(function () {
     dataTable3.ajax.reload(null, false); // user paging is not reset on reload
-  }, 10000);
+  }, 4000);
 
   setInterval(function () {
     dataTable4.ajax.reload(null, false); // user paging is not reset on reload
@@ -179,11 +179,11 @@ $().ready(function () {
 
   setInterval(function () {
     level2usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
-  }, 10000);
+  }, 4000);
 
   setInterval(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
-  }, 10000);
+  }, 4000);
 
 
   $('#adddateselected').datetimepicker({ format: 'dddd Y/M/D' });
@@ -1323,7 +1323,7 @@ function dashUsersDisplayComplete(xhr, status) {
 
 function deleteUsers(val) {
   console.log('users', val);
-  var theUrl = "databasehandler.php?cmd=20&userid=" + val;
+  var theUrl = "databasehandler.php?cmd=20&userid=" + val +"&myid="+ sessionStorage.userid;
 
   $.ajax(theUrl,
     {
@@ -1357,7 +1357,7 @@ function deleteUsersComplete(xhr, status) {
 
 function reactivateUsers(val) {
   console.log('users', val);
-  var theUrl = "databasehandler.php?cmd=21&userid=" + val;
+  var theUrl = "databasehandler.php?cmd=21&userid=" + val + "&myid="+ sessionStorage.userid;
 
   $.ajax(theUrl,
     {
