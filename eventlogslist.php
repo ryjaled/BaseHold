@@ -23,15 +23,16 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "select e.eventlog_id,e.event_title,u.firstname as fname,u.lastname as lname,e.action,e.date from eventlogs as e inner join users as u on u.userid = e.user_id";
+$sql = "select e.eventlog_id,e.event_title,u.firstname as fname,u.lastname as lname,e.action,e.date,r.regionname from eventlogs as e inner join users as u on u.userid = e.user_id inner join region as r on r.region_id = e.region";
 $query=mysqli_query($conn, $sql) or die("eventloglist.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
-$sql = "select e.eventlog_id,e.event_title,u.firstname as fname,u.lastname as lname,e.action,e.date from eventlogs as e inner join users as u on u.userid = e.user_id";
+$sql = "select e.eventlog_id,e.event_title,u.firstname as fname,u.lastname as lname,e.action,e.date,r.regionname from eventlogs as e inner join users as u on u.userid = e.user_id inner join region as r on r.region_id = e.region";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" Where ( u.firstname LIKE '".$requestData['search']['value']."%'";
-	$sql.=" or u.lastname LIKE '".$requestData['search']['value']."%' )";
+	$sql.=" or u.lastname LIKE '".$requestData['search']['value']."%'";
+	$sql.=" or r.regionname LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("eventloglist.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
@@ -44,7 +45,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
 	$enddate = date('jS F Y', strtotime($row['date']));
-	$nestedData[] = $row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'];
+	$nestedData[] = $row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region';
 	$nestedData[] = $enddate;
 
 	$data[] = $nestedData;

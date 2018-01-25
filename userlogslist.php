@@ -23,17 +23,18 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "select u.action, u.date, e.firstname as addedfname, e.lastname as addedlname, f.firstname as addedonfname, f.lastname as addedonlname from userlogs as u inner join users as e on e.userid = u.acted_id inner join users as f on f.userid = u.acted_on_id";
+$sql = "select u.action, u.date, e.firstname as addedfname, e.lastname as addedlname, f.firstname as addedonfname, f.lastname as addedonlname, r.regionname as region from userlogs as u inner join users as e on e.userid = u.acted_id inner join users as f on f.userid = u.acted_on_id inner join region as r on r.region_id = f.region";
 $query=mysqli_query($conn, $sql) or die("eventloglist.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
-$sql = "select u.action, u.date, e.firstname as addedfname, e.lastname as addedlname, f.firstname as addedonfname, f.lastname as addedonlname from userlogs as u inner join users as e on e.userid = u.acted_id inner join users as f on f.userid = u.acted_on_id";
+$sql = "select u.action, u.date, e.firstname as addedfname, e.lastname as addedlname, f.firstname as addedonfname, f.lastname as addedonlname, r.regionname as region from userlogs as u inner join users as e on e.userid = u.acted_id inner join users as f on f.userid = u.acted_on_id inner join region as r on r.region_id = f.region";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" Where ( e.firstname LIKE '".$requestData['search']['value']."%'";
 	$sql.=" or e.lastname LIKE '".$requestData['search']['value']."%'";
 	$sql.=" or f.firstname LIKE '".$requestData['search']['value']."%'";
-	$sql.=" or f.lastname LIKE '".$requestData['search']['value']."%' )";
+	$sql.=" or f.lastname LIKE '".$requestData['search']['value']."%'";
+	$sql.=" or r.regionname LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("eventloglist.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
@@ -46,7 +47,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
 	$enddate = date('jS F Y', strtotime($row['date']));
-	$nestedData[] = $row['addedfname'].' '.$row['addedlname'].' '.$row['action'].' '.$row['addedonfname'].' '.$row['addedonlname'];
+	$nestedData[] = $row['addedfname'].' '.$row['addedlname'].' '.$row['action'].' '.$row['addedonfname'].' '.$row['addedonlname'].' in '.$row['region']. ' Region';
 	$nestedData[] = $enddate;
 
 	$data[] = $nestedData;

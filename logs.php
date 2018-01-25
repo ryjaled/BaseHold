@@ -16,12 +16,13 @@ include_once("database.php");
 		* @param [all attributes needed to create a user]
 		* @return boolean showing success or failure
 		*/
-		function addEventLog($eventtitle,$userid,$action){
+		function addEventLog($eventtitle,$userid,$action,$region){
 
 			$strQuery="insert into eventlogs set
 							event_title='$eventtitle',
 							user_id='$userid',
-              action='$action' ";
+              action='$action',
+							region='$region' ";
 
 							// echo $strQuery;
 			return $this->query($strQuery);

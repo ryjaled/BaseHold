@@ -209,19 +209,19 @@ $().ready(function () {
 
   setInterval(function () {
      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-  }, 5000);
+  }, 3000);
 
   setInterval(function () {
     dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-  }, 4000);
+  }, 3000);
 
   setInterval(function () {
     dataTable3.ajax.reload(null, false); // user paging is not reset on reload
-  }, 4000);
+  }, 3000);
 
   setInterval(function () {
     dataTable4.ajax.reload(null, false); // user paging is not reset on reload
-  }, 5000);
+  }, 3000);
 
   setInterval(function () {
     dataTable5.ajax.reload(null, false); // user paging is not reset on reload
@@ -233,11 +233,11 @@ $().ready(function () {
 
   setInterval(function () {
     level2usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
-  }, 4000);
+  }, 3000);
 
   setInterval(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
-  }, 4000);
+  }, 3000);
 
 
   $('#adddateselected').datetimepicker({ format: 'dddd Y/M/D' });
@@ -972,7 +972,7 @@ function addlevel2userComplete(xhr, status) {
   console.log(obj);
   document.getElementById('AddUserForm').reset();
   //level2usersdatatable.ajax.reload();
-  
+
   var theUrl = "databasehandler.php?cmd=23&acted_on_id=" + obj[0].userid +"&myid="+sessionStorage.userid;
 
   $.ajax(theUrl,

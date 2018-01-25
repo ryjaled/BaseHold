@@ -162,7 +162,7 @@
 		$actedon=$_REQUEST['acted_on_id'];
 		$myid=$_REQUEST['myid'];
 
-		$log->addUserLog($myid,$actedon,"Added");
+		$log->addUserLog($myid,$actedon,"added");
 
 	}
 
@@ -180,7 +180,7 @@
 		$myid=$_REQUEST['myid'];
 
 		$validation = $user->deleteUser($userid);
-		$log->addUserLog($myid, $userid, "Deactivated User");
+		$log->addUserLog($myid, $userid, "deactivated the user:");
 
 		echo json_encode($validation);
 	}
@@ -197,7 +197,7 @@
 		$myid=$_REQUEST['myid'];
 
 		$validation = $user->reactivateUser($userid);
-		$log->addUserLog($myid, $userid, "Activated User");
+		$log->addUserLog($myid, $userid, "activated the user:");
 
 		echo json_encode($validation);
 	}
@@ -228,7 +228,8 @@
 		$foldpath=$_REQUEST['foldpath'];
 
 		$verify=$event->addEvent($eventtitle,$final_date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath);
-		$log->addEventLog($eventtitle,$reporter,"Added a completed event");
+
+		$log->addEventLog($eventtitle,$reporter,"added a completed event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -255,7 +256,8 @@
 		$reporter=$_REQUEST['reporter'];
 
 		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$audiencecat,$reporter);
-		$log->addEventLog($eventtitle,$reporter,"Added a pending event");
+
+		$log->addEventLog($eventtitle,$reporter,"added a pending event", $region);
 
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
