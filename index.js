@@ -240,16 +240,19 @@ $().ready(function () {
   }, 3000);
 
 
-  $('#adddateselected').datetimepicker({ format: 'dddd Y/M/D' });
-  $('#addpendingdateselected').datetimepicker({ format: 'dddd Y/M/D' });
+  $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
 
 
   document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
 
+  document.getElementById('pendingverifyformdiv').appendChild = "<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='pendingadd(" + obj[0].report_id + ")' type='button' class='btn btn-success' id='addpendingConfirm' data-toggle='modal' data-target='#verifypendingEvent'>Save</button>";
 
 });
 
+var pendingid;
 
 function loginUser()
 {
@@ -721,6 +724,11 @@ function clearaddfield() {
   document.getElementById('RegisterValidationDoc').reset();
 }
 
+function clearaddpendingfield() {
+  event.preventDefault();
+  document.getElementById('RegisterAddPendingValidationDoc').reset();
+}
+
 function clearpendingfield() {
   event.preventDefault();
   document.getElementById('RegisterPendingValidationDoc').reset();
@@ -858,6 +866,123 @@ function addpendingeventComplete(xhr, status) {
     });
 
 
+}
+
+function addpendpendingevent() {
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  pendingid = $('#pendid').val();
+  var eventtitle = $('#pendtitle').val();
+  var date = $('#penddateselected').val();
+  var region = $('#pendregion').val();
+  var town = $('#pendtown').val();
+  var audiencecat = $('#pendaudience').val();
+  var attendance = $('#pendattendance').val();
+  var challenges = $('#pendchallenges').val();
+  var complaints = $('#pendcomplaints').val();
+  var summary = $('#pendsummary').val();
+  var approved = 0;
+  var verified = 0;
+  var verifiedComments = "not verified";
+
+  var filesarray = [];
+  var inp = document.getElementById('pendinput-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    document.cookie = "foldname=" + foldname;
+
+    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
+
+    //var theUrl1 = "databasehandler.php?cmd=25&pendid=" + pendingid;
+    
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: addpendpendingeventComplete
+      });
+
+    // $.ajax(theUrl1,
+    //   {
+    //     async: true,
+    //     complete: removependpendingeventComplete
+    //   });
+  }
+
+}
+
+function deletependingevent(pid){
+  var theUrl = "databasehandler.php?cmd=25&pendid=" + pid;
+  $.ajax(theUrl,
+    {
+      async: true
+    });
+}
+
+function addpendpendingeventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
+  $('#pendinput-id').fileinput('upload');
+  document.getElementById('RegisterAddPendingValidationDoc').reset();
+  $('#pendinput-id').fileinput('enable');
+
+  deletependingevent(pendingid);
+
+  UIkit.modal('#pending-modal-overflow').hide();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Event Added Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+
+}
+
+function removependpendingeventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  $.notify({
+    icon: "info_outline",
+    message: "Pending Event Removed Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
 }
 
 function clearuseraddfield() {
@@ -1096,6 +1221,39 @@ function level1viewerComplete(xhr, status) {
   // $('#picture_paths').val(picture_paths);
   // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");
 
+}
+
+function level1pendingviewer(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=24&eventid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level1pendingviewerComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level1pendingviewerComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+
+  //console.log(obj[0].report_id);
+  var dform = new Date(obj.date);
+
+  document.getElementById('pendid').value = obj.id;
+
+  document.getElementById('pendtitle').value = obj.title;
+  document.getElementById('penddateselected').value = moment(dform).format('dddd, D MMMM Y');
+  document.getElementById('pendregion').value = obj.region;
+  document.getElementById('pendtown').value = obj.town;
+
+  // $('#modalshow').click();
+  UIkit.modal('#pending-modal-overflow').show();
 }
 
 function closemodal1(){
@@ -1468,7 +1626,7 @@ function passwordreset(){
 
   if(newpassword == confirmednewpassword){
 
-    var theUrl = "databasehandler.php?cmd=24&myid=" + sessionStorage.userid + "&confirmednewpassword="+ confirmednewpassword;
+    var theUrl = "databasehandler.php?cmd=26&myid=" + sessionStorage.userid + "&confirmednewpassword="+ confirmednewpassword;
 
     $.ajax(theUrl,
       {

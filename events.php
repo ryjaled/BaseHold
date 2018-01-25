@@ -42,17 +42,21 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-		function addPendingEvent($eventtitle,$date,$region,$town,$audiencecat,$reporter){
+		function addPendingEvent($eventtitle,$date,$region,$town,$reporter){
 
 			$strQuery="insert into pending set
 							eventtitle='$eventtitle',
 							date_to_be_organized='$date',
 							region='$region',
 							town='$town',
-							audience_category='$audiencecat',
 							reporter='$reporter' ";
 
 							// echo $strQuery;
+			return $this->query($strQuery);
+		}
+
+		function deletePendingEvent($eventid){
+			$strQuery="delete from pending where pending_id='$eventid' ";
 			return $this->query($strQuery);
 		}
 
@@ -68,6 +72,11 @@ include_once("database.php");
 
     function getAnEvent($eventid){
 			$strQuery="select r.report_id,r.eventtitle,r.date_organized,a.regionname as region,r.town,r.audience_category,r.audience_attendance,r.team_challenges,r.complaints_raised,r.is_verified,r.is_approved,r.verification_comments,r.event_summary,r.picture_paths,r.folder_paths,r.reporter from reports as r inner join region as a on a.region_id = r.region where report_id=$eventid";
+      return $this->query($strQuery);
+		}
+
+		function getAPendingEvent($eventid){
+			$strQuery="select p.eventtitle,p.date_to_be_organized,r.regionname as region,p.town,p.pending_id FROM `pending` as p INNER JOIN region as r on r.region_id = p.region where p.pending_id = '$eventid'";
       return $this->query($strQuery);
 		}
 
@@ -135,7 +144,6 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
-
     function toggleVerify($eventid, $verify, $verifycomments){
       //echo $verify;
       //echo $eventid;
@@ -150,14 +158,10 @@ include_once("database.php");
       return $this->query($strQuery);
     }
 
-
-
 		function getDashTopAudienceCategory(){
 			$strQuery="select audience_category, count(audience_category) as total from reports where is_approved=1 group by audience_category order by count(audience_category) desc limit 1";
 			return $this->query($strQuery);
 		}
-
-
 
 		/**
 		* get user id
