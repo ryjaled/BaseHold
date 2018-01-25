@@ -923,12 +923,6 @@ function addpendpendingevent() {
         async: true,
         complete: addpendpendingeventComplete
       });
-
-    // $.ajax(theUrl1,
-    //   {
-    //     async: true,
-    //     complete: removependpendingeventComplete
-    //   });
   }
 
 }
