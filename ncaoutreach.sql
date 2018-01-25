@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2018 at 05:20 PM
+-- Generation Time: Jan 25, 2018 at 04:41 PM
 -- Server version: 5.5.42
 -- PHP Version: 5.6.10
 
@@ -132,16 +132,20 @@ CREATE TABLE `eventlogs` (
   `event_title` varchar(30) NOT NULL,
   `user_id` int(11) NOT NULL,
   `action` varchar(30) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `region` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `eventlogs`
 --
 
-INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `date`) VALUES
-(4, 'aaa', 5, 'Added a completed event', '2018-01-24 15:48:48'),
-(5, 'aa', 5, 'Added a pending event', '2018-01-24 15:49:00');
+INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `date`, `region`) VALUES
+(4, 'aaa', 5, 'added a completed event', '2018-01-24 15:48:48', '1'),
+(5, 'aa', 5, 'added a pending event', '2018-01-24 15:49:00', '1'),
+(11, 'cccc', 5, 'added a completed event', '2018-01-25 09:36:12', '4'),
+(12, 'xxxx', 5, 'added a pending event', '2018-01-25 14:55:47', '4'),
+(13, 'xxxx', 5, 'added a completed event', '2018-01-25 15:06:52', '1');
 
 -- --------------------------------------------------------
 
@@ -167,11 +171,12 @@ CREATE TABLE `pending` (
 INSERT INTO `pending` (`pending_id`, `eventtitle`, `date_to_be_organized`, `region`, `town`, `audience_category`, `status`, `reporter`) VALUES
 (1, '$eventtitle', '2018-09-01 00:00:00', 2, 'town', '$audiencecat', '1', 5),
 (2, 'sdsd', '2018-01-27 00:00:00', 2, 'sdsdsd', 'Education', '1', 5),
-(3, 'ttt', '2018-01-26 00:00:00', 4, 'gf', 'Healthcare', '1', 5),
 (4, 'test4', '2018-01-27 00:00:00', 2, 'awurade', 'Hospitality', '1', 5),
 (5, 'vfevve', '2018-01-24 00:00:00', 1, 'vfvf', 'Education', '1', 5),
 (6, 'eeee', '2018-01-26 00:00:00', 4, 'eee', '', '1', 5),
-(7, 'aa', '2018-01-24 00:00:00', 1, 'aaa', 'Corporate', '1', 5);
+(7, 'aa', '2018-01-24 00:00:00', 1, 'aaa', 'Corporate', '1', 5),
+(8, '23dsd', '2018-01-25 00:00:00', 2, 'sdas', 'Corporate', '1', 5),
+(9, 'checker22', '2018-01-25 00:00:00', 2, 'asd', 'Education', '1', 5);
 
 -- --------------------------------------------------------
 
@@ -230,23 +235,29 @@ CREATE TABLE `reports` (
 --
 
 INSERT INTO `reports` (`report_id`, `eventtitle`, `date_organized`, `region`, `town`, `audience_category`, `audience_attendance`, `team_challenges`, `complaints_raised`, `is_verified`, `is_approved`, `verification_comments`, `event_summary`, `picture_paths`, `folder_paths`, `reporter`) VALUES
-(75, 'as', '2018-01-03 00:00:00', '2', '', 'Corporate', '19', 'as', 'as', 1, 1, 'not verified', 'as', '[\"dining-room-paint-colors_3275_1600_1067.jpg\",\"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg\"]', '5_as', 5),
+(75, 'as', '2018-01-03 00:00:00', '2', 'wdc', 'Corporate', '19', 'as', 'as', 1, 1, 'not verified', 'as', '[\"dining-room-paint-colors_3275_1600_1067.jpg\",\"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg\"]', '5_as', 5),
 (76, 'sdasd', '2018-01-18 12:00:21', '4', 'adasd', 'Healthcare', '12', 'sd', 'sd', 1, 1, 'jh', 'ds', '[\"Modern-small-dining-room-colors.jpg\"]', '5_sdasd', 5),
 (77, 'sd', '2018-01-07 00:00:00', '9', 'dsd', 'Healthcare', '4', 'asd', 'asd', 1, 1, 'not verified', 'asd', '[\"Modern-small-dining-room-colors.jpg\"]', '5_sd', 5),
 (78, 'ss', '2018-01-15 11:33:36', '10', 'sd', 'Hospitality', '78', 's', 'sd', 1, 1, 'bgcgv', 's', '[]', '5_ss', 5),
 (79, 'dd', '2018-01-12 00:00:00', '5', 'ds', 'Mixed', '20', 's', 's', 1, 1, 'not verified', 's', '[]', '5_dd', 5),
-(80, 's', '2018-01-15 11:33:22', '2', 's', 'Market', '10', 'sd', 'sd', 1, 0, 'done', 'sd', '[]', '5_s', 5),
-(81, 's', '2018-01-17 00:00:00', '2', 'sd', 'Corporate', '20', 'sd', 'sd', 1, 0, 'not verified', 'sd', '[\"IMG-20180102-WA0008.jpg\"]', '5_s', 5),
+(80, 's', '2018-01-15 11:33:22', '2', 's', 'Market', '10', 'sd', 'sd', 1, 1, 'done', 'sd', '[]', '5_s', 5),
+(81, 's', '2018-01-17 00:00:00', '2', 'sd', 'Corporate', '20', 'sd', 'sd', 1, 1, 'not verified', 'sd', '[\"IMG-20180102-WA0008.jpg\"]', '5_s', 5),
 (82, 'sd', '2018-01-15 09:31:13', '2', 'asd', 'Mixed', '2', 'sd', 'sd', 1, 1, 'not verified', 'sd', '[]', '5_sd', 7),
 (83, 'sd', '2018-01-18 12:08:12', '1', 'd', 'Healthcare', '3', 'sd', 'd', 1, 1, 'dsd', 'sd', '[]', '5_sd', 7),
 (84, 'sd', '2018-01-15 09:31:13', '1', 'sd', 'Education', '100', 'sd', 'ds', 1, 1, 'not verified', 'sd', '[]', '5_sd', 7),
-(85, 'dsd', '2018-01-24 00:00:00', '5', 'sdd', 'Education', '683', 'sds', 'sd', 0, 0, 'not verified', 'd', '[]', '5_dsd', 5),
-(86, 'teST', '2018-01-15 09:42:53', '2', 'weija', 'Corporate', '234', 'dfdf', 'dfdf', 1, 0, 'hi', 'dfdf', '[\"Tech-News.jpg\"]', '5_teST', 5),
-(87, 'hey', '2018-01-17 00:00:00', '2', 'adsd', 'Education', '4', 'sds', 'sddd', 1, 0, 'd', 'sdsd', '[\"Pink watercolor skull1939_square.jpg\",\"Sunny stag811_square.jpg\",\"Meet you1889_square.jpg\"]', '5_hey', 5),
+(85, 'dsd', '2018-01-24 00:00:00', '5', 'sdd', 'Education', '683', 'sds', 'sd', 1, 1, 'verify at 5', 'd', '[]', '5_dsd', 5),
+(86, 'teST', '2018-01-15 09:42:53', '2', 'weija', 'Corporate', '234', 'dfdf', 'dfdf', 1, 1, 'hi', 'dfdf', '[\"Tech-News.jpg\"]', '5_teST', 5),
+(87, 'hey', '2018-01-17 00:00:00', '2', 'adsd', 'Education', '4', 'sds', 'sddd', 1, 1, 'd', 'sdsd', '[\"Pink watercolor skull1939_square.jpg\",\"Sunny stag811_square.jpg\",\"Meet you1889_square.jpg\"]', '5_hey', 5),
 (88, 'Test Event', '2018-01-16 12:09:07', '2', 'Trotdgdf', 'Healthcare', '60', 'None', 'None', 1, 1, 'how', 'None', '[\"work.jpg\"]', '17_Test Event', 17),
 (89, 'asd', '2018-01-24 00:00:00', '2', '12dsa', 'Corporate', '12', 'asd', 'dasd', 0, 0, 'not verified', 'asd', '[\"4620747.jpg\"]', '5_asd', 5),
 (90, 'asdasd', '2018-01-24 00:00:00', '1', 'cccc', 'Corporate', '212', 'csc', 'gg', 0, 0, 'not verified', 'ww', '[\"74297b.jpg\"]', '5_asdasd', 5),
-(91, 'aaa', '2018-01-24 00:00:00', '1', 'aaa', 'Corporate', '111', 'aaa', 'aa', 0, 0, 'not verified', 'aaa', '[\"images.jpeg\"]', '5_aaa', 5);
+(91, 'aaa', '2018-01-24 00:00:00', '1', 'aaa', 'Corporate', '111', 'aaa', 'aa', 1, 1, 'verify', 'aaa', '[\"images.jpeg\"]', '5_aaa', 5),
+(92, '111', '2018-01-25 00:00:00', '1', '333', 'Corporate', '222', '444', 'ss', 1, 1, 'verify again', 'ddddd', '[\"4620747.jpg\"]', '5_111', 5),
+(93, 'checker', '2018-01-25 00:00:00', '2', 'casda', 'Corporate', '122', 'asda', 'asdas', 1, 1, 'verify me', 'das ', '[\"images.jpeg\"]', '5_checker', 5),
+(94, 'qweqweqwe', '2018-01-25 00:00:00', '2', 'qweqwe', 'Hospitality', '2121', 'asdasd', 'czsca', 0, 0, 'not verified', 'asd', '[]', '5_qweqweqwe', 5),
+(95, 'cccc', '2018-01-25 00:00:00', '4', 'Ccc', 'Education', '11', 'ccc', 'cc', 0, 0, 'not verified', 'cc', '[]', '5_cccc', 5),
+(96, 'ttttttt', '2018-01-26 00:00:00', '1', 'gf', 'Corporate', '21', 'asd', 'asd', 0, 0, 'not verified', 'asd', '[\"4620747.jpg\"]', '5_ttttttt', 5),
+(97, 'xxxx', '2018-01-25 00:00:00', '1', 'xxxx', 'Corporate', '222', 'xx', 'xxx', 0, 0, 'not verified', 'xxx', '[\"316084.gif\"]', '5_xxxx', 5);
 
 -- --------------------------------------------------------
 
@@ -267,16 +278,25 @@ CREATE TABLE `userlogs` (
 --
 
 INSERT INTO `userlogs` (`userlog_id`, `acted_id`, `acted_on_id`, `action`, `date`) VALUES
-(1, 0, 0, 'Deactivated User', '2018-01-24 15:49:29'),
-(2, 0, 0, 'Activated User', '2018-01-24 15:49:35'),
-(3, 3, 5, 'Deactivated User', '2018-01-24 15:52:44'),
-(4, 3, 4, 'Deactivated User', '2018-01-24 15:52:45'),
-(5, 3, 5, 'Activated User', '2018-01-24 15:52:48'),
-(6, 3, 4, 'Activated User', '2018-01-24 15:52:50'),
-(7, 3, 5, 'Deactivated User', '2018-01-24 15:54:36'),
-(8, 3, 4, 'Deactivated User', '2018-01-24 15:54:41'),
-(9, 3, 5, 'Activated User', '2018-01-24 15:54:43'),
-(10, 3, 4, 'Activated User', '2018-01-24 15:54:44');
+(1, 0, 0, 'deactivated the user:', '2018-01-24 15:49:29'),
+(2, 0, 0, 'activated the user:', '2018-01-24 15:49:35'),
+(3, 3, 5, 'deactivated the user:', '2018-01-24 15:52:44'),
+(4, 3, 4, 'deactivated the user:', '2018-01-24 15:52:45'),
+(5, 3, 5, 'activated the user:', '2018-01-24 15:52:48'),
+(6, 3, 4, 'activated the user:', '2018-01-24 15:52:50'),
+(7, 3, 5, 'deactivated the user:', '2018-01-24 15:54:36'),
+(8, 3, 4, 'deactivated the user:', '2018-01-24 15:54:41'),
+(9, 3, 5, 'activated the user:', '2018-01-24 15:54:43'),
+(10, 3, 4, 'activated the user:', '2018-01-24 15:54:44'),
+(11, 0, 0, 'activated the user:', '2018-01-24 21:23:50'),
+(12, 4, 31, 'added', '2018-01-24 22:21:22'),
+(13, 3, 32, 'added', '2018-01-24 22:28:08'),
+(14, 3, 33, 'added', '2018-01-24 22:28:34'),
+(15, 3, 34, 'added', '2018-01-25 08:43:02'),
+(16, 3, 16, 'deactivated the user:', '2018-01-25 09:59:57'),
+(17, 3, 16, 'activated the user:', '2018-01-25 10:00:43'),
+(18, 3, 16, 'deactivated the user:', '2018-01-25 10:00:48'),
+(19, 3, 16, 'activated the user:', '2018-01-25 10:00:51');
 
 -- --------------------------------------------------------
 
@@ -307,7 +327,11 @@ INSERT INTO `users` (`userid`, `firstname`, `lastname`, `email`, `password`, `re
 (5, 'Admin1', 'Account1', 'admin1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 7, '1', 'active'),
 (16, 'Brian ', 'Martey', 'bm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '1', 'active'),
 (17, 'Brian1', 'MArtey', 'bnmm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '1', 'active'),
-(18, 'BB', 'Martey', 'bnmm1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '2', 'active');
+(18, 'BB', 'Martey', 'bnmm1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '2', 'active'),
+(31, 'Test', 'Testuser', 'test@nca.org.gh', '098f6bcd4621d373cade4e832627b4f6', 2, '1', 'active'),
+(32, 'testteam', 'testteam', 'testteam@nca.org.gh', '6054086ed1959ec7bbad81be7f6170c6', 1, '1', 'active'),
+(33, 'testteam2', 'testteam2', 'testteam2@nca.org.gh', 'ae4940e04e8e9aadf41bb3398d934580', 5, '2', 'active'),
+(34, 'firstname', 'lastname', 'firstname@nca.org.gh', '342f5c77ed008542e78094607ce1f7f3', 1, '3', 'active');
 
 --
 -- Indexes for dumped tables
@@ -381,13 +405,13 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `eventlogs`
 --
 ALTER TABLE `eventlogs`
-  MODIFY `eventlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `eventlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `pending`
 --
 ALTER TABLE `pending`
-  MODIFY `pending_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pending_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `region`
@@ -399,16 +423,16 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `userlogs`
 --
 ALTER TABLE `userlogs`
-  MODIFY `userlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `userlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
