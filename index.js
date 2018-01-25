@@ -1171,7 +1171,6 @@ function level1pendingviewerComplete(xhr, status) {
   //console.log(obj[0].report_id);
   var dform = new Date(obj.date);
 
-  //
   document.getElementById('pendid').value = obj.id;
 
   document.getElementById('pendtitle').value = obj.title;
