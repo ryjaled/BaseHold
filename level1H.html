@@ -110,7 +110,7 @@
 
 
 
-                      <div class="card card-login card-hidden card-nav-tabs">
+                    <div class="card card-login card-hidden card-nav-tabs">
                             <div class="header" style="background-color:#424242">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
@@ -305,24 +305,6 @@
                                                             <input id="addpendingtitle" name="addpendingtitle" class="form-control" name="title" type="text" required="true" />
                                                         </div>
                                                     </div>
-                                                    <br/>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                AUDIENCE
-                                                                <small>(required)</small>
-                                                            </label>
-                                                            <select id="addpendingaudience" name="addpendingaudience" class="selectpicker" data-style="btn" title="Select Audience" data-size="11" style="background-color:#000000;">
-                                                                <option value="Corporate">Corporate</option>
-                                                                <option value="Education">Education</option>
-                                                                <option value="Healthcare">Healthcare</option>
-                                                                <option value="Hospitality">Hospitality</option>
-                                                                <option value="Market">Market</option>
-                                                                <option value="Mixed">Mixed</option>
-                                                                <option value="Transportation">Transportation</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label style="font-weight: 900; color: #aaa" class="control-label">
@@ -343,10 +325,6 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                    
-                                                <div class="row">
-                                                    
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label style="font-weight: 900; color: #aaa" class="control-label">
@@ -356,6 +334,11 @@
                                                             <input id="addpendingtown" name="addpendingtown" class="form-control" name="location" type="text" required="true" />
                                                         </div>
                                                     </div>
+                                                </div>
+                                    
+                                                <div class="row">
+                                                    
+                                                    
                                                 </div>
                                                 <br/>
                                                 <div class="category form-category">
@@ -371,7 +354,8 @@
                                             </div>
                                         </form>
                                         <br/>
-                                        <hr>
+                                        <br/>
+                                        <br/>
                                         <div class="row">
                                             <h2 style="font-weight: 900;color: #aaa" class="col-sm-12 text-center">Pending Lists</h2>
                                         </div>
@@ -384,135 +368,11 @@
                                                     <th style="text-align: left; font-size: 1.0em;">Region</th>
                                                     <th style="text-align: left; font-size: 1.0em;">Town</th>
                                                     <th style="text-align: left; font-size: 1.0em;">Creator</th>
-                                                    <th style="text-align: left; font-size: 1.0em;">View</th>
+                                                    <th style="text-align: left; font-size: 1.0em;">Edit</th>
                                                 </tr>
                                             </thead>
                                         </table>
                                     </div>
-                                    
-                                    <!-- <div class="tab-pane" id="event" style=" padding: 3%;">
-                                        <form id="RegisterValidationDoc" action="" method="">
-                                            <div class="card-content" style="padding: 2% 15%;">
-                                    
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                DATE SELECTED
-                                                                <small>(required)</small>
-                                                            </label>
-                                                            <input id="adddateselected" type="text" class="form-control datetimepicker" required="true" value="" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                EVENT TITLE
-                                                                <small>(required)</small>
-                                                            </label>
-                                                            <input id="addtitle" class="form-control" name="title" type="text" required="true" />
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                AUDIENCE
-                                                                <small>(required)</small>
-                                                            </label>
-                                                            <select id="addaudience" class="selectpicker" data-style="btn" title="Select Audience" data-size="11" style="background-color:#000000;">
-                                                                <option value="Corporate">Corporate</option>
-                                                                <option value="Education">Education</option>
-                                                                <option value="Healthcare">Healthcare</option>
-                                                                <option value="Hospitality">Hospitality</option>
-                                                                <option value="Market">Market</option>
-                                                                <option value="Mixed">Mixed</option>
-                                                                <option value="Transportation">Transportation</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                NUMBER IN ATTENDANCE
-                                                                <small></small>
-                                                            </label>
-                                                            <input id="addattendance" class="form-control" name="location" type="number" pattern="\d{1,10}" />
-                                                        </div>
-                                                    </div>
-                                    
-                                                </div>
-                                                <br/>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <select id="addregion" class="selectpicker" data-style="btn" title="Select Region" data-size="11" style="background-color:#000000;">
-                                                            <option value="1">Ashanti</option>
-                                                            <option value="2">Brong Ahafo</option>
-                                                            <option value="3">Central</option>
-                                                            <option value="4">Eastern</option>
-                                                            <option value="5">Greater Accra</option>
-                                                            <option value="6">Northern</option>
-                                                            <option value="7">Upper East</option>
-                                                            <option value="8">Upper West</option>
-                                                            <option value="9">Volta</option>
-                                                            <option value="10">Western</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                TOWN
-                                                                <small>(required)</small>
-                                                            </label>
-                                                            <input id="addtown" class="form-control" name="location" type="text" required="true" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br/>
-                                                <br/>
-                                                <div class="row">
-                                                    <p style="font-weight: 900; color: #aaa" class="control-label">
-                                                        CHALLENGES FACED
-                                                        <small>(required)</small>
-                                                    </p>
-                                                    <textarea id="addchallenges" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
-                                                        placeholder="Type event summary here" rows="4"></textarea>
-                                                </div>
-                                                <br/>
-                                                <div class="row">
-                                                    <p style="font-weight: 900; color: #aaa" class="control-label">
-                                                        EVENT SUMMARY
-                                                        <small>(required)</small>
-                                                    </p>
-                                                    <textarea id="addsummary" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
-                                                        placeholder="Type event summary here" rows="4"></textarea>
-                                                </div>
-                                                <div class="row">
-                                                    <p style="font-weight: 900; color: #aaa" class="control-label">
-                                                        COMPLAINTS
-                                                        <small>(required)</small>
-                                                    </p>
-                                                    <textarea id="addcomplaints" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
-                                                        placeholder="Type event complaints here" rows="4"></textarea>
-                                                </div>
-                                                <br/>
-                                                <div>
-                                                    <input id="input-id" type="file" name="files[]" class="file" multiple>
-                                                </div>
-                                    
-                                                <div class="category form-category">
-                                                    <small>(required)</small> - Required fields</div>
-                                    
-                                                <div class="form-footer text-right">
-                                                    <div class="checkbox pull-left">
-                                    
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-default pull-left" onclick="clearaddfield()">Clear Fields</button>
-                                                <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="addevent()">Create Event</button>
-                                            </div>
-                                        </form>
-                                    </div> -->
 
                                     <div class="tab-pane active" id="cal" style=" padding: 3%;">
                                     <div id='calendar' style="width:100%;"></div>
@@ -648,159 +508,152 @@
 
     <div id="pending-modal-overflow" class="uk-modal-container" uk-modal>
         <div class="uk-modal-dialog">
-    
+        
             <button class="uk-modal-close-default" type="button" uk-close></button>
-    
+        
             <div class="uk-modal-header">
-                <h2 class="uk-modal-title">Event Details</h2>
+                <h2 class="uk-modal-title">Edit and Save Event Details</h2>
             </div>
-    
+        
             <div class="uk-modal-body" uk-overflow-auto>
-    
-                <article class="uk-comment">
-                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                        <div class="uk-width-auto">
-                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+        
+                <form id="RegisterAddPendingValidationDoc" action="" method="">
+                    <div class="card-content" style="padding: 2% 15%;">
+
+                        <input id="pendid" style="display:none;"/>
+                
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                        DATE SELECTED
+                                        <small>(required)</small>
+                                    </label>
+                                    <input id="penddateselected" type="text" class="form-control datetimepicker" required="true" value="" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                        EVENT TITLE
+                                        <small>(required)</small>
+                                    </label>
+                                    <input id="pendtitle" class="form-control" name="title" type="text" required="true" />
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                        AUDIENCE
+                                        <small>(required)</small>
+                                    </label>
+                                    <select id="pendaudience" class="selectpicker" data-style="btn" title="Select Audience" data-size="11" style="background-color:#000000;">
+                                        <option value="Corporate">Corporate</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Hospitality">Hospitality</option>
+                                        <option value="Market">Market</option>
+                                        <option value="Mixed">Mixed</option>
+                                        <option value="Transportation">Transportation</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                        NUMBER IN ATTENDANCE
+                                        <small></small>
+                                    </label>
+                                    <input id="pendattendance" class="form-control" name="location" type="number" pattern="\d{1,10}" />
+                                </div>
+                            </div>
+                
                         </div>
-                        <div class="uk-width-expand">
-                            <h4 class="uk-comment-title uk-margin-remove">
-                                <a id="pendingeventtitle" class="uk-link-reset" href="#">Author: Admin1</a>
-                            </h4>
-                            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                <li>
-                                    <a href="#" id="pendingdate_organized">23 January 2018</a>
-                                </li>
-                            </ul>
+                        <br/>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                        REGION
+                                        <small>(required)</small>
+                                    </label>
+                                    <select id="pendregion" class="selectpicker" data-style="btn" title="Select Region" data-size="11" style="background-color:#000000;">
+                                        <option value="1">Ashanti</option>
+                                        <option value="2">Brong Ahafo</option>
+                                        <option value="3">Central</option>
+                                        <option value="4">Eastern</option>
+                                        <option value="5">Greater Accra</option>
+                                        <option value="6">Northern</option>
+                                        <option value="7">Upper East</option>
+                                        <option value="8">Upper West</option>
+                                        <option value="9">Volta</option>
+                                        <option value="10">Western</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                        TOWN
+                                        <small>(required)</small>
+                                    </label>
+                                    <input id="pendtown" class="form-control" name="location" type="text" required="true" />
+                                </div>
+                            </div>
                         </div>
-                    </header>
-    
-                    <div class="row">
-                        <dl class="uk-description-list">
-                            <div class="col-sm-6">
-                                <dt>REGION</dt>
-                                <dd id="pendingregion"></dd>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <p style="font-weight: 900; color: #aaa" class="control-label">
+                                CHALLENGES FACED
+                                <small>(required)</small>
+                            </p>
+                            <textarea id="pendchallenges" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
+                                placeholder="Type event summary here" rows="4"></textarea>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <p style="font-weight: 900; color: #aaa" class="control-label">
+                                EVENT SUMMARY
+                                <small>(required)</small>
+                            </p>
+                            <textarea id="pendsummary" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
+                                placeholder="Type event summary here" rows="4"></textarea>
+                        </div>
+                        <div class="row">
+                            <p style="font-weight: 900; color: #aaa" class="control-label">
+                                COMPLAINTS
+                                <small>(required)</small>
+                            </p>
+                            <textarea id="pendcomplaints" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
+                                placeholder="Type event complaints here" rows="4"></textarea>
+                        </div>
+                        <br/>
+                        <div>
+                            <input id="pendinput-id" type="file" name="pendfiles[]" class="file" multiple>
+                        </div>
+                
+                        <div class="category form-category">
+                            <small>(required)</small> - Required fields</div>
+                
+                        <div class="form-footer text-right">
+                            <div class="checkbox pull-left">
+                
                             </div>
-                            <div class="col-sm-6">
-                                <dt>TOWN</dt>
-                                <dd id="pendingtown"></dd>
-                            </div>
-                        </dl>
+                        </div>
+                        <button type="submit" class="btn btn-default pull-left uk-modal-close" onclick="clearaddpendingfield()">Clear Fields</button>
+                        <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="addpendpendingevent()">Create Event</button>
                     </div>
-    
-                    <center>
-                        <hr class="uk-divider-small" style="margin:5%;">
-                    </center>
-    
-                    <div class="row">
-                        <dl class="uk-description-list">
-                            <div class="col-sm-6">
-                                <dt>AUDIENCE CATEGORY</dt>
-                                <dd id="pendingaudience_category"></dd>
-                            </div>
-                            <div class="col-sm-6">
-                                <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                                <dd id="pendingaudience_attendance"></dd>
-                            </div>
-                        </dl>
-                    </div>
-    
-                </article>
-    
+                </form>
+        
             </div>
-    
-            <div class="uk-modal-footer uk-text-right" id="verifyformdiv">
-                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-            </div>
-    
+        
         </div>
     </div>
 
 
-    <!-- Modal 2 -->
-    <!-- <div class="modal fade" id="eventDetailView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 100%">
-        <div class="modal-dialog" style="width: 90%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h2 class="modal-title" id="myModalLabel">Event Details</h2>
-                </div>
-                <div class="modal-body">
-
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Event Title </label>
-                            <br>
-                            <input class="form-control" id="eventtitle" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Date Organized </label>
-                            <br>
-                            <input class="form-control" id="date_organized" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Region </label>
-                            <br>
-                            <input class="form-control" id="region" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Town </label>
-                            <br>
-                            <input class="form-control" id="town" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Audience Industry </label>
-                            <br>
-                            <input class="form-control" id="audience_category" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Attendance </label>
-                            <br>
-                            <input class="form-control" id="audience_attendance" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Team Challenges </label>
-                            <br>
-                            <input class="form-control" id="team_challenges" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Complaints Raised </label>
-                            <br>
-                            <input class="form-control" id="complaints_raised" readonly>
-                            <br>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Event Summary </label>
-                            <br>
-                            <input class="form-control" id="event_summary" readonly>
-                            <br>
-                        </div>
-                    </div>
-
-                    <div>
-                      <label>Event Photos: </label>
-                      <br/>
-                      <div id="pictureContainer">
-                      </div>
-                    </div>
-
-
-
-
-                </div>
-                <div class="modal-footer" id="verifyformdiv">
-                        <button onclick="closemodal1()" id="closebutton" type='button' class='btn btn-default'>Cancel</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> -->
+   
                 </div>
             </div>
         </div>
@@ -986,6 +839,15 @@
         }
 
         $("#input-id").fileinput({
+            showUpload: false,
+            showCaption: false,
+            browseOnZoneClick: true,
+            uploadUrl: "uploads.php",
+            //uploadUrl: "server/index.php",
+            uploadAsync: true
+        });
+
+        $("#pendinput-id").fileinput({
             showUpload: false,
             showCaption: false,
             browseOnZoneClick: true,

@@ -75,6 +75,12 @@
 		case 22:
 			addPendingEvent();
 			break;
+		case 24:
+			getAPendingEvent();
+			break;
+		case 25:
+			deleteAPendingEvent();
+			break;
 
 		default:
 			echo "wrong cmd";	//change to json message
@@ -193,10 +199,9 @@
 		$final_date = date("Y-m-d H:i:s", $converted_date);
 		$region=$_REQUEST['region'];
 		$town=$_REQUEST['town'];
-		$audiencecat=$_REQUEST['audiencecat'];
 		$reporter=$_REQUEST['reporter'];
 
-		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$audiencecat,$reporter);
+		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$reporter);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -206,6 +211,19 @@
 		}
 	}
 
+	function deleteAPendingEvent()
+ 	{
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+			$eventid=$_REQUEST['pendid'];
+
+ 			$result = $event->deletePendingEvent($eventid);
+
+ 			echo json_encode($result);
+
+ 	}
 
 	function getEvents()
 	{
@@ -272,6 +290,33 @@
  					$success="true";
  					// $data[]=$row;
  					array_push($data,$row);
+
+ 				}
+
+ 				echo json_encode($data);
+
+	}
+	 
+	function getAPendingEvent()
+ 	{
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+			$eventid=$_REQUEST['eventid'];
+
+ 			$result = $event->getAPendingEvent($eventid);
+
+ 			$data = array();
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+					$data['title']=$row['eventtitle'];
+					$data['date']=$row['date_to_be_organized'];
+					$data['region']=$row['region'];
+					$data['town']=$row['town'];
+					$data['id']=$row['pending_id'];
+ 					//array_push($data,$row);
 
  				}
 
@@ -582,7 +627,6 @@
 
 
 	}
-
 	//Logs user into system
 	function login(){
 		include("users.php");
