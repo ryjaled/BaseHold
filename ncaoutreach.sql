@@ -30,13 +30,13 @@ CREATE TABLE `audiences` (
 --
 
 INSERT INTO `audiences` (`aud_id`, `aud_name`) VALUES
-(1, 'Corporate'),
-(2, 'Education'),
-(3, 'Healthcare'),
-(4, 'Hospitality'),
-(5, 'Market'),
-(6, 'Mixed'),
-(7, 'Transportation');
+(1, 'Artisans'),
+(2, 'Communities'),
+(3, 'Corporate Bodies'),
+(4, 'Religious Bodies'),
+(5, 'Schools'),
+(6, 'Villages'),
+(7, 'Others');
 
 -- --------------------------------------------------------
 
