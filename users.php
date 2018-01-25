@@ -66,7 +66,16 @@ include_once("database.php");
 		* @return user's Id
 		*/
 		function getID($userName){
-			$strQuery="Select ID from user where username = '$userName'";
+			$strQuery="Select userid from users where firstname = '$userName'";
+			return $this->query($strQuery);
+		}
+
+
+		function updatepassword($id, $password){
+			echo $id;
+			echo $password;
+
+			$strQuery="update users set password=MD5('$password') where userid='$id'";
 			return $this->query($strQuery);
 		}
 

@@ -1,45 +1,29 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2018 at 12:02 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Jan 24, 2018 at 05:20 PM
+-- Server version: 5.5.42
+-- PHP Version: 5.6.10
 
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ncaoutreach`
 --
-CREATE DATABASE IF NOT EXISTS `ncaoutreach` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE ncaoutreach;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `audiences`
 --
--- Creation: Jan 04, 2018 at 01:28 PM
---
 
-DROP TABLE IF EXISTS `audiences`;
 CREATE TABLE `audiences` (
   `aud_id` int(11) NOT NULL,
   `aud_name` varchar(250) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `audiences`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `audiences`
@@ -59,19 +43,12 @@ INSERT INTO `audiences` (`aud_id`, `aud_name`) VALUES
 --
 -- Table structure for table `cities`
 --
--- Creation: Dec 17, 2017 at 08:13 PM
---
 
-DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `city_id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `state_id` int(11) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `cities`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cities`
@@ -147,12 +124,31 @@ INSERT INTO `cities` (`city_id`, `name`, `state_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pending`
---
--- Creation: Jan 23, 2018 at 09:48 PM
+-- Table structure for table `eventlogs`
 --
 
-DROP TABLE IF EXISTS `pending`;
+CREATE TABLE `eventlogs` (
+  `eventlog_id` int(11) NOT NULL,
+  `event_title` varchar(30) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `action` varchar(30) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `eventlogs`
+--
+
+INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `date`) VALUES
+(4, 'aaa', 5, 'Added a completed event', '2018-01-24 15:48:48'),
+(5, 'aa', 5, 'Added a pending event', '2018-01-24 15:49:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pending`
+--
+
 CREATE TABLE `pending` (
   `pending_id` int(11) NOT NULL,
   `eventtitle` varchar(100) NOT NULL,
@@ -162,11 +158,7 @@ CREATE TABLE `pending` (
   `audience_category` varchar(100) NOT NULL,
   `status` enum('1','0') NOT NULL,
   `reporter` int(10) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `pending`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pending`
@@ -176,25 +168,21 @@ INSERT INTO `pending` (`pending_id`, `eventtitle`, `date_to_be_organized`, `regi
 (1, '$eventtitle', '2018-09-01 00:00:00', 2, 'town', '$audiencecat', '1', 5),
 (2, 'sdsd', '2018-01-27 00:00:00', 2, 'sdsdsd', 'Education', '1', 5),
 (3, 'ttt', '2018-01-26 00:00:00', 4, 'gf', 'Healthcare', '1', 5),
-(4, 'test4', '2018-01-27 00:00:00', 2, 'awurade', 'Hospitality', '1', 5);
+(4, 'test4', '2018-01-27 00:00:00', 2, 'awurade', 'Hospitality', '1', 5),
+(5, 'vfevve', '2018-01-24 00:00:00', 1, 'vfvf', 'Education', '1', 5),
+(6, 'eeee', '2018-01-26 00:00:00', 4, 'eee', '', '1', 5),
+(7, 'aa', '2018-01-24 00:00:00', 1, 'aaa', 'Corporate', '1', 5);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `region`
 --
--- Creation: Dec 17, 2017 at 07:59 PM
---
 
-DROP TABLE IF EXISTS `region`;
 CREATE TABLE `region` (
   `region_id` int(10) NOT NULL,
   `regionname` varchar(40) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `region`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `region`
@@ -217,10 +205,7 @@ INSERT INTO `region` (`region_id`, `regionname`) VALUES
 --
 -- Table structure for table `reports`
 --
--- Creation: Jan 18, 2018 at 12:10 PM
---
 
-DROP TABLE IF EXISTS `reports`;
 CREATE TABLE `reports` (
   `report_id` int(11) NOT NULL,
   `eventtitle` varchar(1000) NOT NULL,
@@ -238,11 +223,7 @@ CREATE TABLE `reports` (
   `picture_paths` varchar(2000) NOT NULL,
   `folder_paths` varchar(250) NOT NULL,
   `reporter` int(10) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `reports`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reports`
@@ -262,17 +243,47 @@ INSERT INTO `reports` (`report_id`, `eventtitle`, `date_organized`, `region`, `t
 (85, 'dsd', '2018-01-24 00:00:00', '5', 'sdd', 'Education', '683', 'sds', 'sd', 0, 0, 'not verified', 'd', '[]', '5_dsd', 5),
 (86, 'teST', '2018-01-15 09:42:53', '2', 'weija', 'Corporate', '234', 'dfdf', 'dfdf', 1, 0, 'hi', 'dfdf', '[\"Tech-News.jpg\"]', '5_teST', 5),
 (87, 'hey', '2018-01-17 00:00:00', '2', 'adsd', 'Education', '4', 'sds', 'sddd', 1, 0, 'd', 'sdsd', '[\"Pink watercolor skull1939_square.jpg\",\"Sunny stag811_square.jpg\",\"Meet you1889_square.jpg\"]', '5_hey', 5),
-(88, 'Test Event', '2018-01-16 12:09:07', '2', 'Trotdgdf', 'Healthcare', '60', 'None', 'None', 1, 1, 'how', 'None', '[\"work.jpg\"]', '17_Test Event', 17);
+(88, 'Test Event', '2018-01-16 12:09:07', '2', 'Trotdgdf', 'Healthcare', '60', 'None', 'None', 1, 1, 'how', 'None', '[\"work.jpg\"]', '17_Test Event', 17),
+(89, 'asd', '2018-01-24 00:00:00', '2', '12dsa', 'Corporate', '12', 'asd', 'dasd', 0, 0, 'not verified', 'asd', '[\"4620747.jpg\"]', '5_asd', 5),
+(90, 'asdasd', '2018-01-24 00:00:00', '1', 'cccc', 'Corporate', '212', 'csc', 'gg', 0, 0, 'not verified', 'ww', '[\"74297b.jpg\"]', '5_asdasd', 5),
+(91, 'aaa', '2018-01-24 00:00:00', '1', 'aaa', 'Corporate', '111', 'aaa', 'aa', 0, 0, 'not verified', 'aaa', '[\"images.jpeg\"]', '5_aaa', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userlogs`
+--
+
+CREATE TABLE `userlogs` (
+  `userlog_id` int(11) NOT NULL,
+  `acted_id` int(11) NOT NULL,
+  `acted_on_id` int(11) NOT NULL,
+  `action` varchar(30) CHARACTER SET latin1 NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `userlogs`
+--
+
+INSERT INTO `userlogs` (`userlog_id`, `acted_id`, `acted_on_id`, `action`, `date`) VALUES
+(1, 0, 0, 'Deactivated User', '2018-01-24 15:49:29'),
+(2, 0, 0, 'Activated User', '2018-01-24 15:49:35'),
+(3, 3, 5, 'Deactivated User', '2018-01-24 15:52:44'),
+(4, 3, 4, 'Deactivated User', '2018-01-24 15:52:45'),
+(5, 3, 5, 'Activated User', '2018-01-24 15:52:48'),
+(6, 3, 4, 'Activated User', '2018-01-24 15:52:50'),
+(7, 3, 5, 'Deactivated User', '2018-01-24 15:54:36'),
+(8, 3, 4, 'Deactivated User', '2018-01-24 15:54:41'),
+(9, 3, 5, 'Activated User', '2018-01-24 15:54:43'),
+(10, 3, 4, 'Activated User', '2018-01-24 15:54:44');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
--- Creation: Jan 12, 2018 at 07:08 AM
---
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userid` int(100) NOT NULL,
   `firstname` varchar(300) NOT NULL,
@@ -282,11 +293,7 @@ CREATE TABLE `users` (
   `region` int(10) NOT NULL,
   `level` varchar(300) NOT NULL,
   `status` enum('active','inactive') NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `users`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -319,6 +326,12 @@ ALTER TABLE `cities`
   ADD PRIMARY KEY (`city_id`);
 
 --
+-- Indexes for table `eventlogs`
+--
+ALTER TABLE `eventlogs`
+  ADD PRIMARY KEY (`eventlog_id`);
+
+--
 -- Indexes for table `pending`
 --
 ALTER TABLE `pending`
@@ -337,6 +350,12 @@ ALTER TABLE `reports`
   ADD PRIMARY KEY (`report_id`);
 
 --
+-- Indexes for table `userlogs`
+--
+ALTER TABLE `userlogs`
+  ADD PRIMARY KEY (`userlog_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -350,33 +369,46 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `audiences`
 --
 ALTER TABLE `audiences`
-  MODIFY `aud_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `aud_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20432;
+
+--
+-- AUTO_INCREMENT for table `eventlogs`
+--
+ALTER TABLE `eventlogs`
+  MODIFY `eventlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `pending`
 --
 ALTER TABLE `pending`
-  MODIFY `pending_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pending_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `region`
 --
 ALTER TABLE `region`
-  MODIFY `region_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `region_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT for table `userlogs`
+--
+ALTER TABLE `userlogs`
+  MODIFY `userlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT;COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;

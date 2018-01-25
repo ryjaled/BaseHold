@@ -31,12 +31,12 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "select u.userid as userid, u.firstname as fname, u.lastname as lname, u.email as email, u.status as status, u.level as level, r.regionname as region from users as u inner join region as r on r.region_id = u.region where u.level < 3";
+$sql = "select u.userid as userid, u.firstname as fname, u.lastname as lname, u.email as email, u.status as status, u.level as level, r.regionname as region from users as u inner join region as r on r.region_id = u.region where u.level < 5";
 $query=mysqli_query($conn, $sql) or die("dashusers.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
-$sql = "select u.userid as userid, u.firstname as fname, u.lastname as lname, u.email as email, u.status as status, u.level as level, r.regionname as region from users as u inner join region as r on r.region_id = u.region where u.level < 3";
+$sql = "select u.userid as userid, u.firstname as fname, u.lastname as lname, u.email as email, u.status as status, u.level as level, r.regionname as region from users as u inner join region as r on r.region_id = u.region where u.level < 5";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
    $sql.=" AND ( firstname LIKE '".$requestData['search']['value']."%' ";
    $sql.=" OR lastname LIKE '".$requestData['search']['value']."%' ";
@@ -66,6 +66,12 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
       case '2':
          $level = 'Regional Manager';
          break;
+		  case '3':
+ 	       $level = 'Project Manager';
+ 	       break;
+			case '4':
+		 		$level = 'Management';
+		 		break;
 
       default:
          $level = 'Officer';

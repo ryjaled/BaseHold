@@ -75,11 +75,16 @@
 		case 22:
 			addPendingEvent();
 			break;
+    case 23:
+			fetchAddUserLog();
+			break;
 		case 24:
 			getAPendingEvent();
 			break;
 		case 25:
 			deleteAPendingEvent();
+		case 26:
+			changePassword();
 			break;
 
 		default:
@@ -119,9 +124,41 @@
 
 	}
 
+
+
+	function changePassword()
+	{
+
+		 include("users.php");
+		 $user = new users();
+
+		 $myid = $_REQUEST['myid'];
+		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
+
+		 echo $myid;
+		 echo $confirmednewpassword;
+		 
+		 $validation = $user->updatepassword($myid,$confirmednewpassword);
+		 // echo $validation;
+		 if($validation==false){
+				echo '{"result":0,"message":"Validation failed"}';
+		 }
+		 else{
+
+			 // $array=array('result'=>1,'message'=>'User logged in','email'=>$email,'password'=>$password);
+			 echo json_encode($validation);
+		 }
+
+ 	}
+
+
+
+
 	function addLevel1User()
    {
-      include("users.php");
+
+    include("users.php");
+
 		$user = new users();
 
 		$firstname=$_REQUEST['useraddfname'];
@@ -130,36 +167,85 @@
 		$password=$_REQUEST['useraddpword'];
 		$region=$_REQUEST['region'];
 		$level=$_REQUEST['level'];
+		$myid=$_REQUEST['myid'];
 
 		$validation = $user->addNewUser($firstname,$lastname,$email,$password,$region,$level);
-		echo json_encode($validation);
+
+		$user2 = new users();
+
+		// $user_id=$_REQUEST['userid'];
+
+		$result = $user2->getID($firstname);
+
+		$usersdata = array();
+
+		// echo $row=$user->fetch();
+
+		while($row = $user2->fetch()){
+				array_push($usersdata,$row);
+		}
+
+		echo json_encode($usersdata);
+
 	}
+
+
+	function fetchAddUserLog()
+   {
+
+    include("logs.php");
+
+		$log = new logs();
+
+		$actedon=$_REQUEST['acted_on_id'];
+		$myid=$_REQUEST['myid'];
+
+		$log->addUserLog($myid,$actedon,"added");
+
+	}
+
+
 
 	function deleteUser()
    {
       include("users.php");
+			include("logs.php");
+
 		$user = new users();
+		$log = new logs();
 
 		$userid=$_REQUEST['userid'];
+		$myid=$_REQUEST['myid'];
 
 		$validation = $user->deleteUser($userid);
+		$log->addUserLog($myid, $userid, "deactivated the user:");
+
 		echo json_encode($validation);
 	}
 
 	function reactivateUser()
    {
       include("users.php");
+			include("logs.php");
+
 		$user = new users();
+		$log = new logs();
 
 		$userid=$_REQUEST['userid'];
+		$myid=$_REQUEST['myid'];
 
 		$validation = $user->reactivateUser($userid);
+		$log->addUserLog($myid, $userid, "activated the user:");
+
 		echo json_encode($validation);
 	}
 
 	function addEvent(){
 		include("events.php");
+		include("logs.php");
+
 		$event = new events();
+		$log = new logs();
 
 		$eventtitle=$_REQUEST['eventtitle'];
 		$date=$_REQUEST['date'];
@@ -180,6 +266,8 @@
 		$foldpath=$_REQUEST['foldpath'];
 
 		$verify=$event->addEvent($eventtitle,$final_date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath);
+
+		$log->addEventLog($eventtitle,$reporter,"added a completed event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -191,7 +279,10 @@
 
 	function addPendingEvent(){
 		include("events.php");
+		include("logs.php");
+
 		$event = new events();
+		$log = new logs();
 
 		$eventtitle=$_REQUEST['eventtitle'];
 		$date=$_REQUEST['date'];
@@ -202,6 +293,9 @@
 		$reporter=$_REQUEST['reporter'];
 
 		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$reporter);
+
+		$log->addEventLog($eventtitle,$reporter,"added a pending event", $region);
+
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -294,7 +388,6 @@
  				}
 
  				echo json_encode($data);
-
 	}
 	 
 	function getAPendingEvent()
