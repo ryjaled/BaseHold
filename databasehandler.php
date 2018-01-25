@@ -135,9 +135,6 @@
 		 $myid = $_REQUEST['myid'];
 		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
 
-		 echo $myid;
-		 echo $confirmednewpassword;
-		 
 		 $validation = $user->updatepassword($myid,$confirmednewpassword);
 		 // echo $validation;
 		 if($validation==false){
@@ -389,7 +386,7 @@
 
  				echo json_encode($data);
 	}
-	 
+
 	function getAPendingEvent()
  	{
  			$success="";
