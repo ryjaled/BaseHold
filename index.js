@@ -1457,3 +1457,60 @@ function reactivateUsersComplete(xhr, status) {
     });
 
 }
+
+
+function passwordreset(){
+  event.preventDefault();
+
+  var currentpassword = $('#currentpassword').val();
+  var newpassword = $('#newpassword').val();
+  var confirmednewpassword = $('#confirmednewpassword').val();
+
+  if(newpassword == confirmednewpassword){
+
+    var theUrl = "databasehandler.php?cmd=24&myid=" + sessionStorage.userid + "&confirmednewpassword="+ confirmednewpassword;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: passwordresetComplete
+      });
+
+  } else {
+
+    $.notify({
+      icon: "info_outline",
+      message: "New password is not the same as confirmed password."
+
+    }, {
+        type: 'warning',
+        timer: 1000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+
+}
+
+
+function passwordresetComplete(xhr, status) {
+  console.log(xhr);
+
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "Password Changed Successfully."
+
+  }, {
+      type: 'success',
+      timer: 1000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}

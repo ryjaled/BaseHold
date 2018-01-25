@@ -71,5 +71,14 @@ include_once("database.php");
 		}
 
 
+		function updatepassword($id, $password){
+			echo $id;
+			echo $password;
+
+			$strQuery="update users set password=MD5('$password') where userid='$id'";
+			return $this->query($strQuery);
+		}
+
+
 	}
 ?>

@@ -78,6 +78,9 @@
 		case 23:
 			fetchAddUserLog();
 			break;
+		case 24:
+			changePassword();
+			break;
 
 		default:
 			echo "wrong cmd";	//change to json message
@@ -115,6 +118,36 @@
 			}
 
 	}
+
+
+
+	function changePassword()
+	{
+
+		 include("users.php");
+		 $user = new users();
+
+		 $myid = $_REQUEST['myid'];
+		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
+
+		 echo $myid;
+		 echo $confirmednewpassword;
+		 
+		 $validation = $user->updatepassword($myid,$confirmednewpassword);
+		 // echo $validation;
+		 if($validation==false){
+				echo '{"result":0,"message":"Validation failed"}';
+		 }
+		 else{
+
+			 // $array=array('result'=>1,'message'=>'User logged in','email'=>$email,'password'=>$password);
+			 echo json_encode($validation);
+		 }
+
+ 	}
+
+
+
 
 	function addLevel1User()
    {
