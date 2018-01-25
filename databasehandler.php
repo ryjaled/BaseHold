@@ -75,8 +75,11 @@
 		case 22:
 			addPendingEvent();
 			break;
-		case 23:
+		case 24:
 			getAPendingEvent();
+			break;
+		case 25:
+			deleteAPendingEvent();
 			break;
 
 		default:
@@ -196,10 +199,9 @@
 		$final_date = date("Y-m-d H:i:s", $converted_date);
 		$region=$_REQUEST['region'];
 		$town=$_REQUEST['town'];
-		$audiencecat=$_REQUEST['audiencecat'];
 		$reporter=$_REQUEST['reporter'];
 
-		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$audiencecat,$reporter);
+		$verify=$event->addPendingEvent($eventtitle,$final_date,$region,$town,$reporter);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -208,6 +210,20 @@
 
 		}
 	}
+
+	function deleteAPendingEvent()
+ 	{
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+			$eventid=$_REQUEST['pendid'];
+
+ 			$result = $event->deletePendingEvent($eventid);
+
+ 			echo json_encode($result);
+
+ 	}
 
 	function getEvents()
 	{

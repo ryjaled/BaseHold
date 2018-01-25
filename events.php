@@ -42,17 +42,21 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-		function addPendingEvent($eventtitle,$date,$region,$town,$audiencecat,$reporter){
+		function addPendingEvent($eventtitle,$date,$region,$town,$reporter){
 
 			$strQuery="insert into pending set
 							eventtitle='$eventtitle',
 							date_to_be_organized='$date',
 							region='$region',
 							town='$town',
-							audience_category='$audiencecat',
 							reporter='$reporter' ";
 
 							// echo $strQuery;
+			return $this->query($strQuery);
+		}
+
+		function deletePendingEvent($eventid){
+			$strQuery="delete from pending where pending_id='$eventid' ";
 			return $this->query($strQuery);
 		}
 

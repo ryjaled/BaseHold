@@ -162,7 +162,7 @@ $().ready(function () {
   });
 
   setInterval(function () {
-     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
 
   setInterval(function () {
@@ -186,8 +186,9 @@ $().ready(function () {
   }, 10000);
 
 
-  $('#adddateselected').datetimepicker({ format: 'dddd Y/M/D' });
-  $('#addpendingdateselected').datetimepicker({ format: 'dddd Y/M/D' });
+  $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
 
 
@@ -197,6 +198,7 @@ $().ready(function () {
 
 });
 
+var pendingid;
 
 function loginUser()
 {
@@ -667,6 +669,11 @@ function clearaddfield() {
   document.getElementById('RegisterValidationDoc').reset();
 }
 
+function clearaddpendingfield() {
+  event.preventDefault();
+  document.getElementById('RegisterAddPendingValidationDoc').reset();
+}
+
 function clearpendingfield() {
   event.preventDefault();
   document.getElementById('RegisterPendingValidationDoc').reset();
@@ -804,6 +811,123 @@ function addpendingeventComplete(xhr, status) {
     });
 
 
+}
+
+function addpendpendingevent() {
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  pendingid = $('#pendid').val();
+  var eventtitle = $('#pendtitle').val();
+  var date = $('#penddateselected').val();
+  var region = $('#pendregion').val();
+  var town = $('#pendtown').val();
+  var audiencecat = $('#pendaudience').val();
+  var attendance = $('#pendattendance').val();
+  var challenges = $('#pendchallenges').val();
+  var complaints = $('#pendcomplaints').val();
+  var summary = $('#pendsummary').val();
+  var approved = 0;
+  var verified = 0;
+  var verifiedComments = "not verified";
+
+  var filesarray = [];
+  var inp = document.getElementById('pendinput-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    document.cookie = "foldname=" + foldname;
+
+    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
+
+    //var theUrl1 = "databasehandler.php?cmd=25&pendid=" + pendingid;
+    
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: addpendpendingeventComplete
+      });
+
+    // $.ajax(theUrl1,
+    //   {
+    //     async: true,
+    //     complete: removependpendingeventComplete
+    //   });
+  }
+
+}
+
+function deletependingevent(pid){
+  var theUrl = "databasehandler.php?cmd=25&pendid=" + pid;
+  $.ajax(theUrl,
+    {
+      async: true
+    });
+}
+
+function addpendpendingeventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
+  $('#pendinput-id').fileinput('upload');
+  document.getElementById('RegisterAddPendingValidationDoc').reset();
+  $('#pendinput-id').fileinput('enable');
+
+  deletependingevent(pendingid);
+
+  UIkit.modal('#pending-modal-overflow').hide();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Event Added Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+
+}
+
+function removependpendingeventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  $.notify({
+    icon: "info_outline",
+    message: "Pending Event Removed Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
 }
 
 function clearuseraddfield() {
@@ -1027,7 +1151,7 @@ function level1viewerComplete(xhr, status) {
 
 function level1pendingviewer(val) {
   console.log('modal to edit: ', val);
-  var theUrl = "databasehandler.php?cmd=23&eventid=" + val;
+  var theUrl = "databasehandler.php?cmd=24&eventid=" + val;
 
   $.ajax(theUrl,
     {
@@ -1042,78 +1166,21 @@ function level1pendingviewerComplete(xhr, status) {
   console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
 
-
-  // console.log(typeof(obj[0].picture_paths));
   console.log(obj);
 
-  var picValues = "";
-  $('#pictureContainer').html("");
   //console.log(obj[0].report_id);
-  var dform = new Date(obj[0].date_organized);
+  var dform = new Date(obj.date);
+
+  //
+  document.getElementById('pendid').value = obj.id;
+
+  document.getElementById('pendtitle').value = obj.title;
+  document.getElementById('penddateselected').value = moment(dform).format('dddd, D MMMM Y');
+  document.getElementById('pendregion').value = obj.region;
+  document.getElementById('pendtown').value = obj.town;
 
   // $('#modalshow').click();
-  UIkit.modal('#modal-overflow').show();
-
-  //$('#report_id').val(obj[0].report_id);
-  // $('#eventtitle').innerHTML(obj[0].eventtitle);
-  document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
-  document.getElementById('region').innerHTML = obj[0].region;
-  document.getElementById('town').innerHTML = obj[0].town;
-  document.getElementById('audience_category').innerHTML = obj[0].audience_category;
-  document.getElementById('audience_attendance').innerHTML = obj[0].audience_attendance;
-  document.getElementById('team_challenges').innerHTML = obj[0].team_challenges;
-  document.getElementById('complaints_raised').innerHTML = obj[0].complaints_raised;
-  document.getElementById('event_summary').innerHTML = obj[0].event_summary;
-  //
-  // $('#date_organized').val(moment(dform).format('D MMMM Y'));
-  //
-  // $('#region').val(obj[0].region);
-  // $('#town').val(obj[0].town);
-  // $('#audience_category').val(obj[0].audience_category);
-  // $('#audience_attendance').val(obj[0].audience_attendance);
-  // $('#team_challenges').val(obj[0].team_challenges);
-  // $('#complaints_raised').val(obj[0].complaints_raised);
-  // $('#event_summary').val(obj[0].event_summary);
-  // $('#picture_paths').val(picture_paths);
-
-  // $('#pictureContainer').html();
-
-  picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
-
-  var jsonarray = JSON.parse(obj[0].picture_paths);
-  for (var i = 0; i < jsonarray.length; i++) {
-    var obj2 = jsonarray[i];
-
-    //obj2 contains picture names.
-    // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
-
-    var user_id = "" + obj[0].reporter;
-    var event_header = "" + obj[0].eventtitle;
-    var picture_header = "" + obj2;
-
-
-    picValues = picValues + "<div>";
-    picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/" + user_id + "_" + event_header + "/" + picture_header + "' caption='Caption 1'>";
-    picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/" + user_id + "_" + event_header + "/" + picture_header + "'/>";
-    picValues = picValues + "</a>";
-    picValues = picValues + "</div>";
-
-
-    // $('#pictureContainer').append("<div>");
-    // $('#pictureContainer').append("<a class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>");
-    // $('#pictureContainer').append("<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>");
-    // $('#pictureContainer').append("</a>");
-    // $('#pictureContainer').append("</div>");
-    // $('#pictureContainer').html("<img style='height: 30px; width: 30px' src='uploads/"+obj[0].reporter+"_"+obj[0].eventtitle+"/"+obj2+"/>");
-
-  }
-  picValues = picValues + "</div>";
-  document.getElementById('pictureContainer').innerHTML = picValues;
-
-  // $('#picture_paths').val(picture_paths);
-  // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");
-
+  UIkit.modal('#pending-modal-overflow').show();
 }
 
 function closemodal1(){
