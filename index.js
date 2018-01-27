@@ -184,7 +184,6 @@ $().ready(function () {
     }
   });
 
-
   var dataTable6 = $('#userlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -917,7 +916,7 @@ function addpendpendingevent() {
       + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
 
     //var theUrl1 = "databasehandler.php?cmd=25&pendid=" + pendingid;
-    
+
     $.ajax(theUrl,
       {
         async: true,
