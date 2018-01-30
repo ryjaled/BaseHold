@@ -56,6 +56,32 @@ $().ready(function () {
     }
   });
 
+  var dataTable7 = $('#level2reportlist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '5%' },
+      { "targets": 1, width: '20%' },
+      { "targets": 2, width: '15%' },
+      { "targets": 3, width: '10%' },
+      { "targets": 4, width: "10%" },
+      { "targets": 5, width: "10%" },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[2, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "level2reportlist.php?usersessionid=" + sessionStorage.userid + "&userregion=" + sessionStorage.region, // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".level2reportlist-error").html("");
+        $("#level2reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#level2reportlist_processing").css("display", "none");
+      }
+    }
+  });
+
   var dataTable3 = $('#level3list').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -237,6 +263,10 @@ $().ready(function () {
   setInterval(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
   }, 3000);
+
+  setInterval(function () {
+    dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+  }, 2000);
 
 
   $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
