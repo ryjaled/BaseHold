@@ -115,21 +115,19 @@
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <ul class="nav nav-tabs" data-tabs="tabs">
-                                            <li class="active">
+                                          <li class="active">
+                                              <a href="#cal" data-toggle="tab">Calendar</a>
+                                          </li>
+                                            <li>
                                                 <a href="#myevent" data-toggle="tab">My Events</a>
                                             </li>
                                             <li>
-                                                <a href="#event" data-toggle="tab">Add Event</a>
-                                            </li>
-                                            <li>
-                                                <a href="#pendingevent" data-toggle="tab">Pending Events</a>
-                                            </li>
-                                            <li>
-                                                <a href="#cal" data-toggle="tab">Calendar</a>
+                                                <a href="#addnewevent" data-toggle="tab">Add New Event</a>
                                             </li>
                                             <li>
                                                 <a href="#changepassword" data-toggle="tab">Change My Password</a>
                                             </li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -137,7 +135,11 @@
                             <div class="content">
                                 <div class="tab-content">
 
-                                    <div class="tab-pane active" id="myevent" style=" padding: 3%;">
+                                    <div class="tab-pane active" id="cal" style=" padding: 3%;">
+                                      <div id='calendar' style="width:100%;"></div>
+                                    </div>
+
+                                    <div class="tab-pane" id="myevent" style=" padding: 3%;">
                                         <div class="content">
                                             <table id="level1list" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                                 <thead style="text-align: left;">
@@ -497,9 +499,7 @@
                                         </form>
                                     </div> -->
 
-                                    <div class="tab-pane active" id="cal" style=" padding: 3%;">
-                                    <div id='calendar' style="width:100%;"></div>
-                                    </div>
+
 
                                     <div class="tab-pane" id="changepassword" style=" padding: 3%;">
 
@@ -527,6 +527,236 @@
                                             <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="passwordreset()">Reset Passowrd</button>
                                           </div>
 
+
+                                    </div>
+
+
+                                    <div class="tab-pane" id="addnewevent" style=" padding: 3%;">
+                                        <form id="RegisterValidationDoc" action="" method="">
+                                            <div class="card-content" style="padding: 2% 15%;">
+
+                                              <h2 style="text-align: center; font-weight: 500">ADD A NEW EVENT</h2>
+                                              <h5 style="text-align: center;">Your event can only be carried out once your regional manager has VERIFIED and Head Office has APPROVED. You are required to create a report once the event has taken place.</h5>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                Please select when the event should take place
+                                                                <small>(required)</small>
+                                                            </label>
+                                                            <input id="addnewdateselected" type="text" class="form-control datetimepicker" required="true" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                Title of Event - This may include a group name
+                                                                <small>(required)</small>
+                                                            </label>
+                                                            <input id="addnewtitle" class="form-control" name="title" type="text" required="true" />
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                    Audience Category
+                                                                    <small>(required)</small>
+                                                                </label>
+                                                                <select id="addnewaudience" class="selectpicker" data-style="btn" title="Select Audience" data-size="11" style="background-color:#000000;">
+                                                                    <option value="Artisans">Artisans</option>
+                                                                    <option value="Communities">Communities</option>
+                                                                    <option value="Corporate">Corporate</option>
+                                                                    <option value="Religious Bodies">Religious Bodies</option>
+                                                                    <option value="Schools">Schools</option>
+                                                                    <option value="Villages">Villages</option>
+                                                                    <option value="Others">Others</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                     Expected number in attendance
+                                                                    <small>(required)</small>
+                                                                </label>
+                                                                <input id="addnewattendance" class="form-control" name="location" type="number" pattern = "\d{1,10}"/>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                <br/>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                REGION
+                                                                <small>(required)</small>
+                                                            </label>
+                                                            <select id="addnewregion" class="selectpicker" data-style="btn" title="Select Region" data-size="11" style="background-color:#000000;">
+                                                                <option value="1">Ashanti</option>
+                                                                <option value="2">Brong Ahafo</option>
+                                                                <option value="3">Central</option>
+                                                                <option value="4">Eastern</option>
+                                                                <option value="5">Greater Accra</option>
+                                                                <option value="6">Northern</option>
+                                                                <option value="7">Upper East</option>
+                                                                <option value="8">Upper West</option>
+                                                                <option value="9">Volta</option>
+                                                                <option value="10">Western</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                TOWN
+                                                                <small>(required)</small>
+                                                            </label>
+                                                            <input id="addnewtown" class="form-control" name="location" type="text" required="true"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <!-- <div class="col-sm-12"> -->
+                                                    <div class="form-group" style="margin-top:5%;">
+                                                        <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                            Topics to be discussed
+                                                            <small>(required)</small>
+                                                        </label>
+                                                        <input id="addnewtopics" class="form-control" name="title" type="text" required="true" />
+                                                    </div>
+                                                <!-- </div> -->
+                                                <br/>
+
+
+
+                                              <div style="margin-bottom: 10%; margin-top: 10%;">
+                                                <div class="col-sm-12">
+                                                  <h5>Select the mode of communication(s) you would utilize:</h5>
+                                                  <div class="checkbox">
+                                                  	<label>
+                                                  		<input id="addnewpowerpoint" type="checkbox" name="optionsCheckboxes" value="PowerPoint Presentation">
+                                                  		PowerPoint Presentation
+                                                  	</label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label>
+                                                      <input id="addnewoneonone" type="checkbox" name="optionsCheckboxes" value="One-on-one">
+                                                      One-on-one
+                                                    </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label>
+                                                      <input id="addnewroadshow" type="checkbox" name="optionsCheckboxes" value="Road Show">
+                                                      Road Show
+                                                    </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label>
+                                                      <input id="addnewdurbar" type="checkbox" name="optionsCheckboxes" value="Durbar">
+                                                      Durbar
+                                                    </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label>
+                                                      <input id="addnewsmallgroupmeeting" type="checkbox" name="optionsCheckboxes" value="Small group meeting">
+                                                      Small group meeting
+                                                    </label>
+                                                  </div>
+                                              </div>
+                                            </div>
+
+
+
+
+                                              <div style="padding-top: 40%;">
+
+                                                  <div class="col-sm-6">
+                                                <h5>Select the logistics required for the event:</h5>
+                                                <div class="checkbox">
+                                                	<label>
+                                                		<input id="addnewbus" type="checkbox" name="optionsCheckboxes" value="Bus(es)">
+                                                		Bus(es)
+                                                	</label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewsoundsystem" type="checkbox" name="optionsCheckboxes" value="Sound System(s)">
+                                                    Sound System(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewflyer" type="checkbox" name="optionsCheckboxes" value="Flyer(s)">
+                                                    Flyer(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewpen" type="checkbox" name="optionsCheckboxes" value="Pen(s)">
+                                                    Pen(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewtapemeasure" type="checkbox" name="optionsCheckboxes" value="Tape Measure(s)">
+                                                    Tape Measure(s)
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div class="col-sm-6" style="color: black">
+                                                <h5>Select from the checkboxes below</h5>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewtowel" type="checkbox" name="optionsCheckboxes" value="Towel(s)">
+                                                    Towel(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewmug" type="checkbox" name="optionsCheckboxes" value="Mug(s)">
+                                                    Mug(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewshirt" type="checkbox" name="optionsCheckboxes" value="T-shirt(s)">
+                                                    T-shirt(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewnotepad" type="checkbox" name="optionsCheckboxes" value="Notepad(s)">
+                                                    Notepad(s)
+                                                  </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input id="addnewpowerblock" type="checkbox" name="optionsCheckboxes" value="Power Block(s)">
+                                                    Power Block(s)
+                                                  </label>
+                                                </div>
+                                              </div>
+                                              </div>
+
+
+
+
+
+
+                                              <br/>
+                                              <br/>
+                                                <div class="category form-category col-sm-12">
+                                                    <small>(required)</small> - Required fields</div>
+
+
+                                                <button type="submit" class="btn btn-default pull-left" onclick="clearaddfield()">Clear Fields</button>
+                                                <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="addnewevent()">Submit Event</button>
+                                            </div>
+                                        </form>
 
                                     </div>
 

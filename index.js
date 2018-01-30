@@ -266,10 +266,10 @@ $().ready(function () {
 
   setInterval(function () {
     dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  }, 2000);
+  }, 3000);
 
 
-  $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
@@ -1693,5 +1693,157 @@ function passwordresetComplete(xhr, status) {
         align: 'right'
       }
     });
+
+}
+
+
+
+
+function addnewevent(){
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventtitle = $('#addnewtitle').val();
+  var date = $('#addnewdateselected').val();
+  var region = $('#addnewregion').val();
+  var town = $('#addnewtown').val();
+  var audiencecat = $('#addnewaudience').val();
+  var attendance = $('#addnewattendance').val();
+
+  var topic = $('#addnewtopics').val();
+
+  var logistics = "";
+  var communicationMode = "";
+
+
+  var addnewpowerpoint = $('#addnewpowerpoint').val();
+  var addnewoneonone = $('#addnewoneonone').val();
+  var addnewroadshow = $('#addnewroadshow').val();
+  var addnewdurbar = $('#addnewdurbar').val();
+  var addnewsmallgroupmeeting = $('#addnewsmallgroupmeeting').val();
+  var addnewbus = $('#addnewbus').val();
+  var addnewsoundsystem = $('#addnewsoundsystem').val();
+  var addnewflyer = $('#addnewflyer').val();
+  var addnewpen = $('#addnewpen').val();
+  var addnewtapemeasure = $('#addnewtapemeasure').val();
+  var addnewtowel = $('#addnewtowel').val();
+  var addnewmug = $('#addnewmug').val();
+  var addnewshirt = $('#addnewshirt').val();
+  var addnewnotepad = $('#addnewnotepad').val();
+  var addnewpowerblock = $('#addnewpowerblock').val();
+
+
+  // communications mode select
+    if ($('#addnewpowerpoint').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewpowerpoint;
+    }
+    if ($('#addnewoneonone').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewoneonone;
+    }
+    if ($('#addnewroadshow').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewroadshow;
+    }
+    if ($('#addnewdurbar').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewdurbar;
+    }
+    if ($('#addnewsmallgroupmeeting').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewsmallgroupmeeting;
+    }
+
+
+    // logistics select
+    if ($('#addnewbus').is(":checked"))
+    {
+      logistics = logistics + addnewbus+ ",";
+    }
+    if ($('#addnewsoundsystem').is(":checked"))
+    {
+      logistics = logistics + addnewsoundsystem+ ",";
+    }
+    if ($('#addnewflyer').is(":checked"))
+    {
+      logistics = logistics + addnewflyer+ ",";
+    }
+    if ($('#addnewpen').is(":checked"))
+    {
+      logistics = logistics + addnewpen+ ",";
+    }
+    if ($('#addnewtapemeasure').is(":checked"))
+    {
+      logistics = logistics + addnewtapemeasure+ ",";
+    }
+    if ($('#addnewtowel').is(":checked"))
+    {
+      logistics = logistics + addnewtowel+ ",";
+    }
+    if ($('#addnewmug').is(":checked"))
+    {
+      logistics = logistics + addnewmug+ ",";
+    }
+    if ($('#addnewshirt').is(":checked"))
+    {
+      logistics = logistics + addnewshirt+ ",";
+    }
+    if ($('#addnewnotepad').is(":checked"))
+    {
+      logistics = logistics + addnewnotepad+ ",";
+    }
+    if ($('#addnewpowerblock').is(":checked"))
+    {
+      logistics = logistics + addnewpowerblock+ ",";
+    }
+
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (town == "") || (audiencecat == "") || (attendance == "") ){
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }else{
+
+    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+       "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: addneweventComplete
+      });
+  }
+
+}
+
+function addneweventComplete(xhr,status){
+  var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
+
+  document.getElementById('RegisterValidationDoc').reset();
+
+  $.notify({
+     icon: "info_outline",
+     message: "Event submitted successfully for verification and approval."
+
+ },{
+     type: 'success',
+     timer: 2000,
+     placement: {
+         from: 'top',
+         align: 'right'
+     }
+ });
+
 
 }

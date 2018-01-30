@@ -115,17 +115,14 @@
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <ul class="nav nav-tabs" data-tabs="tabs">
-                                            <li class="active">
-                                                <a href="#myevent" data-toggle="tab">Verify Events</a>
+                                          <li class="active">
+                                              <a href="#cal" data-toggle="tab">Calendar</a>
+                                          </li>
+                                            <li>
+                                                <a href="#events" data-toggle="tab"> Events</a>
                                             </li>
                                             <li>
-                                                <a href="#cal" data-toggle="tab">Calendar</a>
-                                            </li>
-                                            <li>
-                                                <a href="#level2adduser" data-toggle="tab">Add User</a>
-                                            </li>
-                                            <li>
-                                                <a href="#level2users" data-toggle="tab">Users</a>
+                                                <a href="#reports" data-toggle="tab"> Reports</a>
                                             </li>
                                             <li>
                                                 <a href="#changepassword" data-toggle="tab">Change My Password</a>
@@ -137,9 +134,29 @@
                             <div class="content">
                                 <div class="tab-content">
 
-                                    <div class="tab-pane active" id="myevent" style=" padding: 3%;">
+                                    <div class="tab-pane" id="events" style=" padding: 3%;">
                                         <div class="content">
                                         <table id="level2list" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
+                                            <thead style="text-align: left;">
+                                                <tr style="text-align: left;">
+                                                        <th style="text-align: left; font-size: 1.0em;">ID</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Event Title</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Start Date</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Region</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Location </th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Verification Status</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Approval Status</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane" id="reports" style=" padding: 3%;">
+                                        <div class="content">
+                                        <table id="level2reportlist" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
                                             <thead style="text-align: left;">
                                                 <tr style="text-align: left;">
                                                         <th style="text-align: left; font-size: 1.0em;">ID</th>
