@@ -8,11 +8,11 @@ $().ready(function () {
   var dataTable1 = $('#level1list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '20%' },
-      { "targets": 1, width: '17.5%' },
-      { "targets": 2, width: '17.5%'} ,
-      { "targets": 3, width: '17.5%'} ,
-      { "targets": 4, width: '17.5%'} ,
+      { "targets": 0, width: '22%' },
+      { "targets": 1, width: '17%' },
+      { "targets": 2, width: '17%'} ,
+      { "targets": 3, width: '17%'} ,
+      { "targets": 4, width: '15%'} ,
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
@@ -234,7 +234,7 @@ $().ready(function () {
 
   setInterval(function () {
      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-  }, 3000);
+  }, 6000);
 
   setInterval(function () {
     dataTable2.ajax.reload(null, false); // user paging is not reset on reload
