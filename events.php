@@ -19,28 +19,28 @@ include_once("database.php");
 		* @param [all attributes needed to create a user]
 		* @return boolean showing success or failure
 		*/
-		function addEvent($eventtitle,$date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath){
+		// function addEvent($eventtitle,$date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath){
 
-			$strQuery="insert into reports set
-							eventtitle='$eventtitle',
-							date_organized='$date',
-							region='$region',
-							town='$town',
-							audience_category='$audiencecat',
-							audience_attendance='$attendance',
-							team_challenges='$challenges',
-							complaints_raised='$complaints',
-							is_verified='$isVerified',
-							is_approved='$isApproved',
-							verification_comments='$verifiedComments',
-							event_summary='$summary',
-							picture_paths='$picpath',
-							reporter='$reporter',
-							folder_paths='$foldpath' ";
+		// 	$strQuery="insert into reports set
+		// 					eventtitle='$eventtitle',
+		// 					date_organized='$date',
+		// 					region='$region',
+		// 					town='$town',
+		// 					audience_category='$audiencecat',
+		// 					audience_attendance='$attendance',
+		// 					team_challenges='$challenges',
+		// 					complaints_raised='$complaints',
+		// 					is_verified='$isVerified',
+		// 					is_approved='$isApproved',
+		// 					verification_comments='$verifiedComments',
+		// 					event_summary='$summary',
+		// 					picture_paths='$picpath',
+		// 					reporter='$reporter',
+		// 					folder_paths='$foldpath' ";
 
-							// echo $strQuery;
-			return $this->query($strQuery);
-		}
+		// 					// echo $strQuery;
+		// 	return $this->query($strQuery);
+		// }
 
 		function addPendingEvent($eventtitle,$date,$region,$town,$reporter){
 
@@ -172,7 +172,38 @@ include_once("database.php");
 			$strQuery="Select ID from user where username = '$userName'";
 			return $this->query($strQuery);
 		}
+ 
+		function addNewEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter){
 
+			$strQuery="insert into events set
+							eventtitle='$eventtitle',
+							eventtopic='$topic',
+							date_to_be_organized='$date',
+							audience_category='$audience',
+							expected_audience_attendance='$expected_audience_attendance',
+							region='$region',
+							town='$town',
+							logistics='$logistics',
+							mode_of_outreach='$mode_of_outreach',
+							creator='$reporter' ";
+
+			return $this->query($strQuery);
+		}
+
+		function addNewReport($event_id,$challenges,$complaints,$isApproved,$verifiedComments,$summary,$picpath,$foldpath){
+
+			$strQuery="insert into reports set
+		 					event_id='$event_id',
+		 					team_challenges='$challenges',
+		 					complaints_raised='$complaints',
+		 					is_approved='$isApproved',
+		 					verification_comments='$verifiedComments',
+		 					event_summary='$summary',
+		 					picture_paths='$picpath',
+		 					folder_paths='$foldpath' ";
+
+			return $this->query($strQuery);
+		}
 
 	}
 ?>
