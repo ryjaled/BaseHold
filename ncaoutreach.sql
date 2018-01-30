@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 30, 2018 at 12:47 PM
+-- Generation Time: Jan 30, 2018 at 04:21 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -178,13 +178,14 @@ INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `dat
 --
 -- Table structure for table `events`
 --
--- Creation: Jan 30, 2018 at 11:47 AM
+-- Creation: Jan 30, 2018 at 01:35 PM
 --
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
   `eventtitle` varchar(1000) NOT NULL,
+  `eventtopic` varchar(30) NOT NULL,
   `date_to_be_organized` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `region` varchar(300) NOT NULL,
   `town` varchar(300) NOT NULL,
@@ -192,8 +193,8 @@ CREATE TABLE `events` (
   `mode_of_outreach` varchar(30) NOT NULL,
   `audience_category` varchar(300) NOT NULL,
   `expected_audience_attendance` varchar(300) NOT NULL,
-  `is_verified` int(10) NOT NULL,
-  `is_approved` int(10) NOT NULL,
+  `is_verified` int(10) NOT NULL DEFAULT '0',
+  `is_approved` int(10) NOT NULL DEFAULT '0',
   `verification_comments` varchar(2000) NOT NULL,
   `creator` int(10) NOT NULL,
   `verified_timestamp` varchar(30) NOT NULL,
@@ -205,6 +206,15 @@ CREATE TABLE `events` (
 --   `creator`
 --       `users` -> `userid`
 --
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `verification_comments`, `creator`, `verified_timestamp`, `approved_timestamp`) VALUES
+(11, 'dsd', 'dfdfdf', '2018-02-08 00:00:00', '2', 'ad', 'Sound System(s),Tape Measure(s),Notepad(s),', 'One-on-oneSmall group meeting', 'Communities', '33', 0, 0, '', 5, '', ''),
+(12, 'fdwf', 'afdafdsf', '2018-02-06 00:00:00', '2', 'asf', 'Sound System(s),Power Block(s),', 'One-on-one,Durbar,', 'Religious Bodies', '33', 0, 0, '', 5, '', ''),
+(13, 'sdsd', 'e34r', '2018-02-04 00:00:00', '3', 'df', 'Bus(es),Towel(s),Power Block(s),', 'PowerPoint Presentation,One-on', 'Corporate', '3', 0, 0, '', 5, '', '');
 
 -- --------------------------------------------------------
 
@@ -291,16 +301,13 @@ CREATE TABLE `reportmembers` (
 --
 -- Table structure for table `reports`
 --
--- Creation: Jan 30, 2018 at 10:46 AM
+-- Creation: Jan 30, 2018 at 01:23 PM
 --
 
 DROP TABLE IF EXISTS `reports`;
 CREATE TABLE `reports` (
   `report_id` int(11) NOT NULL,
   `event_id` int(10) NOT NULL,
-  `date_organized` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `region` varchar(300) NOT NULL,
-  `town` varchar(300) NOT NULL,
   `team_challenges` varchar(1000) NOT NULL,
   `complaints_raised` varchar(1000) NOT NULL,
   `is_approved` int(10) NOT NULL,
