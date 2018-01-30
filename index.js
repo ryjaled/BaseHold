@@ -1736,23 +1736,23 @@ function addnewevent(){
   // communications mode select
     if ($('#addnewpowerpoint').is(":checked"))
     {
-      communicationMode = communicationMode + addnewpowerpoint;
+      communicationMode = communicationMode + addnewpowerpoint + ",";
     }
     if ($('#addnewoneonone').is(":checked"))
     {
-      communicationMode = communicationMode + addnewoneonone;
+      communicationMode = communicationMode + addnewoneonone + ",";
     }
     if ($('#addnewroadshow').is(":checked"))
     {
-      communicationMode = communicationMode + addnewroadshow;
+      communicationMode = communicationMode + addnewroadshow + ",";
     }
     if ($('#addnewdurbar').is(":checked"))
     {
-      communicationMode = communicationMode + addnewdurbar;
+      communicationMode = communicationMode + addnewdurbar + ",";
     }
     if ($('#addnewsmallgroupmeeting').is(":checked"))
     {
-      communicationMode = communicationMode + addnewsmallgroupmeeting;
+      communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
     }
 
 
@@ -1814,9 +1814,8 @@ function addnewevent(){
       });
   }else{
 
-    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
        "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
-
     $.ajax(theUrl,
       {
         async: true,
@@ -1828,7 +1827,7 @@ function addnewevent(){
 
 function addneweventComplete(xhr,status){
   var obj = JSON.parse(xhr.responseText);
-  console.log(obj);
+  console.log('LOOK HERE' , obj);
 
   document.getElementById('RegisterValidationDoc').reset();
 

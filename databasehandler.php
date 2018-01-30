@@ -257,7 +257,7 @@
 		$mode_of_outreach=$_REQUEST['outreach'];
 		$reporter=$_REQUEST['reporter'];
 		
-		$verify=$event->addNewEvent($eventtitle,$topic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter);
+		$verify=$event->addNewEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter);
 
 		$log->addEventLog($eventtitle,$reporter,"added a Future event", $region);
 		if($verify==""){
