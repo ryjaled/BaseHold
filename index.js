@@ -1195,28 +1195,12 @@ function level1viewerComplete(xhr, status) {
   document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
   document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
   document.getElementById('event_summary').innerHTML=obj[0].event_summary;
-  //
-  // $('#date_organized').val(moment(dform).format('D MMMM Y'));
-  //
-  // $('#region').val(obj[0].region);
-  // $('#town').val(obj[0].town);
-  // $('#audience_category').val(obj[0].audience_category);
-  // $('#audience_attendance').val(obj[0].audience_attendance);
-  // $('#team_challenges').val(obj[0].team_challenges);
-  // $('#complaints_raised').val(obj[0].complaints_raised);
-  // $('#event_summary').val(obj[0].event_summary);
-  // $('#picture_paths').val(picture_paths);
-
-  // $('#pictureContainer').html();
 
   picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
 
   var jsonarray = JSON.parse(obj[0].picture_paths);
   for(var i = 0; i < jsonarray.length; i++) {
     var obj2 = jsonarray[i];
-
-    //obj2 contains picture names.
-    // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
 
     var user_id = ""+obj[0].reporter;
     var event_header = ""+obj[0].eventtitle;
@@ -1639,7 +1623,6 @@ function reactivateUsersComplete(xhr, status) {
 
 }
 
-
 function passwordreset(){
   event.preventDefault();
 
@@ -1676,7 +1659,6 @@ function passwordreset(){
 
 }
 
-
 function passwordresetComplete(xhr, status) {
   console.log(xhr);
 
@@ -1695,9 +1677,6 @@ function passwordresetComplete(xhr, status) {
     });
 
 }
-
-
-
 
 function addnewevent(){
   event.preventDefault();
