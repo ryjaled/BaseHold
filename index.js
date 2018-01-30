@@ -20,7 +20,7 @@ $().ready(function () {
     "processing": true,
     "serverSide": true,
     "ajax": {
-      url: "level1list.php?usersessionid="+sessionStorage.userid+"&userregion="+sessionStorage.region, // json datasource
+      url: "level1list.php?usersessionid="+sessionStorage.userid, // json datasource
       type: "post",  // method  , by default get
       error: function () {  // error handling
         $(".level1list-error").html("");

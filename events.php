@@ -42,18 +42,18 @@ include_once("database.php");
 		// 	return $this->query($strQuery);
 		// }
 
-		function addPendingEvent($eventtitle,$date,$region,$town,$reporter){
+		// function addPendingEvent($eventtitle,$date,$region,$town,$reporter){
 
-			$strQuery="insert into pending set
-							eventtitle='$eventtitle',
-							date_to_be_organized='$date',
-							region='$region',
-							town='$town',
-							reporter='$reporter' ";
+		// 	$strQuery="insert into pending set
+		// 					eventtitle='$eventtitle',
+		// 					date_to_be_organized='$date',
+		// 					region='$region',
+		// 					town='$town',
+		// 					reporter='$reporter' ";
 
-							// echo $strQuery;
-			return $this->query($strQuery);
-		}
+		// 					// echo $strQuery;
+		// 	return $this->query($strQuery);
+		// }
 
 		function deletePendingEvent($eventid){
 			$strQuery="delete from pending where pending_id='$eventid' ";
