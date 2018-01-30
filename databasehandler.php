@@ -245,6 +245,7 @@
 		$log = new logs();
 
 		$eventtitle=$_REQUEST['eventtitle'];
+		$eventtopic=$_REQUEST['eventtopic'];
 		$date=$_REQUEST['date'];
 		$converted_date = strtotime($date);
 		$final_date = date("Y-m-d H:i:s", $converted_date);
@@ -252,19 +253,13 @@
 		$town=$_REQUEST['town'];
 		$audiencecat=$_REQUEST['audiencecat'];
 		$attendance=$_REQUEST['attendance'];
-		$challenges=$_REQUEST['challenges'];
-		$complaints=$_REQUEST['complaints'];
-		$isVerified=$_REQUEST['isVerified'];
-		$isApproved=$_REQUEST['isApproved'];
-		$verifiedComments=$_REQUEST['verifiedComments'];
-		$summary=$_REQUEST['summary'];
-		$picpath=$_REQUEST['picpath'];
+		$logistics=$_REQUEST['logistics'];
+		$mode_of_outreach=$_REQUEST['outreach'];
 		$reporter=$_REQUEST['reporter'];
-		$foldpath=$_REQUEST['foldpath'];
+		
+		$verify=$event->addNewEvent($eventtitle,$topic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter);
 
-		$verify=$event->addEvent($eventtitle,$final_date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath);
-
-		$log->addEventLog($eventtitle,$reporter,"added a completed event", $region);
+		$log->addEventLog($eventtitle,$reporter,"added a Future event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
