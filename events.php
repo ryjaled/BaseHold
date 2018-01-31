@@ -66,19 +66,19 @@ include_once("database.php");
 		* @return boolean showing success or failure
 		*/
 		function getEvents(){
-			$strQuery="select * from reports where is_approved =1";
+			$strQuery="select * from events where is_approved =1";
       return $this->query($strQuery);
 		}
 
     function getAnEvent($eventid){
-			$strQuery="select r.report_id,r.eventtitle,r.date_organized,a.regionname as region,r.town,r.audience_category,r.audience_attendance,r.team_challenges,r.complaints_raised,r.is_verified,r.is_approved,r.verification_comments,r.event_summary,r.picture_paths,r.folder_paths,r.reporter from reports as r inner join region as a on a.region_id = r.region where report_id=$eventid";
+			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.town,e.verification_comments,e.verified_timestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
       return $this->query($strQuery);
 		}
 
-		function getAPendingEvent($eventid){
-			$strQuery="select p.eventtitle,p.date_to_be_organized,r.regionname as region,p.town,p.pending_id FROM `pending` as p INNER JOIN region as r on r.region_id = p.region where p.pending_id = '$eventid'";
-      return $this->query($strQuery);
-		}
+		// function getAPendingEvent($eventid){
+		// 	$strQuery="select p.eventtitle,p.date_to_be_organized,r.regionname as region,p.town,p.pending_id FROM `pending` as p INNER JOIN region as r on r.region_id = p.region where p.pending_id = '$eventid'";
+    //   return $this->query($strQuery);
+		// }
 
 		function getRegions(){
 			$strQuery="select * from region";
@@ -203,6 +203,11 @@ include_once("database.php");
 		 					folder_paths='$foldpath' ";
 
 			return $this->query($strQuery);
+		}
+
+		function getAReport($reportid){
+			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
+      return $this->query($strQuery);
 		}
 
 	}
