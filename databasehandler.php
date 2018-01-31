@@ -349,9 +349,9 @@
 					$success="true";
 					$data['title']=$row['eventtitle'];
 					//$data['start']=date_format($row['date_organized'],"D M d Y H:i:s");
-					$data['start']=substr($row['date_organized'], 0, -9);
+					$data['start']=substr($row['date_to_be_organized'], 0, -9);
 					$data['className']='success';
-					$data['eventid']=$row['report_id'];
+					$data['eventid']=$row['event_id'];
 					$moredata[] = $data;
 				}
 				//echo date("D M d Y H:i:s");
