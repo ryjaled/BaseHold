@@ -33,12 +33,13 @@ $().ready(function () {
   var dataTable2 = $('#level2list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '5%'},
+      { "targets": 0, width: '15%'},
       { "targets": 1, width: '20%'},
       { "targets": 2, width: '15%'},
       { "targets": 3, width: '10%'},
       { "targets": 4, width: "10%"} ,
       { "targets": 5, width: "10%"} ,
+      { "targets": 6, width: "10%" },
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
@@ -59,7 +60,7 @@ $().ready(function () {
   var dataTable7 = $('#level2reportlist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '5%' },
+      { "targets": 0, width: '15%' },
       { "targets": 1, width: '20%' },
       { "targets": 2, width: '15%' },
       { "targets": 3, width: '10%' },
@@ -543,20 +544,6 @@ function editorComplete(xhr, status){
     sessionStorage.pullverified = obj[0].is_verified;
     help();
 
-
-    // $('#modalpop').click();
-    // $('#report_id').val(obj[0].report_id);
-    // $('#eventtitle').val(obj[0].eventtitle);
-    // $('#date_organized').val(obj[0].date_organized);
-    // $('#region').val(obj[0].region);
-    // $('#town').val(obj[0].town);
-    // $('#audience_category').val(obj[0].audience_category);
-    // $('#audience_attendance').val(obj[0].audience_attendance);
-    // $('#team_challenges').val(obj[0].team_challenges);
-    // $('#complaints_raised').val(obj[0].complaints_raised);
-    // $('#event_y').val(obj[0].event_summary);
-    // $('#picture_paths').val(picture_paths);
-
     var picValues = "";
     $('#pictureContainerLevel2').html("");
 
@@ -663,27 +650,10 @@ function approvalwindowComplete(xhr, status){
     var picValues = "";
     $('#pictureContainerLevel3').html("");
 
-
     sessionStorage.pullreportid = obj[0].report_id;
     sessionStorage.pullapproved = obj[0].is_approved;
-    // helpApproval();
 
-
-    // $('#viewEvent2Button').click();
     UIkit.modal('#viewEvent2').show();
-
-    // $('#report_id').val(obj[0].report_id);
-    // $('#eventtitle').val(obj[0].eventtitle);
-    // $('#date_organized').val(obj[0].date_organized);
-    // $('#region').val(obj[0].region);
-    // $('#town').val(obj[0].town);
-    // $('#audience_category').val(obj[0].audience_category);
-    // $('#audience_attendance').val(obj[0].audience_attendance);
-    // $('#team_challenges').val(obj[0].team_challenges);
-    // $('#complaints_raised').val(obj[0].complaints_raised);
-    // $('#event_summary').val(obj[0].event_summary);
-    // $('#picture_paths').val(picture_paths);
-
 
     picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
 
@@ -705,8 +675,6 @@ function approvalwindowComplete(xhr, status){
       }
       picValues = picValues + "</div>";
 
-
-
       var dform = new Date(obj[0].date_organized);
 
       document.getElementById('report_id').innerHTML=obj[0].report_id;
@@ -721,10 +689,6 @@ function approvalwindowComplete(xhr, status){
       document.getElementById('event_summary').innerHTML=obj[0].event_summary;
       document.getElementById('pictureContainerLevel3').innerHTML=picValues;
 
-
-
-    // $('#approvebuttons').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='toggleapprove("+obj[0].is_approved+","+obj[0].report_id+")' type='button' class='btn btn-warning' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Toggle Approval</button>");
-    // $('#approvebuttons').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>");
 }
 
 function helpApproval(){
@@ -1470,28 +1434,12 @@ function dashEventsDisplayComplete(xhr, status) {
     document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
     document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
     document.getElementById('event_summary').innerHTML=obj[0].event_summary;
-    //
-    // $('#date_organized').val(moment(dform).format('D MMMM Y'));
-    //
-    // $('#region').val(obj[0].region);
-    // $('#town').val(obj[0].town);
-    // $('#audience_category').val(obj[0].audience_category);
-    // $('#audience_attendance').val(obj[0].audience_attendance);
-    // $('#team_challenges').val(obj[0].team_challenges);
-    // $('#complaints_raised').val(obj[0].complaints_raised);
-    // $('#event_summary').val(obj[0].event_summary);
-    // $('#picture_paths').val(picture_paths);
-
-    // $('#pictureContainer').html();
 
     picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
 
     var jsonarray = JSON.parse(obj[0].picture_paths);
     for(var i = 0; i < jsonarray.length; i++) {
       var obj2 = jsonarray[i];
-
-      //obj2 contains picture names.
-      // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
 
       var user_id = ""+obj[0].reporter;
       var event_header = ""+obj[0].eventtitle;
@@ -1504,20 +1452,9 @@ function dashEventsDisplayComplete(xhr, status) {
       picValues = picValues + "</a>";
       picValues = picValues + "</div>";
 
-
-      // $('#pictureContainer').append("<div>");
-      // $('#pictureContainer').append("<a class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>");
-      // $('#pictureContainer').append("<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>");
-      // $('#pictureContainer').append("</a>");
-      // $('#pictureContainer').append("</div>");
-      // $('#pictureContainer').html("<img style='height: 30px; width: 30px' src='uploads/"+obj[0].reporter+"_"+obj[0].eventtitle+"/"+obj2+"/>");
-
   }
   picValues = picValues + "</div>";
   document.getElementById('pictureContainerLevel4users').innerHTML=picValues;
-
-  // $('#picture_paths').val(picture_paths);
-  // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");
 
 }
 

@@ -31,7 +31,7 @@ $columns = array(
 // datatable column index  => database column name	
 	0 => 'eventtitle',
 	1 => 'region', 
-	2 => 'date_organized',
+	2 => 'date_to_be_organized',
 	3 => 'is_verified',
 	4 => 'is_approved',
 	5 => 'event_id'
@@ -45,7 +45,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 $sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id'";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' )";
+	$sql.=" AND eventtitle LIKE '".$requestData['search']['value']."%' ";
 }
 $query=mysqli_query($conn, $sql) or die("level1list.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result. 
