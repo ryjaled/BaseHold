@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 30, 2018 at 04:21 PM
+-- Generation Time: Jan 31, 2018 at 12:21 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -212,9 +212,10 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `verification_comments`, `creator`, `verified_timestamp`, `approved_timestamp`) VALUES
-(11, 'dsd', 'dfdfdf', '2018-02-08 00:00:00', '2', 'ad', 'Sound System(s),Tape Measure(s),Notepad(s),', 'One-on-oneSmall group meeting', 'Communities', '33', 0, 0, '', 5, '', ''),
+(11, 'dsd', 'dfdfdf', '2018-02-08 00:00:00', '2', 'ad', 'Sound System(s),Tape Measure(s),Notepad(s),', 'One-on-oneSmall group meeting', 'Communities', '33', 1, 1, '', 5, '', ''),
 (12, 'fdwf', 'afdafdsf', '2018-02-06 00:00:00', '2', 'asf', 'Sound System(s),Power Block(s),', 'One-on-one,Durbar,', 'Religious Bodies', '33', 0, 0, '', 5, '', ''),
-(13, 'sdsd', 'e34r', '2018-02-04 00:00:00', '3', 'df', 'Bus(es),Towel(s),Power Block(s),', 'PowerPoint Presentation,One-on', 'Corporate', '3', 0, 0, '', 5, '', '');
+(13, 'sdsd', 'e34r', '2018-02-04 00:00:00', '3', 'df', 'Bus(es),Towel(s),Power Block(s),', 'PowerPoint Presentation,One-on', 'Corporate', '3', 0, 0, '', 5, '', ''),
+(14, 'sssss', 'daf', '2018-02-10 00:00:00', '4', 'dsdf', 'Flyer(s),Power Block(s),', 'One-on-one,', 'Schools', '23', 0, 0, '', 5, '', '');
 
 -- --------------------------------------------------------
 
@@ -301,7 +302,7 @@ CREATE TABLE `reportmembers` (
 --
 -- Table structure for table `reports`
 --
--- Creation: Jan 30, 2018 at 01:23 PM
+-- Creation: Jan 31, 2018 at 10:48 AM
 --
 
 DROP TABLE IF EXISTS `reports`;
@@ -314,7 +315,9 @@ CREATE TABLE `reports` (
   `verification_comments` varchar(2000) NOT NULL,
   `event_summary` varchar(2000) NOT NULL,
   `picture_paths` varchar(2000) NOT NULL,
-  `folder_paths` varchar(250) NOT NULL
+  `folder_paths` varchar(250) NOT NULL,
+  `date_reported` timestamp NOT NULL,
+  `verified_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ;
 
 --
@@ -322,6 +325,13 @@ CREATE TABLE `reports` (
 --   `event_id`
 --       `events` -> `event_id`
 --
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `event_summary`, `picture_paths`, `folder_paths`, `date_reported`, `verified_timestamp`) VALUES
+(111, 11, 'none', ' none', 0, 'none', 'none', 'none', 'none', '2018-01-31 10:48:05', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
