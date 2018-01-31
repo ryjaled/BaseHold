@@ -29,60 +29,48 @@ $id=$_REQUEST['userregion'];
 
 $columns = array(
 // datatable column index  => database column name
-	  0 => 'eventtitle',
-	  1 => 'date_to_be_organized',
-    2 => 'region',
-    3 => 'user',
-    4 => 'is_verified',
-    5 => 'is_approved',
-    6 => 'event_id'
+    0 => 'eventtitle',
+    1 => 'regionname',
+    2 => 'user',
+    3 => 'date_reported',
+    4 => 'is_approved',
+    5 => 'event_id'
 );
 
 // getting total number records without any search
-$sql = "select e.event_id, e.eventtitle, e.date_to_be_organized, r.regionname as region, u.firstname as user, u.lastname, e.is_verified, e.is_approved from events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where e.region = '$id'";
-$query=mysqli_query($conn, $sql) or die("level2list.php: get information0");
+$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id'";
+$query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
-$sql = "select e.event_id, e.eventtitle, e.date_to_be_organized, r.regionname as region, u.firstname as user, u.lastname, e.is_verified, e.is_approved from events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where (e.region = '$id')";
+$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id'";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' )";
 }
-$query=mysqli_query($conn, $sql) or die("level2list.php: get information1");
+$query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
 //$sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir']." LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 /* $requestData['order'][0]['column'] contains column index, $requestData['order'][0]['dir'] contains order such as asc/desc  */
-$query=mysqli_query($conn, $sql) or die("level2list.php: get information2");
+$query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information2");
 
 $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
     $nestedData[] = $row['eventtitle'];
-    $nestedData[] = date('jS F Y', strtotime($row['date_to_be_organized']));
-    $nestedData[] = $row['region'];
-    $nestedData[] = $row['user'].' '.$row['lastname'];
-
-    if( $row['is_verified'] == "0"){
-        $verifyLabel = "<p style='color: red'>Not Verified</p>";
-
-      } else {
-        $verifyLabel = "<p style='color: green'>Verified</p>";
-
-      }
-    $nestedData[] = $verifyLabel;
+    $nestedData[] = $row['regionname'];
+    $nestedData[] = $row['firstname'].' '.$row['lastname'];
+    $nestedData[] = date('jS F Y', strtotime($row['date_reported']));
 
     if( $row['is_approved'] == "0"){
         $approveLabel = "<p style='color: red'>Not Approved</p>";
-				$buttonshow = "<button onclick='editor({$row['event_id']},{$row['is_verified']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
+				$buttonshow = "<button onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
       } else {
         $approveLabel = "<p style='color: green'>Approved</p>";
-				$buttonshow = "<button hidden onclick='editor({$row['event_id']},{$row['is_verified']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
+				$buttonshow = "<button hidden onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
       }
     $nestedData[] = $approveLabel;
-
-    //$nestedData[] = $row['event_id'];
-	  $nestedData[] = $buttonshow;
+	 $nestedData[] = $buttonshow;
 
 	$data[] = $nestedData;
 }
