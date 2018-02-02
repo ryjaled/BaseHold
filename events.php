@@ -210,5 +210,25 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
+		function editEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid){
+
+			$strQuery="update events set
+							eventtitle='$eventtitle',
+							eventtopic='$topic',
+							date_to_be_organized='$date',
+							audience_category='$audience',
+							expected_audience_attendance='$expected_audience_attendance',
+							region='$region',
+							town='$town',
+							logistics='$logistics',
+							mode_of_outreach='$mode_of_outreach',
+							is_verified='0',
+							is_approved='0',
+							creator='$reporter' 
+							where event_id='$eventid'";
+
+			return $this->query($strQuery);
+		}
+
 	}
 ?>
