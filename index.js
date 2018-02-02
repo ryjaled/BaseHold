@@ -95,7 +95,7 @@ $().ready(function () {
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[3, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -105,6 +105,31 @@ $().ready(function () {
         $(".level3list-error").html("");
         $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level3list_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable3 = $('#level3reportlist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '25%' },
+      { "targets": 1, width: '15%' },
+      { "targets": 2, width: '15%' },
+      { "targets": 3, width: '15%' },
+      { "targets": 4, width: '15%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[3, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "level3reportlist.php?usersessionid=" + sessionStorage.userid, // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".level3reportlist-error").html("");
+        $("#level3reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#level3reportlist_processing").css("display", "none");
       }
     }
   });
@@ -187,7 +212,6 @@ $().ready(function () {
       }
     }
   });
-
 
   var dataTable5 = $('#eventlogslist').DataTable({
     "autoWidth": false,
