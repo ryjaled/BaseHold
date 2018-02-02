@@ -97,7 +97,7 @@
 			break;
 	}
 
-	
+
    function loginUser()
    {
 
@@ -130,7 +130,6 @@
 	}
 
 
-
 	function changePassword()
 	{
 
@@ -141,13 +140,11 @@
 		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
 
 		 $validation = $user->updatepassword($myid,$confirmednewpassword);
-		 // echo $validation;
+		 
 		 if($validation==false){
 				echo '{"result":0,"message":"Validation failed"}';
 		 }
 		 else{
-
-			 // $array=array('result'=>1,'message'=>'User logged in','email'=>$email,'password'=>$password);
 			 echo json_encode($validation);
 		 }
 
@@ -175,13 +172,9 @@
 
 		$user2 = new users();
 
-		// $user_id=$_REQUEST['userid'];
-
 		$result = $user2->getID($firstname);
 
 		$usersdata = array();
-
-		// echo $row=$user->fetch();
 
 		while($row = $user2->fetch()){
 				array_push($usersdata,$row);
@@ -336,7 +329,6 @@
 
 				echo json_encode($data);
 
-
 	}
 
 	function getCalEvents()
@@ -430,7 +422,6 @@
 					$data['town']=$row['town'];
 					$data['id']=$row['pending_id'];
  					//array_push($data,$row);
-
  				}
 
  				echo json_encode($data);
@@ -565,7 +556,7 @@
 
 			   }
 
-			   echo json_encode($data);
+			echo json_encode($data);
 
    }
 
@@ -581,11 +572,8 @@
 
 				while($row = $event->fetch()){
 						$success="true";
-						//array_push($data,$row);
-						//$newdate = str_replace("-",",",$row['date']);
 						$newdate = strtotime($row['date_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
-						//$data[] = gmdate('r', strtotime($row['date_organized']));
 						$data[]=$new_date;
 						$data[]=(int)$row['totals'];
 						$moredata[] = $data;
@@ -662,9 +650,7 @@
 					$seriesnumdata = [];
 				}
 
-				//echo json_encode($allarrays);
 				$alldata = transposeData($allarrays);
-				//echo json_encode($alldata);
 
 				for ($k=0; $k < count($alldata); $k++) {
 					$seriesdata['name'] = $snumdata[$k];
@@ -792,7 +778,6 @@
 			$array=array('result'=>1,'message'=>'User logged in',
 		'username'=>$username,'password'=>$password,'userID'=>$id["ID"],'bank'=>$bank["BANK"]);
 			echo json_encode($array);
-		//	echo'{"result":1,"message":"Welcome to the Rally"}';
 		}
 
 	}
@@ -906,33 +891,19 @@
 		$verify = $user->adminLogin($username,$password);
 
 		if($verify==false){
-			// $ans= $user->getEmail($username);
-			// $ans=$user->fetch();
-			// if($ans!=false){
-			// 	$array = array('result'=>0,'message'=>'Please enter the right password','email'=>$ans["email"]);
-			// 	echo json_encode($array);
-			// }
-			// else{
+
 				echo '{"result":0,"message":"Wrong User information"}';
 
-			// }
 
 		}
 		else{
 			session_start();
 			$_SESSION=$verify;
-			//
-			// $id=$user->getID($username);
-			// $bank=$user2->getBank($username);
-			//
-			// $id=$user->fetch();
-			// $bank=$user2->fetch();
 
 
 			$array=array('result'=>1,'message'=>'User logged in',
 		'username'=>$username,'password'=>$password);
 			echo json_encode($array);
-		//	echo'{"result":1,"message":"Welcome to the Rally"}';
 		}
 
 	}
