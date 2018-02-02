@@ -451,7 +451,6 @@
 
 			while($row = $event->fetch()){
 			   $success="true";
-			   //array_push($data,$row);
 			   $data['regname']=$row['regname'];
 			   $data['figures']=$row['figures'];
 			   $decimal = $row['figures'] / $total;
@@ -558,7 +557,7 @@
 						$success="true";
 						//array_push($data,$row);
 						//$newdate = str_replace("-",",",$row['date']);
-						$newdate = strtotime($row['date_organized']." UTC");
+						$newdate = strtotime($row['date_to_be_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
 						//$data[] = gmdate('r', strtotime($row['date_organized']));
 						$data[]=$new_date;
