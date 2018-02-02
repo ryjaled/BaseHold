@@ -75,7 +75,7 @@
 		case 22:
 			addPendingEvent();
 			break;
-    case 23:
+   		case 23:
 			fetchAddUserLog();
 			break;
 		case 24:
@@ -86,13 +86,18 @@
 		case 26:
 			changePassword();
 			break;
-
+		case 27:
+			getAReport();
+			break;
+		case 28:
+			toggleApproveReport();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
 	}
 
-
+	
    function loginUser()
    {
 
@@ -381,6 +386,29 @@
 
  				echo json_encode($data);
 	}
+
+
+	function getAReport()
+	{
+			$success="";
+			include("events.php");
+			$event = new events();
+
+			$reportid=$_REQUEST['reportid'];
+
+			$result = $event->getAReport($reportid);
+
+			$data = array();
+
+			while($row = $event->fetch()){
+					$success="true";
+					// $data[]=$row;
+					array_push($data,$row);
+
+				}
+
+			echo json_encode($data);
+   }
 
 	function getAPendingEvent()
  	{
@@ -672,6 +700,21 @@
 		 $approval=$_REQUEST['approval'];
 
 		 $verify=$event->toggleEvent($eventid,$approval);
+
+		 echo json_encode($approval);
+
+	}
+
+	function toggleApproveReport()
+	{
+
+		 include("events.php");
+		 $event = new events();
+
+		 $reportid=$_REQUEST['reportid'];
+		 $approval=$_REQUEST['approval'];
+
+		 $verify=$event->toggleReport($reportid,$approval);
 
 		 echo json_encode($approval);
 

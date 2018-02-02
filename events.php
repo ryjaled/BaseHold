@@ -140,7 +140,7 @@ include_once("database.php");
         $newapproval = "0";
       }
       echo $newapproval;
-			$strQuery="update reports set is_approved='$newapproval' where report_id=$eventid";
+			$strQuery="update events set is_approved='$newapproval' where event_id=$eventid";
       return $this->query($strQuery);
 		}
 
@@ -154,7 +154,7 @@ include_once("database.php");
         $newverify = "0";
       }
       echo $newapproval;
-      $strQuery="update reports set is_verified='$newverify', verification_comments='$verifycomments'  where report_id=$eventid";
+      $strQuery="update events set is_verified='$newverify', verification_comments='$verifycomments' where event_id=$eventid";
       return $this->query($strQuery);
     }
 
@@ -207,6 +207,21 @@ include_once("database.php");
 
 		function getAReport($reportid){
 			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
+      return $this->query($strQuery);
+		}
+
+
+		function toggleReport($reportid, $approval){
+      // echo $approval;
+      // echo $reportid;
+      // $newapproval = "";
+      if($approval == "0"){
+        $newapproval = "1";
+      } else {
+        $newapproval = "0";
+      }
+      // echo $newapproval;
+			$strQuery="update reports set is_approved='$newapproval' where report_id=$reportid";
       return $this->query($strQuery);
 		}
 

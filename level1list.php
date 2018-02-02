@@ -57,7 +57,7 @@ $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
-	$nestedData[] = "<p style='margin-top: 20px; text-align: left'>{$row['eventtitle']}</p>";
+	$nestedData[] = $row['eventtitle'];
 	$nestedData[] = $row['region'];
 	$enddate = date('jS F Y', strtotime($row['date_to_be_organized']));
 	$nestedData[] = $enddate;
@@ -79,17 +79,17 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	if( ($row['is_verified'] == "0") && ($row['is_approved'] == "0") )
 	{
 		// $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
-		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a href='#'>Edit</a></li><li><a href='#'>View Details</a></li><li><a href='#'>Delete</a></li></ul></div>";
+		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level1Edit({$row['event_id']})' href='#'>Edit Event</a></li><li><a onclick='level1View({$row['event_id']})' href='#'>View Details</a></li><li><a href='#'>Delete Event</a></li></ul></div>";
 	}
 	if( ($row['is_verified'] == "1") && ($row['is_approved'] == "0") )
 	{
 		// $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
-		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a href='#'>View Details</a></li></ul></div>";
+		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level1View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
 	}
 	if( ($row['is_verified'] == "1") && ($row['is_approved'] == "1") )
 	{
 		// $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
-		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a href='#'>View Details</a></li><li><a href='#'>Add Report</a></li></ul></div>";
+		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a style='color: red' onclick='level1Edit({$row['event_id']})' href='#'>Reschedule Event</a></li><li><a onclick='level1View({$row['event_id']})' href='#'>View Details</a></li><li><a onclick='showReportModal()' href='#'>Add Report</a></li></ul></div>";
 	}
 
 	$nestedData[] = $buttonshow;

@@ -521,15 +521,6 @@
                 <dt>COMPLAINTS RAISED BY AUDIENCE</dt>
                 <dd id="complaints_raised"></dd>
                 </div>
-
-                <center><hr class="uk-divider-small" style="margin:5%;"></center>
-
-                <div class="uk-comment-body" style="margin-top: 20px">
-                <dt>PHOTOS:</dt>
-
-                <div id="pictureContainer">
-                </div>
-
                 </div>
 
                 </article>
@@ -543,152 +534,444 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+     <!-- UI kit modal -->
+     <div id="modal-overflow-edit" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Event Detaxils</h2>
+            </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+
+            <article class="uk-comment">
+                <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                    <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                    <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                </div>
+                <div class="uk-width-expand">
+                    <h4 class="uk-comment-title uk-margin-remove"><a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li><a href="#" id="date_organized">23 January 2018</a></li>
+                    </ul>
+                </div>
+                </header>
+
+                <div class="row">
+                <dl class="uk-description-list">
+                    <div class="col-sm-6">
+                    <dt>REGIxON</dt>
+                    <input style="color: red" class="uk-input" type="text" placeholder="Input">
+                    <dd id="region"></dd>
+                    </div>
+                    <div class="col-sm-6">
+                    <dt>TOWN</dt>
+                    <input class="uk-input" type="text" placeholder="Input">
+                    <dd id="town"></dd>
+                    </div>
+                    </dl>
+                </div>
+
+                <br/>
+
+                <div class="uk-comment-body">
+                <dt>SUMMARY</dt>
+                <input class="uk-input" type="text" placeholder="Input">
+                <dd id="event_summary"></dd>
+                </div>
+
+                <center><hr class="uk-divider-small" style="margin:5%;"></center>
+
+                <div class="row">
+                <dl class="uk-description-list">
+                    <div class="col-sm-6">
+                    <dt>AUDIENCE CATEGORY</dt>
+                    <input class="uk-input" type="text" placeholder="Input">
+                    <dd id="audience_category"></dd>
+                    </div>
+                    <div class="col-sm-6">
+                    <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                    <input class="uk-input" type="text" placeholder="Input">
+                    <dd id="audience_attendance"></dd>
+                    </div>
+                    </dl>
+                </div>
+
+                <div class="uk-comment-body" style="margin-top: 20px">
+                <dt>OUTREACH TEAM CHALLANGES</dt>
+                <input class="uk-input" type="text" placeholder="Input">
+                <dd id="team_challenges"></dd>
+                </div>
+
+                <div class="uk-comment-body" style="margin-top: 20px">
+                <dt>COMPLAINTS RAISED BY AUDIENCE</dt>
+                <input class="uk-input" type="text" placeholder="Input">
+                <dd id="complaints_raised"></dd>
+                </div>
+
+                <center><hr class="uk-divider-small" style="margin:5%;"></center>
+
+                </article>
+
+            </div>
+
+            <div class="uk-modal-footer uk-text-right" id="verifyformdiv">
+                <button class="uk-button uk-button-primary" type="button">Update Event</button>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+     <!-- UI kit modal -->
+     <div id="modal-report" class="uk-modal-container" uk-modal>
+            <div class="uk-modal-dialog">
+    
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+    
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Event Details</h2>
+                </div>
+    
+                <div class="uk-modal-body" uk-overflow-auto>
+    
+                <article class="uk-comment">
+                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                    <div class="uk-width-auto">
+                        <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                        <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                    </div>
+                    <div class="uk-width-expand">
+                        <h4 class="uk-comment-title uk-margin-remove"><a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
+                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                            <li><a href="#" id="date_organized">23 January 2018</a></li>
+                        </ul>
+                    </div>
+                    </header>
+    
+                    <div class="row">
+                    <dl class="uk-description-list">
+                        <div class="col-sm-6">
+                        <dt>REGION</dt>
+                        <dd id="region"></dd>
+                        </div>
+                        <div class="col-sm-6">
+                        <dt>TOWN</dt>
+                        <dd id="town"></dd>
+                        </div>
+                        </dl>
+                    </div>
+    
+                    <br/>
+    
+                    <div class="uk-comment-body">
+                    <dt>SUMMARY</dt>
+                    <dd id="event_summary"></dd>
+                    </div>
+    
+                    <center><hr class="uk-divider-small" style="margin:5%;"></center>
+    
+                    <div class="row">
+                    <dl class="uk-description-list">
+                        <div class="col-sm-6">
+                        <dt>AUDIENCE CATEGORY</dt>
+                        <dd id="audience_category"></dd>
+                        </div>
+                        <div class="col-sm-6">
+                        <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                        <dd id="audience_attendance"></dd>
+                        </div>
+                        </dl>
+                    </div>
+    
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                    <dt>OUTREACH TEAM CHALLANGES</dt>
+                    <dd id="team_challenges"></dd>
+                    </div>
+    
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                    <dt>COMPLAINTS RAISED BY AUDIENCE</dt>
+                    <dd id="complaints_raised"></dd>
+                    </div>
+                    </div>
+    
+                    </article>
+    
+                </div>
+    
+                <div class="uk-modal-footer uk-text-right" id="verifyformdiv">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                </div>
+    
+            </div>
+        </div>
+
+
+
+
+
+
     <div id="pending-modal-overflow" class="uk-modal-container" uk-modal>
         <div class="uk-modal-dialog">
 
             <button class="uk-modal-close-default" type="button" uk-close></button>
 
             <div class="uk-modal-header">
-                <h2 class="uk-modal-title">Edit and Save Event Details</h2>
+                <h2 class="uk-modal-title">Edit and Resubmit Event Details</h2>
             </div>
 
             <div class="uk-modal-body" uk-overflow-auto>
 
-                <form id="RegisterAddPendingValidationDoc" action="" method="">
-                    <div class="card-content" style="padding: 2% 15%;">
+                    <form id="RegisterValidationDoc" action="" method="">
+                            <div class="card-content" style="padding: 2% 15%;">
 
-                        <input id="pendid" style="display:none;" />
+                              <h2 style="text-align: center; font-weight: 500">RESUBMIT EVENT FOR VERIFICATION AND APPROVAL</h2>
+                              <h5 style="text-align: center;">Your event can only be carried out once your regional manager has VERIFIED and Head Office has APPROVED. You are required to create a report once the event has taken place.</h5>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                        DATE SELECTED
-                                        <small>(required)</small>
-                                    </label>
-                                    <input id="penddateselected" type="text" class="form-control datetimepicker" required="true" value="" />
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                Please select when the event should take place
+                                                <small>(required)</small>
+                                            </label>
+                                            <input id="editaddnewdateselected" type="text" class="form-control datetimepicker" required="true" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                Title of Event - This may include a group name
+                                                <small>(required)</small>
+                                            </label>
+                                            <input id="editaddnewtitle" class="form-control" name="title" type="text" required="true" />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                    Audience Category
+                                                    <small>(required)</small>
+                                                </label>
+                                                <select id="editaddnewaudience" class="selectpicker" data-style="btn" title="Select Audience" data-size="11" style="background-color:#000000;">
+                                                    <option value="Artisans">Artisans</option>
+                                                    <option value="Communities">Communities</option>
+                                                    <option value="Corporate">Corporate</option>
+                                                    <option value="Religious Bodies">Religious Bodies</option>
+                                                    <option value="Schools">Schools</option>
+                                                    <option value="Villages">Villages</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                     Expected number in attendance
+                                                    <small>(required)</small>
+                                                </label>
+                                                <input id="editaddnewattendance" class="form-control" name="location" type="number" pattern = "\d{1,10}"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                REGION
+                                                <small>(required)</small>
+                                            </label>
+                                            <select id="editaddnewregion" class="selectpicker" data-style="btn" title="Select Region" data-size="11" style="background-color:#000000;">
+                                                <option value="1">Ashanti</option>
+                                                <option value="2">Brong Ahafo</option>
+                                                <option value="3">Central</option>
+                                                <option value="4">Eastern</option>
+                                                <option value="5">Greater Accra</option>
+                                                <option value="6">Northern</option>
+                                                <option value="7">Upper East</option>
+                                                <option value="8">Upper West</option>
+                                                <option value="9">Volta</option>
+                                                <option value="10">Western</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                TOWN
+                                                <small>(required)</small>
+                                            </label>
+                                            <input id="editaddnewtown" class="form-control" name="location" type="text" required="true"/>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                        EVENT TITLE
-                                        <small>(required)</small>
+                                <br/>
+                                <!-- <div class="col-sm-12"> -->
+                                    <div class="form-group" style="margin-top:5%;">
+                                        <label style="font-weight: 900; color: #aaa" class="control-label">
+                                            Topics to be discussed
+                                            <small>(required)</small>
+                                        </label>
+                                        <input id="editaddnewtopics" class="form-control" name="title" type="text" required="true" />
+                                    </div>
+                                <!-- </div> -->
+                                <br/>
+
+
+
+                              <div style="margin-bottom: 10%; margin-top: 10%;">
+                                <div class="col-sm-12">
+                                  <h5>Select the mode of communication(s) you would utilize:</h5>
+                                  <div class="checkbox">
+                                      <label>
+                                          <input id="editaddnewpowerpoint" type="checkbox" name="optionsCheckboxes" value="PowerPoint Presentation">
+                                          PowerPoint Presentation
+                                      </label>
+                                  </div>
+                                  <div class="checkbox">
+                                    <label>
+                                      <input id="editaddnewoneonone" type="checkbox" name="optionsCheckboxes" value="One-on-one">
+                                      One-on-one
                                     </label>
-                                    <input id="pendtitle" class="form-control" name="title" type="text" required="true" />
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                        AUDIENCE
-                                        <small>(required)</small>
+                                  </div>
+                                  <div class="checkbox">
+                                    <label>
+                                      <input id="editaddnewroadshow" type="checkbox" name="optionsCheckboxes" value="Road Show">
+                                      Road Show
                                     </label>
-                                    <select id="pendaudience" class="selectpicker" data-style="btn" title="Select Audience" data-size="11" style="background-color:#000000;">
-                                        <option value="Artisans">Artisans</option>
-                                        <option value="Communities">Communities</option>
-                                        <option value="Corporate">Corporate</option>
-                                        <option value="Religious Bodies">Religious Bodies</option>
-                                        <option value="Schools">Schools</option>
-                                        <option value="Villages">Villages</option>
-                                        <option value="Others">Others</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                        NUMBER IN ATTENDANCE
-                                        <small></small>
+                                  </div>
+                                  <div class="checkbox">
+                                    <label>
+                                      <input id="editaddnewdurbar" type="checkbox" name="optionsCheckboxes" value="Durbar">
+                                      Durbar
                                     </label>
-                                    <input id="pendattendance" class="form-control" name="location" type="number" pattern="\d{1,10}" />
-                                </div>
+                                  </div>
+                                  <div class="checkbox">
+                                    <label>
+                                      <input id="editaddnewsmallgroupmeeting" type="checkbox" name="optionsCheckboxes" value="Small group meeting">
+                                      Small group meeting
+                                    </label>
+                                  </div>
+                              </div>
                             </div>
 
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                        REGION
-                                        <small>(required)</small>
+
+
+
+                              <div style="padding-top: 40%;">
+
+                                  <div class="col-sm-6">
+                                <h5>Select the logistics required for the event:</h5>
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="editaddnewbus" type="checkbox" name="optionsCheckboxes" value="Bus(es)">
+                                        Bus(es)
                                     </label>
-                                    <select id="pendregion" class="selectpicker" data-style="btn" title="Select Region" data-size="11" style="background-color:#000000;">
-                                        <option value="1">Ashanti</option>
-                                        <option value="2">Brong Ahafo</option>
-                                        <option value="3">Central</option>
-                                        <option value="4">Eastern</option>
-                                        <option value="5">Greater Accra</option>
-                                        <option value="6">Northern</option>
-                                        <option value="7">Upper East</option>
-                                        <option value="8">Upper West</option>
-                                        <option value="9">Volta</option>
-                                        <option value="10">Western</option>
-                                    </select>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                        TOWN
-                                        <small>(required)</small>
-                                    </label>
-                                    <input id="pendtown" class="form-control" name="location" type="text" required="true" />
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewsoundsystem" type="checkbox" name="optionsCheckboxes" value="Sound System(s)">
+                                    Sound System(s)
+                                  </label>
                                 </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewflyer" type="checkbox" name="optionsCheckboxes" value="Flyer(s)">
+                                    Flyer(s)
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewpen" type="checkbox" name="optionsCheckboxes" value="Pen(s)">
+                                    Pen(s)
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewtapemeasure" type="checkbox" name="optionsCheckboxes" value="Tape Measure(s)">
+                                    Tape Measure(s)
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-sm-6" style="color: black">
+                                <h5>Select from the checkboxes below</h5>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewtowel" type="checkbox" name="optionsCheckboxes" value="Towel(s)">
+                                    Towel(s)
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewmug" type="checkbox" name="optionsCheckboxes" value="Mug(s)">
+                                    Mug(s)
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewshirt" type="checkbox" name="optionsCheckboxes" value="T-shirt(s)">
+                                    T-shirt(s)
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewnotepad" type="checkbox" name="optionsCheckboxes" value="Notepad(s)">
+                                    Notepad(s)
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="editaddnewpowerblock" type="checkbox" name="optionsCheckboxes" value="Power Block(s)">
+                                    Power Block(s)
+                                  </label>
+                                </div>
+                              </div>
+                              </div>
+
+
+
+
+
+
+                              <br/>
+                              <br/>
+                                <div class="category form-category col-sm-12">
+                                    <small>(required)</small> - Required fields</div>
+
+
+                                <button type="submit" class="btn btn-default pull-left" onclick="clearaddfield()">Clear Fields</button>
+                                <button id="addediteventinfo" type="submit" class="btn btn-twitter pull-right" onclick="editnewevent()">Edit Event</button>
                             </div>
-                        </div>
-                        <br/>
-                        <br/>
-                        <div class="row">
-                            <p style="font-weight: 900; color: #aaa" class="control-label">
-                                CHALLENGES FACED
-                                <small>(required)</small>
-                            </p>
-                            <textarea id="pendchallenges" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
-                                placeholder="Type event challenges here" rows="4"></textarea>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <p style="font-weight: 900; color: #aaa" class="control-label">
-                                TEAM FEEDBACK
-                                <small>(required)</small>
-                            </p>
-                            <textarea id="pendsummary" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
-                                placeholder="Type event feedback here" rows="4"></textarea>
-                        </div>
-                        <div class="row">
-                            <p style="font-weight: 900; color: #aaa" class="control-label">
-                                COMPLAINTS
-                                <small>(required)</small>
-                            </p>
-                            <textarea id="pendcomplaints" require="true" style="border-style: solid; border-with: 10px;" class="form-control label-floating"
-                                placeholder="Type event complaints here" rows="4"></textarea>
-                        </div>
-                        <br/>
-                        <div>
-                            <input id="pendinput-id" type="file" name="files[]" class="file" multiple>
-                        </div>
-
-                        <div class="category form-category">
-                            <small>(required)</small> - Required fields</div>
-
-                        <div class="form-footer text-right">
-                            <div class="checkbox pull-left">
-
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-default pull-left uk-modal-close" onclick="clearaddpendingfield()">Clear Fields</button>
-                        <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="addpendpendingevent()">Create Event</button>
-                    </div>
-                </form>
+                        </form>
 
             </div>
 
         </div>
     </div>
 
+    <!-- <div>
+            <input id="pendinput-id" type="file" name="files[]" class="file" multiple>
+        </div> -->
 
     <!-- Modal 2 -->
     <!-- <div class="modal fade" id="eventDetailView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 100%">
