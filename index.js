@@ -1862,3 +1862,64 @@ function loadDashData(){
   fillDashCommonPlace(sdate, edate);
   
 }
+
+function regionfillDashTotalEvents(sdate,edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=11";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalEventsComplete
+    });
+
+}
+
+function regionfillDashTotalAttendees(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=13";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+  
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalAttendeesComplete
+    });
+
+}
+
+function regionfillDashCommonPlace(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=14";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashCommonPlaceComplete
+    });
+
+}
+
+function regionloadDashData(region) {
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  regionfillDashTotalEvents(sdate, edate, region);
+  regionfillDashTotalAttendees(sdate, edate, region);
+  regionfillDashCommonPlace(sdate, edate, region);
+
+}

@@ -94,8 +94,11 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
-		function getDashTotalAttendees($fdate=false,$ldate=false){
+		function getDashTotalAttendees($fdate=false,$ldate=false,$region=false){
 			$strQuery="select sum(expected_audience_attendance) as total from events where is_approved = 1 ";
+			if($region!=false){
+				$strQuery.="and region = '$region' ";
+			}
 			if(($fdate!=false) && ($ldate!=false)){
 				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
@@ -171,8 +174,11 @@ include_once("database.php");
       return $this->query($strQuery);
     }
 
-		function getDashTopAudienceCategory($fdate=false,$ldate=false){
+		function getDashTopAudienceCategory($fdate=false,$ldate=false,$region=false){
 			$strQuery="select audience_category, count(audience_category) as total from events where is_approved=1 ";
+			if($region!=false){
+				$strQuery.="and region = '$region' ";
+			}
 			if(($fdate!=false) && ($ldate!=false)){
 				$strQuery.=" and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
