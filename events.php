@@ -85,18 +85,28 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
-		function getDashRegionFigures(){
-			$strQuery="select r.regionname as regname, count(e.region) as figures from events as e inner join region as r on r.region_id = e.region where e.is_approved = 1 group by e.region order by r.regionname ASC";
+		function getDashRegionFigures($fdate=false,$ldate=false){
+			$strQuery="select r.regionname as regname, count(e.region) as figures from events as e inner join region as r on r.region_id = e.region where e.is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by e.region order by r.regionname ASC";
       return $this->query($strQuery);
 		}
 
-		function getDashTotalAttendees(){
-			$strQuery="select sum(expected_audience_attendance) as total from events where is_approved = 1";
+		function getDashTotalAttendees($fdate=false,$ldate=false){
+			$strQuery="select sum(expected_audience_attendance) as total from events where is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
 			return $this->query($strQuery);
 		}
 
-		function getDashTotalEvents(){
-			$strQuery="select count(region) as total from events where is_approved = 1";
+		function getDashTotalEvents($fdate=false,$ldate=false){
+			$strQuery="select count(region) as total from events where is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
 			return $this->query($strQuery);
 		}
 
@@ -158,8 +168,12 @@ include_once("database.php");
       return $this->query($strQuery);
     }
 
-		function getDashTopAudienceCategory(){
-			$strQuery="select audience_category, count(audience_category) as total from events where is_approved=1 group by audience_category order by count(audience_category) desc limit 1";
+		function getDashTopAudienceCategory($fdate=false,$ldate=false){
+			$strQuery="select audience_category, count(audience_category) as total from events where is_approved=1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.=" and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by audience_category order by count(audience_category) desc limit 1";
 			return $this->query($strQuery);
 		}
 
@@ -230,7 +244,7 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-		function editReport($event_id,$challenges,$complaints,$verifiedComments,$summary,$picpath,$foldpath,$reportid){x
+		function editReport($event_id,$challenges,$complaints,$verifiedComments,$summary,$picpath,$foldpath,$reportid){
 
 			$strQuery="update events set
 		 					event_id='$event_id',
@@ -245,6 +259,8 @@ include_once("database.php");
 
 			return $this->query($strQuery);
 		}
+
+
 
 	}
 ?>

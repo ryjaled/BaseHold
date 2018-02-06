@@ -258,7 +258,7 @@ $().ready(function () {
   });
 
   setInterval(function () {
-     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
   }, 6000);
 
   setInterval(function () {
@@ -295,6 +295,17 @@ $().ready(function () {
 
 
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#addenddateselected').datetimepicker({
+    format: 'dddd, D MMMM Y',
+    useCurrent: false //Important! See issue #1075
+  });
+  $("#addnewdateselected").on("dp.change", function (e) {
+    $('#addenddateselected').data("DateTimePicker").minDate(e.date);
+  });
+  $("#addenddateselected").on("dp.change", function (e) {
+    $('#addnewdateselected').data("DateTimePicker").maxDate(e.date);
+  });
+
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 

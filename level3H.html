@@ -293,6 +293,41 @@
                                     <div class="tab-pane" id="level3dashboard" style=" padding: 3%;">
                                         <div class="content">
                                           <div class="container-fluid">
+
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-8">
+                                                <div class="card card-stats">
+                                                    <div data-background-color="grey">
+                                                        <i class="material-icons">search</i>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                        Start date
+                                                                        <small>(required)</small>
+                                                                    </label>
+                                                                    <input id="addnewdateselected" type="text" class="form-control datetimepicker" required="true" value="Start Date"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                        End date
+                                                                        <small>(required)</small>
+                                                                    </label>
+                                                                    <input id="addenddateselected" class="form-control datetimepickker" type="text" required="true" value="End Date"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button id="dashsearchinfo" type="submit" class="btn btn-twitter col-sm-12" onclick="searchdash()">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        
+                                              <br />
                                               <div class="row">
                                                   <div class="col-md-12">
                                                       <div class="card">
@@ -497,7 +532,7 @@
 
                                         <div style="margin-left: 20%; margin-right: 20%;">
 
-                                            <center><label style="font-weight: 900; font-size: 1.5em;  margin-top: 10%;">NEW PASSWORD</label></center>
+                                            <center><label style="font-weight: 900; font-size: 1.5em;">NEW PASSWORD</label></center>
 
                                             <div class="form-group">
                                                 <label style="font-weight: 900; color: #aaa; font-size: 1.0em;" class="control-label">
@@ -669,68 +704,64 @@
 
       <!-- Modal 2 -->
       <div class="modal fade" id="viewEvent2x" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 100%">
-      <div class="modal-dialog" style="width: 90%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h2 class="modal-title" id="myModalLabel">Outreach Event Details</h2>
-          </div>
-          <div class="modal-body">
+        <div class="modal-dialog" style="width: 90%;">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h2 class="modal-title" id="myModalLabel">Outreach Event Details</h2>
+            </div>
+            <div class="modal-body">
 
 
-          <label>Event ID </label>
-          <br><input id="report_id" readonly> <br><br>
+            <label>Event ID </label>
+            <br><input id="report_id" readonly> <br><br>
 
-          <label>Event Title </label>
-          <br><input class="form-control" id="eventtitle" readonly> <br><br>
+            <label>Event Title </label>
+            <br><input class="form-control" id="eventtitle" readonly> <br><br>
 
-          <label>Date Organized </label>
-          <br><input class="form-control" id="date_organized"  readonly> <br><br>
+            <label>Date Organized </label>
+            <br><input class="form-control" id="date_organized"  readonly> <br><br>
 
-          <label>Region </label>
-          <br><input class="form-control" id="region"  readonly> <br><br>
+            <label>Region </label>
+            <br><input class="form-control" id="region"  readonly> <br><br>
 
-          <label>Town </label>
-          <br><input class="form-control" id="town" readonly > <br><br>
+            <label>Town </label>
+            <br><input class="form-control" id="town" readonly > <br><br>
 
-          <label>Audience Industry </label>
-          <br><input class="form-control" id="audience_category"  readonly> <br><br>
+            <label>Audience Industry </label>
+            <br><input class="form-control" id="audience_category"  readonly> <br><br>
 
-          <label>Attendance </label>
-          <br><input class="form-control" id="audience_attendance"  readonly> <br><br>
+            <label>Attendance </label>
+            <br><input class="form-control" id="audience_attendance"  readonly> <br><br>
 
-          <label>Team Challenges </label>
-          <br><input class="form-control" id="team_challenges"  readonly> <br><br>
+            <label>Team Challenges </label>
+            <br><input class="form-control" id="team_challenges"  readonly> <br><br>
 
-          <label>Complaints Raised </label>
-          <br><input class="form-control" id="complaints_raised"  readonly> <br><br>
+            <label>Complaints Raised </label>
+            <br><input class="form-control" id="complaints_raised"  readonly> <br><br>
 
-          <label>Event Summary </label>
-          <br><input class="form-control" id="event_summary" readonly> <br><br>
+            <label>Event Summary </label>
+            <br><input class="form-control" id="event_summary" readonly> <br><br>
 
-          <div id="pictureContainerLevel3">
-          </div>
+            <div id="pictureContainerLevel3">
+            </div>
 
 
-          </div>
-          <div id="approvebuttons" class="modal-footer">
-            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-warning" id="addConfirm" data-toggle="modal" data-target="#verifyEvent">Approve</button> -->
-          </div>
+            </div>
+            <div id="approvebuttons" class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="addConfirm" data-toggle="modal" data-target="#verifyEvent">Approve</button> -->
+            </div>
+            </div>
         </div>
       </div>
-      </div>
-
-
-
-
-
-
 
 <script src="index.js"></script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src='jquery/jquery-1.10.2.js'></script>
+<script src='jquery/jquery-ui.custom.min.js'></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="assets/js/material.min.js" type="text/javascript"></script>
 <script src="assets/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
