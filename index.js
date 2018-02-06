@@ -1,3 +1,4 @@
+var global1;
 var global2;
 var global7;
 
@@ -236,9 +237,17 @@ $().ready(function () {
     }
   });
 
-  setInterval(function () {
-     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-  }, 6000);
+//   setInterval(function () {
+//      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+//   }, 6000);
+
+function refireTable1(){
+  setTimeout(function () {
+  dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+}, 500);
+}
+
+global1 = refireTable1;
 
   // setInterval(function () {
   //   dataTable2.ajax.reload(null, false); // user paging is not reset on reload
@@ -289,6 +298,7 @@ global7 = refireTable7;
 
 
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#editaddnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
@@ -840,7 +850,7 @@ function editevent(){
   }else{
     document.cookie = "foldname=" + foldname;
 
-    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
       + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
 
     $.ajax(theUrl,
@@ -860,7 +870,7 @@ function editEventComplete(xhr,status){
   $('#input-id').fileinput('enable');
   $.notify({
      icon: "info_outline",
-     message: "Event Added Successfully."
+     message: "Event Editted Successfully."
 
  },{
      type: 'success',
@@ -870,6 +880,7 @@ function editEventComplete(xhr,status){
          align: 'right'
      }
  });
+  global1();
 
 }
 
@@ -1242,172 +1253,15 @@ function level1ViewComplete(xhr, status) {
 
 
   document.getElementById('complaints_raised2').innerHTML= obj[0].approved_timestamp;
-  
-
- 
+   
 }
 
 
 
 
-function editnewevent(){
-  event.preventDefault();
-
-  var userid = sessionStorage.getItem("userid");
-  var eventtitle = $('#editaddnewtitle').val();
-  var date = $('#editaddnewdateselected').val();
-  var region = $('#editaddnewregion').val();
-  var town = $('#editaddnewtown').val();
-  var audiencecat = $('#editaddnewaudience').val();
-  var attendance = $('#editaddnewattendance').val();
-
-  var topic = $('#editaddnewtopics').val();
-
-  var logistics = "";
-  var communicationMode = "";
 
 
-  var addnewpowerpoint = $('#editaddnewpowerpoint').val();
-  var addnewoneonone = $('#editaddnewoneonone').val();
-  var addnewroadshow = $('#editaddnewroadshow').val();
-  var addnewdurbar = $('#editaddnewdurbar').val();
-  var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
-  var addnewbus = $('#editaddnewbus').val();
-  var addnewsoundsystem = $('#editaddnewsoundsystem').val();
-  var addnewflyer = $('#editaddnewflyer').val();
-  var addnewpen = $('#editaddnewpen').val();
-  var addnewtapemeasure = $('#editaddnewtapemeasure').val();
-  var addnewtowel = $('#editaddnewtowel').val();
-  var addnewmug = $('#editaddnewmug').val();
-  var addnewshirt = $('#editaddnewshirt').val();
-  var addnewnotepad = $('#editaddnewnotepad').val();
-  var addnewpowerblock = $('#editaddnewpowerblock').val();
-
-
-  // communications mode select
-    if ($('#addnewpowerpoint').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewpowerpoint + ",";
-    }
-    if ($('#addnewoneonone').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewoneonone + ",";
-    }
-    if ($('#addnewroadshow').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewroadshow + ",";
-    }
-    if ($('#addnewdurbar').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewdurbar + ",";
-    }
-    if ($('#addnewsmallgroupmeeting').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
-    }
-
-
-    // logistics select
-    if ($('#addnewbus').is(":checked"))
-    {
-      logistics = logistics + addnewbus+ ",";
-    }
-    if ($('#addnewsoundsystem').is(":checked"))
-    {
-      logistics = logistics + addnewsoundsystem+ ",";
-    }
-    if ($('#addnewflyer').is(":checked"))
-    {
-      logistics = logistics + addnewflyer+ ",";
-    }
-    if ($('#addnewpen').is(":checked"))
-    {
-      logistics = logistics + addnewpen+ ",";
-    }
-    if ($('#addnewtapemeasure').is(":checked"))
-    {
-      logistics = logistics + addnewtapemeasure+ ",";
-    }
-    if ($('#addnewtowel').is(":checked"))
-    {
-      logistics = logistics + addnewtowel+ ",";
-    }
-    if ($('#addnewmug').is(":checked"))
-    {
-      logistics = logistics + addnewmug+ ",";
-    }
-    if ($('#addnewshirt').is(":checked"))
-    {
-      logistics = logistics + addnewshirt+ ",";
-    }
-    if ($('#addnewnotepad').is(":checked"))
-    {
-      logistics = logistics + addnewnotepad+ ",";
-    }
-    if ($('#addnewpowerblock').is(":checked"))
-    {
-      logistics = logistics + addnewpowerblock+ ",";
-    }
-
-
-  if ((eventtitle == "") || (date == "") || (region == "") || (town == "") || (audiencecat == "") || (attendance == "") ){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Fill Compulsory Fields."
-
-    }, {
-        type: 'danger',
-        timer: 500,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-
-    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-       "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: editneweventComplete
-      });
-  }
-
-}
-
-function editneweventComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  console.log('LOOK HERE' , obj);
-
-  document.getElementById('RegisterValidationDoc').reset();
-
-  $.notify({
-     icon: "info_outline",
-     message: "Event submitted successfully for verification and approval."
-
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
-     }
- });
-
-
-}
-
-
-
-function showReportModal(){
-  UIkit.modal('#modal-report').show();
-}
-
-
-
-
-function addNewReport(){
+function addnewevent(){
   event.preventDefault();
 
   var userid = sessionStorage.getItem("userid");
@@ -1527,9 +1381,257 @@ function addNewReport(){
     $.ajax(theUrl,
       {
         async: true,
-        complete: addNewReportComplete
+        complete: addneweventComplete
       });
   }
+
+}
+
+function addneweventComplete(xhr,status){
+
+  var obj = JSON.parse(xhr.responseText);
+  console.log('LOOK HERE' , obj);
+
+  document.getElementById('RegisterValidationDoc').reset();
+
+  $.notify({
+     icon: "info_outline",
+     message: "Event submitted successfully for verification and approval."
+
+ },{
+     type: 'success',
+     timer: 2000,
+     placement: {
+         from: 'top',
+         align: 'right'
+     }
+ });
+
+ global1();
+
+}
+
+
+
+
+
+function level1Edit(val){
+  event.preventDefault();
+
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level1EditComplete
+    });
+
+  
+
+
+  
+  // }else{
+
+  //   var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+  //      "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+  //   $.ajax(theUrl,
+  //     {
+  //       async: true,
+  //       complete: level1EditComplete
+  //     });
+  // }
+
+}
+
+function level1EditComplete(xhr,status){
+  var obj = JSON.parse(xhr.responseText);
+  console.log('LOOK HERE' , obj);
+
+  document.getElementById('RegisterValidationDoc').reset();
+
+ 
+  UIkit.modal('#edit-modal-overflow').show();
+  
+    $('#editaddnewdateselected').val(moment(obj[0].date_to_be_organized).format('dddd, D MMMM Y'));
+    $('#editaddnewtitle').val(obj[0].eventtitle);
+    $('#editaddnewattendance').val(obj[0].expected_audience_attendance);
+    $('#editaddnewtown').val(obj[0].town);
+    $('#editaddnewtopics').val(obj[0].eventtopic);
+    
+}
+
+function editNewEvent(){
+
+  event.preventDefault();
+  
+    var userid = sessionStorage.getItem("userid");
+    var eventtitle = $('#editaddnewtitle').val();
+    var date = $('#editaddnewdateselected').val();
+    var region = $('#editaddnewregion').val();
+    var town = $('#editaddnewtown').val();
+    var audiencecat = $('#editaddnewaudience').val();
+    var attendance = $('#editaddnewattendance').val();
+  
+    var topic = $('#editaddnewtopics').val();
+  
+    var logistics = "";
+    var communicationMode = "";
+  
+  
+    var addnewpowerpoint = $('#editaddnewpowerpoint').val();
+    var addnewoneonone = $('#editaddnewoneonone').val();
+    var addnewroadshow = $('#editaddnewroadshow').val();
+    var addnewdurbar = $('#editaddnewdurbar').val();
+    var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
+    var addnewbus = $('#editaddnewbus').val();
+    var addnewsoundsystem = $('#editaddnewsoundsystem').val();
+    var addnewflyer = $('#editaddnewflyer').val();
+    var addnewpen = $('#editaddnewpen').val();
+    var addnewtapemeasure = $('#editaddnewtapemeasure').val();
+    var addnewtowel = $('#editaddnewtowel').val();
+    var addnewmug = $('#editaddnewmug').val();
+    var addnewshirt = $('#editaddnewshirt').val();
+    var addnewnotepad = $('#editaddnewnotepad').val();
+    var addnewpowerblock = $('#editaddnewpowerblock').val();
+  
+  
+    // communications mode select
+      if ($('#editaddnewpowerpoint').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewpowerpoint + ",";
+      }
+      if ($('#editaddnewoneonone').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewoneonone + ",";
+      }
+      if ($('#editaddnewroadshow').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewroadshow + ",";
+      }
+      if ($('#editaddnewdurbar').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewdurbar + ",";
+      }
+      if ($('#editaddnewsmallgroupmeeting').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
+      }
+  
+  
+      // logistics select
+      if ($('#editaddnewbus').is(":checked"))
+      {
+        logistics = logistics + addnewbus+ ",";
+      }
+      if ($('#editaddnewsoundsystem').is(":checked"))
+      {
+        logistics = logistics + addnewsoundsystem+ ",";
+      }
+      if ($('#editaddnewflyer').is(":checked"))
+      {
+        logistics = logistics + addnewflyer+ ",";
+      }
+      if ($('#editaddnewpen').is(":checked"))
+      {
+        logistics = logistics + addnewpen+ ",";
+      }
+      if ($('#editaddnewtapemeasure').is(":checked"))
+      {
+        logistics = logistics + addnewtapemeasure+ ",";
+      }
+      if ($('#editaddnewtowel').is(":checked"))
+      {
+        logistics = logistics + addnewtowel+ ",";
+      }
+      if ($('#editaddnewmug').is(":checked"))
+      {
+        logistics = logistics + addnewmug+ ",";
+      }
+      if ($('#editaddnewshirt').is(":checked"))
+      {
+        logistics = logistics + addnewshirt+ ",";
+      }
+      if ($('#editaddnewnotepad').is(":checked"))
+      {
+        logistics = logistics + addnewnotepad+ ",";
+      }
+      if ($('#editaddnewpowerblock').is(":checked"))
+      {
+        logistics = logistics + addnewpowerblock+ ",";
+      }
+  
+  
+    if ((eventtitle == "") || (date == "") || (topic == "") || (town == "") || (attendance == "")  ) 
+    {
+      $.notify({
+        icon: "info_outline",
+        message: "Please Fill Compulsory Fields."
+  
+      }, {
+          type: 'danger',
+          timer: 500,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+    } else if ((region == ""))
+    {
+      $.notify({
+        icon: "info_outline",
+        message: "Please select the region this altered event will be held in."
+  
+      }, {
+          type: 'danger',
+          timer: 500,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+    } else if ((audiencecat == ""))
+    {
+      $.notify({
+        icon: "info_outline",
+        message: "Please select the audience category this altered event will be held for."
+  
+      }, {
+          type: 'danger',
+          timer: 500,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+    }
+    else{
+  
+      var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: editNewEventComplete
+        });
+    }
+}
+
+function editNewEventComplete(){
+
+}
+
+
+
+function addReportModal(){
+  UIkit.modal('#modal-report').show();
+}
+
+
+
+
+function addNewReport(){
+  event.preventDefault();
+
 
 }
 
@@ -2496,153 +2598,5 @@ function passwordresetComplete(xhr, status) {
         align: 'right'
       }
     });
-
-}
-
-function addnewevent(){
-  event.preventDefault();
-
-  var userid = sessionStorage.getItem("userid");
-  var eventtitle = $('#addnewtitle').val();
-  var date = $('#addnewdateselected').val();
-  var region = $('#addnewregion').val();
-  var town = $('#addnewtown').val();
-  var audiencecat = $('#addnewaudience').val();
-  var attendance = $('#addnewattendance').val();
-
-  var topic = $('#addnewtopics').val();
-
-  var logistics = "";
-  var communicationMode = "";
-
-
-  var addnewpowerpoint = $('#addnewpowerpoint').val();
-  var addnewoneonone = $('#addnewoneonone').val();
-  var addnewroadshow = $('#addnewroadshow').val();
-  var addnewdurbar = $('#addnewdurbar').val();
-  var addnewsmallgroupmeeting = $('#addnewsmallgroupmeeting').val();
-  var addnewbus = $('#addnewbus').val();
-  var addnewsoundsystem = $('#addnewsoundsystem').val();
-  var addnewflyer = $('#addnewflyer').val();
-  var addnewpen = $('#addnewpen').val();
-  var addnewtapemeasure = $('#addnewtapemeasure').val();
-  var addnewtowel = $('#addnewtowel').val();
-  var addnewmug = $('#addnewmug').val();
-  var addnewshirt = $('#addnewshirt').val();
-  var addnewnotepad = $('#addnewnotepad').val();
-  var addnewpowerblock = $('#addnewpowerblock').val();
-
-
-  // communications mode select
-    if ($('#addnewpowerpoint').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewpowerpoint + ",";
-    }
-    if ($('#addnewoneonone').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewoneonone + ",";
-    }
-    if ($('#addnewroadshow').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewroadshow + ",";
-    }
-    if ($('#addnewdurbar').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewdurbar + ",";
-    }
-    if ($('#addnewsmallgroupmeeting').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
-    }
-
-
-    // logistics select
-    if ($('#addnewbus').is(":checked"))
-    {
-      logistics = logistics + addnewbus+ ",";
-    }
-    if ($('#addnewsoundsystem').is(":checked"))
-    {
-      logistics = logistics + addnewsoundsystem+ ",";
-    }
-    if ($('#addnewflyer').is(":checked"))
-    {
-      logistics = logistics + addnewflyer+ ",";
-    }
-    if ($('#addnewpen').is(":checked"))
-    {
-      logistics = logistics + addnewpen+ ",";
-    }
-    if ($('#addnewtapemeasure').is(":checked"))
-    {
-      logistics = logistics + addnewtapemeasure+ ",";
-    }
-    if ($('#addnewtowel').is(":checked"))
-    {
-      logistics = logistics + addnewtowel+ ",";
-    }
-    if ($('#addnewmug').is(":checked"))
-    {
-      logistics = logistics + addnewmug+ ",";
-    }
-    if ($('#addnewshirt').is(":checked"))
-    {
-      logistics = logistics + addnewshirt+ ",";
-    }
-    if ($('#addnewnotepad').is(":checked"))
-    {
-      logistics = logistics + addnewnotepad+ ",";
-    }
-    if ($('#addnewpowerblock').is(":checked"))
-    {
-      logistics = logistics + addnewpowerblock+ ",";
-    }
-
-
-  if ((eventtitle == "") || (date == "") || (region == "") || (town == "") || (audiencecat == "") || (attendance == "") ){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Fill Compulsory Fields."
-
-    }, {
-        type: 'danger',
-        timer: 500,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-
-    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-       "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: addneweventComplete
-      });
-  }
-
-}
-
-function addneweventComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  console.log('LOOK HERE' , obj);
-
-  document.getElementById('RegisterValidationDoc').reset();
-
-  $.notify({
-     icon: "info_outline",
-     message: "Event submitted successfully for verification and approval."
-
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
-     }
- });
-
 
 }
