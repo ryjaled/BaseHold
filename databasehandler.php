@@ -75,7 +75,7 @@
 		case 22:
 			addPendingEvent();
 			break;
-    case 23:
+    	case 23:
 			fetchAddUserLog();
 			break;
 		case 24:
@@ -451,7 +451,6 @@
 
 			while($row = $event->fetch()){
 			   $success="true";
-			   //array_push($data,$row);
 			   $data['regname']=$row['regname'];
 			   $data['figures']=$row['figures'];
 			   $decimal = $row['figures'] / $total;
@@ -470,7 +469,28 @@
 			include("events.php");
 			$event = new events();
 
-			$result = $event->getDashTotalEvents();
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region= '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			} 
+
+			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
@@ -490,7 +510,28 @@
 			include("events.php");
 			$event = new events();
 
-			$result = $event->getDashTotalAttendees();
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
+
+			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
@@ -528,9 +569,30 @@
    {
 		   $success="";
 		   include("events.php");
-		   $event = new events();
+			$event = new events();
+			
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
 
-		   $result = $event->getDashTopAudienceCategory();
+		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
 
 		   $data = array();
 
@@ -558,7 +620,7 @@
 						$success="true";
 						//array_push($data,$row);
 						//$newdate = str_replace("-",",",$row['date']);
-						$newdate = strtotime($row['date_organized']." UTC");
+						$newdate = strtotime($row['date_to_be_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
 						//$data[] = gmdate('r', strtotime($row['date_organized']));
 						$data[]=$new_date;
@@ -895,6 +957,39 @@
 		//	echo'{"result":1,"message":"Welcome to the Rally"}';
 		}
 
+	}
+	
+	function editEvent(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+
+		$eventtitle=$_REQUEST['eventtitle'];
+		$eventtopic=$_REQUEST['eventtopic'];
+		$date=$_REQUEST['date'];
+		$converted_date = strtotime($date);
+		$final_date = date("Y-m-d H:i:s", $converted_date);
+		$region=$_REQUEST['region'];
+		$town=$_REQUEST['town'];
+		$audiencecat=$_REQUEST['audiencecat'];
+		$attendance=$_REQUEST['attendance'];
+		$logistics=$_REQUEST['logistics'];
+		$mode_of_outreach=$_REQUEST['outreach'];
+		$reporter=$_REQUEST['reporter'];
+		$eventid=$_REQUEST['eventid'];
+		
+		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
+
+		$log->addEventLog($eventtitle,$reporter,"edited a Future event", $region);
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			echo '{"result":1,"message":"Event added"}';
+
+		}
 	}
 
 	function editEvent(){
