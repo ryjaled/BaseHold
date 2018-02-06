@@ -269,7 +269,5 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-
-
 	}
 ?>

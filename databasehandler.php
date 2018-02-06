@@ -992,6 +992,39 @@
 		}
 	}
 
+	function editEvent(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+
+		$eventtitle=$_REQUEST['eventtitle'];
+		$eventtopic=$_REQUEST['eventtopic'];
+		$date=$_REQUEST['date'];
+		$converted_date = strtotime($date);
+		$final_date = date("Y-m-d H:i:s", $converted_date);
+		$region=$_REQUEST['region'];
+		$town=$_REQUEST['town'];
+		$audiencecat=$_REQUEST['audiencecat'];
+		$attendance=$_REQUEST['attendance'];
+		$logistics=$_REQUEST['logistics'];
+		$mode_of_outreach=$_REQUEST['outreach'];
+		$reporter=$_REQUEST['reporter'];
+		$eventid=$_REQUEST['eventid'];
+		
+		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
+
+		$log->addEventLog($eventtitle,$reporter,"edited a Future event", $region);
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			echo '{"result":1,"message":"Event added"}';
+
+		}
+	}
+
 
 
 
