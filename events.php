@@ -102,8 +102,11 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-		function getDashTotalEvents($fdate=false,$ldate=false){
+		function getDashTotalEvents($fdate=false,$ldate=false,$region=false){
 			$strQuery="select count(region) as total from events where is_approved = 1 ";
+			if($region!=false){
+				$strQuery.="and region = '$region' ";
+			}
 			if(($fdate!=false) && ($ldate!=false)){
 				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}

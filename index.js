@@ -1336,9 +1336,14 @@ function fillDashRegionFiguresComplete(xhr, status) {
 
 }
 
-function fillDashTotalEvents() {
+function fillDashTotalEvents(sdate,edate) {
 
   var theUrl = "databasehandler.php?cmd=11";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')){
+    theUrl;
+  }else{
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -1351,7 +1356,7 @@ function fillDashTotalEvents() {
 function fillDashTotalEventsComplete(xhr, status) {
 
   var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
+  //console.log("obj", obj);
 
   $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
   // document.getElementById('totalEventsHoted').value = obj.total;
@@ -1360,9 +1365,14 @@ function fillDashTotalEventsComplete(xhr, status) {
 
 }
 
-function fillDashTotalAttendees() {
+function fillDashTotalAttendees(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=13";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -1384,9 +1394,14 @@ function fillDashTotalAttendeesComplete(xhr, status) {
 
 }
 
-function fillDashCommonPlace() {
+function fillDashCommonPlace(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=14";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -1796,4 +1811,54 @@ function addneweventComplete(xhr,status){
  });
 
 
+}
+
+
+
+
+
+
+function searchdash(){
+  if ($('#addnewdateselected').val() == "") {
+    
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select Start Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ($('#addenddateselected').val() == ""){
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select End Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }else{
+    loadDashData();
+    $('#datafield').show();
+  }
+
+}
+
+function loadDashData(){
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  fillDashTotalEvents(sdate, edate);
+  fillDashTotalAttendees(sdate, edate);
+  fillDashCommonPlace(sdate, edate);
+  
 }

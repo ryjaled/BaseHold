@@ -469,7 +469,15 @@
 			include("events.php");
 			$event = new events();
 
-			$result = $event->getDashTotalEvents();
+			$sdate=$_REQUEST['sdate'];
+			$edate=$_REQUEST['edate'];
+
+			$s_converted_date = strtotime($sdate);
+			$e_converted_date = strtotime($edate);
+			$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+			$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+
+			$result = $event->getDashTotalEvents($s_final_date,$e_final_date);
 
 			$data = array();
 
@@ -489,7 +497,15 @@
 			include("events.php");
 			$event = new events();
 
-			$result = $event->getDashTotalAttendees();
+			$sdate=$_REQUEST['sdate'];
+			$edate=$_REQUEST['edate'];
+
+			$s_converted_date = strtotime($sdate);
+			$e_converted_date = strtotime($edate);
+			$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+			$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+
+			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date);
 
 			$data = array();
 
@@ -527,9 +543,17 @@
    {
 		   $success="";
 		   include("events.php");
-		   $event = new events();
+			$event = new events();
+			
+			$sdate=$_REQUEST['sdate'];
+			$edate=$_REQUEST['edate'];
 
-		   $result = $event->getDashTopAudienceCategory();
+			$s_converted_date = strtotime($sdate);
+			$e_converted_date = strtotime($edate);
+			$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+			$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+
+		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date);
 
 		   $data = array();
 
