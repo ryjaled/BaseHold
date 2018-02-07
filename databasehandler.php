@@ -75,7 +75,7 @@
 		case 22:
 			addPendingEvent();
 			break;
-    	case 23:
+    case 23:
 			fetchAddUserLog();
 			break;
 		case 24:
@@ -86,10 +86,15 @@
 		case 26:
 			changePassword();
 			break;
+    case 27:
+			getAReport();
+			break;
 		case 28:
 			editEvent();
 			break;
-
+		case 29:
+			toggleApproveReport();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -128,7 +133,6 @@
 	}
 
 
-
 	function changePassword()
 	{
 
@@ -139,13 +143,11 @@
 		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
 
 		 $validation = $user->updatepassword($myid,$confirmednewpassword);
-		 // echo $validation;
+		 
 		 if($validation==false){
 				echo '{"result":0,"message":"Validation failed"}';
 		 }
 		 else{
-
-			 // $array=array('result'=>1,'message'=>'User logged in','email'=>$email,'password'=>$password);
 			 echo json_encode($validation);
 		 }
 
@@ -173,13 +175,9 @@
 
 		$user2 = new users();
 
-		// $user_id=$_REQUEST['userid'];
-
 		$result = $user2->getID($firstname);
 
 		$usersdata = array();
-
-		// echo $row=$user->fetch();
 
 		while($row = $user2->fetch()){
 				array_push($usersdata,$row);
@@ -334,7 +332,6 @@
 
 				echo json_encode($data);
 
-
 	}
 
 	function getCalEvents()
@@ -385,6 +382,29 @@
  				echo json_encode($data);
 	}
 
+
+	function getAReport()
+	{
+			$success="";
+			include("events.php");
+			$event = new events();
+
+			$reportid=$_REQUEST['reportid'];
+
+			$result = $event->getAReport($reportid);
+
+			$data = array();
+
+			while($row = $event->fetch()){
+					$success="true";
+					// $data[]=$row;
+					array_push($data,$row);
+
+				}
+
+			echo json_encode($data);
+   }
+
 	function getAPendingEvent()
  	{
  			$success="";
@@ -405,7 +425,6 @@
 					$data['town']=$row['town'];
 					$data['id']=$row['pending_id'];
  					//array_push($data,$row);
-
  				}
 
  				echo json_encode($data);
@@ -602,7 +621,7 @@
 
 			   }
 
-			   echo json_encode($data);
+			echo json_encode($data);
 
    }
 
@@ -622,7 +641,6 @@
 						//$newdate = str_replace("-",",",$row['date']);
 						$newdate = strtotime($row['date_to_be_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
-						//$data[] = gmdate('r', strtotime($row['date_organized']));
 						$data[]=$new_date;
 						$data[]=(int)$row['totals'];
 						$moredata[] = $data;
@@ -699,9 +717,7 @@
 					$seriesnumdata = [];
 				}
 
-				//echo json_encode($allarrays);
 				$alldata = transposeData($allarrays);
-				//echo json_encode($alldata);
 
 				for ($k=0; $k < count($alldata); $k++) {
 					$seriesdata['name'] = $snumdata[$k];
@@ -737,6 +753,21 @@
 		 $approval=$_REQUEST['approval'];
 
 		 $verify=$event->toggleEvent($eventid,$approval);
+
+		 echo json_encode($approval);
+
+	}
+
+	function toggleApproveReport()
+	{
+
+		 include("events.php");
+		 $event = new events();
+
+		 $reportid=$_REQUEST['reportid'];
+		 $approval=$_REQUEST['approval'];
+
+		 $verify=$event->toggleReport($reportid,$approval);
 
 		 echo json_encode($approval);
 
@@ -814,7 +845,6 @@
 			$array=array('result'=>1,'message'=>'User logged in',
 		'username'=>$username,'password'=>$password,'userID'=>$id["ID"],'bank'=>$bank["BANK"]);
 			echo json_encode($array);
-		//	echo'{"result":1,"message":"Welcome to the Rally"}';
 		}
 
 	}
@@ -928,33 +958,19 @@
 		$verify = $user->adminLogin($username,$password);
 
 		if($verify==false){
-			// $ans= $user->getEmail($username);
-			// $ans=$user->fetch();
-			// if($ans!=false){
-			// 	$array = array('result'=>0,'message'=>'Please enter the right password','email'=>$ans["email"]);
-			// 	echo json_encode($array);
-			// }
-			// else{
+
 				echo '{"result":0,"message":"Wrong User information"}';
 
-			// }
 
 		}
 		else{
 			session_start();
 			$_SESSION=$verify;
-			//
-			// $id=$user->getID($username);
-			// $bank=$user2->getBank($username);
-			//
-			// $id=$user->fetch();
-			// $bank=$user2->fetch();
 
 
 			$array=array('result'=>1,'message'=>'User logged in',
 		'username'=>$username,'password'=>$password);
 			echo json_encode($array);
-		//	echo'{"result":1,"message":"Welcome to the Rally"}';
 		}
 
 	}
