@@ -1621,39 +1621,97 @@ function editNewEventComplete(){
 }
 
 
-
-function addReportModal(){
-  UIkit.modal('#modal-report').show();
+function addReportModal(val){
+  
+var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadEventReport
+    });
+ 
 }
 
 
+function loadEventReport(xhr, status){
+  var obj = JSON.parse(xhr.responseText);
 
-
-function addNewReport(){
   event.preventDefault();
 
+  UIkit.modal('#modal-report').show();
 
+  document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_date_organized').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_region').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_town').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_checks').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_audience_category').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_audience_attendance').innerHTML=obj[0].eventtitle;
 }
 
-function addNewReportComplete(xhr,status){
+function addNewReport(){
+
+  var addnewreportobservation = $('#report_observations').val();
+  var addnewreportchallenge = $('#report_challenges').val();
+  var addnewreportcomplaint = $('#report_complaints').val();
+  var addnewreportinput = $('#input-id').val();
+  var addnewreportmembers = $('#report_members').val();
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+
+  if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportinput == "") || (addnewreportmembers == "") )
+  {
+
+    $.notify({
+      icon: "info_outline",
+      message: "PLEASE FILL OUT ALL FIELDS TO CONTINUE."
+  
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+  else{
+
+    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id;
+    
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: addNewReportComplete
+        });
+  }
+}
+
+
+function addNewReportComplete(){
+
   var obj = JSON.parse(xhr.responseText);
-  console.log('LOOK HERE' , obj);
 
-  document.getElementById('RegisterValidationDoc').reset();
+  $('#input-id').fileinput('upload');
+  $('#input-id').fileinput('enable');
 
-  $.notify({
-     icon: "info_outline",
-     message: "Event submitted successfully for verification and approval."
-
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
-     }
- });
-
+  $('#report_observations').val("");
+  $('#report_challenges').val("");
+  $('#report_complaints').val("");
+  $('#input-id').val("");
+  $('#report_members').val("");
 
 }
 
@@ -1665,7 +1723,6 @@ function addNewReportComplete(xhr,status){
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-
 
 
 
@@ -1804,14 +1861,16 @@ function level2ReportViewComplete(xhr, status) {
   sessionStorage.pullapproved = obj[0].reportapprove;
   reportHelp();
 
-  console.log(obj);
+  console.log("object", obj);
 
-  var dateOrganized = new Date(obj[0].date_to_be_organized);
+  // var dateOrganized = new Date(obj[0].date_to_be_organized);
+
+  // console.log("HERExx", dateOrganized);
 
   UIkit.modal('#modal-overflow-2-report').show();
 
   document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
+  document.getElementById('report_date_organized').innerHTML=moment(obj[0].date_to_be_organized).format('D MMMM Y');
   document.getElementById('report_region').innerHTML=obj[0].regionname;
   document.getElementById('report_town').innerHTML=obj[0].town;
   document.getElementById('report_audience_category').innerHTML=obj[0].audience_category;
@@ -1826,18 +1885,19 @@ function level2ReportViewComplete(xhr, status) {
 
   var dateVerfied = new Date(obj[0].verified_timestamp);
   var dateApproved = new Date(obj[0].approved_timestamp);
+ 
 
   if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
     document.getElementById('report_event_summary').innerHTML= "This event has not yet been verified nor approved.";
   }
   if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + ". This event is still pending approval.";
   }
   if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
-    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + " and approved on: "+ moment(obj[0].approved_timestamp).format('D MMMM Y');
   }
   if((obj[0].reportverifiedtimestamp != "")){
-    document.getElementById('report_event_summary_2').innerHTML= "This report was approved on:"+obj[0].reportverifiedtimestamp;
+    document.getElementById('report_event_summary_2').innerHTML= "This report was approved on: " +moment(obj[0].reportverifiedtimestamp).format('D MMMM Y');
   }
   if((obj[0].reportverifiedtimestamp == "")){
     document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
@@ -1848,7 +1908,7 @@ function level2ReportViewComplete(xhr, status) {
   console.log(obj[0].event_summary);
   document.getElementById('report_2').innerHTML=obj[0].complaints_raised;
   console.log(obj[0].eventcomplaints_raised_summary);
-  document.getElementById('report_3').innerHTML=moment(new Date(obj[0].date_reported)).format('D MMMM Y') ;
+  document.getElementById('report_3').innerHTML= moment(obj[0].date_reported).format('D MMMM Y') ;
   console.log(obj[0].date_reported);
   document.getElementById('report_4').innerHTML=obj[0].team_challenges;
   console.log(obj[0].team_challenges);
@@ -2598,5 +2658,16 @@ function passwordresetComplete(xhr, status) {
         align: 'right'
       }
     });
+
+}
+
+
+function generateInputs(){
+
+  var number = $('#createInputs').val();
+
+  for(var i = 0; i < number; i++){
+    document.getElementById('place').appendChild="<div><input/></div>";
+  }
 
 }
