@@ -1313,9 +1313,14 @@ function eventviewerComplete(xhr, status) {
 
 }
 
-function fillDashRegionFigures() {
+function fillDashRegionFigures(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=10";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -1326,6 +1331,8 @@ function fillDashRegionFigures() {
 }
 
 function fillDashRegionFiguresComplete(xhr, status) {
+
+  $('#dashboardtablebody').html('<th><td> Region</td><td class="text-right">Events Hosted</td><td class="text-right">Percentage %</td></th>');
 
   var obj = JSON.parse(xhr.responseText);
   // console.log("obj", obj);
@@ -1862,6 +1869,7 @@ function loadDashData(){
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
 
+  fillDashRegionFigures(sdate, edate);
   fillDashTotalEvents(sdate, edate);
   fillDashTotalAttendees(sdate, edate);
   fillDashCommonPlace(sdate, edate);

@@ -432,15 +432,36 @@
 			$success="";
 			include("events.php");
 		   $event = new events();
-		   $total="";
+			$total="";
+			
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region= '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			} 
 
-		   $result = $event->getDashTotalEvents();
+		   $result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
 		   while($row = $event->fetch()){
 			   $success="true";
 			   $total = $row['total'];
 		   }
 
-			$result = $event->getDashRegionFigures();
+			$result = $event->getDashRegionFigures($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
