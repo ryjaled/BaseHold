@@ -119,7 +119,7 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
-    function toggleVerify($eventid, $verify, $verifycomments){
+    function toggleVerify($eventid, $verify, $date, $verifycomments){
       //echo $verify;
       //echo $eventid;
       // $newapproval = "";
@@ -129,7 +129,7 @@ include_once("database.php");
         $newverify = "0";
       }
       echo $newapproval;
-      $strQuery="update events set is_verified='$newverify', verification_comments='$verifycomments' where event_id=$eventid";
+      $strQuery="update events set is_verified='$newverify', verification_comments='$verifycomments', verified_timestamp='$date' where event_id=$eventid";
       return $this->query($strQuery);
     }
 

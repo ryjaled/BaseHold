@@ -451,6 +451,7 @@
 			include("events.php");
 		   $event = new events();
 			$total="";
+			$moredata = array();
 			
 			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
 			{ 
@@ -606,7 +607,7 @@
 
 				while($row = $event->fetch()){
 						$success="true";
-						$newdate = strtotime($row['date_organized']." UTC");
+						$newdate = strtotime($row['date_to_be_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
 						$data[]=$new_date;
 						$data[]=(int)$row['totals'];
@@ -779,7 +780,8 @@
 		$eventid=$_REQUEST['eventid'];
 		$isVerify=$_REQUEST['verify'];
 		$commentToVerify = $_REQUEST['verifycomments'];
-		$verify=$event->toggleVerify($eventid,$isVerify,$commentToVerify);
+		$verifiedDate = date("Y-m-d H:i:s");
+		$verify=$event->toggleVerify($eventid,$isVerify,$verifiedDate,$commentToVerify);
 
 		echo json_encode($isVerify);
 
