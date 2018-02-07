@@ -192,7 +192,6 @@ $().ready(function () {
     }
   });
 
-
   var dataTable5 = $('#eventlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -245,10 +244,6 @@ $().ready(function () {
 
   global1 = refireTable1;
 
-  // setInterval(function () {
-  //   dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-  // }, 3000);
-
   function refireTable2(){
         setTimeout(function () {
         dataTable2.ajax.reload(null, false); // user paging is not reset on reload
@@ -257,11 +252,6 @@ $().ready(function () {
 
       
   }
-  // <div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><div uk-spinner></div></div>
-  // <div class="uk-overlay uk-position-bottom uk-dark">
-  // <div uk-spinner></div>
-  // </div>
-  
 
   global2 = refireTable2;
 
@@ -564,88 +554,6 @@ function _fetchMyEventsCompleteLevel2(xhr,status){
 
     }
 }
-
-// function editor(val){
-//     // console.log('modal to edit: ',val);
-//     var theUrl="databasehandler.php?cmd=6&eventid="+val;
-
-//     $.ajax(theUrl,
-//           {
-//             async:true,
-//             complete:editorComplete
-//           });
-
-//     // $('#modalpop').click();
-// }
-
-// function editorComplete(xhr, status){
-//     // console.log(xhr);
-
-//     var obj = JSON.parse(xhr.responseText);
-
-
-//     sessionStorage.pullreportid = obj[0].report_id;
-//     sessionStorage.pullverified = obj[0].is_verified;
-//     help();
-
-//     var picValues = "";
-//     $('#pictureContainerLevel2').html("");
-
-//     picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
-
-//       var jsonarray = JSON.parse(obj[0].picture_paths);
-//       for(var i = 0; i < jsonarray.length; i++) {
-//         var obj2 = jsonarray[i];
-
-//         //obj2 contains picture names.
-//         // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
-
-//         var user_id = ""+obj[0].reporter;
-//         var event_header = ""+obj[0].eventtitle;
-//         var picture_header = ""+obj2;
-
-
-//         picValues = picValues + "<div>";
-//         picValues = picValues + "<a onclick='closemodal2()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-//         picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-//         picValues = picValues + "</a>";
-//         picValues = picValues + "</div>";
-
-
-//       }
-
-//     picValues = picValues + "</div>";
-
-//     var dform = new Date(obj[0].date_organized);
-//     console.log(obj);
-//     console.log(obj[0].report_id);
-//     console.log(obj[0].eventtitle);
-//     console.log(moment(dform).format('D MMMM Y'));
-//     console.log(obj[0].region);
-//     console.log(obj[0].town);
-//     console.log(obj[0].audience_category);
-//     console.log(obj[0].audience_attendance);
-//     console.log(obj[0].team_challenges);
-//     console.log(obj[0].complaints_raised);
-//     console.log(obj[0].event_summary);
-//     console.log(picValues);
-
-
-//     UIkit.modal('#level2Modal').show();
-//     document.getElementById('report_id').innerHTML=obj[0].report_id;
-//     document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-//     document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-//     document.getElementById('region').innerHTML=obj[0].region;
-//     document.getElementById('town').innerHTML=obj[0].town;
-//     document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-//     document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-//     document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-//     document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-//     document.getElementById('event_summary').innerHTML=obj[0].event_summary;
-//     document.getElementById('pictureContainerLevel2').innerHTML=picValues;
-
-
-// }
 
 function approvalwindow(id){
     // console.log('modal for viewing: ',id);
@@ -1205,7 +1113,6 @@ function addlevel2userComplete(xhr, status) {
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
-
 function level1View(val) {
   console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
@@ -1420,10 +1327,6 @@ function addneweventComplete(xhr,status){
 
 }
 
-
-
-
-
 function level1Edit(val){
   event.preventDefault();
 
@@ -1434,21 +1337,6 @@ function level1Edit(val){
       async: true,
       complete: level1EditComplete
     });
-
-  
-
-
-  
-  // }else{
-
-  //   var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-  //      "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
-  //   $.ajax(theUrl,
-  //     {
-  //       async: true,
-  //       complete: level1EditComplete
-  //     });
-  // }
 
 }
 
@@ -1615,7 +1503,7 @@ function editNewEvent(){
     }
     else{
   
-      var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+      var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
          "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
       $.ajax(theUrl,
         {
@@ -1633,13 +1521,13 @@ function editNewEventComplete(){
 
 function addReportModal(val){
   
-var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
-sessionStorage.report_event_id = val;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: loadEventReport
-    });
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  sessionStorage.report_event_id = val;
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: loadEventReport
+      });
  
 }
 
@@ -1708,7 +1596,6 @@ function addNewReport(){
         });
   }
 }
-
 
 function addNewReportComplete(){
 
@@ -1832,9 +1719,6 @@ function verifyEventToggle(id, verState){
 
 }
 
-
-
-
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
@@ -1847,7 +1731,6 @@ function reportApprover(id, verifyCheck, approveCheck){
     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
   }
 }
-
 
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
@@ -1923,7 +1806,6 @@ function level2ReportViewComplete(xhr, status) {
   document.getElementById('report_4').innerHTML=obj[0].team_challenges;
   console.log(obj[0].team_challenges);
 }
-
 
 function ApproveReportToggle(id, approveState){
   
@@ -2031,7 +1913,6 @@ function level3ViewComplete(xhr, status) {
 
 }
 
-
 function verifyEventToggle(id, verState){
   // alert('here in VET'+id+verState);
   event.preventDefault();
@@ -2059,7 +1940,6 @@ function reportApprover(id, verifyCheck, approveCheck){
     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
   }
 }
-
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -2132,7 +2012,6 @@ function level3ReportViewComplete(xhr, status) {
   document.getElementById('report_4').innerHTML=obj[0].team_challenges;
   console.log(obj[0].team_challenges);
 }
-
 
 function ApproveReportToggle(id, approveState){
   alert('here in VET'+id+approveState);

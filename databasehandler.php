@@ -92,6 +92,9 @@
 		case 28:
 			toggleApproveReport();
 			break;
+		case 29:
+			editEvent();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -194,8 +197,6 @@
 		$log->addUserLog($myid,$actedon,"added");
 
 	}
-
-
 
 	function deleteUser()
    {
@@ -374,7 +375,6 @@
 
  				echo json_encode($data);
 	}
-
 
 	function getAReport()
 	{
@@ -899,7 +899,6 @@
 			echo'{"result":1,"message":"Request added"}';
 		}
 	}
-
 
 	function addBook()
 	{
