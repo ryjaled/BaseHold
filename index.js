@@ -925,7 +925,8 @@ function deleteevent(pid){
   $.ajax(theUrl,
     {
       async: true,
-      removependpendingeventComplete
+      complete: global1,
+      complete: removependpendingeventComplete
     });
 }
 
@@ -958,7 +959,6 @@ function addpendpendingeventComplete(xhr, status) {
 
 function removependpendingeventComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
-  global1();
 
   $.notify({
     icon: "info_outline",
@@ -1533,7 +1533,6 @@ function addReportModal(val){
       });
  
 }
-
 
 function loadEventReport(xhr, status){
   var obj = JSON.parse(xhr.responseText);

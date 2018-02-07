@@ -83,6 +83,7 @@
 			break;
 		case 25:
 			deleteAnEvent();
+			break;
 		case 26:
 			changePassword();
 			break;
@@ -138,10 +139,10 @@
 		 include("users.php");
 		 $user = new users();
 
-		 $myid = $_REQUEST['myid'];
-		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
+	 	 $myid = $_REQUEST['myid'];
+	 	 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
 
-		 $validation = $user->updatepassword($myid,$confirmednewpassword);
+	 	 $validation = $user->updatepassword($myid,$confirmednewpassword);
 		 
 		 if($validation==false){
 				echo '{"result":0,"message":"Validation failed"}';
@@ -155,7 +156,7 @@
 	function addLevel1User()
    {
 
-    include("users.php");
+    	include("users.php");
 
 		$user = new users();
 
@@ -183,11 +184,10 @@
 
 	}
 
-
 	function fetchAddUserLog()
    {
 
-    include("logs.php");
+    	include("logs.php");
 
 		$log = new logs();
 
@@ -295,12 +295,13 @@
 	function deleteAnEvent()
  	{
  			$success="";
- 			include("events.php");
- 			$event = new events();
+			include("events.php");
+
+			$event = new events();
 
 			$eventid=$_REQUEST['eventid'];
 
- 			$result = $event->deleteEvent($eventid);
+			$result = $event->deleteEvent($eventid);
 
  			echo json_encode($result);
 
