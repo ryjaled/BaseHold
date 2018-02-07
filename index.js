@@ -1358,6 +1358,7 @@ function addnewevent(){
     }
 
 
+
     // logistics select
     if ($('#addnewbus').is(":checked"))
     {
@@ -2003,7 +2004,6 @@ function _level3cancel(){
   window.location.href="level2H.html";
 }
 
-
 function level3View(val) {
   console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
@@ -2062,6 +2062,7 @@ function level3ViewComplete(xhr, status) {
 
 }
 
+
 function verifyEventToggle(id, verState){
   // alert('here in VET'+id+verState);
   event.preventDefault();
@@ -2076,9 +2077,6 @@ function verifyEventToggle(id, verState){
 
 
 }
-
-
-
 
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -2193,140 +2191,6 @@ function ApproveReportToggle(id, approveState){
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
 
-
-// function level1viewer(val) {
-//   console.log('modal to edit: ', val);
-//   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
-
-//   $.ajax(theUrl,
-//     {
-//       async: true,
-//       complete: level1viewerComplete
-//     });
-
-//   // $('#modalpop').click();
-// }
-
-// function level1viewerComplete(xhr, status) {
-//   console.log(xhr);
-//   var obj = JSON.parse(xhr.responseText);
-
-
-//   // console.log(typeof(obj[0].picture_paths));
-//   console.log(obj);
-
-//   var picValues = "";
-//   $('#pictureContainer').html("");
-//   //console.log(obj[0].report_id);
-//   var dform = new Date(obj[0].date_organized);
-//   // console.log(obj[0].eventtitle);
-//   // console.log(obj[0].date_organized);
-//   // console.log(obj[0].region);
-//   // console.log(obj[0].town);
-//   // console.log(obj[0].audience_category);
-//   // console.log(obj[0].audience_attendance);
-//   // console.log(obj[0].team_challenges);
-//   // console.log(obj[0].complaints_raised);
-//   // console.log(obj[0].event_summary);
-//   // console.log(obj[0].picture_paths);
-//   // console.log(obj[0].verification_comments);
-
-//   // $('#modalshow').click();
-//   UIkit.modal('#modal-overflow').show();
-
-//   //$('#report_id').val(obj[0].report_id);
-//   // $('#eventtitle').innerHTML(obj[0].eventtitle);
-//   document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-//   document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-//   document.getElementById('region').innerHTML=obj[0].region;
-//   document.getElementById('town').innerHTML=obj[0].town;
-//   document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-//   document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-//   document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-//   document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-//   document.getElementById('event_summary').innerHTML=obj[0].event_summary;
-
-//   picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
-
-//   var jsonarray = JSON.parse(obj[0].picture_paths);
-//   for(var i = 0; i < jsonarray.length; i++) {
-//     var obj2 = jsonarray[i];
-
-//     var user_id = ""+obj[0].reporter;
-//     var event_header = ""+obj[0].eventtitle;
-//     var picture_header = ""+obj2;
-
-
-//     picValues = picValues + "<div>";
-//     picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-//     picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-//     picValues = picValues + "</a>";
-//     picValues = picValues + "</div>";
-
-
-//     // $('#pictureContainer').append("<div>");
-//     // $('#pictureContainer').append("<a class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>");
-//     // $('#pictureContainer').append("<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>");
-//     // $('#pictureContainer').append("</a>");
-//     // $('#pictureContainer').append("</div>");
-//     // $('#pictureContainer').html("<img style='height: 30px; width: 30px' src='uploads/"+obj[0].reporter+"_"+obj[0].eventtitle+"/"+obj2+"/>");
-
-//   }
-//   picValues = picValues + "</div>";
-//   document.getElementById('pictureContainer').innerHTML=picValues;
-
-//   // $('#picture_paths').val(picture_paths);
-//   // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");
-
-// }
-
-// function level1pendingviewer(val) {
-//   console.log('modal to edit: ', val);
-//   var theUrl = "databasehandler.php?cmd=24&eventid=" + val;
-
-//   $.ajax(theUrl,
-//     {
-//       async: true,
-//       complete: level1pendingviewerComplete
-//     });
-
-//   // $('#modalpop').click();
-// }
-
-// function level1pendingviewerComplete(xhr, status) {
-//   console.log(xhr);
-//   var obj = JSON.parse(xhr.responseText);
-
-//   console.log(obj);
-
-//   //console.log(obj[0].report_id);
-//   var dform = new Date(obj.date);
-
-//   document.getElementById('pendid').value = obj.id;
-
-//   document.getElementById('pendtitle').value = obj.title;
-//   document.getElementById('penddateselected').value = moment(dform).format('dddd, D MMMM Y');
-//   document.getElementById('pendregion').value = obj.region;
-//   document.getElementById('pendtown').value = obj.town;
-
-//   // $('#modalshow').click();
-//   UIkit.modal('#pending-modal-overflow').show();
-// }
-
-// function closemodal1(){
-//   // $('#closebutton').click();
-//   console.log("im here in the close modal function");
-//   // $('#closebutton').click();
-//   $('#eventDetailView').modal('hide');
-// }
-
-// function closemodal2(){
-//   // $('#closebutton').click();
-//   console.log("im here in the close modal 2 function");
-//   // $('#closebutton').click();
-//   $('#addContact').modal('hide');
-// }
-
 function eventviewer(val) {
   // console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
@@ -2345,12 +2209,6 @@ function eventviewerComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
   var dform = new Date(obj[0].date_organized);
-  // console.log(obj[0].eventtitle);
-  // console.log(obj[0].region);
-  // console.log(obj[0].town);
-  // console.log(obj[0].audience_category);
-  // console.log(obj[0].audience_attendance);
-  // console.log(obj[0].event_summary);
 
   $('#eventmodalshow').click();
 
@@ -2364,9 +2222,14 @@ function eventviewerComplete(xhr, status) {
 
 }
 
-function fillDashRegionFigures() {
+function fillDashRegionFigures(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=10";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -2377,6 +2240,8 @@ function fillDashRegionFigures() {
 }
 
 function fillDashRegionFiguresComplete(xhr, status) {
+
+  $('#dashboardtablebody').html('<th><td> Region</td><td class="text-right">Events Hosted</td><td class="text-right">Percentage %</td></th>');
 
   var obj = JSON.parse(xhr.responseText);
   // console.log("obj", obj);
@@ -2472,27 +2337,32 @@ function fillDashCommonPlaceComplete(xhr, status) {
 
 }
 
-function fillDashGraphEventData() {
+// function fillDashGraphEventData(sdate, edate) {
 
-  var theUrl = "databasehandler.php?cmd=15";
+//   var theUrl = "databasehandler.php?cmd=15";
+//   if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+//     theUrl;
+//   } else {
+//     theUrl += "&sdate=" + sdate + "&edate=" + edate;
+//   }
 
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashGraphEventDataComplete
-    });
+//   $.ajax(theUrl,
+//     {
+//       async: true,
+//       complete: fillDashGraphEventDataComplete
+//     });
 
-}
+// }
 
-function fillDashGraphEventDataComplete(xhr, status) {
+// function fillDashGraphEventDataComplete(xhr, status) {
 
-  var obj = JSON.parse(xhr.responseText);
-  console.log("obj", obj);
+//   var obj = JSON.parse(xhr.responseText);
+//   console.log("obj", obj);
 
-  //$('#totalAttendees').html("<p>" + obj[0].total + "<p>");
-  // document.getElementById('totalEventsHoted').value = obj.total;
+//   //$('#totalAttendees').html("<p>" + obj[0].total + "<p>");
+//   // document.getElementById('totalEventsHoted').value = obj.total;
 
-}
+// }
 
 function dashEventsDisplay(val) {
   console.log('evend it:', val);
@@ -2716,7 +2586,6 @@ function passwordresetComplete(xhr, status) {
 
 }
 
-
 function generateInputs(){
 
   var number = $('#createInputs').val();
@@ -2749,11 +2618,6 @@ function addneweventComplete(xhr,status){
 
 }
 
-
-
-
-
-
 function searchdash(){
   if ($('#addnewdateselected').val() == "") {
     
@@ -2784,6 +2648,7 @@ function searchdash(){
       });
   }else{
     loadDashData();
+    $('#searchregionarea').show();
     $('#datafield').show();
   }
 
@@ -2793,10 +2658,13 @@ function loadDashData(){
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
 
+  fillDashRegionFigures(sdate, edate);
   fillDashTotalEvents(sdate, edate);
   fillDashTotalAttendees(sdate, edate);
   fillDashCommonPlace(sdate, edate);
-  
+  dashGraphEventData(sdate, edate);
+  dashGraphAudienceData(sdate, edate);
+  dashGraphUserData(sdate, edate);
 }
 
 function regionfillDashTotalEvents(sdate,edate, region) {
@@ -2854,9 +2722,162 @@ function regionloadDashData(region) {
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
 
-  regionfillDashTotalEvents(sdate, edate, region);
-  regionfillDashTotalAttendees(sdate, edate, region);
-  regionfillDashCommonPlace(sdate, edate, region);
+  if(region == 0){
+    fillDashTotalEvents(sdate, edate);
+    fillDashTotalAttendees(sdate, edate);
+    fillDashCommonPlace(sdate, edate);
+  }else{
+    regionfillDashTotalEvents(sdate, edate, region);
+    regionfillDashTotalAttendees(sdate, edate, region);
+    regionfillDashCommonPlace(sdate, edate, region);
+  }
+}
 
+function dashGraphEventData(sdate, edate){
+  var theUrl = "databasehandler.php?cmd=15";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.getJSON(theUrl, function (data) {
+
+    Highcharts.chart('eventcontainer', {
+      chart: {
+        zoomType: 'x'
+      },
+      title: {
+        text: 'Events Per Day'
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+          'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+      },
+      xAxis: {
+        type: 'datetime',
+        visible: false
+      },
+      yAxis: {
+        title: {
+          text: 'Events'
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        area: {
+          fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1
+            },
+            stops: [
+              [0, Highcharts.getOptions().colors[0]],
+              [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+            ]
+          },
+          marker: {
+            radius: 2
+          },
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          threshold: null
+        }
+      },
+
+      series: [{
+        type: 'area',
+        name: 'Number of Events',
+        data: data
+      }]
+    });
+  });
+}
+
+function dashGraphAudienceData(sdate, edate) {
+  var theUrl = "databasehandler.php?cmd=16";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.getJSON(theUrl, function (data) {
+    //var piedata = JSON.parse(data);
+    console.log(data);
+    Highcharts.chart('eventaudiencecontainer', {
+      chart: {
+        type: 'pie',
+        options3d: {
+          enabled: true,
+          alpha: 45
+        }
+      },
+      title: {
+        text: 'Audience Categories'
+      },
+      subtitle: {
+        text: 'Sum of Categories'
+      },
+      plotOptions: {
+        pie: {
+          innerSize: 100,
+          depth: 45
+        }
+      },
+      series: [{
+        name: 'Number of events tailored to',
+        data: data
+      }]
+    });
+  });
+}
+
+function dashGraphUserData(sdate, edate) {
+  var theUrl = "databasehandler.php?cmd=17";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.getJSON(theUrl, function (data) {
+
+    Highcharts.chart('eventusercontainer', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Outreach Categories Per Region'
+      },
+      xAxis: {
+        categories: data.categories
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Total Audience Attended'
+        }
+      },
+      tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+        shared: true
+      },
+      plotOptions: {
+        column: {
+          stacking: 'percent'
+        }
+      },
+      series: data.series
+    });
+  });
 }
 
