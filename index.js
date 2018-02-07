@@ -90,8 +90,8 @@ $().ready(function () {
   var dataTable3 = $('#level3list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '25%'},
-      { "targets": 1, width: '15%'},
+      { "targets": 0, width: '7%'},
+      { "targets": 1, width: '25%'},
       { "targets": 2, width: '15%'},
       { "targets": 3, width: '15%'},
       { "targets": 4, width: '15%'},
@@ -99,7 +99,7 @@ $().ready(function () {
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[3, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -109,31 +109,6 @@ $().ready(function () {
         $(".level3list-error").html("");
         $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level3list_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable3 = $('#level3reportlist').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '25%' },
-      { "targets": 1, width: '15%' },
-      { "targets": 2, width: '15%' },
-      { "targets": 3, width: '15%' },
-      { "targets": 4, width: '15%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[3, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "level3reportlist.php?usersessionid=" + sessionStorage.userid, // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".level3reportlist-error").html("");
-        $("#level3reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#level3reportlist_processing").css("display", "none");
       }
     }
   });
@@ -217,6 +192,7 @@ $().ready(function () {
     }
   });
 
+
   var dataTable5 = $('#eventlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -276,8 +252,16 @@ $().ready(function () {
   function refireTable2(){
         setTimeout(function () {
         dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+        // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
       }, 500);
+
+      
   }
+  // <div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><div uk-spinner></div></div>
+  // <div class="uk-overlay uk-position-bottom uk-dark">
+  // <div uk-spinner></div>
+  // </div>
+  
 
   global2 = refireTable2;
 
@@ -333,7 +317,6 @@ $().ready(function () {
   });
 
   $('#editaddnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
-
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
@@ -1632,7 +1615,7 @@ function editNewEvent(){
     }
     else{
   
-      var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+      var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
          "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
       $.ajax(theUrl,
         {
@@ -1643,7 +1626,8 @@ function editNewEvent(){
 }
 
 function editNewEventComplete(){
-
+  UIkit.modal('#edit-modal-overflow').hide();
+  global1();
 }
 
 
@@ -1715,7 +1699,7 @@ function addNewReport(){
   }
   else{
 
-    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id;
+    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id + "&eventtitle="+obj[0].eventtitle + "&date="+obj[0].date+ "&region=" +obj[0].region+ "&town=" +obj[0].town + "&audcat="+obj[0].audcat+ "&audatt="+obj[0].audatt+ "&observations="+obj[0].observations+ "&challenges="+obj[0].challenges+ "&complaints="+obj[0].complaints+ "&members="+obj[0].members+ "&members="+obj[0].members;
     
       $.ajax(theUrl,
         {
@@ -1942,7 +1926,7 @@ function level2ReportViewComplete(xhr, status) {
 
 
 function ApproveReportToggle(id, approveState){
-  alert('here in VET'+id+approveState);
+  
   event.preventDefault();
   var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
   
@@ -2237,14 +2221,9 @@ function fillDashRegionFiguresComplete(xhr, status) {
 
 }
 
-function fillDashTotalEvents(sdate,edate) {
+function fillDashTotalEvents() {
 
   var theUrl = "databasehandler.php?cmd=11";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')){
-    theUrl;
-  }else{
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
 
   $.ajax(theUrl,
   {
@@ -2257,7 +2236,7 @@ function fillDashTotalEvents(sdate,edate) {
 function fillDashTotalEventsComplete(xhr, status) {
 
   var obj = JSON.parse(xhr.responseText);
-  //console.log("obj", obj);
+  // console.log("obj", obj);
 
   $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
   // document.getElementById('totalEventsHoted').value = obj.total;
@@ -2266,14 +2245,9 @@ function fillDashTotalEventsComplete(xhr, status) {
 
 }
 
-function fillDashTotalAttendees(sdate, edate) {
+function fillDashTotalAttendees() {
 
   var theUrl = "databasehandler.php?cmd=13";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
 
   $.ajax(theUrl,
   {
@@ -2295,14 +2269,9 @@ function fillDashTotalAttendeesComplete(xhr, status) {
 
 }
 
-function fillDashCommonPlace(sdate, edate) {
+function fillDashCommonPlace() {
 
   var theUrl = "databasehandler.php?cmd=14";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
 
   $.ajax(theUrl,
   {
@@ -2578,6 +2547,7 @@ function generateInputs(){
   for(var i = 0; i < number; i++){
     document.getElementById('place').appendChild="<div><input/></div>";
   }
+
 
 }
 

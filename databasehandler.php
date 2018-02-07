@@ -75,7 +75,7 @@
 		case 22:
 			addPendingEvent();
 			break;
-    case 23:
+   	case 23:
 			fetchAddUserLog();
 			break;
 		case 24:
@@ -86,13 +86,10 @@
 		case 26:
 			changePassword();
 			break;
-    case 27:
+		case 27:
 			getAReport();
 			break;
 		case 28:
-			editEvent();
-			break;
-		case 29:
 			toggleApproveReport();
 			break;
 		default:
@@ -487,6 +484,7 @@
 
 			while($row = $event->fetch()){
 			   $success="true";
+			   //array_push($data,$row);
 			   $data['regname']=$row['regname'];
 			   $data['figures']=$row['figures'];
 			   $decimal = $row['figures'] / $total;
@@ -505,28 +503,7 @@
 			include("events.php");
 			$event = new events();
 
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region= '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			} 
-
-			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
+			$result = $event->getDashTotalEvents();
 
 			$data = array();
 
@@ -548,28 +525,7 @@
 			$total = '';
 			$moredata = array();
 
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region = '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			}
-
-			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
+			$result = $event->getDashTotalAttendees();
 
 			$data = array();
 
@@ -606,30 +562,9 @@
    {
 		   $success="";
 		   include("events.php");
-			$event = new events();
-			
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region = '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			}
+		   $event = new events();
 
-		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
+		   $result = $event->getDashTopAudienceCategory();
 
 		   $data = array();
 
@@ -670,9 +605,7 @@
 
 				while($row = $event->fetch()){
 						$success="true";
-						//array_push($data,$row);
-						//$newdate = str_replace("-",",",$row['date']);
-						$newdate = strtotime($row['date_to_be_organized']." UTC");
+						$newdate = strtotime($row['date_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
 						$data[]=$new_date;
 						$data[]=(int)$row['totals'];
