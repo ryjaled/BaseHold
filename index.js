@@ -1331,6 +1331,7 @@ function level1Edit(val){
   event.preventDefault();
 
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  sessionStorage.setItem("eventneededid",val);
 
   $.ajax(theUrl,
     {
@@ -1362,6 +1363,7 @@ function editNewEvent(){
   event.preventDefault();
   
     var userid = sessionStorage.getItem("userid");
+    var eventid = sessionStorage.getItem("eventneededid");
     var eventtitle = $('#editaddnewtitle').val();
     var date = $('#editaddnewdateselected').val();
     var region = $('#editaddnewregion').val();
@@ -1504,7 +1506,7 @@ function editNewEvent(){
     else{
   
       var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid + "&eventid=" + eventid;
       $.ajax(theUrl,
         {
           async: true,
@@ -1517,7 +1519,6 @@ function editNewEventComplete(){
   UIkit.modal('#edit-modal-overflow').hide();
   global1();
 }
-
 
 function addReportModal(val){
   
