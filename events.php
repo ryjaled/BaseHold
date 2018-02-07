@@ -11,52 +11,8 @@ include_once("database.php");
 
 		}
 
-
-
-
-		/**
-		* adds new user to the database
-		* @param [all attributes needed to create a user]
-		* @return boolean showing success or failure
-		*/
-		// function addEvent($eventtitle,$date,$region,$town,$audiencecat,$attendance,$challenges,$complaints,$isVerified,$isApproved,$verifiedComments,$summary,$picpath,$reporter,$foldpath){
-
-		// 	$strQuery="insert into reports set
-		// 					eventtitle='$eventtitle',
-		// 					date_organized='$date',
-		// 					region='$region',
-		// 					town='$town',
-		// 					audience_category='$audiencecat',
-		// 					audience_attendance='$attendance',
-		// 					team_challenges='$challenges',
-		// 					complaints_raised='$complaints',
-		// 					is_verified='$isVerified',
-		// 					is_approved='$isApproved',
-		// 					verification_comments='$verifiedComments',
-		// 					event_summary='$summary',
-		// 					picture_paths='$picpath',
-		// 					reporter='$reporter',
-		// 					folder_paths='$foldpath' ";
-
-		// 					// echo $strQuery;
-		// 	return $this->query($strQuery);
-		// }
-
-		// function addPendingEvent($eventtitle,$date,$region,$town,$reporter){
-
-		// 	$strQuery="insert into pending set
-		// 					eventtitle='$eventtitle',
-		// 					date_to_be_organized='$date',
-		// 					region='$region',
-		// 					town='$town',
-		// 					reporter='$reporter' ";
-
-		// 					// echo $strQuery;
-		// 	return $this->query($strQuery);
-		// }
-
-		function deletePendingEvent($eventid){
-			$strQuery="delete from pending where pending_id='$eventid' ";
+		function deleteEvent($eventid){
+			$strQuery="delete from events where event_id='$eventid' ";
 			return $this->query($strQuery);
 		}
 

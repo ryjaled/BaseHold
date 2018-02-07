@@ -82,7 +82,7 @@
 			getAPendingEvent();
 			break;
 		case 25:
-			deleteAPendingEvent();
+			deleteAnEvent();
 		case 26:
 			changePassword();
 			break;
@@ -292,15 +292,15 @@
 		}
 	}
 
-	function deleteAPendingEvent()
+	function deleteAnEvent()
  	{
  			$success="";
  			include("events.php");
  			$event = new events();
 
-			$eventid=$_REQUEST['pendid'];
+			$eventid=$_REQUEST['eventid'];
 
- 			$result = $event->deletePendingEvent($eventid);
+ 			$result = $event->deleteEvent($eventid);
 
  			echo json_encode($result);
 

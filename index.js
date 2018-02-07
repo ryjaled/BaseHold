@@ -920,11 +920,12 @@ function addpendpendingevent() {
 
 }
 
-function deletependingevent(pid){
-  var theUrl = "databasehandler.php?cmd=25&pendid=" + pid;
+function deleteevent(pid){
+  var theUrl = "databasehandler.php?cmd=25&eventid=" + pid;
   $.ajax(theUrl,
     {
-      async: true
+      async: true,
+      removependpendingeventComplete
     });
 }
 
@@ -957,10 +958,11 @@ function addpendpendingeventComplete(xhr, status) {
 
 function removependpendingeventComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
+  global1();
 
   $.notify({
     icon: "info_outline",
-    message: "Pending Event Removed Successfully."
+    message: "Event Removed Successfully."
 
   }, {
       type: 'success',
