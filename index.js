@@ -90,8 +90,8 @@ $().ready(function () {
   var dataTable3 = $('#level3list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '7%'},
-      { "targets": 1, width: '25%'},
+      { "targets": 0, width: '25%'},
+      { "targets": 1, width: '15%'},
       { "targets": 2, width: '15%'},
       { "targets": 3, width: '15%'},
       { "targets": 4, width: '15%'},
@@ -99,7 +99,7 @@ $().ready(function () {
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[3, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -109,6 +109,31 @@ $().ready(function () {
         $(".level3list-error").html("");
         $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level3list_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable3 = $('#level3reportlist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '25%' },
+      { "targets": 1, width: '15%' },
+      { "targets": 2, width: '15%' },
+      { "targets": 3, width: '15%' },
+      { "targets": 4, width: '15%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[3, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "level3reportlist.php?usersessionid=" + sessionStorage.userid, // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".level3reportlist-error").html("");
+        $("#level3reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#level3reportlist_processing").css("display", "none");
       }
     }
   });
@@ -192,7 +217,6 @@ $().ready(function () {
     }
   });
 
-
   var dataTable5 = $('#eventlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -237,9 +261,11 @@ $().ready(function () {
     }
   });
 
+
 //   setInterval(function () {
 //      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
 //   }, 6000);
+
 
 function refireTable1(){
   setTimeout(function () {
@@ -298,7 +324,21 @@ global7 = refireTable7;
 
 
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+
+  $('#addenddateselected').datetimepicker({
+    format: 'dddd, D MMMM Y',
+    useCurrent: false //Important! See issue #1075
+  });
+  $("#addnewdateselected").on("dp.change", function (e) {
+    $('#addenddateselected').data("DateTimePicker").minDate(e.date);
+  });
+  $("#addenddateselected").on("dp.change", function (e) {
+    $('#addnewdateselected').data("DateTimePicker").maxDate(e.date);
+  });
+
+
   $('#editaddnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
@@ -2347,9 +2387,14 @@ function fillDashRegionFiguresComplete(xhr, status) {
 
 }
 
-function fillDashTotalEvents() {
+function fillDashTotalEvents(sdate,edate) {
 
   var theUrl = "databasehandler.php?cmd=11";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')){
+    theUrl;
+  }else{
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -2362,7 +2407,7 @@ function fillDashTotalEvents() {
 function fillDashTotalEventsComplete(xhr, status) {
 
   var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
+  //console.log("obj", obj);
 
   $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
   // document.getElementById('totalEventsHoted').value = obj.total;
@@ -2371,9 +2416,14 @@ function fillDashTotalEventsComplete(xhr, status) {
 
 }
 
-function fillDashTotalAttendees() {
+function fillDashTotalAttendees(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=13";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -2395,9 +2445,14 @@ function fillDashTotalAttendeesComplete(xhr, status) {
 
 }
 
-function fillDashCommonPlace() {
+function fillDashCommonPlace(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=14";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
   {
@@ -2671,3 +2726,139 @@ function generateInputs(){
   }
 
 }
+
+function addneweventComplete(xhr,status){
+  var obj = JSON.parse(xhr.responseText);
+  console.log('LOOK HERE' , obj);
+
+  document.getElementById('RegisterValidationDoc').reset();
+
+  $.notify({
+     icon: "info_outline",
+     message: "Event submitted successfully for verification and approval."
+
+ },{
+     type: 'success',
+     timer: 2000,
+     placement: {
+         from: 'top',
+         align: 'right'
+     }
+ });
+
+
+}
+
+
+
+
+
+
+function searchdash(){
+  if ($('#addnewdateselected').val() == "") {
+    
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select Start Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ($('#addenddateselected').val() == ""){
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select End Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }else{
+    loadDashData();
+    $('#datafield').show();
+  }
+
+}
+
+function loadDashData(){
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  fillDashTotalEvents(sdate, edate);
+  fillDashTotalAttendees(sdate, edate);
+  fillDashCommonPlace(sdate, edate);
+  
+}
+
+function regionfillDashTotalEvents(sdate,edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=11";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalEventsComplete
+    });
+
+}
+
+function regionfillDashTotalAttendees(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=13";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+  
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalAttendeesComplete
+    });
+
+}
+
+function regionfillDashCommonPlace(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=14";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashCommonPlaceComplete
+    });
+
+}
+
+function regionloadDashData(region) {
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  regionfillDashTotalEvents(sdate, edate, region);
+  regionfillDashTotalAttendees(sdate, edate, region);
+  regionfillDashCommonPlace(sdate, edate, region);
+
+}
+
+}
+
