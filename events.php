@@ -41,18 +41,34 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
-		function getDashRegionFigures(){
-			$strQuery="select r.regionname as regname, count(p.region) as figures from reports as p inner join region as r on r.region_id = p.region where is_approved = 1 group by p.region ORDER BY r.regionname ASC";
+		function getDashRegionFigures($fdate=false,$ldate=false){
+			$strQuery="select r.regionname as regname, count(e.region) as figures from events as e inner join region as r on r.region_id = e.region where e.is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by e.region order by r.regionname ASC";
       return $this->query($strQuery);
 		}
 
-		function getDashTotalAttendees(){
-			$strQuery="select sum(audience_attendance) as total from reports where is_approved = 1";
+		function getDashTotalAttendees($fdate=false,$ldate=false,$region=false){
+			$strQuery="select sum(expected_audience_attendance) as total from events where is_approved = 1 ";
+			if($region!=false){
+				$strQuery.="and region = '$region' ";
+			}
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
 			return $this->query($strQuery);
 		}
 
-		function getDashTotalEvents(){
-			$strQuery="select count(region) as total from reports where is_approved = 1";
+		function getDashTotalEvents($fdate=false,$ldate=false,$region=false){
+			$strQuery="select count(region) as total from events where is_approved = 1 ";
+			if($region!=false){
+				$strQuery.="and region = '$region' ";
+			}
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
 			return $this->query($strQuery);
 		}
 
