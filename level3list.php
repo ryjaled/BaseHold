@@ -29,22 +29,23 @@ $constant = 1;
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'evemtttile',
-    1 => 'regionname',
-    2 => 'town',
-    3 => 'verified_timestamp',
-    4 => 'is_approved',
-    5 => 'event_id'
+	0 => 'report_id',
+	1 => 'eventtitle',
+    2 => 'date_organized',
+    3 => 'region',
+    4 => 'town',
+    5 => 'is_approved',
+    6 => 'report_id'
 );
 
 // getting total number records without any search
-$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,u.firstname, u.lastname,r.regionname,e.town FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
+$sql = "select r.report_id, r.eventtitle, r.date_organized, u.regionname as region, r.town, r.is_approved from reports as r inner join region as u on u.region_id = r.region where is_verified = '$constant'";
 $query=mysqli_query($conn, $sql) or die("level3list.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 // $sql = "select report_id, eventtitle, date_organized, region from reports where reporter = '$id'";
-$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,u.firstname, u.lastname,r.regionname,e.town FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
+$sql = "select r.report_id, r.eventtitle, r.date_organized, u.regionname as region, r.town, r.is_approved from reports as r inner join region as u on u.region_id = r.region where is_verified = '$constant'";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND eventtitle LIKE '".$requestData['search']['value']."%'";
 }
@@ -58,10 +59,11 @@ $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
+    $nestedData[] = $row['report_id'];
     $nestedData[] = $row['eventtitle'];
-    $nestedData[] = $row['regionname'];
+    $nestedData[] = date('jS F Y', strtotime($row['date_organized']));
+    $nestedData[] = $row['region'];
     $nestedData[] = $row['town'];
-    $nestedData[] = date('jS F Y', strtotime($row['verified_timestamp']));
 
     if( $row['is_approved'] == "0"){
         $verifyLabel = "<p style='color: red'>Not Approved</p>";
@@ -76,7 +78,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	// $enddate = date('jS F Y', strtotime($row['date_organized']));
     // $nestedData[] = $enddate;
     // "<button onclick='editor({$row['report_id']},{$row['is_verified']})' class='btn btn-just-icon btn-twitter' rel='tooltip' data-placement='bottom' title='Verify Event'><i class='material-icons'>assignment</i></button>"
-	$buttonshow = "<button onclick='approvalwindow({$row['event_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View'><i class='material-icons'>visibility</i></button>";
+	$buttonshow = "<button onclick='approvalwindow({$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View'><i class='material-icons'>visibility</i></button>";
 	$nestedData[] = $buttonshow;
 
 	$data[] = $nestedData;
