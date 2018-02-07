@@ -127,8 +127,6 @@
 
 	}
 
-
-
 	function changePassword()
 	{
 
@@ -150,9 +148,6 @@
 		 }
 
  	}
-
-
-
 
 	function addLevel1User()
    {
@@ -607,12 +602,27 @@
    }
 
 	function getDashGraphEventData()
-		{
+	{
 				$success="";
 				include("events.php");
 				$event = new events();
 
-				$result = $event->getDashGraphEventData();
+				if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+				{ 
+					$sdate='';
+					$edate=''; 
+					$s_final_date = '';
+					$e_final_date = '';
+				}else{
+					$sdate=$_REQUEST['sdate'];
+					$edate=$_REQUEST['edate'];
+					$s_converted_date = strtotime($sdate);
+					$e_converted_date = strtotime($edate);
+					$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+					$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+				}
+
+				$result = $event->getDashGraphEventData($s_final_date,$e_final_date);
 
 				$data = array();
 
@@ -634,12 +644,27 @@
 	}
 
 	function getDashPieEventData()
-		{
+	{
 				$success="";
 				include("events.php");
 				$event = new events();
 
-				$result = $event->getDashPieEventData();
+				if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+				{ 
+					$sdate='';
+					$edate=''; 
+					$s_final_date = '';
+					$e_final_date = '';
+				}else{
+					$sdate=$_REQUEST['sdate'];
+					$edate=$_REQUEST['edate'];
+					$s_converted_date = strtotime($sdate);
+					$e_converted_date = strtotime($edate);
+					$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+					$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+				}
+
+				$result = $event->getDashPieEventData($s_final_date,$e_final_date);
 
 				$data = array();
 
@@ -656,7 +681,7 @@
 	}
 
 	function getDashOutreachEventData()
-		{
+	{
 				$success="";
 				include("events.php");
 				$event = new events();
@@ -669,14 +694,29 @@
 				$fulldata = array();
 				$allarrays = array();
 
-				$result = $event->getDashRegionNameData();
+				if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+				{ 
+					$sdate='';
+					$edate=''; 
+					$s_final_date = '';
+					$e_final_date = '';
+				}else{
+					$sdate=$_REQUEST['sdate'];
+					$edate=$_REQUEST['edate'];
+					$s_converted_date = strtotime($sdate);
+					$e_converted_date = strtotime($edate);
+					$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+					$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+				}
+
+				$result = $event->getDashRegionNameData($s_final_date,$e_final_date);
 				while($row = $event->fetch()){
 					$data[]=(int)$row['regnum'];
 					$data[]=$row['name'];
 					$ndata[] = $data;
 					$data = [];
 				}
-				$result = $event->getDashRegionAudienceData();
+				$result = $event->getDashRegionAudienceData($s_final_date,$e_final_date);
 				while($row = $event->fetch()){
 					$data[]=$row['audience_category'];
 					$adata[] = $data;
@@ -690,7 +730,7 @@
 				for ($i=0; $i < count($ndata); $i++) {
 				@$snumdata[]=$adata[$i][0];
 					for ($j=0; $j < count($adata); $j++) {
-						$result = $event->getDashRegionAudienceFullData($ndata[$i][0],$adata[$j][0]);
+						$result = $event->getDashRegionAudienceFullData($ndata[$i][0],$adata[$j][0],$s_final_date,$e_final_date);
 						while($row = $event->fetch()){
 							$seriesnumdata[] = (int)$row['count'];
 						}

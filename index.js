@@ -1421,27 +1421,32 @@ function fillDashCommonPlaceComplete(xhr, status) {
 
 }
 
-function fillDashGraphEventData() {
+// function fillDashGraphEventData(sdate, edate) {
 
-  var theUrl = "databasehandler.php?cmd=15";
+//   var theUrl = "databasehandler.php?cmd=15";
+//   if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+//     theUrl;
+//   } else {
+//     theUrl += "&sdate=" + sdate + "&edate=" + edate;
+//   }
 
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashGraphEventDataComplete
-    });
+//   $.ajax(theUrl,
+//     {
+//       async: true,
+//       complete: fillDashGraphEventDataComplete
+//     });
 
-}
+// }
 
-function fillDashGraphEventDataComplete(xhr, status) {
+// function fillDashGraphEventDataComplete(xhr, status) {
 
-  var obj = JSON.parse(xhr.responseText);
-  console.log("obj", obj);
+//   var obj = JSON.parse(xhr.responseText);
+//   console.log("obj", obj);
 
-  //$('#totalAttendees').html("<p>" + obj[0].total + "<p>");
-  // document.getElementById('totalEventsHoted').value = obj.total;
+//   //$('#totalAttendees').html("<p>" + obj[0].total + "<p>");
+//   // document.getElementById('totalEventsHoted').value = obj.total;
 
-}
+// }
 
 function dashEventsDisplay(val) {
   console.log('evend it:', val);
@@ -1860,7 +1865,9 @@ function loadDashData(){
   fillDashTotalEvents(sdate, edate);
   fillDashTotalAttendees(sdate, edate);
   fillDashCommonPlace(sdate, edate);
-  
+  dashGraphEventData(sdate, edate);
+  dashGraphAudienceData(sdate, edate);
+  dashGraphUserData(sdate, edate);
 }
 
 function regionfillDashTotalEvents(sdate,edate, region) {
@@ -1918,8 +1925,161 @@ function regionloadDashData(region) {
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
 
-  regionfillDashTotalEvents(sdate, edate, region);
-  regionfillDashTotalAttendees(sdate, edate, region);
-  regionfillDashCommonPlace(sdate, edate, region);
+  if(region == 0){
+    fillDashTotalEvents(sdate, edate);
+    fillDashTotalAttendees(sdate, edate);
+    fillDashCommonPlace(sdate, edate);
+  }else{
+    regionfillDashTotalEvents(sdate, edate, region);
+    regionfillDashTotalAttendees(sdate, edate, region);
+    regionfillDashCommonPlace(sdate, edate, region);
+  }
+}
 
+function dashGraphEventData(sdate, edate){
+  var theUrl = "databasehandler.php?cmd=15";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.getJSON(theUrl, function (data) {
+
+    Highcharts.chart('eventcontainer', {
+      chart: {
+        zoomType: 'x'
+      },
+      title: {
+        text: 'Events Per Day'
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+          'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+      },
+      xAxis: {
+        type: 'datetime',
+        visible: false
+      },
+      yAxis: {
+        title: {
+          text: 'Events'
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        area: {
+          fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1
+            },
+            stops: [
+              [0, Highcharts.getOptions().colors[0]],
+              [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+            ]
+          },
+          marker: {
+            radius: 2
+          },
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          threshold: null
+        }
+      },
+
+      series: [{
+        type: 'area',
+        name: 'Number of Events',
+        data: data
+      }]
+    });
+  });
+}
+
+function dashGraphAudienceData(sdate, edate) {
+  var theUrl = "databasehandler.php?cmd=16";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.getJSON(theUrl, function (data) {
+    //var piedata = JSON.parse(data);
+    console.log(data);
+    Highcharts.chart('eventaudiencecontainer', {
+      chart: {
+        type: 'pie',
+        options3d: {
+          enabled: true,
+          alpha: 45
+        }
+      },
+      title: {
+        text: 'Audience Categories'
+      },
+      subtitle: {
+        text: 'Sum of Categories'
+      },
+      plotOptions: {
+        pie: {
+          innerSize: 100,
+          depth: 45
+        }
+      },
+      series: [{
+        name: 'Number of events tailored to',
+        data: data
+      }]
+    });
+  });
+}
+
+function dashGraphUserData(sdate, edate) {
+  var theUrl = "databasehandler.php?cmd=17";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.getJSON(theUrl, function (data) {
+
+    Highcharts.chart('eventusercontainer', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Outreach Categories Per Region'
+      },
+      xAxis: {
+        categories: data.categories
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Total Audience Attended'
+        }
+      },
+      tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+        shared: true
+      },
+      plotOptions: {
+        column: {
+          stacking: 'percent'
+        }
+      },
+      series: data.series
+    });
+  });
 }

@@ -121,28 +121,47 @@ include_once("database.php");
 		// 	return $this->query($strQuery);
 		// }
 
-		function getDashGraphEventData(){
-			$strQuery="select count(DATE(date_to_be_organized)) as totals, DATE(date_to_be_organized) as date, date_to_be_organized from events where is_approved = 1 group by DATE(events.date_to_be_organized)";
+		function getDashGraphEventData($fdate=false,$ldate=false){
+			$strQuery="select count(DATE(date_to_be_organized)) as totals, DATE(date_to_be_organized) as date, date_to_be_organized from events where is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.= "group by DATE(events.date_to_be_organized)";
 			return $this->query($strQuery);
 		}
 
-		function getDashPieEventData(){
-			$strQuery="select count(audience_category) as totals, audience_category as audience from events where is_approved = 1 group by audience_category";
+		function getDashPieEventData($fdate=false,$ldate=false){
+			$strQuery="select count(audience_category) as totals, audience_category as audience from events where is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by audience_category";
 			return $this->query($strQuery);
 		}
 
-		function getDashRegionNameData(){
-			$strQuery="select p.region as regnum, r.regionname as name from events as p inner join region as r on r.region_id = p.region where p.is_approved = 1 group by p.region ORDER by r.regionname asc";
+		function getDashRegionNameData($fdate=false,$ldate=false){
+			$strQuery="select p.region as regnum, r.regionname as name from events as p inner join region as r on r.region_id = p.region where p.is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by p.region ORDER by r.regionname asc";
 			return $this->query($strQuery);
 		}
 
-		function getDashRegionAudienceData(){
-			$strQuery="select audience_category from events where is_approved=1 group by audience_category";
+		function getDashRegionAudienceData($fdate=false,$ldate=false){
+			$strQuery="select audience_category from events where is_approved=1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by audience_category";
 			return $this->query($strQuery);
 		}
 
-		function getDashRegionAudienceFullData($region,$aud){
-			$strQuery="select sum(expected_audience_attendance) as count from events where region = '$region' and audience_category = '$aud' and is_approved=1";
+		function getDashRegionAudienceFullData($region,$aud,$fdate=false,$ldate=false){
+			$strQuery="select sum(expected_audience_attendance) as count from events where region = '$region' and audience_category = '$aud' and is_approved=1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
 			return $this->query($strQuery);
 		}
 
