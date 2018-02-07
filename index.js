@@ -2173,33 +2173,6 @@ function fillDashCommonPlaceComplete(xhr, status) {
 
 }
 
-// function fillDashGraphEventData(sdate, edate) {
-
-//   var theUrl = "databasehandler.php?cmd=15";
-//   if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-//     theUrl;
-//   } else {
-//     theUrl += "&sdate=" + sdate + "&edate=" + edate;
-//   }
-
-//   $.ajax(theUrl,
-//     {
-//       async: true,
-//       complete: fillDashGraphEventDataComplete
-//     });
-
-// }
-
-// function fillDashGraphEventDataComplete(xhr, status) {
-
-//   var obj = JSON.parse(xhr.responseText);
-//   console.log("obj", obj);
-
-//   //$('#totalAttendees').html("<p>" + obj[0].total + "<p>");
-//   // document.getElementById('totalEventsHoted').value = obj.total;
-
-// }
-
 function dashEventsDisplay(val) {
   console.log('evend it:', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
