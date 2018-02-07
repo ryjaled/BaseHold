@@ -1860,6 +1860,7 @@ function searchdash(){
       });
   }else{
     loadDashData();
+    $('#searchregionarea').show();
     $('#datafield').show();
   }
 

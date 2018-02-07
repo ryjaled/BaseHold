@@ -525,6 +525,8 @@
 			$success="";
 			include("events.php");
 			$event = new events();
+			$total = '';
+			$moredata = array();
 
 			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
 			{ 
@@ -554,7 +556,6 @@
 			while($row = $event->fetch()){
 					$success="true";
 					array_push($data,$row);
-
 				}
 
 				echo json_encode($data);
