@@ -72,10 +72,10 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-		function getDashTopRegion(){
-			$strQuery="select r.regionname as region, count(p.region) as total from reports as p inner join region as r on r.region_id = p.region where is_approved = 1 group by p.region order by count(p.region) desc limit 1";
-			return $this->query($strQuery);
-		}
+		// function getDashTopRegion(){
+		// 	$strQuery="select r.regionname as region, count(p.region) as total from reports as p inner join region as r on r.region_id = p.region where is_approved = 1 group by p.region order by count(p.region) desc limit 1";
+		// 	return $this->query($strQuery);
+		// }
 
 		function getDashGraphEventData($fdate=false,$ldate=false){
 			$strQuery="select count(DATE(date_to_be_organized)) as totals, DATE(date_to_be_organized) as date, date_to_be_organized from events where is_approved = 1 ";
