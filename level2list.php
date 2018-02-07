@@ -64,22 +64,42 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row['user'].' '.$row['lastname'];
 
     if( $row['is_verified'] == "0"){
-        $verifyLabel = "<p style='color: red'>Not Verified</p>";
+        $verifyLabel = "<p style='color: red; margin-top: 20px;'>Not Verified</p>";
 
       } else {
-        $verifyLabel = "<p style='color: green'>Verified</p>";
+        $verifyLabel = "<p style='color: green; margin-top: 20px;'>Verified</p>";
 
       }
     $nestedData[] = $verifyLabel;
 
     if( $row['is_approved'] == "0"){
-        $approveLabel = "<p style='color: red'>Not Approved</p>";
-				$buttonshow = "<button onclick='editor({$row['event_id']},{$row['is_verified']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
+        $approveLabel = "<p style='color: red; margin-top: 20px;'>Not Approved</p>";
+				// $buttonshow = "<button onclick='editor({$row['event_id']},{$row['is_verified']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
       } else {
-        $approveLabel = "<p style='color: green'>Approved</p>";
-				$buttonshow = "<button hidden onclick='editor({$row['event_id']},{$row['is_verified']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
+        $approveLabel = "<p style='color: green; margin-top: 20px;'>Approved</p>";
+				// $buttonshow = "<button hidden onclick='editor({$row['event_id']},{$row['is_verified']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
       }
     $nestedData[] = $approveLabel;
+
+    $queryID = $row['event_id'];
+    $queryVerification = $row['is_verified'];
+
+
+    if( ($row['is_verified'] == "0") && ($row['is_approved'] == "0") )
+    {
+      // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='verifyEventToggle(".$queryID.",\"".$queryVerification."\")' href='#'>Verify</a></li><li><a onclick='level2View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+    }
+    if( ($row['is_verified'] == "1") && ($row['is_approved'] == "0") )
+    {
+      // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='verifyEventToggle(".$queryID.",\"".$queryVerification."\")' href='#'>Verify</a></li><li><a onclick='level2View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+    }
+    if( ($row['is_verified'] == "1") && ($row['is_approved'] == "1") )
+    {
+      // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level2View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+    }
 
     //$nestedData[] = $row['event_id'];
 	  $nestedData[] = $buttonshow;

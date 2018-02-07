@@ -1,3 +1,7 @@
+var global1;
+var global2;
+var global7;
+
 $().ready(function () {
 
   setTimeout(function () {
@@ -33,12 +37,12 @@ $().ready(function () {
   var dataTable2 = $('#level2list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '15%'},
-      { "targets": 1, width: '20%'},
-      { "targets": 2, width: '15%'},
-      { "targets": 3, width: '10%'},
-      { "targets": 4, width: "10%"} ,
-      { "targets": 5, width: "10%"} ,
+      { "targets": 0, width: '10%'},
+      { "targets": 1, width: '10%'},
+      { "targets": 2, width: '10%'},
+      { "targets": 3, width: '15%'},
+      { "targets": 4, width: "7%"} ,
+      { "targets": 5, width: "7%"} ,
       { "targets": 6, width: "10%" },
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
@@ -257,13 +261,31 @@ $().ready(function () {
     }
   });
 
-  setInterval(function () {
-    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-  }, 6000);
 
-  setInterval(function () {
-    dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-  }, 3000);
+//   setInterval(function () {
+//      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+//   }, 6000);
+
+
+function refireTable1(){
+  setTimeout(function () {
+  dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+}, 500);
+}
+
+global1 = refireTable1;
+
+  // setInterval(function () {
+  //   dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+  // }, 3000);
+
+  function refireTable2(){
+        setTimeout(function () {
+        dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+      }, 500);
+  }
+
+  global2 = refireTable2;
 
   setInterval(function () {
     dataTable3.ajax.reload(null, false); // user paging is not reset on reload
@@ -289,12 +311,20 @@ $().ready(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
   }, 3000);
 
-  setInterval(function () {
-    dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  }, 3000);
+  // setInterval(function () {
+  //   dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+  // }, 3000);
+
+  function refireTable7(){
+    setTimeout(function () {
+      dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+  }, 500);
+}
+global7 = refireTable7;
 
 
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+
   $('#addenddateselected').datetimepicker({
     format: 'dddd, D MMMM Y',
     useCurrent: false //Important! See issue #1075
@@ -305,6 +335,9 @@ $().ready(function () {
   $("#addenddateselected").on("dp.change", function (e) {
     $('#addnewdateselected').data("DateTimePicker").maxDate(e.date);
   });
+
+
+  $('#editaddnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
@@ -556,116 +589,87 @@ function _fetchMyEventsCompleteLevel2(xhr,status){
     }
 }
 
-function editor(val){
-    // console.log('modal to edit: ',val);
-    var theUrl="databasehandler.php?cmd=6&eventid="+val;
+// function editor(val){
+//     // console.log('modal to edit: ',val);
+//     var theUrl="databasehandler.php?cmd=6&eventid="+val;
 
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete:editorComplete
-          });
+//     $.ajax(theUrl,
+//           {
+//             async:true,
+//             complete:editorComplete
+//           });
 
-    // $('#modalpop').click();
-}
+//     // $('#modalpop').click();
+// }
 
-function editorComplete(xhr, status){
-    // console.log(xhr);
+// function editorComplete(xhr, status){
+//     // console.log(xhr);
 
-    var obj = JSON.parse(xhr.responseText);
-
-
-    sessionStorage.pullreportid = obj[0].report_id;
-    sessionStorage.pullverified = obj[0].is_verified;
-    help();
-
-    var picValues = "";
-    $('#pictureContainerLevel2').html("");
-
-    picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
-
-      var jsonarray = JSON.parse(obj[0].picture_paths);
-      for(var i = 0; i < jsonarray.length; i++) {
-        var obj2 = jsonarray[i];
-
-        //obj2 contains picture names.
-        // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
-
-        var user_id = ""+obj[0].reporter;
-        var event_header = ""+obj[0].eventtitle;
-        var picture_header = ""+obj2;
+//     var obj = JSON.parse(xhr.responseText);
 
 
-        picValues = picValues + "<div>";
-        picValues = picValues + "<a onclick='closemodal2()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-        picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-        picValues = picValues + "</a>";
-        picValues = picValues + "</div>";
+//     sessionStorage.pullreportid = obj[0].report_id;
+//     sessionStorage.pullverified = obj[0].is_verified;
+//     help();
+
+//     var picValues = "";
+//     $('#pictureContainerLevel2').html("");
+
+//     picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
+
+//       var jsonarray = JSON.parse(obj[0].picture_paths);
+//       for(var i = 0; i < jsonarray.length; i++) {
+//         var obj2 = jsonarray[i];
+
+//         //obj2 contains picture names.
+//         // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
+
+//         var user_id = ""+obj[0].reporter;
+//         var event_header = ""+obj[0].eventtitle;
+//         var picture_header = ""+obj2;
 
 
-      }
-
-    picValues = picValues + "</div>";
-
-    var dform = new Date(obj[0].date_organized);
-    console.log(obj);
-    console.log(obj[0].report_id);
-    console.log(obj[0].eventtitle);
-    console.log(moment(dform).format('D MMMM Y'));
-    console.log(obj[0].region);
-    console.log(obj[0].town);
-    console.log(obj[0].audience_category);
-    console.log(obj[0].audience_attendance);
-    console.log(obj[0].team_challenges);
-    console.log(obj[0].complaints_raised);
-    console.log(obj[0].event_summary);
-    console.log(picValues);
+//         picValues = picValues + "<div>";
+//         picValues = picValues + "<a onclick='closemodal2()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
+//         picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
+//         picValues = picValues + "</a>";
+//         picValues = picValues + "</div>";
 
 
-    UIkit.modal('#addContact').show();
-    document.getElementById('report_id').innerHTML=obj[0].report_id;
-    document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-    document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-    document.getElementById('region').innerHTML=obj[0].region;
-    document.getElementById('town').innerHTML=obj[0].town;
-    document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-    document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-    document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-    document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-    document.getElementById('event_summary').innerHTML=obj[0].event_summary;
-    document.getElementById('pictureContainerLevel2').innerHTML=picValues;
+//       }
+
+//     picValues = picValues + "</div>";
+
+//     var dform = new Date(obj[0].date_organized);
+//     console.log(obj);
+//     console.log(obj[0].report_id);
+//     console.log(obj[0].eventtitle);
+//     console.log(moment(dform).format('D MMMM Y'));
+//     console.log(obj[0].region);
+//     console.log(obj[0].town);
+//     console.log(obj[0].audience_category);
+//     console.log(obj[0].audience_attendance);
+//     console.log(obj[0].team_challenges);
+//     console.log(obj[0].complaints_raised);
+//     console.log(obj[0].event_summary);
+//     console.log(picValues);
 
 
-}
-
-function help(){
-  verifier(sessionStorage.pullreportid, sessionStorage.pullverified);
-}
-
-function verifier(id, verifyCheck){
-  $('#verifyCommentor').html("<button onclick= _level2cancel() type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick= _pullverificationcoments("+id+","+verifyCheck+") type='button' class='btn btn-success' id='addConfirm'>Verify</button>");
-}
-
-function _level2cancel(){
-  window.location.href="level2H.html";
-}
-
-function _pullverificationcoments(id, verifyCheck){
-  var comment = $('#verifycommentarea').val();
-  // console.log(comment);
+//     UIkit.modal('#level2Modal').show();
+//     document.getElementById('report_id').innerHTML=obj[0].report_id;
+//     document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
+//     document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
+//     document.getElementById('region').innerHTML=obj[0].region;
+//     document.getElementById('town').innerHTML=obj[0].town;
+//     document.getElementById('audience_category').innerHTML=obj[0].audience_category;
+//     document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
+//     document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
+//     document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
+//     document.getElementById('event_summary').innerHTML=obj[0].event_summary;
+//     document.getElementById('pictureContainerLevel2').innerHTML=picValues;
 
 
-  var theUrl="databasehandler.php?cmd=5&eventid="+id+"&verify="+verifyCheck+"&verifycomments="+comment;
-
-  $.ajax(theUrl,
-        {
-          async:true,
-
-        });
-
-  window.location.href="level2H.html";
-
-}
+// }
 
 function approvalwindow(id){
     // console.log('modal for viewing: ',id);
@@ -837,6 +841,86 @@ function addeventComplete(xhr,status){
      }
  });
 
+}
+
+
+
+
+function editevent(){
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventtitle = $('#editaddnewtitle').val();
+  var date = $('#editaddnewdateselected').val();
+  var region = $('#editaddnewregion').val();
+  var town = $('#editaddnewtown').val();
+  var audiencecat = $('#editaddnewaudience').val();
+  var attendance = $('#editaddnewattendance').val();
+  var topics = $('#editaddnewtopics').val();
+  var complaints = $('#addcomplaints').val();
+  var summary = $('#addsummary').val();
+  var approved = 0;
+  var verified = 0;
+  var verifiedComments = "not verified";
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "") ){
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }else{
+    document.cookie = "foldname=" + foldname;
+
+    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: editEventComplete
+      });
+  }
+
+}
+
+function editEventComplete(xhr,status){
+  var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
+  $('#input-id').fileinput('upload');
+  document.getElementById('RegisterValidationDoc').reset();
+  $('#input-id').fileinput('enable');
+  $.notify({
+     icon: "info_outline",
+     message: "Event Editted Successfully."
+
+ },{
+     type: 'success',
+     timer: 2000,
+     placement: {
+         from: 'top',
+         align: 'right'
+     }
+ });
+  global1();
 
 }
 
@@ -1143,20 +1227,26 @@ function addlevel2userComplete(xhr, status) {
 
 }
 
-function level1viewer(val) {
-  console.log('modal to edit: ', val);
+
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+
+
+function level1View(val) {
+  console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
     {
       async: true,
-      complete: level1viewerComplete
+      complete: level1ViewComplete
     });
 
   // $('#modalpop').click();
 }
 
-function level1viewerComplete(xhr, status) {
+function level1ViewComplete(xhr, status) {
   console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
 
@@ -1167,114 +1257,939 @@ function level1viewerComplete(xhr, status) {
   var picValues = "";
   $('#pictureContainer').html("");
   //console.log(obj[0].report_id);
-  var dform = new Date(obj[0].date_organized);
-  // console.log(obj[0].eventtitle);
-  // console.log(obj[0].date_organized);
-  // console.log(obj[0].region);
-  // console.log(obj[0].town);
-  // console.log(obj[0].audience_category);
-  // console.log(obj[0].audience_attendance);
-  // console.log(obj[0].team_challenges);
-  // console.log(obj[0].complaints_raised);
-  // console.log(obj[0].event_summary);
-  // console.log(obj[0].picture_paths);
-  // console.log(obj[0].verification_comments);
-
-  // $('#modalshow').click();
+  var dform = new Date(obj[0].date_to_be_organized);
   UIkit.modal('#modal-overflow').show();
 
   //$('#report_id').val(obj[0].report_id);
   // $('#eventtitle').innerHTML(obj[0].eventtitle);
   document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
   document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-  document.getElementById('region').innerHTML=obj[0].region;
+  document.getElementById('region').innerHTML=obj[0].regionname;
   document.getElementById('town').innerHTML=obj[0].town;
   document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-  document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-  document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-  document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-  document.getElementById('event_summary').innerHTML=obj[0].event_summary;
+  document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics; 
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
 
-  picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
-
-  var jsonarray = JSON.parse(obj[0].picture_paths);
-  for(var i = 0; i < jsonarray.length; i++) {
-    var obj2 = jsonarray[i];
-
-    var user_id = ""+obj[0].reporter;
-    var event_header = ""+obj[0].eventtitle;
-    var picture_header = ""+obj2;
+  var mode = obj[0].mode_of_outreach; 
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
 
 
-    picValues = picValues + "<div>";
-    picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-    picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-    picValues = picValues + "</a>";
-    picValues = picValues + "</div>";
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
 
 
-    // $('#pictureContainer').append("<div>");
-    // $('#pictureContainer').append("<a class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>");
-    // $('#pictureContainer').append("<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>");
-    // $('#pictureContainer').append("</a>");
-    // $('#pictureContainer').append("</div>");
-    // $('#pictureContainer').html("<img style='height: 30px; width: 30px' src='uploads/"+obj[0].reporter+"_"+obj[0].eventtitle+"/"+obj2+"/>");
-
+  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
   }
-  picValues = picValues + "</div>";
-  document.getElementById('pictureContainer').innerHTML=picValues;
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+moment(dateVerfied).format('D MMMM Y')+" and approved on: "+moment(dateApproved).format('D MMMM Y');
+  }
 
-  // $('#picture_paths').val(picture_paths);
-  // $('#verifyformdiv').html("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>");
+
+  document.getElementById('complaints_raised2').innerHTML= obj[0].approved_timestamp;
+   
+}
+
+
+
+
+
+
+function addnewevent(){
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventtitle = $('#addnewtitle').val();
+  var date = $('#addnewdateselected').val();
+  var region = $('#addnewregion').val();
+  var town = $('#addnewtown').val();
+  var audiencecat = $('#addnewaudience').val();
+  var attendance = $('#addnewattendance').val();
+
+  var topic = $('#addnewtopics').val();
+
+  var logistics = "";
+  var communicationMode = "";
+
+
+  var addnewpowerpoint = $('#addnewpowerpoint').val();
+  var addnewoneonone = $('#addnewoneonone').val();
+  var addnewroadshow = $('#addnewroadshow').val();
+  var addnewdurbar = $('#addnewdurbar').val();
+  var addnewsmallgroupmeeting = $('#addnewsmallgroupmeeting').val();
+  var addnewbus = $('#addnewbus').val();
+  var addnewsoundsystem = $('#addnewsoundsystem').val();
+  var addnewflyer = $('#addnewflyer').val();
+  var addnewpen = $('#addnewpen').val();
+  var addnewtapemeasure = $('#addnewtapemeasure').val();
+  var addnewtowel = $('#addnewtowel').val();
+  var addnewmug = $('#addnewmug').val();
+  var addnewshirt = $('#addnewshirt').val();
+  var addnewnotepad = $('#addnewnotepad').val();
+  var addnewpowerblock = $('#addnewpowerblock').val();
+
+
+  // communications mode select
+    if ($('#addnewpowerpoint').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewpowerpoint + ",";
+    }
+    if ($('#addnewoneonone').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewoneonone + ",";
+    }
+    if ($('#addnewroadshow').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewroadshow + ",";
+    }
+    if ($('#addnewdurbar').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewdurbar + ",";
+    }
+    if ($('#addnewsmallgroupmeeting').is(":checked"))
+    {
+      communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
+    }
+
+
+
+    // logistics select
+    if ($('#addnewbus').is(":checked"))
+    {
+      logistics = logistics + addnewbus+ ",";
+    }
+    if ($('#addnewsoundsystem').is(":checked"))
+    {
+      logistics = logistics + addnewsoundsystem+ ",";
+    }
+    if ($('#addnewflyer').is(":checked"))
+    {
+      logistics = logistics + addnewflyer+ ",";
+    }
+    if ($('#addnewpen').is(":checked"))
+    {
+      logistics = logistics + addnewpen+ ",";
+    }
+    if ($('#addnewtapemeasure').is(":checked"))
+    {
+      logistics = logistics + addnewtapemeasure+ ",";
+    }
+    if ($('#addnewtowel').is(":checked"))
+    {
+      logistics = logistics + addnewtowel+ ",";
+    }
+    if ($('#addnewmug').is(":checked"))
+    {
+      logistics = logistics + addnewmug+ ",";
+    }
+    if ($('#addnewshirt').is(":checked"))
+    {
+      logistics = logistics + addnewshirt+ ",";
+    }
+    if ($('#addnewnotepad').is(":checked"))
+    {
+      logistics = logistics + addnewnotepad+ ",";
+    }
+    if ($('#addnewpowerblock').is(":checked"))
+    {
+      logistics = logistics + addnewpowerblock+ ",";
+    }
+
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (town == "") || (audiencecat == "") || (attendance == "") ){
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }else{
+
+    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+       "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: addneweventComplete
+      });
+  }
 
 }
 
-function level1pendingviewer(val) {
-  console.log('modal to edit: ', val);
-  var theUrl = "databasehandler.php?cmd=24&eventid=" + val;
+function addneweventComplete(xhr,status){
+
+  var obj = JSON.parse(xhr.responseText);
+  console.log('LOOK HERE' , obj);
+
+  document.getElementById('RegisterValidationDoc').reset();
+
+  $.notify({
+     icon: "info_outline",
+     message: "Event submitted successfully for verification and approval."
+
+ },{
+     type: 'success',
+     timer: 2000,
+     placement: {
+         from: 'top',
+         align: 'right'
+     }
+ });
+
+ global1();
+
+}
+
+
+
+
+
+function level1Edit(val){
+  event.preventDefault();
+
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
     {
       async: true,
-      complete: level1pendingviewerComplete
+      complete: level1EditComplete
+    });
+
+  
+
+
+  
+  // }else{
+
+  //   var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+  //      "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+  //   $.ajax(theUrl,
+  //     {
+  //       async: true,
+  //       complete: level1EditComplete
+  //     });
+  // }
+
+}
+
+function level1EditComplete(xhr,status){
+  var obj = JSON.parse(xhr.responseText);
+  console.log('LOOK HERE' , obj);
+
+  document.getElementById('RegisterValidationDoc').reset();
+
+ 
+  UIkit.modal('#edit-modal-overflow').show();
+  
+    $('#editaddnewdateselected').val(moment(obj[0].date_to_be_organized).format('dddd, D MMMM Y'));
+    $('#editaddnewtitle').val(obj[0].eventtitle);
+    $('#editaddnewattendance').val(obj[0].expected_audience_attendance);
+    $('#editaddnewtown').val(obj[0].town);
+    $('#editaddnewtopics').val(obj[0].eventtopic);
+    
+}
+
+function editNewEvent(){
+
+  event.preventDefault();
+  
+    var userid = sessionStorage.getItem("userid");
+    var eventtitle = $('#editaddnewtitle').val();
+    var date = $('#editaddnewdateselected').val();
+    var region = $('#editaddnewregion').val();
+    var town = $('#editaddnewtown').val();
+    var audiencecat = $('#editaddnewaudience').val();
+    var attendance = $('#editaddnewattendance').val();
+  
+    var topic = $('#editaddnewtopics').val();
+  
+    var logistics = "";
+    var communicationMode = "";
+  
+  
+    var addnewpowerpoint = $('#editaddnewpowerpoint').val();
+    var addnewoneonone = $('#editaddnewoneonone').val();
+    var addnewroadshow = $('#editaddnewroadshow').val();
+    var addnewdurbar = $('#editaddnewdurbar').val();
+    var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
+    var addnewbus = $('#editaddnewbus').val();
+    var addnewsoundsystem = $('#editaddnewsoundsystem').val();
+    var addnewflyer = $('#editaddnewflyer').val();
+    var addnewpen = $('#editaddnewpen').val();
+    var addnewtapemeasure = $('#editaddnewtapemeasure').val();
+    var addnewtowel = $('#editaddnewtowel').val();
+    var addnewmug = $('#editaddnewmug').val();
+    var addnewshirt = $('#editaddnewshirt').val();
+    var addnewnotepad = $('#editaddnewnotepad').val();
+    var addnewpowerblock = $('#editaddnewpowerblock').val();
+  
+  
+    // communications mode select
+      if ($('#editaddnewpowerpoint').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewpowerpoint + ",";
+      }
+      if ($('#editaddnewoneonone').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewoneonone + ",";
+      }
+      if ($('#editaddnewroadshow').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewroadshow + ",";
+      }
+      if ($('#editaddnewdurbar').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewdurbar + ",";
+      }
+      if ($('#editaddnewsmallgroupmeeting').is(":checked"))
+      {
+        communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
+      }
+  
+  
+      // logistics select
+      if ($('#editaddnewbus').is(":checked"))
+      {
+        logistics = logistics + addnewbus+ ",";
+      }
+      if ($('#editaddnewsoundsystem').is(":checked"))
+      {
+        logistics = logistics + addnewsoundsystem+ ",";
+      }
+      if ($('#editaddnewflyer').is(":checked"))
+      {
+        logistics = logistics + addnewflyer+ ",";
+      }
+      if ($('#editaddnewpen').is(":checked"))
+      {
+        logistics = logistics + addnewpen+ ",";
+      }
+      if ($('#editaddnewtapemeasure').is(":checked"))
+      {
+        logistics = logistics + addnewtapemeasure+ ",";
+      }
+      if ($('#editaddnewtowel').is(":checked"))
+      {
+        logistics = logistics + addnewtowel+ ",";
+      }
+      if ($('#editaddnewmug').is(":checked"))
+      {
+        logistics = logistics + addnewmug+ ",";
+      }
+      if ($('#editaddnewshirt').is(":checked"))
+      {
+        logistics = logistics + addnewshirt+ ",";
+      }
+      if ($('#editaddnewnotepad').is(":checked"))
+      {
+        logistics = logistics + addnewnotepad+ ",";
+      }
+      if ($('#editaddnewpowerblock').is(":checked"))
+      {
+        logistics = logistics + addnewpowerblock+ ",";
+      }
+  
+  
+    if ((eventtitle == "") || (date == "") || (topic == "") || (town == "") || (attendance == "")  ) 
+    {
+      $.notify({
+        icon: "info_outline",
+        message: "Please Fill Compulsory Fields."
+  
+      }, {
+          type: 'danger',
+          timer: 500,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+    } else if ((region == ""))
+    {
+      $.notify({
+        icon: "info_outline",
+        message: "Please select the region this altered event will be held in."
+  
+      }, {
+          type: 'danger',
+          timer: 500,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+    } else if ((audiencecat == ""))
+    {
+      $.notify({
+        icon: "info_outline",
+        message: "Please select the audience category this altered event will be held for."
+  
+      }, {
+          type: 'danger',
+          timer: 500,
+          placement: {
+            from: 'top',
+            align: 'right'
+          }
+        });
+    }
+    else{
+  
+      var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: editNewEventComplete
+        });
+    }
+}
+
+function editNewEventComplete(){
+
+}
+
+
+function addReportModal(val){
+  
+var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadEventReport
+    });
+ 
+}
+
+
+function loadEventReport(xhr, status){
+  var obj = JSON.parse(xhr.responseText);
+
+  event.preventDefault();
+
+  UIkit.modal('#modal-report').show();
+
+  document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_date_organized').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_region').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_town').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_checks').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_audience_category').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_audience_attendance').innerHTML=obj[0].eventtitle;
+}
+
+function addNewReport(){
+
+  var addnewreportobservation = $('#report_observations').val();
+  var addnewreportchallenge = $('#report_challenges').val();
+  var addnewreportcomplaint = $('#report_complaints').val();
+  var addnewreportinput = $('#input-id').val();
+  var addnewreportmembers = $('#report_members').val();
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+
+  if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportinput == "") || (addnewreportmembers == "") )
+  {
+
+    $.notify({
+      icon: "info_outline",
+      message: "PLEASE FILL OUT ALL FIELDS TO CONTINUE."
+  
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+  else{
+
+    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id;
+    
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: addNewReportComplete
+        });
+  }
+}
+
+
+function addNewReportComplete(){
+
+  var obj = JSON.parse(xhr.responseText);
+
+  $('#input-id').fileinput('upload');
+  $('#input-id').fileinput('enable');
+
+  $('#report_observations').val("");
+  $('#report_challenges').val("");
+  $('#report_complaints').val("");
+  $('#input-id').val("");
+  $('#report_members').val("");
+
+}
+
+
+
+
+
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+
+
+
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+
+function help(){
+  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+}
+
+function verifier(id, verifyCheck, approveCheck){
+  if(approveCheck == 1){
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if(approveCheck == 0){
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+}
+
+function _level2cancel(){
+  window.location.href="level2H.html";
+}
+
+
+function level2View(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level2ViewComplete
     });
 
   // $('#modalpop').click();
 }
 
-function level1pendingviewerComplete(xhr, status) {
+function level2ViewComplete(xhr, status) {
   console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
 
+  sessionStorage.pullreportid = obj[0].event_id;
+  sessionStorage.pullverified = obj[0].is_verified;
+  sessionStorage.pullapproved = obj[0].is_approved;
+  help();
+
   console.log(obj);
 
-  //console.log(obj[0].report_id);
-  var dform = new Date(obj.date);
+  var dateOrganized = new Date(obj[0].date_to_be_organized);
 
-  document.getElementById('pendid').value = obj.id;
+  UIkit.modal('#modal-overflow-2').show();
 
-  document.getElementById('pendtitle').value = obj.title;
-  document.getElementById('penddateselected').value = moment(dform).format('dddd, D MMMM Y');
-  document.getElementById('pendregion').value = obj.region;
-  document.getElementById('pendtown').value = obj.town;
+  document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
+  document.getElementById('region').innerHTML=obj[0].regionname;
+  document.getElementById('town').innerHTML=obj[0].town;
+  document.getElementById('audience_category').innerHTML=obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics; 
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
 
-  // $('#modalshow').click();
-  UIkit.modal('#pending-modal-overflow').show();
+  var mode = obj[0].mode_of_outreach; 
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+
+  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+  }
+
+
 }
 
-function closemodal1(){
-  // $('#closebutton').click();
-  console.log("im here in the close modal function");
-  // $('#closebutton').click();
-  $('#eventDetailView').modal('hide');
+function verifyEventToggle(id, verState){
+  // alert('here in VET'+id+verState);
+  event.preventDefault();
+  var theUrl="databasehandler.php?cmd=5&eventid="+id+"&verify="+verState+"&verifycomments=verificationTouched";
+  
+    $.ajax(theUrl,
+          {
+            async:true,
+            complete: global2
+          });
+  
+
+
 }
 
-function closemodal2(){
-  // $('#closebutton').click();
-  console.log("im here in the close modal 2 function");
-  // $('#closebutton').click();
-  $('#addContact').modal('hide');
+
+
+
+function reportHelp(){
+  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
+
+function reportApprover(id, verifyCheck, approveCheck){
+  if(approveCheck == 1){
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if(approveCheck == 0){
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+}
+
+
+function level2ReportView(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=27&reportid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level2ReportViewComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level2ReportViewComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  sessionStorage.pullreportid = obj[0].report_id;
+  sessionStorage.pullverified = obj[0].is_verified;
+  sessionStorage.pullapproved = obj[0].reportapprove;
+  reportHelp();
+
+  console.log("object", obj);
+
+  // var dateOrganized = new Date(obj[0].date_to_be_organized);
+
+  // console.log("HERExx", dateOrganized);
+
+  UIkit.modal('#modal-overflow-2-report').show();
+
+  document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_date_organized').innerHTML=moment(obj[0].date_to_be_organized).format('D MMMM Y');
+  document.getElementById('report_region').innerHTML=obj[0].regionname;
+  document.getElementById('report_town').innerHTML=obj[0].town;
+  document.getElementById('report_audience_category').innerHTML=obj[0].audience_category;
+  document.getElementById('report_audience_attendance').innerHTML=obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics; 
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('report_team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
+
+  var mode = obj[0].mode_of_outreach; 
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('report_complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+ 
+
+  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('report_event_summary').innerHTML= "This event has not yet been verified nor approved.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
+    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + " and approved on: "+ moment(obj[0].approved_timestamp).format('D MMMM Y');
+  }
+  if((obj[0].reportverifiedtimestamp != "")){
+    document.getElementById('report_event_summary_2').innerHTML= "This report was approved on: " +moment(obj[0].reportverifiedtimestamp).format('D MMMM Y');
+  }
+  if((obj[0].reportverifiedtimestamp == "")){
+    document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  }
+
+  document.getElementById('report_1').innerHTML=obj[0].event_summary;
+  console.log("as");
+  console.log(obj[0].event_summary);
+  document.getElementById('report_2').innerHTML=obj[0].complaints_raised;
+  console.log(obj[0].eventcomplaints_raised_summary);
+  document.getElementById('report_3').innerHTML= moment(obj[0].date_reported).format('D MMMM Y') ;
+  console.log(obj[0].date_reported);
+  document.getElementById('report_4').innerHTML=obj[0].team_challenges;
+  console.log(obj[0].team_challenges);
+}
+
+
+function ApproveReportToggle(id, approveState){
+  alert('here in VET'+id+approveState);
+  event.preventDefault();
+  var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
+  
+    $.ajax(theUrl,
+          {
+            async:true,
+            complete: global7
+          });
+  
+
+
+}
+
+
+
+
+
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
+
+
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+
+function help(){
+  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+}
+
+function verifier(id, verifyCheck, approveCheck){
+  if(approveCheck == 1){
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if(approveCheck == 0){
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+}
+
+function _level3cancel(){
+  window.location.href="level2H.html";
+}
+
+function level3View(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level3ViewComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level3ViewComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  sessionStorage.pullreportid = obj[0].event_id;
+  sessionStorage.pullverified = obj[0].is_verified;
+  sessionStorage.pullapproved = obj[0].is_approved;
+  help();
+
+  console.log(obj);
+
+  var dateOrganized = new Date(obj[0].date_to_be_organized);
+
+  UIkit.modal('#modal-overflow-2').show();
+
+  document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
+  document.getElementById('region').innerHTML=obj[0].regionname;
+  document.getElementById('town').innerHTML=obj[0].town;
+  document.getElementById('audience_category').innerHTML=obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics; 
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
+
+  var mode = obj[0].mode_of_outreach; 
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+
+  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+  }
+
+
+}
+
+
+function verifyEventToggle(id, verState){
+  // alert('here in VET'+id+verState);
+  event.preventDefault();
+  var theUrl="databasehandler.php?cmd=5&eventid="+id+"&verify="+verState+"&verifycomments=verificationTouched";
+  
+    $.ajax(theUrl,
+          {
+            async:true,
+            complete: global2
+          });
+  
+
+
+}
+
+function reportHelp(){
+  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+}
+
+function reportApprover(id, verifyCheck, approveCheck){
+  if(approveCheck == 1){
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if(approveCheck == 0){
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+}
+
+
+function level3ReportView(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=27&reportid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level3ReportViewComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level3ReportViewComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  sessionStorage.pullreportid = obj[0].report_id;
+  sessionStorage.pullverified = obj[0].is_verified;
+  sessionStorage.pullapproved = obj[0].reportapprove;
+  reportHelp();
+
+  console.log(obj);
+
+  var dateOrganized = new Date(obj[0].date_to_be_organized);
+
+  UIkit.modal('#modal-overflow-2-report').show();
+
+  document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
+  document.getElementById('report_region').innerHTML=obj[0].regionname;
+  document.getElementById('report_town').innerHTML=obj[0].town;
+  document.getElementById('report_audience_category').innerHTML=obj[0].audience_category;
+  document.getElementById('report_audience_attendance').innerHTML=obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics; 
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('report_team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
+
+  var mode = obj[0].mode_of_outreach; 
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('report_complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+
+  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('report_event_summary').innerHTML= "This event has not yet been verified nor approved.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
+    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
+    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+  }
+  if((obj[0].reportverifiedtimestamp != "")){
+    document.getElementById('report_event_summary_2').innerHTML= "This report was approved on:"+obj[0].reportverifiedtimestamp;
+  }
+  if((obj[0].reportverifiedtimestamp == "")){
+    document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  }
+
+  document.getElementById('report_1').innerHTML=obj[0].event_summary;
+  console.log("as");
+  console.log(obj[0].event_summary);
+  document.getElementById('report_2').innerHTML=obj[0].complaints_raised;
+  console.log(obj[0].eventcomplaints_raised_summary);
+  document.getElementById('report_3').innerHTML=moment(new Date(obj[0].date_reported)).format('D MMMM Y') ;
+  console.log(obj[0].date_reported);
+  document.getElementById('report_4').innerHTML=obj[0].team_challenges;
+  console.log(obj[0].team_challenges);
+}
+
+
+function ApproveReportToggle(id, approveState){
+  alert('here in VET'+id+approveState);
+  event.preventDefault();
+  var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
+  
+    $.ajax(theUrl,
+          {
+            async:true,
+            complete: global7
+          });
+  
+
+
+}
+
+
+
+
+
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+
 
 function eventviewer(val) {
   // console.log('modal to edit: ', val);
@@ -1294,12 +2209,6 @@ function eventviewerComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
   var dform = new Date(obj[0].date_organized);
-  // console.log(obj[0].eventtitle);
-  // console.log(obj[0].region);
-  // console.log(obj[0].town);
-  // console.log(obj[0].audience_category);
-  // console.log(obj[0].audience_attendance);
-  // console.log(obj[0].event_summary);
 
   $('#eventmodalshow').click();
 
@@ -1677,128 +2586,12 @@ function passwordresetComplete(xhr, status) {
 
 }
 
-function addnewevent(){
-  event.preventDefault();
+function generateInputs(){
 
-  var userid = sessionStorage.getItem("userid");
-  var eventtitle = $('#addnewtitle').val();
-  var date = $('#addnewdateselected').val();
-  var region = $('#addnewregion').val();
-  var town = $('#addnewtown').val();
-  var audiencecat = $('#addnewaudience').val();
-  var attendance = $('#addnewattendance').val();
+  var number = $('#createInputs').val();
 
-  var topic = $('#addnewtopics').val();
-
-  var logistics = "";
-  var communicationMode = "";
-
-
-  var addnewpowerpoint = $('#addnewpowerpoint').val();
-  var addnewoneonone = $('#addnewoneonone').val();
-  var addnewroadshow = $('#addnewroadshow').val();
-  var addnewdurbar = $('#addnewdurbar').val();
-  var addnewsmallgroupmeeting = $('#addnewsmallgroupmeeting').val();
-  var addnewbus = $('#addnewbus').val();
-  var addnewsoundsystem = $('#addnewsoundsystem').val();
-  var addnewflyer = $('#addnewflyer').val();
-  var addnewpen = $('#addnewpen').val();
-  var addnewtapemeasure = $('#addnewtapemeasure').val();
-  var addnewtowel = $('#addnewtowel').val();
-  var addnewmug = $('#addnewmug').val();
-  var addnewshirt = $('#addnewshirt').val();
-  var addnewnotepad = $('#addnewnotepad').val();
-  var addnewpowerblock = $('#addnewpowerblock').val();
-
-
-  // communications mode select
-    if ($('#addnewpowerpoint').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewpowerpoint + ",";
-    }
-    if ($('#addnewoneonone').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewoneonone + ",";
-    }
-    if ($('#addnewroadshow').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewroadshow + ",";
-    }
-    if ($('#addnewdurbar').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewdurbar + ",";
-    }
-    if ($('#addnewsmallgroupmeeting').is(":checked"))
-    {
-      communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
-    }
-
-
-    // logistics select
-    if ($('#addnewbus').is(":checked"))
-    {
-      logistics = logistics + addnewbus+ ",";
-    }
-    if ($('#addnewsoundsystem').is(":checked"))
-    {
-      logistics = logistics + addnewsoundsystem+ ",";
-    }
-    if ($('#addnewflyer').is(":checked"))
-    {
-      logistics = logistics + addnewflyer+ ",";
-    }
-    if ($('#addnewpen').is(":checked"))
-    {
-      logistics = logistics + addnewpen+ ",";
-    }
-    if ($('#addnewtapemeasure').is(":checked"))
-    {
-      logistics = logistics + addnewtapemeasure+ ",";
-    }
-    if ($('#addnewtowel').is(":checked"))
-    {
-      logistics = logistics + addnewtowel+ ",";
-    }
-    if ($('#addnewmug').is(":checked"))
-    {
-      logistics = logistics + addnewmug+ ",";
-    }
-    if ($('#addnewshirt').is(":checked"))
-    {
-      logistics = logistics + addnewshirt+ ",";
-    }
-    if ($('#addnewnotepad').is(":checked"))
-    {
-      logistics = logistics + addnewnotepad+ ",";
-    }
-    if ($('#addnewpowerblock').is(":checked"))
-    {
-      logistics = logistics + addnewpowerblock+ ",";
-    }
-
-
-  if ((eventtitle == "") || (date == "") || (region == "") || (town == "") || (audiencecat == "") || (attendance == "") ){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Fill Compulsory Fields."
-
-    }, {
-        type: 'danger',
-        timer: 500,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-
-    var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-       "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: addneweventComplete
-      });
+  for(var i = 0; i < number; i++){
+    document.getElementById('place').appendChild="<div><input/></div>";
   }
 
 }
@@ -1824,11 +2617,6 @@ function addneweventComplete(xhr,status){
 
 
 }
-
-
-
-
-
 
 function searchdash(){
   if ($('#addnewdateselected').val() == "") {
@@ -2092,3 +2880,4 @@ function dashGraphUserData(sdate, edate) {
     });
   });
 }
+

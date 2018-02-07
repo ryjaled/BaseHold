@@ -241,7 +241,216 @@
       </button>
 
 
-      <div id="addContact" class="uk-modal-container" uk-modal>
+
+      <!-- UI kit modal -->
+        <div id="modal-overflow-2" class="uk-modal-container" uk-modal>
+            <div class="uk-modal-dialog">
+    
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+    
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Event Details</h2>
+                </div>
+    
+                <div class="uk-modal-body" uk-overflow-auto>
+    
+                <article class="uk-comment">
+                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                    <div class="uk-width-auto">
+                        <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                        <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                    </div>
+                    <div class="uk-width-expand">
+                        <h4 class="uk-comment-title uk-margin-remove"><a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
+                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                            <li><a href="#" id="date_organized">23 January 2018</a></li>
+                        </ul>
+                    </div>
+                    </header>
+    
+                    <div class="row">
+                    <dl class="uk-description-list">
+                        <div class="col-sm-6">
+                        <dt>REGION</dt>
+                        <dd id="region"></dd>
+                        </div>
+                        <div class="col-sm-6">
+                        <dt>TOWN</dt>
+                        <dd id="town"></dd>
+                        </div>
+                        </dl>
+                    </div>
+    
+                    <br/>
+    
+                    <div class="uk-comment-body">
+                    <dt>SUMMARY</dt>
+                    <dd id="event_summary"></dd>
+                    </div>
+    
+                    <center><hr class="uk-divider-small" style="margin:5%;"></center>
+    
+                    <div class="row">
+                    <dl class="uk-description-list">
+                        <div class="col-sm-6">
+                        <dt>AUDIENCE CATEGORY</dt>
+                        <dd id="audience_category"></dd>
+                        </div>
+                        <div class="col-sm-6">
+                        <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                        <dd id="audience_attendance"></dd>
+                        </div>
+                        </dl>
+                    </div>
+    
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                    <dt>OUTREACH TEAM CHALLANGES</dt>
+                    <dd id="team_challenges"></dd>
+                    </div>
+    
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                    <dt>COMPLAINTS RAISED BY AUDIENCE</dt>
+                    <dd id="complaints_raised"></dd>
+                    </div>
+                    </div>
+    
+                    </article>
+
+                    <div class="uk-modal-footer uk-text-right" id="verifyformdivbuttons">
+                        <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
+                        <!-- <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button> -->
+                    </div>
+        
+    
+                </div>
+    
+                
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- UI kit modal -->
+        <div id="modal-overflow-2-report" class="uk-modal-container" uk-modal>
+                <div class="uk-modal-dialog">
+        
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+        
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Event Report Details</h2>
+                    </div>
+        
+                    <div class="uk-modal-body" uk-overflow-auto>
+        
+                    <article class="uk-comment">
+                        <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                        <div class="uk-width-auto">
+                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                        </div>
+                        <div class="uk-width-expand">
+                            <h4 class="uk-comment-title uk-margin-remove"><a id="report_eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
+                            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                <li><a href="#" id="report_date_organized">23 January 2018</a></li>
+                            </ul>
+                        </div>
+                        </header>
+        
+                        <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="col-sm-6">
+                            <dt>REGION</dt>
+                            <dd id="report_region"></dd>
+                            </div>
+                            <div class="col-sm-6">
+                            <dt>TOWN</dt>
+                            <dd id="report_town"></dd>
+                            </div>
+                            </dl>
+                        </div>
+        
+                        <br/>
+        
+                        <div class="uk-comment-body">
+                        <dt>SUMMARY</dt>
+                        <dd style="font-weight: 600" id="report_event_summary"></dd>
+                        <dd style="font-weight: 600" id="report_event_summary_2"></dd>
+                        </div>
+        
+                        <center><hr class="uk-divider-small" style="margin:5%;"></center>
+        
+                        <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="col-sm-6">
+                            <dt>AUDIENCE CATEGORY</dt>
+                            <dd id="report_audience_category"></dd>
+                            </div>
+                            <div class="col-sm-6">
+                            <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                            <dd id="report_audience_attendance"></dd>
+                            </div>
+                            </dl>
+                        </div>
+        
+                        <div class="uk-comment-body" style="margin-top: 20px">
+                        <dt>LOGISTICS UTILIZED</dt>
+                        <dd id="report_team_challenges"></dd>
+                        </div>
+        
+                        <div class="uk-comment-body" style="margin-top: 20px">
+                        <dt>MODE OF COMMUNICATION USED</dt>
+                        <dd id="report_complaints_raised"></dd>
+
+                        <dt>TEAM OBSERVATIONS</dt>
+                        <dd id="report_1"></dd>
+
+                        <dt>CONSUMER CHALLENGES</dt>
+                        <dd id="report_2"></dd>
+
+                        
+                        <dt>TEAM CHALLENGES</dt>
+                         <dd id="report_4"></dd>
+
+                        <div style="margin: 20px 0px">
+                         <b>
+                         <small>REPORT CREATED ON:</small>
+                         <small id="report_3"></small>
+                         </b>
+                        </div>
+
+                         <dt>PHOTOS:</dt>
+                         <dd id="report_complaints_raised"></dd>
+                         
+                        </div>
+                        </div>
+
+        
+                        </article>
+
+
+                    <div class="uk-modal-footer uk-text-right" id="verifyformdivbuttons">
+                        <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    </div>
+        
+                    </div>
+        
+                    
+        
+                </div>
+            </div>
+
+
+
+
+
+      <div id="level2Modal" class="uk-modal-container" uk-modal>
       <div class="uk-modal-dialog">
 
           <button class="uk-modal-close-default" type="button" uk-close></button>

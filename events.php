@@ -175,7 +175,7 @@ include_once("database.php");
         $newapproval = "0";
       }
       echo $newapproval;
-			$strQuery="update reports set is_approved='$newapproval' where report_id=$eventid";
+			$strQuery="update events set is_approved='$newapproval' where event_id=$eventid";
       return $this->query($strQuery);
 		}
 
@@ -189,7 +189,7 @@ include_once("database.php");
         $newverify = "0";
       }
       echo $newapproval;
-      $strQuery="update reports set is_verified='$newverify', verification_comments='$verifycomments'  where report_id=$eventid";
+      $strQuery="update events set is_verified='$newverify', verification_comments='$verifycomments' where event_id=$eventid";
       return $this->query($strQuery);
     }
 
@@ -252,6 +252,7 @@ include_once("database.php");
       return $this->query($strQuery);
 		}
 
+
 		function editEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid){
 
 			$strQuery="update events set
@@ -274,7 +275,7 @@ include_once("database.php");
 
 		function editReport($event_id,$challenges,$complaints,$verifiedComments,$summary,$picpath,$foldpath,$reportid){
 
-			$strQuery="update events set
+			$strQuery="update reports set
 		 					event_id='$event_id',
 		 					team_challenges='$challenges',
 		 					complaints_raised='$complaints',
@@ -286,9 +287,20 @@ include_once("database.php");
 							where report_id='$reportid'";
 
 			return $this->query($strQuery);
+
+		function toggleReport($reportid, $approval){
+      // echo $approval;
+      // echo $reportid;
+      // $newapproval = "";
+      if($approval == "0"){
+        $newapproval = "1";
+      } else {
+        $newapproval = "0";
+      }
+      // echo $newapproval;
+			$strQuery="update reports set is_approved='$newapproval' where report_id=$reportid";
+      return $this->query($strQuery);
 		}
-
-
 
 	}
 ?>
