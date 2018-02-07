@@ -261,19 +261,13 @@ $().ready(function () {
     }
   });
 
+  function refireTable1(){
+    setTimeout(function () {
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+    }, 500);
+  }
 
-//   setInterval(function () {
-//      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-//   }, 6000);
-
-
-function refireTable1(){
-  setTimeout(function () {
-  dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-}, 500);
-}
-
-global1 = refireTable1;
+  global1 = refireTable1;
 
   // setInterval(function () {
   //   dataTable2.ajax.reload(null, false); // user paging is not reset on reload
@@ -318,11 +312,13 @@ global1 = refireTable1;
   function refireTable7(){
     setTimeout(function () {
       dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  }, 500);
-}
-global7 = refireTable7;
+    }, 500);
+  }
+  global7 = refireTable7;
 
 
+  $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#addnewnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
   $('#addenddateselected').datetimepicker({
@@ -336,13 +332,10 @@ global7 = refireTable7;
     $('#addnewdateselected').data("DateTimePicker").maxDate(e.date);
   });
 
-
   $('#editaddnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
-
-
 
   document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
 
@@ -843,9 +836,6 @@ function addeventComplete(xhr,status){
 
 }
 
-
-
-
 function editevent(){
   event.preventDefault();
 
@@ -1296,17 +1286,12 @@ function level1ViewComplete(xhr, status) {
    
 }
 
-
-
-
-
-
 function addnewevent(){
   event.preventDefault();
 
   var userid = sessionStorage.getItem("userid");
   var eventtitle = $('#addnewtitle').val();
-  var date = $('#addnewdateselected').val();
+  var date = $('#addnewnewdateselected').val();
   var region = $('#addnewregion').val();
   var town = $('#addnewtown').val();
   var audiencecat = $('#addnewaudience').val();
