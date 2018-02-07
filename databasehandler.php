@@ -451,7 +451,6 @@
 			include("events.php");
 		   $event = new events();
 			$total="";
-			$moredata = array();
 			
 			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
 			{ 
@@ -486,7 +485,6 @@
 
 			while($row = $event->fetch()){
 			   $success="true";
-			   //array_push($data,$row);
 			   $data['regname']=$row['regname'];
 			   $data['figures']=$row['figures'];
 			   $decimal = $row['figures'] / $total;
@@ -505,7 +503,28 @@
 			include("events.php");
 			$event = new events();
 
-			$result = $event->getDashTotalEvents();
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region= '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			} 
+
+			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
@@ -527,7 +546,28 @@
 			$total = '';
 			$moredata = array();
 
-			$result = $event->getDashTotalAttendees();
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
+
+			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
@@ -564,9 +604,30 @@
    {
 		   $success="";
 		   include("events.php");
-		   $event = new events();
+			$event = new events();
+			
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
 
-		   $result = $event->getDashTopAudienceCategory();
+		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
 
 		   $data = array();
 
@@ -607,6 +668,8 @@
 
 				while($row = $event->fetch()){
 						$success="true";
+						//array_push($data,$row);
+						//$newdate = str_replace("-",",",$row['date']);
 						$newdate = strtotime($row['date_to_be_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
 						$data[]=$new_date;
