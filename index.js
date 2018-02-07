@@ -250,7 +250,7 @@ $().ready(function () {
         // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
       }, 500);
 
-      
+
   }
 
   global2 = refireTable2;
