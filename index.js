@@ -256,8 +256,16 @@ global1 = refireTable1;
   function refireTable2(){
         setTimeout(function () {
         dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+        // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
       }, 500);
+
+      
   }
+  // <div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><div uk-spinner></div></div>
+  // <div class="uk-overlay uk-position-bottom uk-dark">
+  // <div uk-spinner></div>
+  // </div>
+  
 
   global2 = refireTable2;
 
@@ -1606,7 +1614,7 @@ function editNewEvent(){
     }
     else{
   
-      var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+      var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
          "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
       $.ajax(theUrl,
         {
@@ -1617,7 +1625,8 @@ function editNewEvent(){
 }
 
 function editNewEventComplete(){
-
+  UIkit.modal('#edit-modal-overflow').hide();
+  global1();
 }
 
 
@@ -1689,7 +1698,7 @@ function addNewReport(){
   }
   else{
 
-    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id;
+    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id + "&eventtitle="+obj[0].eventtitle + "&date="+obj[0].date+ "&region=" +obj[0].region+ "&town=" +obj[0].town + "&audcat="+obj[0].audcat+ "&audatt="+obj[0].audatt+ "&observations="+obj[0].observations+ "&challenges="+obj[0].challenges+ "&complaints="+obj[0].complaints+ "&members="+obj[0].members+ "&members="+obj[0].members;
     
       $.ajax(theUrl,
         {
@@ -1916,7 +1925,7 @@ function level2ReportViewComplete(xhr, status) {
 
 
 function ApproveReportToggle(id, approveState){
-  alert('here in VET'+id+approveState);
+  
   event.preventDefault();
   var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
   

@@ -116,13 +116,13 @@
                                     <div class="nav-tabs-wrapper">
                                         <ul class="nav nav-tabs" data-tabs="tabs">
                                             <li class="active">
-                                                <a href="#myevent" data-toggle="tab">Approve Events</a>
-                                            </li>
-                                            <li>
                                                 <a href="#cal" data-toggle="tab">Calendar</a>
                                             </li>
                                             <li>
-                                                <a href="#level3adduser" data-toggle="tab">Add User</a>
+                                                <a href="#myevent" data-toggle="tab">Events</a>
+                                            </li>
+                                            <li>
+                                                <a href="#myreport" data-toggle="tab">Reports</a>
                                             </li>
                                             <li>
                                                 <a href="#level3users" data-toggle="tab">Users</a>
@@ -143,16 +143,15 @@
                             <div class="content">
                                 <div class="tab-content">
 
-                                    <div class="tab-pane active" id="myevent" style=" padding: 3%;">
+                                    <div class="tab-pane" id="myevent" style=" padding: 3%;">
                                         <div class="content">
                                         <table id="level3list" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
                                             <thead style="text-align: left;">
                                                 <tr style="text-align: left;">
-                                                        <th style="text-align: left; font-size: 1.0em;">ID</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Event Title</th>
-                                                        <th style="text-align: left; font-size: 1.0em;">Start Date</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Region</th>
-                                                        <th style="text-align: left; font-size: 1.0em;">Location </th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Town</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Date Verified</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Approval Status</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Action</th>
                                                 </tr>
@@ -160,13 +159,29 @@
                                         </table>
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="myreport" style=" padding: 3%;">
+                                        <div class="content">
+                                            <table id="level3reportlist" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover"
+                                                width="100%">
+                                                <thead style="text-align: left;">
+                                                    <tr style="text-align: left;">
+                                                        <th style="text-align: left; font-size: 1.0em;">Event Title</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Region</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Town</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Date Reported</th>
+                                                        <th style="text-align: left; font-size: 1.0em;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
                                     <div class="tab-pane active" id="cal" style=" padding: 3%;">
                                         <div id='calendar' style="width:100%;"></div>
                                     </div>
-                                    <div class="tab-pane" id="level3adduser" style=" padding: 3%;">
+                                    <div class="tab-pane" id="level3users" style=" padding: 3%;">
                                         <form id="AddUserForm" action="" method="">
                                             <div class="card-content" style="padding: 2% 15%;">
-
+                                        
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
@@ -239,24 +254,25 @@
                                                         </div>
                                                     </div>
                                                     <br/>
-
+                                        
                                                 </div>
                                                 <br/>
-
+                                        
                                                 <div class="category form-category">
                                                     <small>(required)</small> - Required fields</div>
-
+                                        
                                                 <div class="form-footer text-right">
                                                     <div class="checkbox pull-left">
-
+                                        
                                                     </div>
                                                 </div>
                                                 <button type="submit" class="btn btn-default pull-left" onclick="clearuseraddfield()">Clear Fields</button>
                                                 <button id="adduserinfo" type="submit" class="btn btn-twitter pull-right" onclick="addlevel2user()">Add User</button>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div class="tab-pane" id="level3users" style=" padding: 3%;">
+
+                                        <h2 style="font-weight: 900;color: #aaa" class="col-sm-12 text-center">Users List</h2>
+
                                         <div class="content">
                                             <table id="level3userstable" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
                                                 <thead>
@@ -277,173 +293,195 @@
                                     <div class="tab-pane" id="level3dashboard" style=" padding: 3%;">
                                         <div class="content">
                                           <div class="container-fluid">
-                                              <div class="row">
-                                                  <div class="col-md-12">
-                                                      <div class="card">
-                                                          <div class="card-header card-header-icon" data-background-color="green">
-                                                              <i class="material-icons">&#xE894;</i>
-                                                          </div>
-                                                          <div class="card-content">
-                                                              <h3 class="card-title">National Outreach Event Created by Region</h4>
-                                                              <div class="row">
-                                                                  <div class="col-md-7">
-                                                                      <div class="table-responsive table-sales">
-                                                                          <table class="table">
-                                                                              <tbody id="dashboardtablebody">
-                                                                                      <th>
-                                                                                          <td>Region</td>
-                                                                                          <td class="text-right">Events Hosted</td>
-                                                                                          <td class="text-right">Percentage %</td>
-                                                                                      </th>
 
-                                                                              </tbody>
-                                                                          </table>
-                                                                      </div>
-                                                                  </div>
-                                                                  <div class="col-md-4 col-md-offset-1" style="margin-top: 7%; margin-left: 8%;">
-                                                                      <div><img src="images/gh.svg" style="height: 40%; width:40%"></div>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-8">
+                                                <div class="card card-stats">
+                                                    <div data-background-color="grey">
+                                                        <i class="material-icons">search</i>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                        Start date
+                                                                        <small>(required)</small>
+                                                                    </label>
+                                                                    <input id="addnewdateselected" type="text" class="form-control datetimepicker" required="true" onkeydown="return false;"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                        End date
+                                                                        <small>(required)</small>
+                                                                    </label>
+                                                                    <input id="addenddateselected" class="form-control datetimepickker" type="text" required="true" onkeydown="return false;"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button id="dashsearchinfo" type="submit" class="btn btn-twitter col-sm-12" onclick="searchdash(); return false">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        
+                                            <br />
+                                            <div id="datafield" class="row" style="display:none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-header card-header-icon" data-background-color="green">
+                                                                <i class="material-icons">&#xE894;</i>
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <h3 class="card-title">National Outreach Event Created by Region</h4>
+                                                                <div class="row">
+                                                                    <div class="col-md-7">
+                                                                        <div class="table-responsive table-sales">
+                                                                            <table class="table">
+                                                                                <tbody id="dashboardtablebody">
+                                                                                        <th>
+                                                                                            <td>Region</td>
+                                                                                            <td class="text-right">Events Hosted</td>
+                                                                                            <td class="text-right">Percentage %</td>
+                                                                                        </th>
 
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-md-offset-1" style="margin-top: 7%; margin-left: 8%;">
+                                                                        <div><img src="images/gh.svg" style="height: 40%; width:40%"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <select id="searchregion" class="selectpicker" data-style="btn" title="All Regions" data-size="11" style="background-color:#000000;" onchange="regionloadDashData(this.options[this.selectedIndex].value)">
+                                                    <option value="0">All Regions</option>
+                                                    <option value="1">Ashanti</option>
+                                                    <option value="2">Brong Ahafo</option>
+                                                    <option value="3">Central</option>
+                                                    <option value="4">Eastern</option>
+                                                    <option value="5">Greater Accra</option>
+                                                    <option value="6">Northern</option>
+                                                    <option value="7">Upper East</option>
+                                                    <option value="8">Upper West</option>
+                                                    <option value="9">Volta</option>
+                                                    <option value="10">Western</option>
+                                                </select>
+                                                <br/>
 
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="card card-stats">
+                                                            <div data-background-color="orange">
+                                                                <i class="material-icons">date_range</i>
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <p class="category">Total Events</p>
+                                                                <p style="font-weight: bold; font-size: 2em;" id="totalEventsHoted" class="card-title"></p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="stats">
+                                                                    <p>From 8 regions</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card card-stats">
+                                                            <div data-background-color="rose">
+                                                                <i class="material-icons">equalizer</i>
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <p class="category">Total Attendees</p>
+                                                                <p style="font-weight: bold; font-size: 2em;" id="totalAttendees" class="card-title"></p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="stats">
+                                                                    <p>Estimated attendants to events</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card card-stats">
+                                                            <div data-background-color="green">
+                                                                <i class="material-icons">store</i>
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <p class="category">Common Category</p>
+                                                                <p style="font-weight: bold; font-size: 2em;" id="commonAudience" class="card-title"></p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="stats">
+                                                                    <p>From 15 other possible categories</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                                <div class="" >
+                                                    <div class="card" style="margin-top: 5%;">
+                                                    <div class="card-header">
+                                                        <br/>
+                                                        <h4 class="card-title">Statistics  -
+                                                            <small class="category">Visualize outreach user data</small>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <ul class="nav nav-pills nav-pills-icons nav-pills-rose nav-stacked" role="tablist">
+                                                                
+                                                                    <li class="active">
+                                                                        <a href="#eventstats" role="tab" data-toggle="tab">
+                                                                            <center><i class="material-icons" style="margin-right: 10px">schedule</i></center> Event Data
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#userstats" role="tab" data-toggle="tab">
+                                                                        <center>
+                                                                            <i class="material-icons">face</i></center> Outreach User
+                                                                            Data
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#audiencestats" role="tab" data-toggle="tab">
+                                                                            <center>
+                                                                            <i class="material-icons">record_voice_over</i>
+                                                                            </center>
+                                                                            Audience Categories Reached Out To
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane active" id="eventstats">
+                                                                        <div id="eventcontainer" style="max-width:100%; height:300px;"></div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="userstats">
+                                                                        <div id="eventusercontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="audiencestats">
+                                                                        <div id="eventaudiencecontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
 
-
-                                              <!-- <div class="row" style="marginTop: 5%;">
-                                                  <div class="col-md-12">
-                                                    <select id="pickdashboardregion" onchange="regionSelected()" class="selectpicker" data-style="btn btn-info" title="Select Statistics by Region" data-size="11" style="background-color:#000000;">
-                                                        <option value="1">Ashanti Region</option>
-                                                        <option value="2">Brong Ahafo Region</option>
-                                                        <option value="3">Central Region</option>
-                                                        <option value="4">Eastern Region</option>
-                                                        <option value="5">Greater Accra Region</option>
-                                                        <option value="6">Northern Region</option>
-                                                        <option value="7">Upper East Region</option>
-                                                        <option value="8">Upper West Region</option>
-                                                        <option value="9">Volta Region</option>
-                                                        <option value="10">Western Region</option>
-                                                    </select>
-                                                  </div>
-                                              </div> -->
-
-                                              <br/>
-
-
-                                              <div class="row">
-                                                  <div class="col-md-4">
-                                                      <div class="card card-stats">
-                                                          <div data-background-color="orange">
-                                                              <i class="material-icons">date_range</i>
-                                                          </div>
-                                                          <div class="card-content">
-                                                              <p class="category">Total Events</p>
-                                                              <p style="font-weight: bold; font-size: 2em;" id="totalEventsHoted" class="card-title"></p>
-                                                          </div>
-                                                          <div class="card-footer">
-                                                              <div class="stats">
-                                                                  <p>From 8 regions</p>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                                  <div class="col-md-4">
-                                                      <div class="card card-stats">
-                                                          <div data-background-color="rose">
-                                                              <i class="material-icons">equalizer</i>
-                                                          </div>
-                                                          <div class="card-content">
-                                                              <p class="category">Total Attendees</p>
-                                                              <p style="font-weight: bold; font-size: 2em;" id="totalAttendees" class="card-title"></p>
-                                                          </div>
-                                                          <div class="card-footer">
-                                                              <div class="stats">
-                                                                  <p>Estimated attendants to events</p>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                                  <div class="col-md-4">
-                                                      <div class="card card-stats">
-                                                          <div data-background-color="green">
-                                                              <i class="material-icons">store</i>
-                                                          </div>
-                                                          <div class="card-content">
-                                                              <p class="category">Common Category</p>
-                                                              <p style="font-weight: bold; font-size: 2em;" id="commonAudience" class="card-title"></p>
-                                                          </div>
-                                                          <div class="card-footer">
-                                                              <div class="stats">
-                                                                  <p>From 15 other possible categories</p>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-
-
-                                              <div class="" >
-                                                      <div class="card" style="margin-top: 5%;">
-                                                          <div class="card-header">
-                                                            <br/>
-                                                              <h4 class="card-title">Statistics  -
-                                                                  <small class="category">Visualize outreach user data</small>
-                                                              </h4>
-                                                          </div>
-                                                          <div class="card-content">
-                                                              <div class="row">
-                                                                  <div class="col-md-4">
-                                                                      <ul class="nav nav-pills nav-pills-icons nav-pills-rose nav-stacked" role="tablist">
-                                                                          <!--
-                                                              color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
-                                                          -->
-                                                                          <li class="active">
-                                                                              <a href="#eventstats" role="tab" data-toggle="tab">
-                                                                                  <center><i class="material-icons" style="margin-right: 10px">schedule</i></center> Event Data
-                                                                              </a>
-                                                                          </li>
-                                                                          <li>
-                                                                              <a href="#userstats" role="tab" data-toggle="tab">
-                                                                                <center>
-                                                                                  <i class="material-icons">face</i></center> Outreach User
-                                                                                   Data
-                                                                              </a>
-                                                                          </li>
-                                                                          <li>
-                                                                              <a href="#audiencestats" role="tab" data-toggle="tab">
-                                                                                  <center>
-                                                                                    <i class="material-icons">record_voice_over</i>
-                                                                                  </center>
-                                                                                  Audience Categories Reached Out To
-                                                                              </a>
-                                                                          </li>
-                                                                      </ul>
-                                                                  </div>
-                                                                  <div class="col-md-8">
-                                                                      <div class="tab-content">
-                                                                          <div class="tab-pane active" id="eventstats">
-                                                                              <div id="eventcontainer" style="max-width:100%; height:300px;"></div>
-                                                                          </div>
-                                                                          <div class="tab-pane" id="userstats">
-                                                                              <div id="eventusercontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
-                                                                          </div>
-                                                                          <div class="tab-pane" id="audiencestats">
-                                                                              <div id="eventaudiencecontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
-                                                                          </div>
-                                                                      </div>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-
-
-
-
+                                                </div>
+                                            </div>
                                           </div>
-                                      </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="changelogs" style=" padding: 3%;">
@@ -477,13 +515,11 @@
                                           </table>
                                       </div>
                                     </div>
-
-
                                     <div class="tab-pane" id="changepassword" style=" padding: 3%;">
 
                                         <div style="margin-left: 20%; margin-right: 20%;">
 
-                                            <center><label style="font-weight: 900; font-size: 1.5em;  margin-top: 10%;">NEW PASSWORD</label></center>
+                                            <center><label style="font-weight: 900; font-size: 1.5em;">NEW PASSWORD</label></center>
 
                                             <div class="form-group">
                                                 <label style="font-weight: 900; color: #aaa; font-size: 1.0em;" class="control-label">
@@ -655,68 +691,64 @@
 
       <!-- Modal 2 -->
       <div class="modal fade" id="viewEvent2x" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 100%">
-      <div class="modal-dialog" style="width: 90%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h2 class="modal-title" id="myModalLabel">Outreach Event Details</h2>
-          </div>
-          <div class="modal-body">
+        <div class="modal-dialog" style="width: 90%;">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h2 class="modal-title" id="myModalLabel">Outreach Event Details</h2>
+            </div>
+            <div class="modal-body">
 
 
-          <label>Event ID </label>
-          <br><input id="report_id" readonly> <br><br>
+            <label>Event ID </label>
+            <br><input id="report_id" readonly> <br><br>
 
-          <label>Event Title </label>
-          <br><input class="form-control" id="eventtitle" readonly> <br><br>
+            <label>Event Title </label>
+            <br><input class="form-control" id="eventtitle" readonly> <br><br>
 
-          <label>Date Organized </label>
-          <br><input class="form-control" id="date_organized"  readonly> <br><br>
+            <label>Date Organized </label>
+            <br><input class="form-control" id="date_organized"  readonly> <br><br>
 
-          <label>Region </label>
-          <br><input class="form-control" id="region"  readonly> <br><br>
+            <label>Region </label>
+            <br><input class="form-control" id="region"  readonly> <br><br>
 
-          <label>Town </label>
-          <br><input class="form-control" id="town" readonly > <br><br>
+            <label>Town </label>
+            <br><input class="form-control" id="town" readonly > <br><br>
 
-          <label>Audience Industry </label>
-          <br><input class="form-control" id="audience_category"  readonly> <br><br>
+            <label>Audience Industry </label>
+            <br><input class="form-control" id="audience_category"  readonly> <br><br>
 
-          <label>Attendance </label>
-          <br><input class="form-control" id="audience_attendance"  readonly> <br><br>
+            <label>Attendance </label>
+            <br><input class="form-control" id="audience_attendance"  readonly> <br><br>
 
-          <label>Team Challenges </label>
-          <br><input class="form-control" id="team_challenges"  readonly> <br><br>
+            <label>Team Challenges </label>
+            <br><input class="form-control" id="team_challenges"  readonly> <br><br>
 
-          <label>Complaints Raised </label>
-          <br><input class="form-control" id="complaints_raised"  readonly> <br><br>
+            <label>Complaints Raised </label>
+            <br><input class="form-control" id="complaints_raised"  readonly> <br><br>
 
-          <label>Event Summary </label>
-          <br><input class="form-control" id="event_summary" readonly> <br><br>
+            <label>Event Summary </label>
+            <br><input class="form-control" id="event_summary" readonly> <br><br>
 
-          <div id="pictureContainerLevel3">
-          </div>
+            <div id="pictureContainerLevel3">
+            </div>
 
 
-          </div>
-          <div id="approvebuttons" class="modal-footer">
-            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-warning" id="addConfirm" data-toggle="modal" data-target="#verifyEvent">Approve</button> -->
-          </div>
+            </div>
+            <div id="approvebuttons" class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="addConfirm" data-toggle="modal" data-target="#verifyEvent">Approve</button> -->
+            </div>
+            </div>
         </div>
       </div>
-      </div>
-
-
-
-
-
-
 
 <script src="index.js"></script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src='jquery/jquery-1.10.2.js'></script>
+<script src='jquery/jquery-ui.custom.min.js'></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="assets/js/material.min.js" type="text/javascript"></script>
 <script src="assets/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
@@ -761,9 +793,8 @@
 <script src="assets/js/fileinput.js" type="text/javascript"></script>
 <script src="assets/js/fileinput.min.js" type="text/javascript"></script>
 
-<script src="highcharts/highcharts.js"></script>
-<script src="highcharts/highcharts-3d.js"></script>
 <script src="highcharts/highstock.js"></script>
+<script src="highcharts/highcharts-3d.js"></script>
 <script src="highcharts/exporting.js"></script>
 <script>
 
@@ -908,148 +939,136 @@ $(document).ready(function () {
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $.getJSON('databasehandler.php?cmd=15', function (data) {
+        // $.getJSON('databasehandler.php?cmd=15', function (data) {
 
-            Highcharts.chart('eventcontainer', {
-                chart: {
-                    zoomType: 'x'
-                },
-                title: {
-                    text: 'Events Per Day'
-                },
-                subtitle: {
-                    text: document.ontouchstart === undefined ?
-                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    visible: false
-                },
-                yAxis: {
-                    title: {
-                        text: 'Events'
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                plotOptions: {
-                    area: {
-                        fillColor: {
-                            linearGradient: {
-                                x1: 0,
-                                y1: 0,
-                                x2: 0,
-                                y2: 1
-                            },
-                            stops: [
-                                [0, Highcharts.getOptions().colors[0]],
-                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                            ]
-                        },
-                        marker: {
-                            radius: 2
-                        },
-                        lineWidth: 1,
-                        states: {
-                            hover: {
-                                lineWidth: 1
-                            }
-                        },
-                        threshold: null
-                    }
-                },
+        //     Highcharts.chart('eventcontainer', {
+        //         chart: {
+        //             zoomType: 'x'
+        //         },
+        //         title: {
+        //             text: 'Events Per Day'
+        //         },
+        //         subtitle: {
+        //             text: document.ontouchstart === undefined ?
+        //                 'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+        //         },
+        //         xAxis: {
+        //             type: 'datetime',
+        //             visible: false
+        //         },
+        //         yAxis: {
+        //             title: {
+        //                 text: 'Events'
+        //             }
+        //         },
+        //         legend: {
+        //             enabled: false
+        //         },
+        //         plotOptions: {
+        //             area: {
+        //                 fillColor: {
+        //                     linearGradient: {
+        //                         x1: 0,
+        //                         y1: 0,
+        //                         x2: 0,
+        //                         y2: 1
+        //                     },
+        //                     stops: [
+        //                         [0, Highcharts.getOptions().colors[0]],
+        //                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+        //                     ]
+        //                 },
+        //                 marker: {
+        //                     radius: 2
+        //                 },
+        //                 lineWidth: 1,
+        //                 states: {
+        //                     hover: {
+        //                         lineWidth: 1
+        //                     }
+        //                 },
+        //                 threshold: null
+        //             }
+        //         },
 
-                series: [{
-                    type: 'area',
-                    name: 'Number of Events',
-                    data: data
-                }]
-            });
-        });
+        //         series: [{
+        //             type: 'area',
+        //             name: 'Number of Events',
+        //             data: data
+        //         }]
+        //     });
+        // });
 
-        $.getJSON('databasehandler.php?cmd=17', function (data) {
+        // $.getJSON('databasehandler.php?cmd=17', function (data) {
 
-            Highcharts.chart('eventusercontainer', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Outreach Categories Per Region'
-                },
-                xAxis: {
-                    categories: data.categories
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Total Audience Attended'
-                    }
-                },
-                tooltip: {
-                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-                    shared: true
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'percent'
-                    }
-                },
-                series: data.series
-                // [{
-                //     name: 'John',
-                //     data: [5, 3, 4, 7, 2]
-                // }, {
-                //     name: 'Jane',
-                //     data: [2, 2, 3, 2, 1]
-                // }, {
-                //     name: 'Joe',
-                //     data: [3, 4, 4, 2, 5]
-                // }]
-            });
-        });
+        //     Highcharts.chart('eventusercontainer', {
+        //         chart: {
+        //             type: 'column'
+        //         },
+        //         title: {
+        //             text: 'Outreach Categories Per Region'
+        //         },
+        //         xAxis: {
+        //             categories: data.categories
+        //         },
+        //         yAxis: {
+        //             min: 0,
+        //             title: {
+        //                 text: 'Total Audience Attended'
+        //             }
+        //         },
+        //         tooltip: {
+        //             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+        //             shared: true
+        //         },
+        //         plotOptions: {
+        //             column: {
+        //                 stacking: 'percent'
+        //             }
+        //         },
+        //         series: data.series
+        //         // [{
+        //         //     name: 'John',
+        //         //     data: [5, 3, 4, 7, 2]
+        //         // }, {
+        //         //     name: 'Jane',
+        //         //     data: [2, 2, 3, 2, 1]
+        //         // }, {
+        //         //     name: 'Joe',
+        //         //     data: [3, 4, 4, 2, 5]
+        //         // }]
+        //     });
+        // });
 
-        $.getJSON('databasehandler.php?cmd=16', function (data) {
-            //var piedata = JSON.parse(data);
-            console.log(data);
-            Highcharts.chart('eventaudiencecontainer', {
-                chart: {
-                    type: 'pie',
-                    options3d: {
-                        enabled: true,
-                        alpha: 45
-                    }
-                },
-                title: {
-                    text: 'Audience Categories'
-                },
-                subtitle: {
-                    text: 'Sum of Categories'
-                },
-                plotOptions: {
-                    pie: {
-                        innerSize: 100,
-                        depth: 45
-                    }
-                },
-                series: [{
-                    name: 'Number of events tailored to',
-                    data: data
-                }]
-            });
-        });
-
-        // Javascript method's body can be found in assets/js/demos.js
-        //demo.initDashboardPageCharts();
-
-        //demo.initVectorMap();
-        //
-        //
-
-
-        function regionSelected(){
-          alert("pie");
-        }
+        // $.getJSON('databasehandler.php?cmd=16', function (data) {
+        //     //var piedata = JSON.parse(data);
+        //     console.log(data);
+        //     Highcharts.chart('eventaudiencecontainer', {
+        //         chart: {
+        //             type: 'pie',
+        //             options3d: {
+        //                 enabled: true,
+        //                 alpha: 45
+        //             }
+        //         },
+        //         title: {
+        //             text: 'Audience Categories'
+        //         },
+        //         subtitle: {
+        //             text: 'Sum of Categories'
+        //         },
+        //         plotOptions: {
+        //             pie: {
+        //                 innerSize: 100,
+        //                 depth: 45
+        //             }
+        //         },
+        //         series: [{
+        //             name: 'Number of events tailored to',
+        //             data: data
+        //         }]
+        //     });
+        // });
 
     });
 </script>
