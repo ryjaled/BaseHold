@@ -1234,7 +1234,7 @@ function addlevel2userComplete(xhr, status) {
 
 
 function level1View(val) {
-  console.log('modal to edit: ', val);
+  console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
@@ -2857,8 +2857,6 @@ function regionloadDashData(region) {
   regionfillDashTotalEvents(sdate, edate, region);
   regionfillDashTotalAttendees(sdate, edate, region);
   regionfillDashCommonPlace(sdate, edate, region);
-
-}
 
 }
 
