@@ -90,8 +90,8 @@ $().ready(function () {
   var dataTable3 = $('#level3list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '25%'},
-      { "targets": 1, width: '15%'},
+      { "targets": 0, width: '7%'},
+      { "targets": 1, width: '25%'},
       { "targets": 2, width: '15%'},
       { "targets": 3, width: '15%'},
       { "targets": 4, width: '15%'},
@@ -99,7 +99,7 @@ $().ready(function () {
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[3, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -109,31 +109,6 @@ $().ready(function () {
         $(".level3list-error").html("");
         $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level3list_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable3 = $('#level3reportlist').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '25%' },
-      { "targets": 1, width: '15%' },
-      { "targets": 2, width: '15%' },
-      { "targets": 3, width: '15%' },
-      { "targets": 4, width: '15%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[3, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "level3reportlist.php?usersessionid=" + sessionStorage.userid, // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".level3reportlist-error").html("");
-        $("#level3reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#level3reportlist_processing").css("display", "none");
       }
     }
   });
@@ -261,28 +236,21 @@ $().ready(function () {
     }
   });
 
+  function refireTable1(){
+    setTimeout(function () {
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+    }, 500);
+  }
 
-//   setInterval(function () {
-//      dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-//   }, 6000);
-
-
-function refireTable1(){
-  setTimeout(function () {
-  dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-}, 500);
-}
-
-global1 = refireTable1;
-
-  // setInterval(function () {
-  //   dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-  // }, 3000);
+  global1 = refireTable1;
 
   function refireTable2(){
         setTimeout(function () {
         dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+        // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
       }, 500);
+
+
   }
 
   global2 = refireTable2;
@@ -318,11 +286,13 @@ global1 = refireTable1;
   function refireTable7(){
     setTimeout(function () {
       dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  }, 500);
-}
-global7 = refireTable7;
+    }, 500);
+  }
+  global7 = refireTable7;
 
 
+  $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
+  $('#addnewnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
   $('#addenddateselected').datetimepicker({
@@ -336,13 +306,9 @@ global7 = refireTable7;
     $('#addnewdateselected').data("DateTimePicker").maxDate(e.date);
   });
 
-
   $('#editaddnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
-
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
-
-
 
   document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
 
@@ -589,88 +555,6 @@ function _fetchMyEventsCompleteLevel2(xhr,status){
     }
 }
 
-// function editor(val){
-//     // console.log('modal to edit: ',val);
-//     var theUrl="databasehandler.php?cmd=6&eventid="+val;
-
-//     $.ajax(theUrl,
-//           {
-//             async:true,
-//             complete:editorComplete
-//           });
-
-//     // $('#modalpop').click();
-// }
-
-// function editorComplete(xhr, status){
-//     // console.log(xhr);
-
-//     var obj = JSON.parse(xhr.responseText);
-
-
-//     sessionStorage.pullreportid = obj[0].report_id;
-//     sessionStorage.pullverified = obj[0].is_verified;
-//     help();
-
-//     var picValues = "";
-//     $('#pictureContainerLevel2').html("");
-
-//     picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
-
-//       var jsonarray = JSON.parse(obj[0].picture_paths);
-//       for(var i = 0; i < jsonarray.length; i++) {
-//         var obj2 = jsonarray[i];
-
-//         //obj2 contains picture names.
-//         // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
-
-//         var user_id = ""+obj[0].reporter;
-//         var event_header = ""+obj[0].eventtitle;
-//         var picture_header = ""+obj2;
-
-
-//         picValues = picValues + "<div>";
-//         picValues = picValues + "<a onclick='closemodal2()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-//         picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-//         picValues = picValues + "</a>";
-//         picValues = picValues + "</div>";
-
-
-//       }
-
-//     picValues = picValues + "</div>";
-
-//     var dform = new Date(obj[0].date_organized);
-//     console.log(obj);
-//     console.log(obj[0].report_id);
-//     console.log(obj[0].eventtitle);
-//     console.log(moment(dform).format('D MMMM Y'));
-//     console.log(obj[0].region);
-//     console.log(obj[0].town);
-//     console.log(obj[0].audience_category);
-//     console.log(obj[0].audience_attendance);
-//     console.log(obj[0].team_challenges);
-//     console.log(obj[0].complaints_raised);
-//     console.log(obj[0].event_summary);
-//     console.log(picValues);
-
-
-//     UIkit.modal('#level2Modal').show();
-//     document.getElementById('report_id').innerHTML=obj[0].report_id;
-//     document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-//     document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-//     document.getElementById('region').innerHTML=obj[0].region;
-//     document.getElementById('town').innerHTML=obj[0].town;
-//     document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-//     document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-//     document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-//     document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-//     document.getElementById('event_summary').innerHTML=obj[0].event_summary;
-//     document.getElementById('pictureContainerLevel2').innerHTML=picValues;
-
-
-// }
-
 function approvalwindow(id){
     // console.log('modal for viewing: ',id);
     var theUrl="databasehandler.php?cmd=6&eventid="+id;
@@ -842,9 +726,6 @@ function addeventComplete(xhr,status){
  });
 
 }
-
-
-
 
 function editevent(){
   event.preventDefault();
@@ -1039,11 +920,12 @@ function addpendpendingevent() {
 
 }
 
-function deletependingevent(pid){
-  var theUrl = "databasehandler.php?cmd=25&pendid=" + pid;
+function deleteevent(pid){
+  var theUrl = "databasehandler.php?cmd=25&eventid=" + pid;
   $.ajax(theUrl,
     {
-      async: true
+      async: true,
+      removependpendingeventComplete
     });
 }
 
@@ -1076,10 +958,11 @@ function addpendpendingeventComplete(xhr, status) {
 
 function removependpendingeventComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
+  global1();
 
   $.notify({
     icon: "info_outline",
-    message: "Pending Event Removed Successfully."
+    message: "Event Removed Successfully."
 
   }, {
       type: 'success',
@@ -1232,7 +1115,6 @@ function addlevel2userComplete(xhr, status) {
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
-
 function level1View(val) {
   console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
@@ -1296,17 +1178,12 @@ function level1ViewComplete(xhr, status) {
    
 }
 
-
-
-
-
-
 function addnewevent(){
   event.preventDefault();
 
   var userid = sessionStorage.getItem("userid");
   var eventtitle = $('#addnewtitle').val();
-  var date = $('#addnewdateselected').val();
+  var date = $('#addnewnewdateselected').val();
   var region = $('#addnewregion').val();
   var town = $('#addnewtown').val();
   var audiencecat = $('#addnewaudience').val();
@@ -1452,35 +1329,17 @@ function addneweventComplete(xhr,status){
 
 }
 
-
-
-
-
 function level1Edit(val){
   event.preventDefault();
 
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  sessionStorage.setItem("eventneededid",val);
 
   $.ajax(theUrl,
     {
       async: true,
       complete: level1EditComplete
     });
-
-  
-
-
-  
-  // }else{
-
-  //   var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-  //      "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
-  //   $.ajax(theUrl,
-  //     {
-  //       async: true,
-  //       complete: level1EditComplete
-  //     });
-  // }
 
 }
 
@@ -1506,6 +1365,7 @@ function editNewEvent(){
   event.preventDefault();
   
     var userid = sessionStorage.getItem("userid");
+    var eventid = sessionStorage.getItem("eventneededid");
     var eventtitle = $('#editaddnewtitle').val();
     var date = $('#editaddnewdateselected').val();
     var region = $('#editaddnewregion').val();
@@ -1647,8 +1507,8 @@ function editNewEvent(){
     }
     else{
   
-      var theUrl = "databasehandler.php?cmd=2&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid;
+      var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid + "&eventid=" + eventid;
       $.ajax(theUrl,
         {
           async: true,
@@ -1658,19 +1518,19 @@ function editNewEvent(){
 }
 
 function editNewEventComplete(){
-
+  UIkit.modal('#edit-modal-overflow').hide();
+  global1();
 }
-
 
 function addReportModal(val){
   
-var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
-sessionStorage.report_event_id = val;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: loadEventReport
-    });
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  sessionStorage.report_event_id = val;
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: loadEventReport
+      });
  
 }
 
@@ -1730,7 +1590,7 @@ function addNewReport(){
   }
   else{
 
-    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id;
+    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id + "&eventtitle="+obj[0].eventtitle + "&date="+obj[0].date+ "&region=" +obj[0].region+ "&town=" +obj[0].town + "&audcat="+obj[0].audcat+ "&audatt="+obj[0].audatt+ "&observations="+obj[0].observations+ "&challenges="+obj[0].challenges+ "&complaints="+obj[0].complaints+ "&members="+obj[0].members+ "&members="+obj[0].members;
     
       $.ajax(theUrl,
         {
@@ -1739,7 +1599,6 @@ function addNewReport(){
         });
   }
 }
-
 
 function addNewReportComplete(){
 
@@ -1863,9 +1722,6 @@ function verifyEventToggle(id, verState){
 
 }
 
-
-
-
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
@@ -1878,7 +1734,6 @@ function reportApprover(id, verifyCheck, approveCheck){
     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
   }
 }
-
 
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
@@ -1955,9 +1810,8 @@ function level2ReportViewComplete(xhr, status) {
   console.log(obj[0].team_challenges);
 }
 
-
 function ApproveReportToggle(id, approveState){
-  alert('here in VET'+id+approveState);
+  
   event.preventDefault();
   var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
   
@@ -2062,7 +1916,6 @@ function level3ViewComplete(xhr, status) {
 
 }
 
-
 function verifyEventToggle(id, verState){
   // alert('here in VET'+id+verState);
   event.preventDefault();
@@ -2090,7 +1943,6 @@ function reportApprover(id, verifyCheck, approveCheck){
     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
   }
 }
-
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -2163,7 +2015,6 @@ function level3ReportViewComplete(xhr, status) {
   document.getElementById('report_4').innerHTML=obj[0].team_challenges;
   console.log(obj[0].team_challenges);
 }
-
 
 function ApproveReportToggle(id, approveState){
   alert('here in VET'+id+approveState);
@@ -2252,14 +2103,9 @@ function fillDashRegionFiguresComplete(xhr, status) {
 
 }
 
-function fillDashTotalEvents(sdate,edate) {
+function fillDashTotalEvents() {
 
   var theUrl = "databasehandler.php?cmd=11";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')){
-    theUrl;
-  }else{
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
 
   $.ajax(theUrl,
   {
@@ -2272,7 +2118,7 @@ function fillDashTotalEvents(sdate,edate) {
 function fillDashTotalEventsComplete(xhr, status) {
 
   var obj = JSON.parse(xhr.responseText);
-  //console.log("obj", obj);
+  // console.log("obj", obj);
 
   $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
   // document.getElementById('totalEventsHoted').value = obj.total;
@@ -2281,14 +2127,9 @@ function fillDashTotalEventsComplete(xhr, status) {
 
 }
 
-function fillDashTotalAttendees(sdate, edate) {
+function fillDashTotalAttendees() {
 
   var theUrl = "databasehandler.php?cmd=13";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
 
   $.ajax(theUrl,
   {
@@ -2310,14 +2151,9 @@ function fillDashTotalAttendeesComplete(xhr, status) {
 
 }
 
-function fillDashCommonPlace(sdate, edate) {
+function fillDashCommonPlace() {
 
   var theUrl = "databasehandler.php?cmd=14";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
 
   $.ajax(theUrl,
   {
@@ -2336,33 +2172,6 @@ function fillDashCommonPlaceComplete(xhr, status) {
 
 
 }
-
-// function fillDashGraphEventData(sdate, edate) {
-
-//   var theUrl = "databasehandler.php?cmd=15";
-//   if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-//     theUrl;
-//   } else {
-//     theUrl += "&sdate=" + sdate + "&edate=" + edate;
-//   }
-
-//   $.ajax(theUrl,
-//     {
-//       async: true,
-//       complete: fillDashGraphEventDataComplete
-//     });
-
-// }
-
-// function fillDashGraphEventDataComplete(xhr, status) {
-
-//   var obj = JSON.parse(xhr.responseText);
-//   console.log("obj", obj);
-
-//   //$('#totalAttendees').html("<p>" + obj[0].total + "<p>");
-//   // document.getElementById('totalEventsHoted').value = obj.total;
-
-// }
 
 function dashEventsDisplay(val) {
   console.log('evend it:', val);
@@ -2593,6 +2402,7 @@ function generateInputs(){
   for(var i = 0; i < number; i++){
     document.getElementById('place').appendChild="<div><input/></div>";
   }
+
 
 }
 
