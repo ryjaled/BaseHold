@@ -96,6 +96,9 @@
 		case 29:
 			editEvent();
 			break;
+		case 30:
+			addReport();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -911,103 +914,103 @@
 
 	}
 
-	function generateReport()
-	{
-		include("users.php");
-		$user=new users();
-		$user_id=$_REQUEST['id'];
+	// function generateReport()
+	// {
+	// 	include("users.php");
+	// 	$user=new users();
+	// 	$user_id=$_REQUEST['id'];
 
-		$verify = $user->pullReport($user_id);
+	// 	$verify = $user->pullReport($user_id);
 
-		$array = array();
-		while($one = $user->fetch())
-		{
-			$array[] = $one;
-		}
+	// 	$array = array();
+	// 	while($one = $user->fetch())
+	// 	{
+	// 		$array[] = $one;
+	// 	}
 
-		echo json_encode($array);
-	}
+	// 	echo json_encode($array);
+	// }
 
-	function getNews()
-	{
-		include("users.php");
-		$user=new users();
-
-
-		$verify = $user->pullNews();
-
-		$array = array();
-		while($one = $user->fetch())
-		{
-			$array[] = $one;
-		}
-
-		echo json_encode($array);
-	}
-
-	function requestCard()
-	{
-
-		$username=$_REQUEST['username'];
-		$bank=$_REQUEST['bank'];
-
-		include("users.php");
-		$user=new users();
-
-		echo $username;
-		echo $bank;
-
-		$verify=$user->addRequest($username,$bank);
-		if($verify==false){
-			echo'{"result":0,"message":"Request not added"}';
-		}
-		else{
-			echo'{"result":1,"message":"Request added"}';
-		}
-	}
-
-	function addBook()
-	{
-
-		$hotelname=$_REQUEST['hotelname'];
-		$occupants=$_REQUEST['occupants'];
-		$checkindate=$_REQUEST['checkindate'];
-		$checkoutdate=$_REQUEST['checkoutdate'];
+	// function getNews()
+	// {
+	// 	include("users.php");
+	// 	$user=new users();
 
 
+	// 	$verify = $user->pullNews();
 
-		include("users.php");
-		$user=new users();
+	// 	$array = array();
+	// 	while($one = $user->fetch())
+	// 	{
+	// 		$array[] = $one;
+	// 	}
 
-		echo $telephone;
-		$verify=$user->addBook($hotelname,$occupants,$checkindate,$checkoutdate);
-		if($verify==false){
-			echo'{"result":0,"message":"Request not added"}';
-		}
-		else{
-			echo'{"result":1,"message":"Request added"}';
-		}
-	}
+	// 	echo json_encode($array);
+	// }
 
-	function sendContactForm()
-	{
+	// function requestCard()
+	// {
 
-		// $name=$_REQUEST['name'];
-		$messagearea=$_REQUEST['messagearea'];
-		$username=$_REQUEST['username'];
+	// 	$username=$_REQUEST['username'];
+	// 	$bank=$_REQUEST['bank'];
+
+	// 	include("users.php");
+	// 	$user=new users();
+
+	// 	echo $username;
+	// 	echo $bank;
+
+	// 	$verify=$user->addRequest($username,$bank);
+	// 	if($verify==false){
+	// 		echo'{"result":0,"message":"Request not added"}';
+	// 	}
+	// 	else{
+	// 		echo'{"result":1,"message":"Request added"}';
+	// 	}
+	// }
+
+	// function addBook()
+	// {
+
+	// 	$hotelname=$_REQUEST['hotelname'];
+	// 	$occupants=$_REQUEST['occupants'];
+	// 	$checkindate=$_REQUEST['checkindate'];
+	// 	$checkoutdate=$_REQUEST['checkoutdate'];
 
 
-		include("users.php");
-		$user=new users();
 
-		$verify=$user->sendContact($messagearea,$username);
-		if($verify==false){
-			echo'{"result":0,"message":"Request not added"}';
-		}
-		else{
-			echo'{"result":1,"message":"Request added"}';
-		}
-	}
+	// 	include("users.php");
+	// 	$user=new users();
+
+	// 	echo $telephone;
+	// 	$verify=$user->addBook($hotelname,$occupants,$checkindate,$checkoutdate);
+	// 	if($verify==false){
+	// 		echo'{"result":0,"message":"Request not added"}';
+	// 	}
+	// 	else{
+	// 		echo'{"result":1,"message":"Request added"}';
+	// 	}
+	// }
+
+	// function sendContactForm()
+	// {
+
+	// 	// $name=$_REQUEST['name'];
+	// 	$messagearea=$_REQUEST['messagearea'];
+	// 	$username=$_REQUEST['username'];
+
+
+	// 	include("users.php");
+	// 	$user=new users();
+
+	// 	$verify=$user->sendContact($messagearea,$username);
+	// 	if($verify==false){
+	// 		echo'{"result":0,"message":"Request not added"}';
+	// 	}
+	// 	else{
+	// 		echo'{"result":1,"message":"Request added"}';
+	// 	}
+	// }
 
 	function adminLogin(){
 		include("users.php");
@@ -1060,6 +1063,39 @@
 		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
 
 		$log->addEventLog($eventtitle,$reporter,"edited a Future event", $region);
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			echo '{"result":1,"message":"Event added"}';
+
+		}
+	}
+
+	function addReport(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+		$myArray = array();
+
+		$eventid=$_REQUEST['eventid'];
+		$challenges=$_REQUEST['challenges'];
+		$complaints=$_REQUEST['complaints'];
+		$summary=$_REQUEST['observations'];
+		$picpath=$_REQUEST['picpath'];
+		$foldpath=$_REQUEST['foldpath'];
+		$teammembers=$_REQUEST['members'];
+		
+		$verify=$event->addNewReport($eventid,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers);
+
+		$myArray = explode(',', $teammembers);
+		for ($i=0; $i < count($myArray); $i++) { 
+			$verify=$event->addTeamMembers($eventid,$myArray[$i]);
+		}
+
+		//$log->addEventLog($eventtitle,$reporter,"added a Report", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
