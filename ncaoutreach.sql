@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 08, 2018 at 09:52 AM
+-- Generation Time: Feb 08, 2018 at 05:53 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -166,6 +166,15 @@ CREATE TABLE `eventlogs` (
 -- RELATIONSHIPS FOR TABLE `eventlogs`:
 --
 
+--
+-- Dumping data for table `eventlogs`
+--
+
+INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `date`, `region`) VALUES
+(21, 'test1', 5, 'added a Future event', '2018-02-08 09:21:24', 2),
+(22, 'testtt', 5, 'added a Future event', '2018-02-08 12:58:23', 2),
+(23, 'testtt', 5, 'edited a Future event', '2018-02-08 13:01:59', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -199,6 +208,14 @@ CREATE TABLE `events` (
 --   `creator`
 --       `users` -> `userid`
 --
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `verification_comments`, `creator`, `verified_timestamp`, `approved_timestamp`) VALUES
+(27, 'test1', 'testttt', '2018-02-16 00:00:00', '2', 'dfsdf', 'Sound System(s),Mug(s),', 'Road Show,Durbar,', 'Communities', '34', 1, 1, 'verificationTouched', 5, '2018-02-08 10:21:46', '2018-02-08 16:25:09'),
+(28, 'testtt', 'Topic ', '2018-02-22 00:00:00', '2', 'rt', 'Pen(s),Mug(s),', 'Durbar,', 'Communities', '67', 0, 0, 'verificationTouched', 5, '2018-02-08 16:38:15', '2018-02-08 14:04:31');
 
 -- --------------------------------------------------------
 
@@ -263,22 +280,31 @@ INSERT INTO `region` (`region_id`, `regionname`) VALUES
 --
 -- Table structure for table `reportmembers`
 --
--- Creation: Jan 30, 2018 at 10:50 AM
+-- Creation: Feb 08, 2018 at 09:34 AM
 --
 
 DROP TABLE IF EXISTS `reportmembers`;
 CREATE TABLE `reportmembers` (
   `report_members_id` int(10) NOT NULL,
-  `report_id` int(10) NOT NULL,
+  `event_id` int(10) NOT NULL,
   `role` varchar(20) NOT NULL,
   `name` varchar(30) NOT NULL
 ) ;
 
 --
 -- RELATIONSHIPS FOR TABLE `reportmembers`:
---   `report_id`
+--   `event_id`
 --       `reports` -> `report_id`
 --
+
+--
+-- Dumping data for table `reportmembers`
+--
+
+INSERT INTO `reportmembers` (`report_members_id`, `event_id`, `role`, `name`) VALUES
+(23, 27, '', 'df'),
+(24, 28, '', 'Brian'),
+(25, 28, '', 'Osman');
 
 -- --------------------------------------------------------
 
@@ -309,6 +335,14 @@ CREATE TABLE `reports` (
 --   `event_id`
 --       `events` -> `event_id`
 --
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `event_summary`, `picture_paths`, `folder_paths`, `team_members`, `date_reported`, `verified_timestamp`) VALUES
+(125, 27, 'f', 'f', 1, '', 's', '[\"1920x1080-px-album-covers-Kaptan-H-Davran-Trap-Nation-trapandemi-1227046-wallhere.com.jpg\"]', '5_27', 'df', '2018-02-08 11:56:09', '2018-02-08 13:01:38'),
+(126, 28, 'noneee', 'nonee', 1, '', 'nonee', '[\"1.jpg\",\"3.jpg\"]', '5_28', 'Brian,Osman', '2018-02-08 13:05:34', '2018-02-08 14:08:31');
 
 -- --------------------------------------------------------
 
