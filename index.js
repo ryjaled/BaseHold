@@ -1587,6 +1587,8 @@ function addNewReport(){
   var addnewreportinput = $('#input-id').val();
   var addnewreportmembers = $('#report_members').val();
 
+  var report_event_id = sessionStorage.report_event_id;
+
   var filesarray = [];
   var inp = document.getElementById('input-id');
   for (var i = 0; i < inp.files.length; ++i) {
@@ -1595,11 +1597,10 @@ function addNewReport(){
   }
   var files = JSON.stringify(filesarray);
   var picpath = files;
-  var foldname = userid + "_" + eventtitle;
+  var foldname = sessionStorage.userid + "_" + report_event_id;
   var foldpath = foldname;
 
-
-  if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportinput == "") || (addnewreportmembers == "") )
+  if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportmembers == "") )
   {
 
     $.notify({
@@ -1618,7 +1619,7 @@ function addNewReport(){
   }
   else{
 
-    var theUrl = "databasehandler.php?cmd=x&eventid=" + sessionStorage.report_event_id + "&eventtitle="+obj[0].eventtitle + "&date="+obj[0].date+ "&region=" +obj[0].region+ "&town=" +obj[0].town + "&audcat="+obj[0].audcat+ "&audatt="+obj[0].audatt+ "&observations="+obj[0].observations+ "&challenges="+obj[0].challenges+ "&complaints="+obj[0].complaints+ "&members="+obj[0].members+ "&members="+obj[0].members;
+    var theUrl = "databasehandler.php?cmd=30&eventid=" + report_event_id + "&challenges=" + addnewreportchallenge + "&complaints=" + addnewreportcomplaint + "&observations=" + addnewreportobservation + "&picpath=" + picpath + "&foldpath=" + foldpath + "&members=" + addnewreportmembers;
     
       $.ajax(theUrl,
         {
