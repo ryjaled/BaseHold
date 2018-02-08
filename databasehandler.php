@@ -814,11 +814,11 @@
 		 $event = new events();
 
 		 $eventid=$_REQUEST['eventid'];
-		 $approval=$_REQUEST['approval'];
+		 $approval=$_REQUEST['approve'];
+		 $approvedDate = date("Y-m-d H:i:s");
+		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate);
 
-		 $verify=$event->toggleEvent($eventid,$approval);
-
-		 echo json_encode($approval);
+		 echo json_encode($approve);
 
 	}
 
@@ -830,8 +830,8 @@
 
 		 $reportid=$_REQUEST['reportid'];
 		 $approval=$_REQUEST['approval'];
-
-		 $verify=$event->toggleReport($reportid,$approval);
+		 $date = date("Y-m-d H:i:s");
+		 $verify=$event->toggleReport($reportid,$approval,$date);
 
 		 echo json_encode($approval);
 

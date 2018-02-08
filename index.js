@@ -1,5 +1,6 @@
 var global1;
 var global2;
+var global3;
 var global7;
 
 $().ready(function () {
@@ -274,19 +275,26 @@ $().ready(function () {
         dataTable2.ajax.reload(null, false); // user paging is not reset on reload
         // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
       }, 500);
-
-
   }
 
   global2 = refireTable2;
 
-  setInterval(function () {
-    dataTable3.ajax.reload(null, false); // user paging is not reset on reload
-  }, 3000);
+  function refireTable3(){
+    setTimeout(function () {
+      dataTable3.ajax.reload(null, false);
+    }, 500);
+  }
+
+  global3 = refireTable3;
 
   setInterval(function () {
-    dataTable4.ajax.reload(null, false); // user paging is not reset on reload
-  }, 3000);
+    dataTable3.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+
+  setInterval(function () {
+    dataTable8.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
 
   setInterval(function () {
     dataTable5.ajax.reload(null, false); // user paging is not reset on reload
@@ -1706,12 +1714,10 @@ function level2ViewComplete(xhr, status) {
 
   console.log(obj);
 
-  var dateOrganized = new Date(obj[0].date_to_be_organized);
-
   UIkit.modal('#modal-overflow-2').show();
 
   document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
+  document.getElementById('date_organized').innerHTML=moment(obj[0].date_to_be_organized).format('D MMMM Y');
   document.getElementById('region').innerHTML=obj[0].regionname;
   document.getElementById('town').innerHTML=obj[0].town;
   document.getElementById('audience_category').innerHTML=obj[0].audience_category;
@@ -1724,17 +1730,14 @@ function level2ViewComplete(xhr, status) {
   var strlenMode = obj[0].mode_of_outreach.length;
   document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
 
-  var dateVerfied = new Date(obj[0].verified_timestamp);
-  var dateApproved = new Date(obj[0].approved_timestamp);
-
   if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
     document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
   }
   if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + ". This event is still pending approval.";
   }
   if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + " and approved on: "+ moment(obj[0].approved_timestamp).format('D MMMM Y');;
   }
 
 
@@ -1754,6 +1757,10 @@ function verifyEventToggle(id, verState){
 
 
 }
+
+
+
+
 
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -1875,15 +1882,15 @@ function ApproveReportToggle(id, approveState){
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
 function help(){
-  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+  approver(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
 
-function verifier(id, verifyCheck, approveCheck){
+function approver(id, verifyCheck, approveCheck){
   if(approveCheck == 1){
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+    $('#approveformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
   }
   if(approveCheck == 0){
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+    $('#approveformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='approveEventToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Approve</button>");
   }
 }
 
@@ -1892,7 +1899,8 @@ function _level3cancel(){
 }
 
 function level3View(val) {
-  console.log('modal to edit: ', val);
+  console.log('modal to view: ', val);
+  
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
@@ -1913,14 +1921,10 @@ function level3ViewComplete(xhr, status) {
   sessionStorage.pullapproved = obj[0].is_approved;
   help();
 
-  console.log(obj);
-
-  var dateOrganized = new Date(obj[0].date_to_be_organized);
-
-  UIkit.modal('#modal-overflow-2').show();
+  UIkit.modal('#modal-overflow-3').show();
 
   document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
+  document.getElementById('date_organized').innerHTML=moment(obj[0].date_to_be_organized).format('D MMMM Y');
   document.getElementById('region').innerHTML=obj[0].regionname;
   document.getElementById('town').innerHTML=obj[0].town;
   document.getElementById('audience_category').innerHTML=obj[0].audience_category;
@@ -1933,19 +1937,15 @@ function level3ViewComplete(xhr, status) {
   var strlenMode = obj[0].mode_of_outreach.length;
   document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
 
-  var dateVerfied = new Date(obj[0].verified_timestamp);
-  var dateApproved = new Date(obj[0].approved_timestamp);
-
   if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
     document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
   }
   if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + ". This event is still pending approval.";
   }
   if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+ moment(obj[0].verified_timestamp).format('D MMMM Y') + " and approved on: "+ moment(obj[0].approved_timestamp).format('D MMMM Y');;
   }
-
 
 }
 
@@ -2062,6 +2062,19 @@ function ApproveReportToggle(id, approveState){
   
 
 
+}
+
+
+function approveEventToggle(id, approveState){
+  event.preventDefault();
+  var theUrl="databasehandler.php?cmd=4&eventid="+id+"&approve="+approveState;
+  
+    $.ajax(theUrl,
+          {
+            async:true,
+            complete: global3
+          });
+  
 }
 
 
@@ -2547,7 +2560,6 @@ function regionfillDashTotalAttendees(sdate, edate, region) {
 }
 
 function regionfillDashCommonPlace(sdate, edate, region) {
-
   var theUrl = "databasehandler.php?cmd=14";
   if (typeof (region) === 'undefined') {
     theUrl;
@@ -2560,7 +2572,6 @@ function regionfillDashCommonPlace(sdate, edate, region) {
       async: true,
       complete: fillDashCommonPlaceComplete
     });
-
 }
 
 function regionloadDashData(region) {
