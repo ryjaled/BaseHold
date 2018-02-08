@@ -1680,8 +1680,11 @@ function verifier(id, verifyCheck, approveCheck){
   if(approveCheck == 1){
     $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
   }
-  if(approveCheck == 0){
+  if((approveCheck == 0) && (verifyCheck == 0)){
     $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+  if ((approveCheck == 0) && (verifyCheck == 1)) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>UnVerify</button>");
   }
 }
 
@@ -1914,7 +1917,7 @@ function ApproveReportToggle(id, approveState){
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
-function help(){
+function approvehelp(){
   approver(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
 
@@ -1952,7 +1955,7 @@ function level3ViewComplete(xhr, status) {
   sessionStorage.pullreportid = obj[0].event_id;
   sessionStorage.pullverified = obj[0].is_verified;
   sessionStorage.pullapproved = obj[0].is_approved;
-  help();
+  approvehelp();
 
   UIkit.modal('#modal-overflow-3').show();
 
