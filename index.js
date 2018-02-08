@@ -1584,7 +1584,7 @@ function addNewReport(){
   var addnewreportobservation = $('#report_observations').val();
   var addnewreportchallenge = $('#report_challenges').val();
   var addnewreportcomplaint = $('#report_complaints').val();
-  var addnewreportinput = $('#input-id').val();
+  //var addnewreportinput = $('#input-id').val();
   var addnewreportmembers = $('#report_members').val();
 
   var report_event_id = sessionStorage.report_event_id;
@@ -1599,6 +1599,8 @@ function addNewReport(){
   var picpath = files;
   var foldname = sessionStorage.userid + "_" + report_event_id;
   var foldpath = foldname;
+
+  document.cookie = ("foldname=" + foldname);
 
   if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportmembers == "") )
   {
@@ -1629,12 +1631,14 @@ function addNewReport(){
   }
 }
 
-function addNewReportComplete(){
+function addNewReportComplete(xhr,status){
 
   var obj = JSON.parse(xhr.responseText);
 
   $('#input-id').fileinput('upload');
+  $('#input-id').fileinput('reset');
   $('#input-id').fileinput('enable');
+  UIkit.modal('#modal-report').hide();
 
   $('#report_observations').val("");
   $('#report_challenges').val("");
