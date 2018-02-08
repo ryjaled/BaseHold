@@ -197,13 +197,13 @@ include_once("database.php");
     return $this->query($strQuery);
 	}
 
-		function toggleReport($reportid, $approval){
+		function toggleReport($reportid, $approval,$date){
       if($approval == "0"){
         $newapproval = "1";
       } else {
         $newapproval = "0";
       }
-      $strQuery="update reports set is_approved='$newapproval' where report_id=$reportid";
+      $strQuery="update reports set is_approved='$newapproval', verified_timestamp='$date' where report_id=$reportid";
 			return $this->query($strQuery);
 		}
 

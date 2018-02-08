@@ -827,8 +827,8 @@
 
 		 $reportid=$_REQUEST['reportid'];
 		 $approval=$_REQUEST['approval'];
-
-		 $verify=$event->toggleReport($reportid,$approval);
+		 $date = date("Y-m-d H:i:s");
+		 $verify=$event->toggleReport($reportid,$approval,$date);
 
 		 echo json_encode($approval);
 
