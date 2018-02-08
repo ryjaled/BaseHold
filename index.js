@@ -116,11 +116,11 @@ $().ready(function () {
   var dataTable8 = $('#level3reportlist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 1, width: '25%' },
+      { "targets": 0, width: '25%' },
+      { "targets": 1, width: '15%' },
       { "targets": 2, width: '15%' },
       { "targets": 3, width: '15%' },
       { "targets": 4, width: '15%' },
-      { "targets": 5, width: '15%' },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
