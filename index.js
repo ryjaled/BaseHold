@@ -1758,10 +1758,6 @@ function verifyEventToggle(id, verState){
 
 }
 
-
-
-
-
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
@@ -2050,7 +2046,6 @@ function level3ReportViewComplete(xhr, status) {
 }
 
 function ApproveReportToggle(id, approveState){
-  alert('here in VET'+id+approveState);
   event.preventDefault();
   var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
   
