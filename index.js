@@ -1774,7 +1774,7 @@ function reportApprover(id, verifyCheck, approveCheck){
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=27&reportid=" + val;
-  sessionStorage.report_event_id = val;
+  //sessionStorage.report_event_id = val;
   $.ajax(theUrl,
     {
       async: true,
@@ -1860,13 +1860,16 @@ function level2ReportViewComplete(xhr, status) {
       // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
 
       var user_id = ""+obj[0].creator;
-      var event_header = ""+sessionStorage.report_event_id;
+      var event_header = "" + obj[0].event_id;
       var picture_header = ""+obj2;
+
+      var fold_header = obj[0].folder_paths;
+      //alert(fold_header);
 
 
       picValues = picValues + "<div>";
-      picValues = picValues + "<a onclick='closemodal2()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Outreach Photo'>";
-      picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
+      picValues = picValues + "<a onclick='#' class='uk-inline' href='uploads/"+fold_header+"/"+picture_header+"' caption='Outreach Photo'>";
+      picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+fold_header+"/"+picture_header+"'>";
       picValues = picValues + "</a>";
       picValues = picValues + "</div>";
 
@@ -1874,9 +1877,11 @@ function level2ReportViewComplete(xhr, status) {
     }
 
   picValues = picValues + "</div>";
-}
 
-documment.getElementById('report_photo')=innerHTML
+  //$('#report_photos').html();
+  document.getElementById('report_photos').innerHTML = picValues;
+  
+}
 
 function ApproveReportToggle(id, approveState){
   
