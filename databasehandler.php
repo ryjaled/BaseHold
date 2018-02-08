@@ -83,6 +83,7 @@
 			break;
 		case 25:
 			deleteAnEvent();
+			break;
 		case 26:
 			changePassword();
 			break;
@@ -138,10 +139,10 @@
 		 include("users.php");
 		 $user = new users();
 
-		 $myid = $_REQUEST['myid'];
-		 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
+	 	 $myid = $_REQUEST['myid'];
+	 	 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
 
-		 $validation = $user->updatepassword($myid,$confirmednewpassword);
+	 	 $validation = $user->updatepassword($myid,$confirmednewpassword);
 		 
 		 if($validation==false){
 				echo '{"result":0,"message":"Validation failed"}';
@@ -155,7 +156,7 @@
 	function addLevel1User()
    {
 
-    include("users.php");
+    	include("users.php");
 
 		$user = new users();
 
@@ -183,11 +184,10 @@
 
 	}
 
-
 	function fetchAddUserLog()
    {
 
-    include("logs.php");
+    	include("logs.php");
 
 		$log = new logs();
 
@@ -295,12 +295,13 @@
 	function deleteAnEvent()
  	{
  			$success="";
- 			include("events.php");
- 			$event = new events();
+			include("events.php");
+
+			$event = new events();
 
 			$eventid=$_REQUEST['eventid'];
 
- 			$result = $event->deleteEvent($eventid);
+			$result = $event->deleteEvent($eventid);
 
  			echo json_encode($result);
 
@@ -484,7 +485,6 @@
 
 			while($row = $event->fetch()){
 			   $success="true";
-			   //array_push($data,$row);
 			   $data['regname']=$row['regname'];
 			   $data['figures']=$row['figures'];
 			   $decimal = $row['figures'] / $total;
@@ -503,7 +503,28 @@
 			include("events.php");
 			$event = new events();
 
-			$result = $event->getDashTotalEvents();
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region= '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			} 
+
+			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
@@ -525,7 +546,28 @@
 			$total = '';
 			$moredata = array();
 
-			$result = $event->getDashTotalAttendees();
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
+
+			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
 
 			$data = array();
 
@@ -562,9 +604,30 @@
    {
 		   $success="";
 		   include("events.php");
-		   $event = new events();
+			$event = new events();
+			
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
 
-		   $result = $event->getDashTopAudienceCategory();
+		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
 
 		   $data = array();
 
@@ -605,7 +668,9 @@
 
 				while($row = $event->fetch()){
 						$success="true";
-						$newdate = strtotime($row['date_organized']." UTC");
+						//array_push($data,$row);
+						//$newdate = str_replace("-",",",$row['date']);
+						$newdate = strtotime($row['date_to_be_organized']." UTC");
 						$new_date = date('d F Y', $newdate);
 						$data[]=$new_date;
 						$data[]=(int)$row['totals'];
@@ -778,7 +843,8 @@
 		$eventid=$_REQUEST['eventid'];
 		$isVerify=$_REQUEST['verify'];
 		$commentToVerify = $_REQUEST['verifycomments'];
-		$verify=$event->toggleVerify($eventid,$isVerify,$commentToVerify);
+		$verifiedDate = date("Y-m-d H:i:s");
+		$verify=$event->toggleVerify($eventid,$isVerify,$verifiedDate,$commentToVerify);
 
 		echo json_encode($isVerify);
 

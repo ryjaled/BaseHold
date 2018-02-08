@@ -113,6 +113,31 @@ $().ready(function () {
     }
   });
 
+  var dataTable8 = $('#level3reportlist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 1, width: '25%' },
+      { "targets": 2, width: '15%' },
+      { "targets": 3, width: '15%' },
+      { "targets": 4, width: '15%' },
+      { "targets": 5, width: '15%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[2, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "level3reportlist.php?usersessionid=" + sessionStorage.userid + "&userregion=" + sessionStorage.region, // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".level3reportlist-error").html("");
+        $("#level3reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#level3reportlist_processing").css("display", "none");
+      }
+    }
+  });
+
   var level2usersdatatable = $('#level2userstable').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -712,6 +737,7 @@ function addeventComplete(xhr,status){
   $('#input-id').fileinput('upload');
   document.getElementById('RegisterValidationDoc').reset();
   $('#input-id').fileinput('enable');
+  global1();
   $.notify({
      icon: "info_outline",
      message: "Event Added Successfully."
@@ -789,6 +815,7 @@ function editEventComplete(xhr,status){
   $('#input-id').fileinput('upload');
   document.getElementById('RegisterValidationDoc').reset();
   $('#input-id').fileinput('enable');
+  global1();
   $.notify({
      icon: "info_outline",
      message: "Event Editted Successfully."
@@ -925,7 +952,8 @@ function deleteevent(pid){
   $.ajax(theUrl,
     {
       async: true,
-      removependpendingeventComplete
+      complete: global1,
+      complete: removependpendingeventComplete
     });
 }
 
@@ -958,6 +986,7 @@ function addpendpendingeventComplete(xhr, status) {
 
 function removependpendingeventComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
+
   global1();
 
   $.notify({
@@ -1533,7 +1562,6 @@ function addReportModal(val){
       });
  
 }
-
 
 function loadEventReport(xhr, status){
   var obj = JSON.parse(xhr.responseText);
@@ -2467,6 +2495,8 @@ function searchdash(){
 function loadDashData(){
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
+
+  //alert(sdate+' '+edate);
 
   fillDashRegionFigures(sdate, edate);
   fillDashTotalEvents(sdate, edate);
