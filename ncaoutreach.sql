@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 31, 2018 at 12:21 PM
+-- Generation Time: Feb 08, 2018 at 09:52 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -149,7 +149,7 @@ INSERT INTO `cities` (`city_id`, `name`, `state_id`) VALUES
 --
 -- Table structure for table `eventlogs`
 --
--- Creation: Jan 24, 2018 at 04:23 PM
+-- Creation: Feb 05, 2018 at 01:31 PM
 --
 
 DROP TABLE IF EXISTS `eventlogs`;
@@ -158,20 +158,13 @@ CREATE TABLE `eventlogs` (
   `event_title` varchar(30) NOT NULL,
   `user_id` int(11) NOT NULL,
   `action` varchar(30) NOT NULL,
-  `date` timestamp NOT NULL
+  `date` timestamp NOT NULL,
+  `region` int(11) NOT NULL
 ) ;
 
 --
 -- RELATIONSHIPS FOR TABLE `eventlogs`:
 --
-
---
--- Dumping data for table `eventlogs`
---
-
-INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `date`) VALUES
-(4, 'aaa', 5, 'Added a completed event', '2018-01-24 15:48:48'),
-(5, 'aa', 5, 'Added a pending event', '2018-01-24 15:49:00');
 
 -- --------------------------------------------------------
 
@@ -206,16 +199,6 @@ CREATE TABLE `events` (
 --   `creator`
 --       `users` -> `userid`
 --
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `verification_comments`, `creator`, `verified_timestamp`, `approved_timestamp`) VALUES
-(11, 'dsd', 'dfdfdf', '2018-02-08 00:00:00', '2', 'ad', 'Sound System(s),Tape Measure(s),Notepad(s),', 'One-on-oneSmall group meeting', 'Communities', '33', 1, 1, '', 5, '', ''),
-(12, 'fdwf', 'afdafdsf', '2018-02-06 00:00:00', '2', 'asf', 'Sound System(s),Power Block(s),', 'One-on-one,Durbar,', 'Religious Bodies', '33', 0, 0, '', 5, '', ''),
-(13, 'sdsd', 'e34r', '2018-02-04 00:00:00', '3', 'df', 'Bus(es),Towel(s),Power Block(s),', 'PowerPoint Presentation,One-on', 'Corporate', '3', 0, 0, '', 5, '', ''),
-(14, 'sssss', 'daf', '2018-02-10 00:00:00', '4', 'dsdf', 'Flyer(s),Power Block(s),', 'One-on-one,', 'Schools', '23', 0, 0, '', 5, '', '');
 
 -- --------------------------------------------------------
 
@@ -302,7 +285,7 @@ CREATE TABLE `reportmembers` (
 --
 -- Table structure for table `reports`
 --
--- Creation: Jan 31, 2018 at 10:48 AM
+-- Creation: Feb 02, 2018 at 10:00 AM
 --
 
 DROP TABLE IF EXISTS `reports`;
@@ -316,6 +299,7 @@ CREATE TABLE `reports` (
   `event_summary` varchar(2000) NOT NULL,
   `picture_paths` varchar(2000) NOT NULL,
   `folder_paths` varchar(250) NOT NULL,
+  `team_members` varchar(300) NOT NULL,
   `date_reported` timestamp NOT NULL,
   `verified_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ;
@@ -325,13 +309,6 @@ CREATE TABLE `reports` (
 --   `event_id`
 --       `events` -> `event_id`
 --
-
---
--- Dumping data for table `reports`
---
-
-INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `event_summary`, `picture_paths`, `folder_paths`, `date_reported`, `verified_timestamp`) VALUES
-(111, 11, 'none', ' none', 0, 'none', 'none', 'none', 'none', '2018-01-31 10:48:05', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -353,20 +330,6 @@ CREATE TABLE `userlogs` (
 --
 -- RELATIONSHIPS FOR TABLE `userlogs`:
 --
-
---
--- Dumping data for table `userlogs`
---
-
-INSERT INTO `userlogs` (`userlog_id`, `acted_id`, `acted_on_id`, `action`, `date`) VALUES
-(3, 3, 5, 'Deactivated User', '2018-01-24 15:52:44'),
-(4, 3, 4, 'Deactivated User', '2018-01-24 15:52:45'),
-(5, 3, 5, 'Activated User', '2018-01-24 15:52:48'),
-(6, 3, 4, 'Activated User', '2018-01-24 15:52:50'),
-(7, 3, 5, 'Deactivated User', '2018-01-24 15:54:36'),
-(8, 3, 4, 'Deactivated User', '2018-01-24 15:54:41'),
-(9, 3, 5, 'Activated User', '2018-01-24 15:54:43'),
-(10, 3, 4, 'Activated User', '2018-01-24 15:54:44');
 
 -- --------------------------------------------------------
 
