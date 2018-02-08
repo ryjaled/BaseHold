@@ -1774,7 +1774,7 @@ function reportApprover(id, verifyCheck, approveCheck){
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=27&reportid=" + val;
-
+  sessionStorage.report_event_id = val;
   $.ajax(theUrl,
     {
       async: true,
@@ -1844,7 +1844,39 @@ function level2ReportViewComplete(xhr, status) {
   console.log(obj[0].date_reported);
   document.getElementById('report_4').innerHTML=obj[0].team_challenges;
   console.log(obj[0].team_challenges);
+
+
+
+  var picValues = "";
+  $('#report_photos').html("");
+
+  picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
+
+    var jsonarray = JSON.parse(obj[0].picture_paths);
+    for(var i = 0; i < jsonarray.length; i++) {
+      var obj2 = jsonarray[i];
+
+      //obj2 contains picture names.
+      // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
+
+      var user_id = ""+obj[0].creator;
+      var event_header = ""+sessionStorage.report_event_id;
+      var picture_header = ""+obj2;
+
+
+      picValues = picValues + "<div>";
+      picValues = picValues + "<a onclick='closemodal2()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Outreach Photo'>";
+      picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
+      picValues = picValues + "</a>";
+      picValues = picValues + "</div>";
+
+
+    }
+
+  picValues = picValues + "</div>";
 }
+
+documment.getElementById('report_photo')=innerHTML
 
 function ApproveReportToggle(id, approveState){
   
