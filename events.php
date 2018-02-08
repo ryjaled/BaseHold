@@ -121,24 +121,19 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-    function toggleEvent($eventid, $approval){
-      echo $approval;
-      echo $eventid;
-      // $newapproval = "";
+    function toggleEvent($eventid, $approval, $approvedDate){
+      
       if($approval == "0"){
         $newapproval = "1";
       } else {
         $newapproval = "0";
       }
-      echo $newapproval;
-			$strQuery="update events set is_approved='$newapproval' where event_id=$eventid";
+			$strQuery="update events set is_approved='$newapproval',approved_timestamp='$approvedDate' where event_id=$eventid";
       return $this->query($strQuery);
 		}
 
     function toggleVerify($eventid, $verify, $date, $verifycomments){
-      //echo $verify;
-      //echo $eventid;
-      // $newapproval = "";
+		 
       if($verify == "0"){
         $newverify = "1";
       } else {

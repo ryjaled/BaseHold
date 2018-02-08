@@ -71,13 +71,22 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $verifyLabel;
     // $nestedData[] = $row['report_id'];
 
-	// $nestedData[] = "<p style='text-align: left'>{$row['eventtitle']}</p>";
-	// $nestedData[] = $row['region'];
-	// $enddate = date('jS F Y', strtotime($row['date_organized']));
-    // $nestedData[] = $enddate;
-    // "<button onclick='editor({$row['report_id']},{$row['is_verified']})' class='btn btn-just-icon btn-twitter' rel='tooltip' data-placement='bottom' title='Verify Event'><i class='material-icons'>assignment</i></button>"
-	$buttonshow = "<button onclick='approvalwindow({$row['event_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View'><i class='material-icons'>visibility</i></button>";
-	$nestedData[] = $buttonshow;
+	$queryID = $row['event_id'];
+    $queryApprove = $row['is_approved'];
+
+	if( ($row['is_approved'] == "0") )
+    {
+      // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='approveEventToggle(".$queryID.",\"".$queryApprove."\")' href='#'>Approve</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+    }
+    if( ($row['is_approved'] == "1") )
+    {
+      // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+    }
+
+    //$nestedData[] = $row['event_id'];
+	  $nestedData[] = $buttonshow;
 
 	$data[] = $nestedData;
 }

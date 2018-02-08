@@ -69,7 +69,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	// $enddate = date('jS F Y', strtotime($row['date_organized']));
     // $nestedData[] = $enddate;
 
-   $buttonshow = "<button onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-twitter' rel='tooltip' data-placement='bottom' title='Verify Event'><i class='material-icons'>assignment</i></button>";
+	$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level2ReportView({$row['report_id']})' href='#'>View Report Details</a></li></ul></div>";
 	$nestedData[] = $buttonshow;
 
 	$data[] = $nestedData;
