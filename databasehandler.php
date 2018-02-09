@@ -530,12 +530,19 @@
 			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
 
 			$data = array();
+			$sdata = array();
 
 			while($row = $event->fetch()){
-					$success="true";
+				$success="true";
+				$total = $row['total'];
+				if ($total == null) {
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}else{
 					array_push($data,$row);
-
 				}
+				
+			}
 
 				echo json_encode($data);
 
@@ -573,11 +580,19 @@
 			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
 
 			$data = array();
+			$sdata = array();
 
 			while($row = $event->fetch()){
-					$success="true";
+				$success="true";
+				$total = $row['total'];
+				if ($total == null) {
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}else{
 					array_push($data,$row);
 				}
+				
+			}
 
 				echo json_encode($data);
 
@@ -632,13 +647,30 @@
 
 		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
 
-		   $data = array();
+			$data = array();
+			$sdata = array();
 
 		   while($row = $event->fetch()){
-				   $success="true";
-				   array_push($data,$row);
-
-			   }
+				$success="true";
+				print_r($row);
+				echo count($row);
+				if (count($row)>1) {
+					array_push($data,$row);
+				}else{
+					$sdata['audience_category'] = 'None';
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}
+				// if (isset($row['audience_category'])) {
+				// 	array_push($data,$row);
+				// }else{
+				// 	echo 'no';
+				// 	$sdata['audience_category'] = 'None';
+				// 	$sdata['total'] = '0';
+				// 	array_push($data,$sdata);
+				// }
+				
+			}
 
 			echo json_encode($data);
 
@@ -770,7 +802,7 @@
 				}
 
 				for ($i=0; $i < count($ndata); $i++) {
-				@$snumdata[]=$adata[$i][0];
+					@$snumdata[]=$adata[$i][0];
 					for ($j=0; $j < count($adata); $j++) {
 						$result = $event->getDashRegionAudienceFullData($ndata[$i][0],$adata[$j][0],$s_final_date,$e_final_date);
 						while($row = $event->fetch()){
@@ -784,7 +816,7 @@
 				$alldata = transposeData($allarrays);
 
 				for ($k=0; $k < count($alldata); $k++) {
-					$seriesdata['name'] = $snumdata[$k];
+					$seriesdata['name'] = $adata[$k][0];//$seriesdata['name'] = $snumdata[$k];
 					$seriesdata['data'] = $alldata[$k];
 					$moredata[] = $seriesdata;
 				}
@@ -913,104 +945,6 @@
 		}
 
 	}
-
-	// function generateReport()
-	// {
-	// 	include("users.php");
-	// 	$user=new users();
-	// 	$user_id=$_REQUEST['id'];
-
-	// 	$verify = $user->pullReport($user_id);
-
-	// 	$array = array();
-	// 	while($one = $user->fetch())
-	// 	{
-	// 		$array[] = $one;
-	// 	}
-
-	// 	echo json_encode($array);
-	// }
-
-	// function getNews()
-	// {
-	// 	include("users.php");
-	// 	$user=new users();
-
-
-	// 	$verify = $user->pullNews();
-
-	// 	$array = array();
-	// 	while($one = $user->fetch())
-	// 	{
-	// 		$array[] = $one;
-	// 	}
-
-	// 	echo json_encode($array);
-	// }
-
-	// function requestCard()
-	// {
-
-	// 	$username=$_REQUEST['username'];
-	// 	$bank=$_REQUEST['bank'];
-
-	// 	include("users.php");
-	// 	$user=new users();
-
-	// 	echo $username;
-	// 	echo $bank;
-
-	// 	$verify=$user->addRequest($username,$bank);
-	// 	if($verify==false){
-	// 		echo'{"result":0,"message":"Request not added"}';
-	// 	}
-	// 	else{
-	// 		echo'{"result":1,"message":"Request added"}';
-	// 	}
-	// }
-
-	// function addBook()
-	// {
-
-	// 	$hotelname=$_REQUEST['hotelname'];
-	// 	$occupants=$_REQUEST['occupants'];
-	// 	$checkindate=$_REQUEST['checkindate'];
-	// 	$checkoutdate=$_REQUEST['checkoutdate'];
-
-
-
-	// 	include("users.php");
-	// 	$user=new users();
-
-	// 	echo $telephone;
-	// 	$verify=$user->addBook($hotelname,$occupants,$checkindate,$checkoutdate);
-	// 	if($verify==false){
-	// 		echo'{"result":0,"message":"Request not added"}';
-	// 	}
-	// 	else{
-	// 		echo'{"result":1,"message":"Request added"}';
-	// 	}
-	// }
-
-	// function sendContactForm()
-	// {
-
-	// 	// $name=$_REQUEST['name'];
-	// 	$messagearea=$_REQUEST['messagearea'];
-	// 	$username=$_REQUEST['username'];
-
-
-	// 	include("users.php");
-	// 	$user=new users();
-
-	// 	$verify=$user->sendContact($messagearea,$username);
-	// 	if($verify==false){
-	// 		echo'{"result":0,"message":"Request not added"}';
-	// 	}
-	// 	else{
-	// 		echo'{"result":1,"message":"Request added"}';
-	// 	}
-	// }
 
 	function adminLogin(){
 		include("users.php");

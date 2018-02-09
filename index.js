@@ -351,8 +351,7 @@ $().ready(function () {
 
 var pendingid;
 
-function loginUser()
-{
+function loginUser(){
   event.preventDefault();
   var email = $('#useremail').val();
   var password = $('#userpassword').val();
@@ -1362,7 +1361,7 @@ function addneweventComplete(xhr,status){
      }
  });
 
- global1();
+ alert(global1);
 
 }
 
@@ -1656,15 +1655,10 @@ function addNewReportComplete(xhr,status){
 
 }
 
-
-
-
-
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-
 
 
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
@@ -1691,7 +1685,6 @@ function verifier(id, verifyCheck, approveCheck){
 function _level2cancel(){
   window.location.href="level2H.html";
 }
-
 
 function level2View(val) {
   console.log('modal to edit: ', val);
@@ -1901,10 +1894,6 @@ function ApproveReportToggle(id, approveState){
 
 }
 
-
-
-
-
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
@@ -2112,16 +2101,11 @@ function approveEventToggle(id, approveState){
   
 }
 
-
-
-
-
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-
 
 function eventviewer(val) {
   // console.log('modal to edit: ', val);
