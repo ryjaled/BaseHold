@@ -649,26 +649,17 @@
 
 			$data = array();
 			$sdata = array();
+			
+			$sdata['audience_category'] = 'None';
+			$sdata['total'] = '0';
+			array_push($data,$sdata);
 
 		   while($row = $event->fetch()){
 				$success="true";
-				print_r($row);
-				echo count($row);
 				if (count($row)>1) {
+					$data = array();
 					array_push($data,$row);
-				}else{
-					$sdata['audience_category'] = 'None';
-					$sdata['total'] = '0';
-					array_push($data,$sdata);
 				}
-				// if (isset($row['audience_category'])) {
-				// 	array_push($data,$row);
-				// }else{
-				// 	echo 'no';
-				// 	$sdata['audience_category'] = 'None';
-				// 	$sdata['total'] = '0';
-				// 	array_push($data,$sdata);
-				// }
 				
 			}
 
