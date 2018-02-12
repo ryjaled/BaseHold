@@ -1,5 +1,5 @@
 <?php
-include_once("database.php");
+	include_once("database.php");
 
 	class events extends database
 	{
@@ -23,12 +23,12 @@ include_once("database.php");
 		*/
 		function getEvents(){
 			$strQuery="select * from events where is_approved =1";
-      return $this->query($strQuery);
+      	return $this->query($strQuery);
 		}
 
-    function getAnEvent($eventid){
+    	function getAnEvent($eventid){
 			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.town,e.verification_comments,e.verified_timestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
-      return $this->query($strQuery);
+      	return $this->query($strQuery);
 		}
 
 		// function getAPendingEvent($eventid){
@@ -38,7 +38,7 @@ include_once("database.php");
 
 		function getRegions(){
 			$strQuery="select * from region";
-      return $this->query($strQuery);
+      	return $this->query($strQuery);
 		}
 
 		function getDashRegionFigures($fdate=false,$ldate=false){
@@ -47,7 +47,7 @@ include_once("database.php");
 				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			$strQuery.="group by e.region order by r.regionname ASC";
-      return $this->query($strQuery);
+      	return $this->query($strQuery);
 		}
 
 		function getDashTotalAttendees($fdate=false,$ldate=false,$region=false){
@@ -121,143 +121,154 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
-    function toggleEvent($eventid, $approval, $approvedDate){
+    	function toggleEvent($eventid, $approval, $approvedDate){
       
-      if($approval == "0"){
-        $newapproval = "1";
-      } else {
-        $newapproval = "0";
-      }
+			if($approval == "0"){
+				$newapproval = "1";
+			} else {
+				$newapproval = "0";
+			}
 
 			$strQuery="update events set is_approved='$newapproval',approved_timestamp='$approvedDate' where event_id=$eventid";
-      return $this->query($strQuery);
+      	return $this->query($strQuery);
 		}
 
-    function toggleVerify($eventid, $verify, $date, $verifycomments){
+    	function toggleVerify($eventid, $verify, $date, $verifycomments){
 		 
-      if($verify == "0"){
-        $newverify = "1";
-      } else {
-        $newverify = "0";
-      }
-      echo $newapproval;
-      $strQuery="update events set is_verified='$newverify', verification_comments='$verifycomments', verified_timestamp='$date' where event_id=$eventid";
-      return $this->query($strQuery);
-    }
+			if($verify == "0"){
+				$newverify = "1";
+			} else {
+				$newverify = "0";
+			}
+			echo $newapproval;
+			$strQuery="update events set is_verified='$newverify', verification_comments='$verifycomments', verified_timestamp='$date' where event_id=$eventid";
+			return $this->query($strQuery);
+    	}
 
-	function getDashTopAudienceCategory($fdate=false,$ldate=false,$region=false){
-		$strQuery="select audience_category, count(audience_category) as total from events where is_approved=1 ";
-		if($region!=false){
-			$strQuery.="and region = '$region' ";
-		}
-		if(($fdate!=false) && ($ldate!=false)){
-			$strQuery.=" and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
-		}
-		$strQuery.="group by audience_category order by count(audience_category) desc limit 1";
-		return $this->query($strQuery);
-	}
-
-	/**
-	* get user id
-	* @param user's name
-	* @return user's Id
-	*/
-	function getID($userName){
-		$strQuery="Select ID from user where username = '$userName'";
-		return $this->query($strQuery);
-	}
-
-	function addNewEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter){
-
-		$strQuery="insert into events set
-						eventtitle='$eventtitle',
-						eventtopic='$topic',
-						date_to_be_organized='$date',
-						audience_category='$audience',
-						expected_audience_attendance='$expected_audience_attendance',
-						region='$region',
-						town='$town',
-						logistics='$logistics',
-						mode_of_outreach='$mode_of_outreach',
-						creator='$reporter' ";
-
-		return $this->query($strQuery);
-	}
-
-	function addNewReport($event_id,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers){
-
-		$strQuery="insert into reports set
-						event_id='$event_id',
-						team_challenges='$challenges',
-						complaints_raised='$complaints',
-						is_approved=0,
-						verification_comments='',
-						event_summary='$summary',
-						team_members='$teammembers',
-						picture_paths='$picpath',
-						folder_paths='$foldpath' ";
-    return $this->query($strQuery);
-	}
-
-
-		function toggleReport($reportid, $approval,$date){
-      if($approval == "0"){
-        $newapproval = "1";
-      } else {
-        $newapproval = "0";
-      }
-      $strQuery="update reports set is_approved='$newapproval', verified_timestamp='$date' where report_id=$reportid";
+		function getDashTopAudienceCategory($fdate=false,$ldate=false,$region=false){
+			$strQuery="select audience_category, count(audience_category) as total from events where is_approved=1 ";
+			if($region!=false){
+				$strQuery.="and region = '$region' ";
+			}
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.=" and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by audience_category order by count(audience_category) desc limit 1";
 			return $this->query($strQuery);
 		}
 
-	function getAReport($reportid){
-		$strQuery="SELECT e.approved_timestamp,e.creator,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
-	return $this->query($strQuery);
-	}
+		/**
+		* get user id
+		* @param user's name
+		* @return user's Id
+		*/
+		function getID($userName){
+			$strQuery="Select ID from user where username = '$userName'";
+			return $this->query($strQuery);
+		}
 
-	function editEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid){
+		function addNewEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter){
 
-		$strQuery="update events set
-						eventtitle='$eventtitle',
-						eventtopic='$topic',
-						date_to_be_organized='$date',
-						audience_category='$audience',
-						expected_audience_attendance='$expected_audience_attendance',
-						region='$region',
-						town='$town',
-						logistics='$logistics',
-						mode_of_outreach='$mode_of_outreach',
-						is_verified='0',
-						is_approved='0',
-						creator='$reporter' 
-						where event_id='$eventid'";
+			$strQuery="insert into events set
+							eventtitle='$eventtitle',
+							eventtopic='$topic',
+							date_to_be_organized='$date',
+							audience_category='$audience',
+							expected_audience_attendance='$expected_audience_attendance',
+							region='$region',
+							town='$town',
+							logistics='$logistics',
+							mode_of_outreach='$mode_of_outreach',
+							creator='$reporter' ";
 
-		return $this->query($strQuery);
-	}
+			return $this->query($strQuery);
+		}
 
-	function editReport($event_id,$challenges,$complaints,$verifiedComments,$summary,$picpath,$foldpath,$reportid){
+		function addNewReport($event_id,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers){
 
-		$strQuery="update reports set
-						event_id='$event_id',
-						team_challenges='$challenges',
-						complaints_raised='$complaints',
-						is_approved=0,
-						verification_comments='$verifiedComments',
-						event_summary='$summary',
-						picture_paths='$picpath',
-						folder_paths='$foldpath' 
-						where report_id='$reportid'";
+			$strQuery="insert into reports set
+							event_id='$event_id',
+							team_challenges='$challenges',
+							complaints_raised='$complaints',
+							is_approved=0,
+							verification_comments='',
+							event_summary='$summary',
+							team_members='$teammembers',
+							picture_paths='$picpath',
+							folder_paths='$foldpath' ";
+			return $this->query($strQuery);
+		}
 
-		return $this->query($strQuery);
-	}		
-	
-	function addTeamMembers($event_id,$name){
-		$strQuery="insert into reportmembers set
-						event_id='$event_id',
-						name='$name' ";
+		function toggleReport($reportid, $approval,$date){
+			if($approval == "0"){
+				$newapproval = "1";
+			} else {
+				$newapproval = "0";
+			}
+			$strQuery="update reports set is_approved='$newapproval', verified_timestamp='$date' where report_id=$reportid";
+			return $this->query($strQuery);
+		}
 
-		return $this->query($strQuery);
-	}	
+		function getAReport($reportid){
+			$strQuery="SELECT e.approved_timestamp,e.creator,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
+			return $this->query($strQuery);
+		}
+
+		function editEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid){
+
+			$strQuery="update events set
+							eventtitle='$eventtitle',
+							eventtopic='$topic',
+							date_to_be_organized='$date',
+							audience_category='$audience',
+							expected_audience_attendance='$expected_audience_attendance',
+							region='$region',
+							town='$town',
+							logistics='$logistics',
+							mode_of_outreach='$mode_of_outreach',
+							is_verified='0',
+							is_approved='0',
+							creator='$reporter' 
+							where event_id='$eventid'";
+
+			return $this->query($strQuery);
+		}
+
+		function editReport($event_id,$challenges,$complaints,$verifiedComments,$summary,$picpath,$foldpath,$reportid){
+
+			$strQuery="update reports set
+							event_id='$event_id',
+							team_challenges='$challenges',
+							complaints_raised='$complaints',
+							is_approved=0,
+							verification_comments='$verifiedComments',
+							event_summary='$summary',
+							picture_paths='$picpath',
+							folder_paths='$foldpath' 
+							where report_id='$reportid'";
+
+			return $this->query($strQuery);
+		}		
+		
+		function addTeamMembers($event_id,$name){
+			$strQuery="insert into reportmembers set
+							event_id='$event_id',
+							name='$name' ";
+
+			return $this->query($strQuery);
+		}	
+
+		function addNewReportEventUpdate($event_id,$value){
+
+			$strQuery="update events set is_reported='$value' where event_id='$event_id' ";
+			return $this->query($strQuery);
+		}
+
+		function getReportwithEventid($event_id){
+
+			$strQuery="select team_challenges, complaints_raised, event_summary, picture_paths, folder_paths, team_members from reports where event_id='$event_id' ";
+			return $this->query($strQuery);
+		}
 
 	}
 ?>

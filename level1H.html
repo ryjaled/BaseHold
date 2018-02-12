@@ -570,7 +570,6 @@
 
 
 
-
 <!-- ////////////////MODAL OVERFLOW REPORT//////////////// -->
      <!-- UI kit modal -->
          <div id="modal-report" class="uk-modal-container" uk-modal>
@@ -579,7 +578,7 @@
                 <button class="uk-modal-close-default" type="button" uk-close></button>
     
                 <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">Create Report</h2>
+                    <h2 class="uk-modal-title" id="report_title">Create Report</h2>
                 </div>
     
                 <div class="uk-modal-body" uk-overflow-auto>
@@ -681,9 +680,9 @@
 
                     </article>
                     
-                    <div class="uk-modal-footer uk-text-right" id="verifyformdiv">
+                    <div class="uk-modal-footer uk-text-right" id="reportverifyformdiv">
                         <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                        <button class="uk-button uk-button-secondary" type="button" onclick="addNewReport()">Add Report</button>
+                        <button id="addbuttonreport" class="uk-button uk-button-secondary" type="button" onclick="addNewReport()">Add Report</button>
                     </div>
 
     
