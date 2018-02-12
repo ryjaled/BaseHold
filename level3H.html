@@ -676,6 +676,61 @@
 
 
 
+
+
+
+        <div id="modal-overflow-comments" class="uk-modal-container" uk-modal>
+                <div class="uk-modal-dialog">
+        
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+        
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Approval Comments</h2>
+                    </div>
+        
+                    <div class="uk-modal-body" uk-overflow-auto>
+        
+                    <article class="uk-comment">
+                        <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                        <div class="uk-width-auto">
+                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                        </div>
+                        </header>
+        
+                        <div class="row">
+                            <dl class="uk-description-list">
+                                    <div class="uk-margin">
+                                        <textarea id="commentsForApproval" class="uk-textarea" rows="5" placeholder="Please enter approval Comments"></textarea>
+                                    </div>
+                                </div>
+                            </dl>
+                        </div>
+        
+                        <br/>
+        
+                        
+        
+                    </article>
+    
+                    <div class="uk-modal-footer uk-text-right" id="verifycommentformdivbuttons">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;" onclick="approveEvent()">Submit</button>
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    </div>
+            
+        
+                    </div>
+        
+                    
+                </div>
+            </div>
+
+
+
+
+
+
+
         <!-- UI kit modal -->
         <div id="modal-overflow-2-report" class="uk-modal-container" uk-modal>
                 <div class="uk-modal-dialog">

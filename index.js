@@ -1718,6 +1718,7 @@ function level2ViewComplete(xhr, status) {
   console.log(obj);
 
   UIkit.modal('#modal-overflow-2').show();
+  UIkit.modal('#modal-overflow-comments');
 
   document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
   document.getElementById('date_organized').innerHTML=moment(obj[0].date_to_be_organized).format('D MMMM Y');
@@ -1747,18 +1748,24 @@ function level2ViewComplete(xhr, status) {
 }
 
 function verifyEventToggle(id, verState){
-  // alert('here in VET'+id+verState);
+  sessionStorage.verifyingId = id;
+  sessionStorage.verifyingState = verState;
+
   event.preventDefault();
-  var theUrl="databasehandler.php?cmd=5&eventid="+id+"&verify="+verState+"&verifycomments=verificationTouched";
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global2
-          });
-  
+  UIkit.modal('#modal-overflow-comments').show();
 
+}
 
+function verifyEvent(){
+  var comments = $('#commentsForVerification').val();
+  var theUrl="databasehandler.php?cmd=5&eventid="+sessionStorage.verifyingId+"&verify="+sessionStorage.verifyingState+"&verifycomments="+comments;
+  $.ajax(theUrl,
+    {
+      async:true,
+      complete: global2
+    });
+
+    $('#commentsForVerification').val("");
 }
 
 function reportHelp(){
@@ -1886,22 +1893,6 @@ function level2ReportViewComplete(xhr, status) {
   
 }
 
-function ApproveReportToggle(id, approveState){
-  
-  event.preventDefault();
-  var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global7
-          });
-  
-
-
-}
-
-
 
 
 
@@ -1985,20 +1976,6 @@ function level3ViewComplete(xhr, status) {
 
 }
 
-function verifyEventToggle(id, verState){
-  // alert('here in VET'+id+verState);
-  event.preventDefault();
-  var theUrl="databasehandler.php?cmd=5&eventid="+id+"&verify="+verState+"&verifycomments=verificationTouched";
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global2
-          });
-  
-
-
-}
 
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -2086,8 +2063,22 @@ function level3ReportViewComplete(xhr, status) {
 }
 
 function ApproveReportToggle(id, approveState){
+
+  sessionStorage.approvingReportId = id;
+  sessionStorage.approvingReportState = approveState;
+
   event.preventDefault();
-  var theUrl="databasehandler.php?cmd=28&reportid="+id+"&approval="+approveState;
+  UIkit.modal('#modal-overflow-report-comments').show();
+
+ 
+  
+}
+
+function approveReport(){
+
+  var comments = $('#commentsForReportApproval').val();
+
+  var theUrl="databasehandler.php?cmd=28&reportid="+sessionStorage.approvingReportId+"&approval="+sessionStorage.approvingReportState+"&verifcationComments="+comments;
   
     $.ajax(theUrl,
           {
@@ -2095,21 +2086,34 @@ function ApproveReportToggle(id, approveState){
             complete: global7
           });
   
-
-
+          $('#commentsForReportApproval').val("");
 }
 
 
 function approveEventToggle(id, approveState){
+
+  sessionStorage.approvingId = id;
+  sessionStorage.approvingState = approveState;
+
   event.preventDefault();
-  var theUrl="databasehandler.php?cmd=4&eventid="+id+"&approve="+approveState;
+  UIkit.modal('#modal-overflow-comments').show();
+
+  
+}
+
+function approveEvent(){
+  
+  var comments = $('#commentsForApproval').val();
+
+  var theUrl="databasehandler.php?cmd=4&eventid="+sessionStorage.approvingId+"&approve="+sessionStorage.approvingState+"&approveComments="+comments;
   
     $.ajax(theUrl,
           {
             async:true,
             complete: global3
           });
-  
+
+          $('#commentsForApproval').val("");
 }
 
 

@@ -809,14 +809,19 @@
 
 	function toggleApprove()
 	{
-
+		
+		
+		
+		 include("logs.php");
 		 include("events.php");
 		 $event = new events();
-
+		 $log = new logs();
 		 $eventid=$_REQUEST['eventid'];
 		 $approval=$_REQUEST['approve'];
 		 $approvedDate = date("Y-m-d H:i:s");
 		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate);
+
+		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
 
 		 echo json_encode($approve);
 
@@ -825,14 +830,17 @@
 	function toggleApproveReport()
 	{
 
+		
+		 include("logs.php");
 		 include("events.php");
 		 $event = new events();
-
+		 $log = new logs();
 		 $reportid=$_REQUEST['reportid'];
 		 $approval=$_REQUEST['approval'];
 		 $date = date("Y-m-d H:i:s");
 		 $verify=$event->toggleReport($reportid,$approval,$date);
 
+		 $log->addEventLog($eventtitle,$reporter,"has approved a report: ", $region);
 		 echo json_encode($approval);
 
 	}
@@ -840,14 +848,19 @@
 	function toggleVerify()
 	{
 
+		include("logs.php");
 		include("events.php");
+
 		$event = new events();
+		$log = new logs();
 
 		$eventid=$_REQUEST['eventid'];
 		$isVerify=$_REQUEST['verify'];
 		$commentToVerify = $_REQUEST['verifycomments'];
 		$verifiedDate = date("Y-m-d H:i:s");
 		$verify=$event->toggleVerify($eventid,$isVerify,$verifiedDate,$commentToVerify);
+
+		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
 
 		echo json_encode($isVerify);
 
@@ -1089,6 +1102,8 @@
 		$teammembers=$_REQUEST['members'];
 		
 		$verify=$event->addNewReport($eventid,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers);
+
+		$log->addReportLog($eventid,$reporter,"Added a new report for:", $region);
 
 		$myArray = explode(',', $teammembers);
 		for ($i=0; $i < count($myArray); $i++) { 

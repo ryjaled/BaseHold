@@ -82,5 +82,59 @@ include_once("database.php");
 
 
 
+		 /**
+		* adds new user to the database
+		* @param [all attributes needed to create a user]
+		* @return boolean showing success or failure
+		*/
+		function addEventVerifyLog($eventtitle,$userid,$action,$region){
+			
+						$strQuery="insert into eventlogs set
+										event_title='$eventtitle',
+										user_id='$userid',
+										action='$action',
+										region='$region' ";
+			
+										// echo $strQuery;
+						return $this->query($strQuery);
+					}
+
+
+						 /**
+		* adds new user to the database
+		* @param [all attributes needed to create a user]
+		* @return boolean showing success or failure
+		*/
+		function addEventApproveLog($eventtitle,$userid,$action,$region){
+			
+						$strQuery="insert into eventlogs set
+										event_title='$eventtitle',
+										user_id='$userid',
+										action='$action',
+										region='$region' ";
+			
+										// echo $strQuery;
+						return $this->query($strQuery);
+					}
+
+									 /**
+		* adds new user to the database
+		* @param [all attributes needed to create a user]
+		* @return boolean showing success or failure
+		*/
+		function addReportLog($eventtitle,$userid,$action,$region){
+			
+						$strQuery="insert into eventlogs set
+										event_title='$eventtitle',
+										user_id='$userid',
+										action='$action',
+										region='$region' ";
+			
+										// echo $strQuery;
+						return $this->query($strQuery);
+					}
+
+
+
 	}
 ?>
