@@ -834,9 +834,10 @@
 	}
 
 	function toggleApprove()
-	{
-		
-		
+	{	
+		$eventtitle='';
+		$reporter='';
+		$region='';
 		
 		 include("logs.php");
 		 include("events.php");
@@ -848,6 +849,13 @@
 		 $approvedDate = date("Y-m-d H:i:s");
 		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate,$approveComments);
 
+		 $receipt=$event->getAnEvent($eventid);
+		 while($row = $event->fetch()){
+			$eventtitle=$row['eventtitle'];
+			$reporter=$row['creator'];
+			$region=$row['region'];
+		 }
+
 		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
 
 		 echo json_encode($approve);
@@ -855,9 +863,11 @@
 	}
 
 	function toggleApproveReport()
-	{
+	{	
+		$eventtitle='';
+		$reporter='';
+		$region='';
 
-		
 		 include("logs.php");
 		 include("events.php");
 		 $event = new events();
@@ -868,13 +878,23 @@
 		 $date = date("Y-m-d H:i:s");
 		 $verify=$event->toggleReport($reportid,$approval,$date,$verificationComments);
 
-		 //$log->addEventLog($eventtitle,$reporter,"has approved a report: ", $region);
+		 $receipt=$event->getAReport($reportid);
+		 while($row = $event->fetch()){
+			$eventtitle=$row['eventtitle'];
+			$reporter=$row['creator'];
+			$region=$row['region'];
+		 }
+
+		 $log->addEventApproveLog($eventtitle,$reporter,"has approved a report: ", $region);
 		 echo json_encode($approval);
 
 	}
 
 	function toggleVerify()
-	{
+	{	
+		$eventtitle='';
+		$reporter='';
+		$region='';
 
 		include("logs.php");
 		include("events.php");
@@ -887,6 +907,13 @@
 		$commentToVerify = $_REQUEST['verifycomments'];
 		$verifiedDate = date("Y-m-d H:i:s");
 		$verify=$event->toggleVerify($eventid,$isVerify,$verifiedDate,$commentToVerify);
+
+		$receipt=$event->getAnEvent($eventid);
+		 while($row = $event->fetch()){
+			$eventtitle=$row['eventtitle'];
+			$reporter=$row['creator'];
+			$region=$row['region'];
+		 }
 
 		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
 
