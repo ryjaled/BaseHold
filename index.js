@@ -2083,19 +2083,18 @@ function level3ViewComplete(xhr, status) {
 
 }
 
+// function reportHelp(){
+//   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+// }
 
-function reportHelp(){
-  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-}
-
-function reportApprover(id, verifyCheck, approveCheck){
-  if(approveCheck == 1){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-  }
-  if(approveCheck == 0){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-  }
-}
+// function reportApprover(id, verifyCheck, approveCheck){
+//   if(approveCheck == 1){
+//     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+//   }
+//   if(approveCheck == 0){
+//     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+//   }
+// }
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -2185,7 +2184,7 @@ function approveReport(){
 
   var comments = $('#commentsForReportApproval').val();
 
-  var theUrl="databasehandler.php?cmd=28&reportid="+sessionStorage.approvingReportId+"&approval="+sessionStorage.approvingReportState+"&verifcationComments="+comments;
+  var theUrl="databasehandler.php?cmd=28&reportid="+sessionStorage.approvingReportId+"&approval="+sessionStorage.approvingReportState+"&verificationComments="+comments;
   
     $.ajax(theUrl,
           {
@@ -2193,7 +2192,7 @@ function approveReport(){
             complete: global7
           });
   
-          $('#commentsForReportApproval').val("");
+  $('#commentsForReportApproval').val("");
 }
 
 

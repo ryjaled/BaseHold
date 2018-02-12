@@ -844,8 +844,9 @@
 		 $log = new logs();
 		 $eventid=$_REQUEST['eventid'];
 		 $approval=$_REQUEST['approve'];
+		 $approveComments=$_REQUEST['approveComments'];
 		 $approvedDate = date("Y-m-d H:i:s");
-		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate);
+		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate,$approveComments);
 
 		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
 
@@ -863,10 +864,11 @@
 		 $log = new logs();
 		 $reportid=$_REQUEST['reportid'];
 		 $approval=$_REQUEST['approval'];
+		 $verificationComments = $_REQUEST['verificationComments'];
 		 $date = date("Y-m-d H:i:s");
-		 $verify=$event->toggleReport($reportid,$approval,$date);
+		 $verify=$event->toggleReport($reportid,$approval,$date,$verificationComments);
 
-		 $log->addEventLog($eventtitle,$reporter,"has approved a report: ", $region);
+		 //$log->addEventLog($eventtitle,$reporter,"has approved a report: ", $region);
 		 echo json_encode($approval);
 
 	}

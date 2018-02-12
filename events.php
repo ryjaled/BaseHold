@@ -31,11 +31,6 @@
       	return $this->query($strQuery);
 		}
 
-		// function getAPendingEvent($eventid){
-		// 	$strQuery="select p.eventtitle,p.date_to_be_organized,r.regionname as region,p.town,p.pending_id FROM `pending` as p INNER JOIN region as r on r.region_id = p.region where p.pending_id = '$eventid'";
-    //   return $this->query($strQuery);
-		// }
-
 		function getRegions(){
 			$strQuery="select * from region";
       	return $this->query($strQuery);
@@ -121,7 +116,7 @@
 			return $this->query($strQuery);
 		}
 
-    	function toggleEvent($eventid, $approval, $approvedDate){
+    	function toggleEvent($eventid, $approval, $approvedDate,$approveComments){
       
 			if($approval == "0"){
 				$newapproval = "1";
@@ -129,7 +124,7 @@
 				$newapproval = "0";
 			}
 
-			$strQuery="update events set is_approved='$newapproval',approved_timestamp='$approvedDate' where event_id=$eventid";
+			$strQuery="update events set is_approved='$newapproval',approved_timestamp='$approvedDate',approved_comments='$approveComments' where event_id=$eventid";
       	return $this->query($strQuery);
 		}
 
@@ -199,13 +194,13 @@
 			return $this->query($strQuery);
 		}
 
-		function toggleReport($reportid, $approval,$date){
+		function toggleReport($reportid, $approval,$date,$verificationComments){
 			if($approval == "0"){
 				$newapproval = "1";
 			} else {
 				$newapproval = "0";
 			}
-			$strQuery="update reports set is_approved='$newapproval', verified_timestamp='$date' where report_id=$reportid";
+			$strQuery="update reports set is_approved='$newapproval', verified_timestamp='$date', verification_comments='$verificationComments' where report_id=$reportid";
 			return $this->query($strQuery);
 		}
 
