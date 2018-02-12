@@ -99,6 +99,9 @@
 		case 30:
 			addReport();
 			break;
+		case 31:
+			getAnEventwithReportinfo();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -1017,7 +1020,7 @@
 
 		$myArray = explode(',', $teammembers);
 		for ($i=0; $i < count($myArray); $i++) { 
-			$verify=$event->addTeamMembers($eventid,$myArray[$i]);
+			$verifyadd=$event->addTeamMembers($eventid,$myArray[$i]);
 		}
 
 		//$log->addEventLog($eventtitle,$reporter,"added a Report", $region);
@@ -1025,9 +1028,62 @@
 			echo '{"result":0,"message":"Event not added"}';
 		}
 		else{
+			$verify=$event->addNewReportEventUpdate($eventid,1);
 			echo '{"result":1,"message":"Event added"}';
 
 		}
+	}
+
+	function getAnEventwithReportinfo(){
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+			$eventid=$_REQUEST['eventid'];
+			$data = array();
+
+			$result = $event->getAnEvent($eventid);
+
+			while($row = $event->fetch()){
+ 					$success="true";
+					 // $data[]=$row;
+					$data['approved_timestamp'] = $row['approved_timestamp'];
+					$data['audience_category'] = $row['audience_category'];
+					$data['firstname'] = $row['firstname'];
+					$data['lastname'] = $row['lastname'];
+					$data['date_to_be_organized'] = $row['date_to_be_organized'];
+					$data['event_id'] = $row['event_id'];
+					$data['eventtitle'] = $row['eventtitle'];
+					$data['eventtopic'] = $row['eventtopic'];
+					$data['expected_audience_attendance'] = $row['expected_audience_attendance'];
+					$data['is_approved'] = $row['is_approved'];
+					$data['is_verified'] = $row['is_verified'];
+					$data['logistics'] = $row['logistics'];
+					$data['mode_of_outreach'] = $row['mode_of_outreach'];
+					$data['regionname'] = $row['regionname'];
+					$data['town'] = $row['town'];
+					$data['verification_comments'] = $row['verification_comments'];
+					$data['verified_timestamp'] = $row['verified_timestamp'];
+ 					//array_push($data,$row);
+
+ 				}
+
+			$result = $event->getReportwithEventid($eventid);
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+					 // $data[]=$row;
+					$data['team_challenges'] = $row['team_challenges'];
+					$data['complaints_raised'] = $row['complaints_raised'];
+					$data['event_summary'] = $row['event_summary'];
+					$data['picture_paths'] = $row['picture_paths'];
+					$data['folder_paths'] = $row['folder_paths'];
+					$data['team_members'] = $row['team_members'];
+					//array_push($moredata,$data);
+
+				 }
+
+ 				echo json_encode($data);
 	}
 
 ?>
