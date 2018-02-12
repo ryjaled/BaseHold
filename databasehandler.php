@@ -99,6 +99,9 @@
 		case 30:
 			addReport();
 			break;
+		case 31:
+			getAnEventwithReportinfo();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -530,12 +533,19 @@
 			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
 
 			$data = array();
+			$sdata = array();
 
 			while($row = $event->fetch()){
-					$success="true";
+				$success="true";
+				$total = $row['total'];
+				if ($total == null) {
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}else{
 					array_push($data,$row);
-
 				}
+				
+			}
 
 				echo json_encode($data);
 
@@ -573,11 +583,19 @@
 			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
 
 			$data = array();
+			$sdata = array();
 
 			while($row = $event->fetch()){
-					$success="true";
+				$success="true";
+				$total = $row['total'];
+				if ($total == null) {
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}else{
 					array_push($data,$row);
 				}
+				
+			}
 
 				echo json_encode($data);
 
@@ -632,13 +650,21 @@
 
 		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
 
-		   $data = array();
+			$data = array();
+			$sdata = array();
+			
+			$sdata['audience_category'] = 'None';
+			$sdata['total'] = '0';
+			array_push($data,$sdata);
 
 		   while($row = $event->fetch()){
-				   $success="true";
-				   array_push($data,$row);
-
-			   }
+				$success="true";
+				if (count($row)>1) {
+					$data = array();
+					array_push($data,$row);
+				}
+				
+			}
 
 			echo json_encode($data);
 
@@ -770,7 +796,7 @@
 				}
 
 				for ($i=0; $i < count($ndata); $i++) {
-				@$snumdata[]=$adata[$i][0];
+					@$snumdata[]=$adata[$i][0];
 					for ($j=0; $j < count($adata); $j++) {
 						$result = $event->getDashRegionAudienceFullData($ndata[$i][0],$adata[$j][0],$s_final_date,$e_final_date);
 						while($row = $event->fetch()){
@@ -784,7 +810,7 @@
 				$alldata = transposeData($allarrays);
 
 				for ($k=0; $k < count($alldata); $k++) {
-					$seriesdata['name'] = $snumdata[$k];
+					$seriesdata['name'] = $adata[$k][0];//$seriesdata['name'] = $snumdata[$k];
 					$seriesdata['data'] = $alldata[$k];
 					$moredata[] = $seriesdata;
 				}
@@ -927,104 +953,6 @@
 
 	}
 
-	// function generateReport()
-	// {
-	// 	include("users.php");
-	// 	$user=new users();
-	// 	$user_id=$_REQUEST['id'];
-
-	// 	$verify = $user->pullReport($user_id);
-
-	// 	$array = array();
-	// 	while($one = $user->fetch())
-	// 	{
-	// 		$array[] = $one;
-	// 	}
-
-	// 	echo json_encode($array);
-	// }
-
-	// function getNews()
-	// {
-	// 	include("users.php");
-	// 	$user=new users();
-
-
-	// 	$verify = $user->pullNews();
-
-	// 	$array = array();
-	// 	while($one = $user->fetch())
-	// 	{
-	// 		$array[] = $one;
-	// 	}
-
-	// 	echo json_encode($array);
-	// }
-
-	// function requestCard()
-	// {
-
-	// 	$username=$_REQUEST['username'];
-	// 	$bank=$_REQUEST['bank'];
-
-	// 	include("users.php");
-	// 	$user=new users();
-
-	// 	echo $username;
-	// 	echo $bank;
-
-	// 	$verify=$user->addRequest($username,$bank);
-	// 	if($verify==false){
-	// 		echo'{"result":0,"message":"Request not added"}';
-	// 	}
-	// 	else{
-	// 		echo'{"result":1,"message":"Request added"}';
-	// 	}
-	// }
-
-	// function addBook()
-	// {
-
-	// 	$hotelname=$_REQUEST['hotelname'];
-	// 	$occupants=$_REQUEST['occupants'];
-	// 	$checkindate=$_REQUEST['checkindate'];
-	// 	$checkoutdate=$_REQUEST['checkoutdate'];
-
-
-
-	// 	include("users.php");
-	// 	$user=new users();
-
-	// 	echo $telephone;
-	// 	$verify=$user->addBook($hotelname,$occupants,$checkindate,$checkoutdate);
-	// 	if($verify==false){
-	// 		echo'{"result":0,"message":"Request not added"}';
-	// 	}
-	// 	else{
-	// 		echo'{"result":1,"message":"Request added"}';
-	// 	}
-	// }
-
-	// function sendContactForm()
-	// {
-
-	// 	// $name=$_REQUEST['name'];
-	// 	$messagearea=$_REQUEST['messagearea'];
-	// 	$username=$_REQUEST['username'];
-
-
-	// 	include("users.php");
-	// 	$user=new users();
-
-	// 	$verify=$user->sendContact($messagearea,$username);
-	// 	if($verify==false){
-	// 		echo'{"result":0,"message":"Request not added"}';
-	// 	}
-	// 	else{
-	// 		echo'{"result":1,"message":"Request added"}';
-	// 	}
-	// }
-
 	function adminLogin(){
 		include("users.php");
 		$username=$_REQUEST['username'];
@@ -1107,7 +1035,7 @@
 
 		$myArray = explode(',', $teammembers);
 		for ($i=0; $i < count($myArray); $i++) { 
-			$verify=$event->addTeamMembers($eventid,$myArray[$i]);
+			$verifyadd=$event->addTeamMembers($eventid,$myArray[$i]);
 		}
 
 		//$log->addEventLog($eventtitle,$reporter,"added a Report", $region);
@@ -1115,9 +1043,62 @@
 			echo '{"result":0,"message":"Event not added"}';
 		}
 		else{
+			$verify=$event->addNewReportEventUpdate($eventid,1);
 			echo '{"result":1,"message":"Event added"}';
 
 		}
+	}
+
+	function getAnEventwithReportinfo(){
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+			$eventid=$_REQUEST['eventid'];
+			$data = array();
+
+			$result = $event->getAnEvent($eventid);
+
+			while($row = $event->fetch()){
+ 					$success="true";
+					 // $data[]=$row;
+					$data['approved_timestamp'] = $row['approved_timestamp'];
+					$data['audience_category'] = $row['audience_category'];
+					$data['firstname'] = $row['firstname'];
+					$data['lastname'] = $row['lastname'];
+					$data['date_to_be_organized'] = $row['date_to_be_organized'];
+					$data['event_id'] = $row['event_id'];
+					$data['eventtitle'] = $row['eventtitle'];
+					$data['eventtopic'] = $row['eventtopic'];
+					$data['expected_audience_attendance'] = $row['expected_audience_attendance'];
+					$data['is_approved'] = $row['is_approved'];
+					$data['is_verified'] = $row['is_verified'];
+					$data['logistics'] = $row['logistics'];
+					$data['mode_of_outreach'] = $row['mode_of_outreach'];
+					$data['regionname'] = $row['regionname'];
+					$data['town'] = $row['town'];
+					$data['verification_comments'] = $row['verification_comments'];
+					$data['verified_timestamp'] = $row['verified_timestamp'];
+ 					//array_push($data,$row);
+
+ 				}
+
+			$result = $event->getReportwithEventid($eventid);
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+					 // $data[]=$row;
+					$data['team_challenges'] = $row['team_challenges'];
+					$data['complaints_raised'] = $row['complaints_raised'];
+					$data['event_summary'] = $row['event_summary'];
+					$data['picture_paths'] = $row['picture_paths'];
+					$data['folder_paths'] = $row['folder_paths'];
+					$data['team_members'] = $row['team_members'];
+					//array_push($moredata,$data);
+
+				 }
+
+ 				echo json_encode($data);
 	}
 
 ?>
