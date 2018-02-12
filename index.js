@@ -351,8 +351,7 @@ $().ready(function () {
 
 var pendingid;
 
-function loginUser()
-{
+function loginUser(){
   event.preventDefault();
   var email = $('#useremail').val();
   var password = $('#userpassword').val();
@@ -1211,7 +1210,7 @@ function level1ViewComplete(xhr, status) {
   }
 
 
-  document.getElementById('complaints_raised2').innerHTML= obj[0].approved_timestamp;
+  //document.getElementById('complaints_raised').innerHTML= obj[0].approved_timestamp;
    
 }
 
@@ -1350,19 +1349,19 @@ function addneweventComplete(xhr,status){
   document.getElementById('RegisterValidationDoc').reset();
 
   $.notify({
-     icon: "info_outline",
-     message: "Event submitted successfully for verification and approval."
+    icon: "info_outline",
+    message: "Event submitted successfully for verification and approval."
 
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
+  },{
+    type: 'success',
+    timer: 2000,
+    placement: {
+        from: 'top',
+        align: 'right'
      }
- });
+  });
 
- global1();
+ alert(global1);
 
 }
 
@@ -1577,14 +1576,50 @@ function loadEventReport(xhr, status){
   event.preventDefault();
 
   UIkit.modal('#modal-report').show();
+  document.getElementById('report_title').innerHTML = "Create Report";
+
+  var dform = new Date(obj[0].date_to_be_organized);
 
   document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_date_organized').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_region').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_town').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('report_region').innerHTML = obj[0].regionname;
+  document.getElementById('report_town').innerHTML=obj[0].town;
   document.getElementById('report_checks').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_audience_category').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_audience_attendance').innerHTML=obj[0].eventtitle;
+  document.getElementById('report_audience_category').innerHTML = obj[0].audience_category;
+  document.getElementById('report_audience_attendance').innerHTML = obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics;
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('report_logistics').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  var mode = obj[0].mode_of_outreach;
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('report_mode_of_outreach').innerHTML = mode.substring(0, strlenMode - 1);
+
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+
+
+  if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('report_checks').innerHTML = "This event has not yet been verified nor approved.";
+  }
+  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('report_checks').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
+    document.getElementById('report_checks').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + " and approved on: " + moment(dateApproved).format('D MMMM Y');
+  }
+
+  $('#report_observations').val("");
+  $('#report_challenges').val("");
+  $('#report_complaints').val("");
+  //$('#report_audience_category').val("");
+  $('#report_members').val("");
+
+  $('#addbuttonreport').show();
+
+  //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button> <button class='uk-button uk-button-secondary' type='button' onclick='addNewReport()>Add Report</button>");
+
 }
 
 function addNewReport(){
@@ -1654,17 +1689,93 @@ function addNewReportComplete(xhr,status){
   $('#input-id').val("");
   $('#report_members').val("");
 
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report created successfully for verification."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
 }
 
+function viewReportModal(val) {
+
+  var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
+  sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadViewEventReport
+    });
+
+}
+
+function loadViewEventReport(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  event.preventDefault();
+  //console.log(obj);
+
+  UIkit.modal('#modal-report').show();
+
+  var dform = new Date(obj.date_to_be_organized);
+
+  document.getElementById('report_title').innerHTML = "View Report";
+
+  document.getElementById('report_eventtitle').innerHTML = obj.eventtitle;
+  document.getElementById('report_date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('report_region').innerHTML = obj.regionname;
+  document.getElementById('report_town').innerHTML = obj.town;
+  document.getElementById('report_checks').innerHTML = obj.eventtitle;
+  document.getElementById('report_audience_category').innerHTML = obj.audience_category;
+  document.getElementById('report_audience_attendance').innerHTML = obj.expected_audience_attendance;
+  var logistics = obj.logistics;
+  var strlenLogistics = obj.logistics.length;
+  document.getElementById('report_logistics').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  var mode = obj.mode_of_outreach;
+  var strlenMode = obj.mode_of_outreach.length;
+  document.getElementById('report_mode_of_outreach').innerHTML = mode.substring(0, strlenMode - 1);
 
 
+  var dateVerfied = new Date(obj.verified_timestamp);
+  var dateApproved = new Date(obj.approved_timestamp);
 
+
+  if ((obj.verified_timestamp == "") && (obj.approved_timestamp == "")) {
+    document.getElementById('report_checks').innerHTML = "This event has not yet been verified nor approved.";
+  }
+  if ((obj.verified_timestamp != "") && (obj.approved_timestamp == "")) {
+    document.getElementById('report_checks').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if ((obj.verified_timestamp != "") && (obj.approved_timestamp != "")) {
+    document.getElementById('report_checks').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + " and approved on: " + moment(dateApproved).format('D MMMM Y');
+  }
+
+
+  document.getElementById('report_observations').value = obj.event_summary;
+  document.getElementById('report_challenges').value = obj.team_challenges;
+  document.getElementById('report_complaints').value = obj.complaints_raised;
+  //document.getElementById('report_audience_category').value = obj.audience_category;
+  document.getElementById('report_members').value = obj.team_members;
+
+
+  $('#addbuttonreport').hide();
+  //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");//<button class='uk-button uk-button-secondary' type='button' onclick='#'>Edit Report</button>");
+}
 
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-
 
 
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
@@ -1691,7 +1802,6 @@ function verifier(id, verifyCheck, approveCheck){
 function _level2cancel(){
   window.location.href="level2H.html";
 }
-
 
 function level2View(val) {
   console.log('modal to edit: ', val);
@@ -1892,9 +2002,6 @@ function level2ReportViewComplete(xhr, status) {
   document.getElementById('report_photos').innerHTML = picValues;
   
 }
-
-
-
 
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
@@ -2116,16 +2223,11 @@ function approveEvent(){
           $('#commentsForApproval').val("");
 }
 
-
-
-
-
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-
 
 function eventviewer(val) {
   // console.log('modal to edit: ', val);
