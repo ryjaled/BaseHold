@@ -1616,7 +1616,9 @@ function loadEventReport(xhr, status){
   //$('#report_audience_category').val("");
   $('#report_members').val("");
 
-  $('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button> <button class='uk-button uk-button-secondary' type='button' onclick='addNewReport()>Add Report</button>");
+  $('#addbuttonreport').show();
+
+  //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button> <button class='uk-button uk-button-secondary' type='button' onclick='addNewReport()>Add Report</button>");
 
 }
 
@@ -1687,7 +1689,7 @@ function addNewReportComplete(xhr,status){
   $('#input-id').val("");
   $('#report_members').val("");
 
-  alert(global1);
+  global1();
 
   $.notify({
     icon: "info_outline",
@@ -1720,7 +1722,7 @@ function loadViewEventReport(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
   event.preventDefault();
-  console.log(obj);
+  //console.log(obj);
 
   UIkit.modal('#modal-report').show();
 
@@ -1765,8 +1767,9 @@ function loadViewEventReport(xhr, status) {
   //document.getElementById('report_audience_category').value = obj.audience_category;
   document.getElementById('report_members').value = obj.team_members;
 
-  $('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");//<button class='uk-button uk-button-secondary' type='button' onclick='#'>Edit Report</button>");
- //document.getElementById('complaints_raised2').innerHTML = obj[0].approved_timestamp;
+
+  $('#addbuttonreport').hide();
+  //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");//<button class='uk-button uk-button-secondary' type='button' onclick='#'>Edit Report</button>");
 }
 
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
