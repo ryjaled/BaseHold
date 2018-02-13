@@ -62,6 +62,16 @@
 			return $this->query($strQuery);
 		}
 
+		function deleteReport($reportid){
+			$strQuery="delete from reports where report_id='$reportid' ";
+			return $this->query($strQuery);
+		}
+
+		function deleteReportwithEventid($eventid){
+			$strQuery="delete from reports where event_id='$eventid' ";
+			return $this->query($strQuery);
+		}
+
 		function editEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid){
 
 			$strQuery="update events set

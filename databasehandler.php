@@ -102,6 +102,9 @@
 		case 31:
 			getAnEventwithReportinfo();
 			break;
+		case 32:
+			deleteReport();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -260,7 +263,7 @@
 		
 		$verify=$event->addNewEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter);
 
-		$log->addEventLog($eventtitle,$reporter,"added a Future event", $region);
+		$log->addEventLog($eventtitle,$reporter,"added a future event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -1032,7 +1035,7 @@
 		
 		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
 
-		$log->addEventLog($eventtitle,$reporter,"edited a Future event", $region);
+		$log->addEventLog($eventtitle,$reporter,"edited a future event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -1050,6 +1053,10 @@
 		$log = new logs();
 		$myArray = array();
 
+		$eventtitle = '';
+		$reporter= '';
+		$region = '';
+
 		$eventid=$_REQUEST['eventid'];
 		$challenges=$_REQUEST['challenges'];
 		$complaints=$_REQUEST['complaints'];
@@ -1060,14 +1067,20 @@
 		
 		$verify=$event->addNewReport($eventid,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers);
 
-		$log->addReportLog($eventid,$reporter,"Added a new report for:", $region);
-
 		$myArray = explode(',', $teammembers);
 		for ($i=0; $i < count($myArray); $i++) { 
 			$verifyadd=$event->addTeamMembers($eventid,$myArray[$i]);
 		}
 
-		//$log->addEventLog($eventtitle,$reporter,"added a Report", $region);
+		$result=$event->getAnEvent($eventid);
+		while($row = $event->fetch()){
+			$eventtitle = $row['eventtitle'];
+			$reporter= $row['creator'];
+			$region = $row['region'];
+		}
+
+		$log->addReportLog($eventtitle,$reporter,"added a new report for: ", $region);
+
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
@@ -1125,9 +1138,37 @@
 					$data['team_members'] = $row['team_members'];
 					//array_push($moredata,$data);
 
-				 }
+				}
 
  				echo json_encode($data);
+	}
+
+	function deleteReport(){
+		include("events.php");
+
+		$event = new events();
+
+		if(isset($_REQUEST['eventid'])){
+			$eventid=$_REQUEST['eventid'];
+			$verify=$event->deleteReportwithEventid($eventid);
+			$verify=$event->addNewReportEventUpdate($eventid,0);
+		}elseif (isset($_REQUEST['reportid'])) {
+			$reportid=$_REQUEST['reportid'];
+			$verify=$event->getAReport($reportid);
+			while($row = $event->fetch()){
+				$eventid = $row['event_id'];
+			}	
+			$verify=$event->deleteReport($reportid);
+			$verify=$event->addNewReportEventUpdate($eventid,0);
+		}
+
+		if($verify==""){
+			echo '{"result":0,"message":"Report not deleted"}';
+		}
+		else{
+			echo '{"result":1,"message":"Report deleted"}';
+
+		}
 	}
 
 ?>
