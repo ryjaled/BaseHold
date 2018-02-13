@@ -18,13 +18,15 @@ $requestData= $_REQUEST;
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'firstname',
-	1 => 'date'
+	// 0 => 'action',
+	0 => 'action',
+	1 => 'firstname',
+	2 => 'date'
 );
 
 // getting total number records without any search
 $sql = "select u.action, u.date, e.firstname as addedfname, e.lastname as addedlname, f.firstname as addedonfname, f.lastname as addedonlname, r.regionname as region from userlogs as u inner join users as e on e.userid = u.acted_id inner join users as f on f.userid = u.acted_on_id inner join region as r on r.region_id = f.region";
-$query=mysqli_query($conn, $sql) or die("eventloglist.php: get information0");
+$query=mysqli_query($conn, $sql) or die("userlogslist.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
@@ -36,19 +38,34 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
 	$sql.=" or f.lastname LIKE '".$requestData['search']['value']."%'";
 	$sql.=" or r.regionname LIKE '".$requestData['search']['value']."%' )";
 }
-$query=mysqli_query($conn, $sql) or die("eventloglist.php: get information1");
+$query=mysqli_query($conn, $sql) or die("userlogslist.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
 $sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir']." LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 /* $requestData['order'][0]['column'] contains column index, $requestData['order'][0]['dir'] contains order such as asc/desc  */
-$query=mysqli_query($conn, $sql) or die("eventloglist.php: get information2");
+$query=mysqli_query($conn, $sql) or die("userlogslist.php: get information2");
 
 $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
 	$enddate = date('jS F Y', strtotime($row['date']));
-	$nestedData[] = $row['addedfname'].' '.$row['addedlname'].' '.$row['action'].' '.$row['addedonfname'].' '.$row['addedonlname'].' in '.$row['region']. ' Region';
-	$nestedData[] = $enddate;
+	// $nestedData[] = "<i class='fa fa-calendar-plus-o fa-lg'></i>";	
+
+	if ((strpos($row['action'], 'added') !== false)){
+		$nestedData[] = "<i style='padding: 20px; color: green'   class='fa fa-plus fa-lg'></i>";	
+		$nestedData[] = $row['addedfname'].' '.$row['addedlname'].' '.$row['action'].' '.$row['addedonfname'].' '.$row['addedonlname'].' in '.$row['region']. ' Region';
+		$nestedData[] = $enddate;
+	}
+	else if ((strpos($row['action'], 'deactivated') !== false)){
+		$nestedData[] = "<i style='padding: 20px; color: red'  class='fa fa-ban fa-lg'></i>";	
+		$nestedData[] = $row['addedfname'].' '.$row['addedlname'].' '.$row['action'].' '.$row['addedonfname'].' '.$row['addedonlname'].' in '.$row['region']. ' Region';
+		$nestedData[] = $enddate;
+	}else{
+		$nestedData[] = "<i style='padding: 20px;color:green' class='fa fa-circle fa-lg' color: 'green'></i>";	
+		$nestedData[] = $row['addedfname'].' '.$row['addedlname'].' '.$row['action'].' '.$row['addedonfname'].' '.$row['addedonlname'].' in '.$row['region']. ' Region';
+		$nestedData[] = $enddate;
+	}
+
 
 	$data[] = $nestedData;
 }
