@@ -221,12 +221,13 @@ $().ready(function () {
   var dataTable5 = $('#eventlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '70%' },
-      { "targets": 1, width: '30%' },
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
-    "order": [[1, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -243,12 +244,14 @@ $().ready(function () {
   var dataTable6 = $('#userlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '70%' },
-      { "targets": 1, width: '30%' },
+      // { "targets": 0, width: '10%' },
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
-    "order": [[1, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -1706,6 +1709,115 @@ function addNewReportComplete(xhr,status){
 
 }
 
+function level1ReportView(val) {
+  console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
+  //sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level1ReportViewComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level1ReportViewComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  sessionStorage.pullreportid = obj.report_id;
+  sessionStorage.pullverified = obj.is_verified;
+  sessionStorage.pullapproved = obj.reportapprove;
+  reportHelp();
+
+  console.log("object", obj);
+
+  UIkit.modal('#modal-overflow-2-report').show();
+
+  document.getElementById('report_eventtitles').innerHTML = obj.eventtitle;
+  document.getElementById('report_date_organizeds').innerHTML = moment(obj.date_to_be_organized).format('D MMMM Y');
+  document.getElementById('report_regions').innerHTML = obj.regionname;
+  document.getElementById('report_towns').innerHTML = obj.town;
+  document.getElementById('report_audience_categorys').innerHTML = obj.audience_category;
+  document.getElementById('report_audience_attendances').innerHTML = obj.expected_audience_attendance;
+  var logistics = obj.logistics;
+  var strlenLogistics = obj.logistics.length;
+  document.getElementById('report_team_challengess').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  var mode = obj.mode_of_outreach;
+  var strlenMode = obj.mode_of_outreach.length;
+  document.getElementById('report_complaints_raiseds').innerHTML = mode.substring(0, strlenMode - 1);
+
+  var dateVerfied = new Date(obj.verified_timestamp);
+  var dateApproved = new Date(obj.approved_timestamp);
+
+
+  if ((obj.verified_timestamp == "") && (obj.approved_timestamp == "")) {
+    document.getElementById('report_event_summary').innerHTML = "This event has not yet been verified nor approved.";
+  }
+  if ((obj.verified_timestamp != "") && (obj.approved_timestamp == "")) {
+    document.getElementById('report_event_summary').innerHTML = "This event has been previously verified on: " + moment(obj.verified_timestamp).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if ((obj.verified_timestamp != "") && (obj.approved_timestamp != "")) {
+    document.getElementById('report_event_summary').innerHTML = "This event has been previously verified on: " + moment(obj.verified_timestamp).format('D MMMM Y') + " and approved on: " + moment(obj.approved_timestamp).format('D MMMM Y');
+  }
+  if ((obj.reportverifiedtimestamp != "")) {
+    document.getElementById('report_event_summary_2').innerHTML = "This report was approved on: " + moment(obj.reportverifiedtimestamp).format('D MMMM Y');
+  }
+  if ((obj.reportverifiedtimestamp == "")) {
+    document.getElementById('report_event_summary_2').innerHTML = "This report has not been approved.";
+  }
+
+  document.getElementById('report_1s').innerHTML = obj.event_summary;
+  // console.log("as");
+  console.log(obj.event_summary);
+  document.getElementById('report_2s').innerHTML = obj.complaints_raised;
+  console.log(obj.eventcomplaints_raised_summary);
+  document.getElementById('report_3s').innerHTML = moment(obj.date_reported).format('D MMMM Y');
+  console.log(obj.date_reported);
+  document.getElementById('report_4s').innerHTML = obj.team_challenges;
+  console.log(obj.team_challenges);
+
+
+
+  var picValues = "";
+  $('#report_photoss').html("");
+
+  picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
+
+  var jsonarray = JSON.parse(obj.picture_paths);
+  for (var i = 0; i < jsonarray.length; i++) {
+    var obj2 = jsonarray[i];
+
+    //obj2 contains picture names.
+    // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
+
+    var user_id = "" + obj.creator;
+    var event_header = "" + obj.event_id;
+    var picture_header = "" + obj2;
+
+    var fold_header = obj.folder_paths;
+    //alert(fold_header);
+
+
+    picValues = picValues + "<div>";
+    picValues = picValues + "<a onclick='#' class='uk-inline' href='uploads/" + fold_header + "/" + picture_header + "' caption='Outreach Photo'>";
+    picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/" + fold_header + "/" + picture_header + "'>";
+    picValues = picValues + "</a>";
+    picValues = picValues + "</div>";
+
+
+  }
+
+  picValues = picValues + "</div>";
+
+  //$('#report_photos').html();
+  document.getElementById('report_photoss').innerHTML = picValues;
+
+}
+
+//for report editing
 function viewReportModal(val) {
 
   var theUrl = "databasehandler.php?cmd=31&eventid=" + val;

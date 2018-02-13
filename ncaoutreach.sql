@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 12, 2018 at 05:04 PM
+-- Generation Time: Feb 13, 2018 at 11:04 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -179,23 +179,11 @@ INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `dat
 (26, 'sd', 5, 'added a Future event', '2018-02-09 12:14:25', 3),
 (27, 'ds', 5, 'added a Future event', '2018-02-09 12:19:39', 2),
 (28, 'test1', 5, 'edited a Future event', '2018-02-12 09:27:09', 2),
-(29, '', 0, 'has verified an event: ', '2018-02-12 15:23:07', 0),
-(30, '', 0, 'has verified an event: ', '2018-02-12 15:27:41', 0),
-(31, '', 0, 'has verified an event: ', '2018-02-12 15:27:45', 0),
-(32, '', 0, 'has verified an event: ', '2018-02-12 15:27:53', 0),
-(33, '', 0, 'has verified an event: ', '2018-02-12 15:27:55', 0),
-(34, '', 0, 'has verified an event: ', '2018-02-12 15:28:17', 0),
-(35, '', 0, 'has verified an event: ', '2018-02-12 15:28:24', 0),
-(36, '', 0, 'has verified an event: ', '2018-02-12 15:28:37', 0),
-(37, '', 0, 'has approved an event: ', '2018-02-12 15:37:38', 0),
-(38, '', 0, 'has approved an event: ', '2018-02-12 15:38:44', 0),
-(39, '', 0, 'has approved a report: ', '2018-02-12 15:45:46', 0),
-(40, '', 0, 'has approved a report: ', '2018-02-12 15:47:34', 0),
-(41, '', 0, 'has approved a report: ', '2018-02-12 15:47:37', 0),
-(42, '', 0, 'has approved a report: ', '2018-02-12 15:47:54', 0),
-(43, '', 0, 'has approved a report: ', '2018-02-12 15:51:24', 0),
-(44, '', 0, 'has approved a report: ', '2018-02-12 15:52:21', 0),
-(45, '', 0, 'has approved a report: ', '2018-02-12 15:55:03', 0);
+(48, 'test1', 5, 'has verified an event: ', '2018-02-12 16:36:08', 2),
+(49, 'test1', 5, 'has approved an event: ', '2018-02-12 16:36:18', 2),
+(52, 'sd', 5, 'has approved a report: ', '2018-02-12 16:41:15', 2),
+(53, 'testtt', 5, 'Added a new report for ', '2018-02-13 09:28:31', 2),
+(54, 'test1', 5, 'edited a Future event', '2018-02-13 09:29:14', 4);
 
 -- --------------------------------------------------------
 
@@ -238,10 +226,10 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `verification_comments`, `approved_comments`, `creator`, `verified_timestamp`, `approved_timestamp`, `is_reported`) VALUES
-(27, 'test1', 'testttt', '2018-02-17 00:00:00', '2', 'dfsdf', 'Pen(s),T-shirt(s),', 'Road Show,', 'Religious Bodies', '34', 0, 0, 'verificationTouched', '', 5, '2018-02-12 16:27:55', '2018-02-08 16:25:09', 0),
-(28, 'testtt', 'Topic ', '2018-02-22 00:00:00', '2', 'rt', 'Pen(s),Mug(s),', 'Durbar,', 'Communities', '67', 1, 1, 'Done bro', 'G=woah', 5, '2018-02-12 16:28:17', '2018-02-12 16:38:44', 0),
-(29, 'OH EBONY', 'GONE TOO SOON', '2018-02-09 00:00:00', '2', 'OH', 'Sound System(s),Towel(s),Notepad(s),', 'One-on-one,', 'Others', '32', 1, 1, 'doneeeeeeeeee', 'TodayS', 5, '2018-02-12 16:28:37', '2018-02-12 16:37:38', 0),
-(30, 'sd', 'sdd', '2018-02-21 00:00:00', '2', 'sad', 'Pen(s),Mug(s),', 'Road Show,Small group meeting,', 'Corporate', '12', 1, 1, 'verificationTouched', '', 5, '2018-02-09 14:27:12', '2018-02-09 15:55:57', 1),
+(27, 'test1', 'testttt', '2018-02-18 00:00:00', '4', 'dfsdf', 'Mug(s),', 'Durbar,', 'Communities', '34', 0, 0, 'trial', 'trial2', 5, '', '', 0),
+(28, 'testtt', 'Topic ', '2018-02-22 00:00:00', '2', 'rt', 'Pen(s),Mug(s),', 'Durbar,', 'Communities', '67', 1, 1, 'ghgggg', 'oyayy', 5, '2018-02-12 17:32:47', '2018-02-12 17:32:58', 0),
+(29, 'OH EBONY', 'GONE TOO SOON', '2018-02-09 00:00:00', '2', 'OH', 'Sound System(s),Towel(s),Notepad(s),', 'One-on-one,', 'Others', '32', 0, 0, 'doneeeeeeeeee', 'TodayS', 5, '', '', 0),
+(30, 'sd', 'sdd', '2018-02-21 00:00:00', '2', 'sad', 'Pen(s),Mug(s),', 'Road Show,Small group meeting,', 'Corporate', '12', 1, 1, 'verificationTouched', '', 5, '2018-02-09 14:27:12', '2018-02-09 15:55:57', 0),
 (31, 'sdsd', 'dsf', '2018-02-23 00:00:00', '3', '2', 'T-shirt(s),', 'One-on-one,Road Show,', 'Artisans', '2', 1, 1, 'verificationTouched', '', 5, '2018-02-09 16:30:05', '2018-02-09 16:30:11', 0);
 
 -- --------------------------------------------------------
@@ -336,7 +324,9 @@ INSERT INTO `reportmembers` (`report_members_id`, `event_id`, `role`, `name`) VA
 (27, 30, '', 'we'),
 (28, 30, '', 'fd'),
 (29, 30, '', 's'),
-(30, 31, '', 'gs');
+(30, 31, '', 'gs'),
+(31, 28, '', 'dd'),
+(32, 28, '', 'ddf');
 
 -- --------------------------------------------------------
 
@@ -367,15 +357,6 @@ CREATE TABLE `reports` (
 --   `event_id`
 --       `events` -> `event_id`
 --
-
---
--- Dumping data for table `reports`
---
-
-INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `event_summary`, `picture_paths`, `folder_paths`, `team_members`, `date_reported`, `verified_timestamp`) VALUES
-(125, 27, 'f', 'f', 1, '', 's', '[\"1920x1080-px-album-covers-Kaptan-H-Davran-Trap-Nation-trapandemi-1227046-wallhere.com.jpg\"]', '5_27', 'df', '2018-02-08 11:56:09', '2018-02-12 16:52:21'),
-(126, 28, 'noneee', 'nonee', 1, 'Trial', 'nonee', '[\"1.jpg\",\"3.jpg\"]', '5_28', 'Brian,Osman', '2018-02-08 13:05:34', '2018-02-12 17:03:32'),
-(128, 30, 'dfdfdf', 'dfdfdf', 1, 'yippie', 'dfdfd', '[\"9uRzYv4.jpg\"]', '5_30', 'we,fd,s', '2018-02-12 10:28:07', '2018-02-12 17:03:38');
 
 -- --------------------------------------------------------
 

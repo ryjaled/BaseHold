@@ -18,8 +18,10 @@ $requestData= $_REQUEST;
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'firstname',
-	1 => 'date'
+	0 => 'action',
+	1 => 'firstname',
+	2 => 'date'
+	
 );
 
 // getting total number records without any search
@@ -45,8 +47,40 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
 
 	$enddate = date('jS F Y', strtotime($row['date']));
-	$nestedData[] = $row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region';
-	$nestedData[] = $enddate;
+	// strpos($row['action'], 'event') !== false
+
+	if ((strpos($row['action'], 'added') !== false) && (strpos($row['action'], 'event') !== false)){
+		$nestedData[] = "<i style='padding: 20px;color: black' ' class='fa fa-calendar-plus-o fa-lg'></i>";	
+		$nestedData[] = "<p style='padding-top: 14px;'>".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";	
+		$nestedData[] = $enddate;
+	}
+	else if ((strpos($row['action'], 'edited') !== false) && (strpos($row['action'], 'event') !== false)){
+		$nestedData[] = "<i style='padding: 20px;color: orange' '  class='fa fa-pencil-square-o fa-lg'></i>";	
+		$nestedData[] = "<p style='padding-top: 14px;'>".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";	
+		$nestedData[] = $enddate;
+	}
+	else if ((strpos($row['action'], 'verified') !== false) && (strpos($row['action'], 'event') !== false)){
+		$nestedData[] = "<i style='padding: 20px;color: green' '  class='fa fa-check-circle-o fa-lg'></i>";	
+		$nestedData[] = "<p style='padding-top: 14px;'>".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";	
+		$nestedData[] = $enddate;
+	}
+	else if ((strpos($row['action'], 'approved') !== false) && (strpos($row['action'], 'event') !== false)){
+		$nestedData[] = "<i style='padding: 20px;color: green' '  class='fa fa-check fa-lg'></i>";	
+		$nestedData[] = "<p style='padding-top: 14px;'>".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";	
+		$nestedData[] = $enddate;
+	}
+	else if ((strpos($row['action'], 'approved') !== false) && (strpos($row['action'], 'report') !== false)){
+		$nestedData[] = "<i style='padding: 20px;color: green' '  class='fa fa-thumbs-o-up fa-lg'></i>";	
+		$nestedData[] = "<p style='padding-top: 14px;'>".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";	
+		$nestedData[] = $enddate;
+	}else{
+		$nestedData[] = "<i style='padding: 20px;color: blue'  class='fa fa-calendar-plus-o fa-lg'></i>";	
+		$nestedData[] = "<p style='padding-top: 14px;'>".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";	
+		$nestedData[] = $enddate;
+	}
+
+	// $nestedData[] = "<p>X".$row['fname'].' '.$row['lname'].' '.$row['action'].': '.$row['event_title'].' in '.$row['regionname'].' Region'."</p>";
+	
 
 	$data[] = $nestedData;
 }
