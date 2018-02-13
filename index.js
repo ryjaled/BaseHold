@@ -1752,7 +1752,6 @@ function level1ReportViewComplete(xhr, status) {
   var dateVerfied = new Date(obj.verified_timestamp);
   var dateApproved = new Date(obj.approved_timestamp);
 
-
   if ((obj.verified_timestamp == "") && (obj.approved_timestamp == "")) {
     document.getElementById('report_event_summary').innerHTML = "This event has not yet been verified nor approved.";
   }
@@ -1807,14 +1806,23 @@ function level1ReportViewComplete(xhr, status) {
     picValues = picValues + "</a>";
     picValues = picValues + "</div>";
 
+    
+    
 
   }
 
+
   picValues = picValues + "</div>";
 
-  //$('#report_photos').html();
+  
   document.getElementById('report_photoss').innerHTML = picValues;
 
+  if(obj.report_approve == 0){
+    $('#reportformdivbuttons').html("<button onclick='deleteReport(" + obj.report_id + ")' class='uk-button uk-button-danger uk-modal-close' type='button''>Delete Report</button><span> </span><button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }else {
+    $('#reportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  
 }
 
 //for report editing
