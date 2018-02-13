@@ -561,126 +561,126 @@
 
 <!-- ////////////////MODAL OVERFLOW REPORT//////////////// -->
      <!-- UI kit modal -->
-         <div id="modal-report" class="uk-modal-container" uk-modal>
-            <div class="uk-modal-dialog">
-    
-                <button class="uk-modal-close-default" type="button" uk-close></button>
-    
-                <div class="uk-modal-header">
-                    <h2 class="uk-modal-title" id="report_title">Create Report</h2>
-                </div>
-    
-                <div class="uk-modal-body" uk-overflow-auto>
-    
-                <article class="uk-comment">
-                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                    <div class="uk-width-auto">
-                        <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                        <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
-                    </div>
-                    <div class="uk-width-expand">
-                        <h4 class="uk-comment-title uk-margin-remove"><a id="report_eventtitle" class="uk-link-reset" href="#"></a></h4>
-                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                            <li><a href="#" id="report_date_organized"></a></li>
-                        </ul>
-                    </div>
-                    </header>
-    
-                    <div class="row">
-                    <dl class="uk-description-list">
-                        <div class="col-sm-6">
-                        <dt>REGION</dt>
-                        <dd id="report_region"></dd>
-                        </div>
-                        <div class="col-sm-6">
-                        <dt>TOWN</dt>
-                        <dd id="report_town"></dd>
-                        </div>
-                        </dl>
-                    </div>
-    
-                    <br/>
-    
-                    <div class="uk-comment-body">
-                    <dt>CHECKS</dt>
-                    <dd id="report_checks"></dd>
-                    </div>
-    
-                    <center><hr class="uk-divider-small" style="margin:5%;"></center>
-    
-                    <div class="row">
-                    <dl class="uk-description-list">
-                        <div class="col-sm-6">
-                        <dt>AUDIENCE CATEGORY</dt>
-                        <dd id="report_audience_category"></dd>
-                        </div>
-                        <div class="col-sm-6">
-                        <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                        <dd id="report_audience_attendance"></dd>
-                        </div>
-                        </dl>
-                    </div>
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                    <dt>MODE OF OUTREACH</dt>
-                    <dd id="report_mode_of_outreach"></dd>
-                    </div>
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                    <dt>LOGISTICS</dt>
-                    <dd id="report_logistics"></dd>
+    <div id="modal-report" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog">
 
-                    <hr/>
-                    
-                    <dt>OBSERVATIONS</dt>
-                    <div class="uk-margin">
-                        <textarea id="report_observations" class="uk-textarea" rows="5" placeholder="Please typing in the team observations here.."></textarea>
-                    </div>
+            <button class="uk-modal-close-default" type="button" uk-close></button>
 
-                    <dt>TEAM CHALLENGES</dt>
-                    <div class="uk-margin">
-                        <textarea id="report_challenges" class="uk-textarea" rows="5" placeholder="Please typing in the team challenges here.."></textarea>
-                    </div>
-
-                    <dt>CONSUMER COMPLAINTS</dt>
-                    <div class="uk-margin">
-                        <textarea id="report_complaints"class="uk-textarea" rows="5" placeholder="Please typing in the consumer complaints here.."></textarea>
-                    </div>
-
-
-                    <br/>
-                    <div>
-                        <input id="input-id" type="file" name="files[]" class="file" multiple>
-                    </div>
-
-                    <br/>
-                    <dt>PARTICIPATING TEAM MEMBERS ON OUTREACH</dt>
-                    <small>Please add a comma ( , ) after each team member</small>
-                    <br/>
-                    <small>E.g. Kwadwo Obeng, Esther Addo, John Ativor, Mustapha Inusah</small>
-                    <div class="uk-margin">
-                        <textarea id="report_members" class="uk-textarea" rows="5" placeholder="Please type in team members that took part in this outreach here.."></textarea>
-                    </div>
-
-
-
-                    </div>
-                    </div>
-
-                    </article>
-                    
-                    <div class="uk-modal-footer uk-text-right" id="reportverifyformdiv">
-                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                        <button id="addbuttonreport" class="uk-button uk-button-secondary" type="button" onclick="addNewReport()">Add Report</button>
-                    </div>
-
-    
-                </div>
-    
-                
-    
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title" id="report_title">Create Report</h2>
             </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+
+            <article class="uk-comment">
+                <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                    <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                    <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                </div>
+                <div class="uk-width-expand">
+                    <h4 class="uk-comment-title uk-margin-remove"><a id="report_eventtitle" class="uk-link-reset" href="#"></a></h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li><a href="#" id="report_date_organized"></a></li>
+                    </ul>
+                </div>
+                </header>
+
+                <div class="row">
+                <dl class="uk-description-list">
+                    <div class="col-sm-6">
+                    <dt>REGION</dt>
+                    <dd id="report_region"></dd>
+                    </div>
+                    <div class="col-sm-6">
+                    <dt>TOWN</dt>
+                    <dd id="report_town"></dd>
+                    </div>
+                    </dl>
+                </div>
+
+                <br/>
+
+                <div class="uk-comment-body">
+                <dt>CHECKS</dt>
+                <dd id="report_checks"></dd>
+                </div>
+
+                <center><hr class="uk-divider-small" style="margin:5%;"></center>
+
+                <div class="row">
+                <dl class="uk-description-list">
+                    <div class="col-sm-6">
+                    <dt>AUDIENCE CATEGORY</dt>
+                    <dd id="report_audience_category"></dd>
+                    </div>
+                    <div class="col-sm-6">
+                    <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                    <dd id="report_audience_attendance"></dd>
+                    </div>
+                    </dl>
+                </div>
+
+                <div class="uk-comment-body" style="margin-top: 20px">
+                <dt>MODE OF OUTREACH</dt>
+                <dd id="report_mode_of_outreach"></dd>
+                </div>
+
+                <div class="uk-comment-body" style="margin-top: 20px">
+                <dt>LOGISTICS</dt>
+                <dd id="report_logistics"></dd>
+
+                <hr/>
+                
+                <dt>OBSERVATIONS</dt>
+                <div class="uk-margin">
+                    <textarea id="report_observations" class="uk-textarea" rows="5" placeholder="Please typing in the team observations here.."></textarea>
+                </div>
+
+                <dt>TEAM CHALLENGES</dt>
+                <div class="uk-margin">
+                    <textarea id="report_challenges" class="uk-textarea" rows="5" placeholder="Please typing in the team challenges here.."></textarea>
+                </div>
+
+                <dt>CONSUMER COMPLAINTS</dt>
+                <div class="uk-margin">
+                    <textarea id="report_complaints"class="uk-textarea" rows="5" placeholder="Please typing in the consumer complaints here.."></textarea>
+                </div>
+
+
+                <br/>
+                <div>
+                    <input id="input-id" type="file" name="files[]" class="file" multiple>
+                </div>
+
+                <br/>
+                <dt>PARTICIPATING TEAM MEMBERS ON OUTREACH</dt>
+                <small>Please add a comma ( , ) after each team member</small>
+                <br/>
+                <small>E.g. Kwadwo Obeng, Esther Addo, John Ativor, Mustapha Inusah</small>
+                <div class="uk-margin">
+                    <textarea id="report_members" class="uk-textarea" rows="5" placeholder="Please type in team members that took part in this outreach here.."></textarea>
+                </div>
+
+
+
+                </div>
+                </div>
+
+                </article>
+                
+                <div class="uk-modal-footer uk-text-right" id="reportverifyformdiv">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button id="addbuttonreport" class="uk-button uk-button-secondary" type="button" onclick="addNewReport()">Add Report</button>
+                </div>
+
+
+            </div>
+
+            
+
         </div>
+    </div>
 
 
 <!-- ////////////////MODAL OVERFLOW EDIT//////////////// -->
@@ -946,11 +946,11 @@
                         </div>
                         <div class="uk-width-expand">
                             <h4 class="uk-comment-title uk-margin-remove">
-                                <a id="report_eventtitle" class="uk-link-reset" href="#">Author: Admin1</a>
+                                <a id="report_eventtitles" class="uk-link-reset" href="#"></a>
                             </h4>
                             <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
                                 <li>
-                                    <a href="#" id="report_date_organized">23 January 2018</a>
+                                    <a href="#" id="report_date_organizeds"></a>
                                 </li>
                             </ul>
                         </div>
@@ -960,11 +960,11 @@
                         <dl class="uk-description-list">
                             <div class="col-sm-6">
                                 <dt>REGION</dt>
-                                <dd id="report_region"></dd>
+                                <dd id="report_regions"></dd>
                             </div>
                             <div class="col-sm-6">
                                 <dt>TOWN</dt>
-                                <dd id="report_town"></dd>
+                                <dd id="report_towns"></dd>
                             </div>
                         </dl>
                     </div>
@@ -985,43 +985,43 @@
                         <dl class="uk-description-list">
                             <div class="col-sm-6">
                                 <dt>AUDIENCE CATEGORY</dt>
-                                <dd id="report_audience_category"></dd>
+                                <dd id="report_audience_categorys"></dd>
                             </div>
                             <div class="col-sm-6">
                                 <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                                <dd id="report_audience_attendance"></dd>
+                                <dd id="report_audience_attendances"></dd>
                             </div>
                         </dl>
                     </div>
     
                     <div class="uk-comment-body" style="margin-top: 20px">
                         <dt>LOGISTICS UTILIZED</dt>
-                        <dd id="report_team_challenges"></dd>
+                        <dd id="report_team_challengess"></dd>
                     </div>
     
                     <div class="uk-comment-body" style="margin-top: 20px">
                         <dt>MODE OF COMMUNICATION USED</dt>
-                        <dd id="report_complaints_raised"></dd>
+                        <dd id="report_complaints_raiseds"></dd>
     
                         <dt>TEAM OBSERVATIONS</dt>
-                        <dd id="report_1"></dd>
+                        <dd id="report_1s"></dd>
     
                         <dt>CONSUMER CHALLENGES</dt>
-                        <dd id="report_2"></dd>
+                        <dd id="report_2s"></dd>
     
     
                         <dt>TEAM CHALLENGES</dt>
-                        <dd id="report_4"></dd>
+                        <dd id="report_4s"></dd>
     
                         <div style="margin: 20px 0px">
                             <b>
                                 <small>REPORT CREATED ON:</small>
-                                <small id="report_3"></small>
+                                <small id="report_3s"></small>
                             </b>
                         </div>
     
                         <dt>PHOTOS:</dt>
-                        <div id="report_photos"></div>
+                        <div id="report_photoss"></div>
     
                     </div>
             </div>

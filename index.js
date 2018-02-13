@@ -1730,25 +1730,21 @@ function level1ReportViewComplete(xhr, status) {
 
   console.log("object", obj);
 
-  // var dateOrganized = new Date(obj[0].date_to_be_organized);
-
-  // console.log("HERExx", dateOrganized);
-
   UIkit.modal('#modal-overflow-2-report').show();
 
-  document.getElementById('report_eventtitle').innerHTML = obj.eventtitle;
-  document.getElementById('report_date_organized').innerHTML = moment(obj.date_to_be_organized).format('D MMMM Y');
-  document.getElementById('report_region').innerHTML = obj.regionname;
-  document.getElementById('report_town').innerHTML = obj.town;
-  document.getElementById('report_audience_category').innerHTML = obj.audience_category;
-  document.getElementById('report_audience_attendance').innerHTML = obj.expected_audience_attendance;
+  document.getElementById('report_eventtitles').innerHTML = obj.eventtitle;
+  document.getElementById('report_date_organizeds').innerHTML = moment(obj.date_to_be_organized).format('D MMMM Y');
+  document.getElementById('report_regions').innerHTML = obj.regionname;
+  document.getElementById('report_towns').innerHTML = obj.town;
+  document.getElementById('report_audience_categorys').innerHTML = obj.audience_category;
+  document.getElementById('report_audience_attendances').innerHTML = obj.expected_audience_attendance;
   var logistics = obj.logistics;
   var strlenLogistics = obj.logistics.length;
-  document.getElementById('report_team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
+  document.getElementById('report_team_challengess').innerHTML = logistics.substring(0, strlenLogistics - 1);
 
   var mode = obj.mode_of_outreach;
   var strlenMode = obj.mode_of_outreach.length;
-  document.getElementById('report_complaints_raised').innerHTML = mode.substring(0, strlenMode - 1);
+  document.getElementById('report_complaints_raiseds').innerHTML = mode.substring(0, strlenMode - 1);
 
   var dateVerfied = new Date(obj.verified_timestamp);
   var dateApproved = new Date(obj.approved_timestamp);
@@ -1770,20 +1766,20 @@ function level1ReportViewComplete(xhr, status) {
     document.getElementById('report_event_summary_2').innerHTML = "This report has not been approved.";
   }
 
-  document.getElementById('report_1').innerHTML = obj.event_summary;
-  console.log("as");
+  document.getElementById('report_1s').innerHTML = obj.event_summary;
+  // console.log("as");
   console.log(obj.event_summary);
-  document.getElementById('report_2').innerHTML = obj.complaints_raised;
+  document.getElementById('report_2s').innerHTML = obj.complaints_raised;
   console.log(obj.eventcomplaints_raised_summary);
-  document.getElementById('report_3').innerHTML = moment(obj.date_reported).format('D MMMM Y');
+  document.getElementById('report_3s').innerHTML = moment(obj.date_reported).format('D MMMM Y');
   console.log(obj.date_reported);
-  document.getElementById('report_4').innerHTML = obj.team_challenges;
+  document.getElementById('report_4s').innerHTML = obj.team_challenges;
   console.log(obj.team_challenges);
 
 
 
   var picValues = "";
-  $('#report_photos').html("");
+  $('#report_photoss').html("");
 
   picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
 
@@ -1814,7 +1810,7 @@ function level1ReportViewComplete(xhr, status) {
   picValues = picValues + "</div>";
 
   //$('#report_photos').html();
-  document.getElementById('report_photos').innerHTML = picValues;
+  document.getElementById('report_photoss').innerHTML = picValues;
 
 }
 

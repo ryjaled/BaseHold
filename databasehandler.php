@@ -1137,6 +1137,7 @@
 					$data['folder_paths'] = $row['folder_paths'];
 					$data['team_members'] = $row['team_members'];
 					$data['report_id'] = $row['report_id'];
+					$data['date_reported'] = $row['date_reported'];
 					//array_push($moredata,$data);
 
 				}
