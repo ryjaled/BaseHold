@@ -1136,6 +1136,7 @@
 					$data['picture_paths'] = $row['picture_paths'];
 					$data['folder_paths'] = $row['folder_paths'];
 					$data['team_members'] = $row['team_members'];
+					$data['report_id'] = $row['report_id'];
 					//array_push($moredata,$data);
 
 				}
