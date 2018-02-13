@@ -221,12 +221,13 @@ $().ready(function () {
   var dataTable5 = $('#eventlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '70%' },
-      { "targets": 1, width: '30%' },
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
-    "order": [[1, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -243,12 +244,14 @@ $().ready(function () {
   var dataTable6 = $('#userlogslist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '70%' },
-      { "targets": 1, width: '30%' },
+      // { "targets": 0, width: '10%' },
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
-    "order": [[1, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
