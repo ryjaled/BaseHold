@@ -1140,6 +1140,14 @@
 					$data['date_reported'] = $row['date_reported'];
 					//array_push($moredata,$data);
 
+					$result = $event->getAReport($data['report_id']);
+
+					while($row = $event->fetch()){
+						$success="true";
+						$data['report_approve'] = $row['reportapprove'];
+
+					}
+
 				}
 
  				echo json_encode($data);
