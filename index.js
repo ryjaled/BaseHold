@@ -1892,6 +1892,46 @@ function loadViewEventReport(xhr, status) {
   //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");//<button class='uk-button uk-button-secondary' type='button' onclick='#'>Edit Report</button>");
 }
 
+function deleteReport(val) {
+
+    var theUrl = "databasehandler.php?cmd=32&reportid=" + val;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: deleteReportComplete
+      });
+}
+
+function deleteReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+
+  UIkit.modal('#modal-overflow-2-report').hide();
+
+  // $('#report_observations').val("");
+  // $('#report_challenges').val("");
+  // $('#report_complaints').val("");
+  // $('#input-id').val("");
+  // $('#report_members').val("");
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report deleted successfully."
+
+  }, {
+      type: 'danger',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
