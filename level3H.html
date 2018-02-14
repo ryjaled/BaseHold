@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width" />
         <!-- Bootstrap core CSS     -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link href="assets/css/fresh-bootstrap-table.css" rel="stylesheet" /> -->
         <!--  Material Dashboard CSS    -->
         <link href='assets/css/material-kit.css' rel='stylesheet' />
         <link href="assets/css/material-dashboard.css?v=1.2.1" rel="stylesheet" />
@@ -22,7 +23,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="assets/css/material.min.css">
         <link rel="stylesheet" type="text/css" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
-
 
         <link href='assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 
@@ -129,6 +129,9 @@
                                             </li>
                                             <li>
                                                 <a href="#level3dashboard" data-toggle="tab">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="#level3usersdashboard" data-toggle="tab">User Search</a>
                                             </li>
                                             <li>
                                                 <a href="#changelogs" data-toggle="tab">Change Logs</a>
@@ -288,6 +291,184 @@
                                                 </thead>
 
                                             </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="level3usersdashboard" style=" padding: 3%;">
+                                    
+                                        <h2 style="font-weight: 900;color: #aaa" class="col-sm-12 text-center">Users Events</h2>
+                                    
+                                        <div class="content">
+                                            <div class="fresh-table">
+                                            
+                                                <div class="toolbar">
+                                                    <button id="alertBtn" class="btn btn-default">Alert</button>
+                                                </div>
+                                            
+                                                <table id="fresh-table" class="table">
+                                                    <thead>
+                                                        <th data-field="id">ID</th>
+                                                        <th data-field="name" data-sortable="true">Name</th>
+                                                        <th data-field="salary" data-sortable="true">Salary</th>
+                                                        <th data-field="country" data-sortable="true">Country</th>
+                                                        <th data-field="city">City</th>
+                                                        <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Dakota Rice</td>
+                                                            <td>$36,738</td>
+                                                            <td>Niger</td>
+                                                            <td>Oud-Turnhout</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>Minerva Hooper</td>
+                                                            <td>$23,789</td>
+                                                            <td>Curaçao</td>
+                                                            <td>Sinaai-Waas</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>Sage Rodriguez</td>
+                                                            <td>$56,142</td>
+                                                            <td>Netherlands</td>
+                                                            <td>Baileux</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>Philip Chaney</td>
+                                                            <td>$38,735</td>
+                                                            <td>Korea, South</td>
+                                                            <td>Overland Park</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>Doris Greene</td>
+                                                            <td>$63,542</td>
+                                                            <td>Malawi</td>
+                                                            <td>Feldkirchen in Kärnten</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>6</td>
+                                                            <td>Mason Porter</td>
+                                                            <td>$78,615</td>
+                                                            <td>Chile</td>
+                                                            <td>Gloucester</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>7</td>
+                                                            <td>Alden Chen</td>
+                                                            <td>$63,929</td>
+                                                            <td>Finland</td>
+                                                            <td>Gary</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>8</td>
+                                                            <td>Colton Hodges</td>
+                                                            <td>$93,961</td>
+                                                            <td>Nicaragua</td>
+                                                            <td>Delft</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>9</td>
+                                                            <td>Illana Nelson</td>
+                                                            <td>$56,142</td>
+                                                            <td>Heard Island</td>
+                                                            <td>Montone</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>10</td>
+                                                            <td>Nicole Lane</td>
+                                                            <td>$93,148</td>
+                                                            <td>Cayman Islands</td>
+                                                            <td>Cottbus</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>11</td>
+                                                            <td>Chaim Saunders</td>
+                                                            <td>$5,502</td>
+                                                            <td>Romania</td>
+                                                            <td>New Quay</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>12</td>
+                                                            <td>Josiah Simon</td>
+                                                            <td>$50,265</td>
+                                                            <td>Christmas Island</td>
+                                                            <td>Sint-Jans-Molenbeek</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>13</td>
+                                                            <td>Ila Poole</td>
+                                                            <td>$67,413</td>
+                                                            <td>Montenegro</td>
+                                                            <td>Pontevedra</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>14</td>
+                                                            <td>Shana Mejia</td>
+                                                            <td>$58,566</td>
+                                                            <td>Afghanistan</td>
+                                                            <td>Ballarat</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>15</td>
+                                                            <td>Lana Ryan</td>
+                                                            <td>$64,151</td>
+                                                            <td>Martinique</td>
+                                                            <td>Portobuffolè</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>16</td>
+                                                            <td>Daquan Bender</td>
+                                                            <td>$91,906</td>
+                                                            <td>Sao Tome and Principe</td>
+                                                            <td>Walhain-Saint-Paul</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>17</td>
+                                                            <td>Connor Wagner</td>
+                                                            <td>$86,537</td>
+                                                            <td>Germany</td>
+                                                            <td>Solihull</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>18</td>
+                                                            <td>Boris Horton</td>
+                                                            <td>$35,094</td>
+                                                            <td>Laos</td>
+                                                            <td>Saint-Mard</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>19</td>
+                                                            <td>Winifred Ryan</td>
+                                                            <td>$64,436</td>
+                                                            <td>Ireland</td>
+                                                            <td>Ronciglione</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="level3dashboard" style=" padding: 3%;">
@@ -488,27 +669,27 @@
                                       <div class="content">
 
                                         <center>
-                                        <p style="font-weight: 600;">Legend:</p>
-                                        <ul>
-                                                <li style="display:inline-block; margin-left: 0px;"><i style="padding: 20px;color: black;" class='fa fa-calendar-plus-o fa-lg'></i>Future event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: orange;"  class='fa fa-pencil-square-o fa-lg'></i>Edited event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-check-circle-o fa-lg'></i>Verified event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-check fa-lg'></i>Approved event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-thumbs-o-up fa-lg'></i>Approved report</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: blue;"  class='fa fa-calendar-plus-o fa-lg'></i>Added report</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px; color: green'   class='fa fa-plus fa-lg'></i>Added user</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px; color: red'  class='fa fa-ban fa-lg'></i>Deactivated user</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px;color:green' class='fa fa-circle fa-lg' color: 'green'></i>Activated user</li>      
-                                        </ul>
-                                    </center>
+                                            <p style="font-weight: 600;">Legend:</p>
+                                            <ul>
+                                                    <li style="display:inline-block; margin-left: 0px;"><i style="padding: 20px;color: black;" class='fa fa-calendar-plus-o fa-lg'></i>Future event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: orange;"  class='fa fa-pencil-square-o fa-lg'></i>Edited event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-check-circle-o fa-lg'></i>Verified event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-check fa-lg'></i>Approved event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-thumbs-o-up fa-lg'></i>Approved report</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: blue;"  class='fa fa-calendar-plus-o fa-lg'></i>Added report</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px; color: green'   class='fa fa-plus fa-lg'></i>Added user</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px; color: red'  class='fa fa-ban fa-lg'></i>Deactivated user</li>
+                                                    <li style="display:inline-block; margin-left: 7px;">  </li>
+                                                    <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px;color:green' class='fa fa-circle fa-lg' color: 'green'></i>Activated user</li>      
+                                            </ul>
+                                        </center>
                                     
                                             
                                           <div class="row">
@@ -599,19 +780,7 @@
             </footer>
         </div>
     </div>
-    <script type="text/javascript" charset="utf8" src="assets/js/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="assets/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="assets/js/dataTables.material.min.js"></script>
-
-
-    <!-- UIkit JS -->
-    <script src="assets/js/uikit.min.js"></script>
-    <script src="assets/js/uikit-icons.min.js"></script>
-
-
-      <button id="viewEvent2Button" type="button" hidden class="btn btn-primary btn-lg" data-toggle="modal" data-target="#viewEvent2">
-
-      </button>
+      <button id="viewEvent2Button" type="button" hidden class="btn btn-primary btn-lg" data-toggle="modal" data-target="#viewEvent2"></button>
 
         <div id="modal-overflow-3" class="uk-modal-container" uk-modal>
             <div class="uk-modal-dialog">
@@ -702,12 +871,6 @@
             </div>
         </div>
 
-
-
-
-
-
-
         <div id="modal-overflow-comments" class="uk-modal-container" uk-modal>
                 <div class="uk-modal-dialog">
         
@@ -752,13 +915,7 @@
         
                     
                 </div>
-            </div>
-
-
-
-
-
-
+        </div>
 
         <!-- UI kit modal -->
         <div id="modal-overflow-2-report" class="uk-modal-container" uk-modal>
@@ -871,14 +1028,26 @@
         </div>
 
 
+</body>
+<script type="text/javascript" charset="utf8" src="assets/js/jquery-1.8.2.min.js"></script>
+<!-- <script type="text/javascript" src="assets/js/jquery-1.11.2.min.js"></script> -->
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- <script type="text/javascript" src="assets/js/bootstrap-table.js"></script> -->
+
+<script type="text/javascript" charset="utf8" src="assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="assets/js/dataTables.material.min.js"></script>
+
+<!-- UIkit JS -->
+<script src="assets/js/uikit.min.js"></script>
+<script src="assets/js/uikit-icons.min.js"></script>
 
 <script src="index.js"></script>
-</body>
+
 <!--   Core JS Files   -->
 <script src="assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src='jquery/jquery-1.10.2.js'></script>
 <script src='jquery/jquery-ui.custom.min.js'></script>
-<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+
 <script src="assets/js/material.min.js" type="text/javascript"></script>
 <script src="assets/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
@@ -1064,142 +1233,6 @@ $(document).ready(function () {
 
 		// 	setCookie("foldname", foldname, 1);
 
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        // $.getJSON('databasehandler.php?cmd=15', function (data) {
-
-        //     Highcharts.chart('eventcontainer', {
-        //         chart: {
-        //             zoomType: 'x'
-        //         },
-        //         title: {
-        //             text: 'Events Per Day'
-        //         },
-        //         subtitle: {
-        //             text: document.ontouchstart === undefined ?
-        //                 'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        //         },
-        //         xAxis: {
-        //             type: 'datetime',
-        //             visible: false
-        //         },
-        //         yAxis: {
-        //             title: {
-        //                 text: 'Events'
-        //             }
-        //         },
-        //         legend: {
-        //             enabled: false
-        //         },
-        //         plotOptions: {
-        //             area: {
-        //                 fillColor: {
-        //                     linearGradient: {
-        //                         x1: 0,
-        //                         y1: 0,
-        //                         x2: 0,
-        //                         y2: 1
-        //                     },
-        //                     stops: [
-        //                         [0, Highcharts.getOptions().colors[0]],
-        //                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-        //                     ]
-        //                 },
-        //                 marker: {
-        //                     radius: 2
-        //                 },
-        //                 lineWidth: 1,
-        //                 states: {
-        //                     hover: {
-        //                         lineWidth: 1
-        //                     }
-        //                 },
-        //                 threshold: null
-        //             }
-        //         },
-
-        //         series: [{
-        //             type: 'area',
-        //             name: 'Number of Events',
-        //             data: data
-        //         }]
-        //     });
-        // });
-
-        // $.getJSON('databasehandler.php?cmd=17', function (data) {
-
-        //     Highcharts.chart('eventusercontainer', {
-        //         chart: {
-        //             type: 'column'
-        //         },
-        //         title: {
-        //             text: 'Outreach Categories Per Region'
-        //         },
-        //         xAxis: {
-        //             categories: data.categories
-        //         },
-        //         yAxis: {
-        //             min: 0,
-        //             title: {
-        //                 text: 'Total Audience Attended'
-        //             }
-        //         },
-        //         tooltip: {
-        //             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-        //             shared: true
-        //         },
-        //         plotOptions: {
-        //             column: {
-        //                 stacking: 'percent'
-        //             }
-        //         },
-        //         series: data.series
-        //         // [{
-        //         //     name: 'John',
-        //         //     data: [5, 3, 4, 7, 2]
-        //         // }, {
-        //         //     name: 'Jane',
-        //         //     data: [2, 2, 3, 2, 1]
-        //         // }, {
-        //         //     name: 'Joe',
-        //         //     data: [3, 4, 4, 2, 5]
-        //         // }]
-        //     });
-        // });
-
-        // $.getJSON('databasehandler.php?cmd=16', function (data) {
-        //     //var piedata = JSON.parse(data);
-        //     console.log(data);
-        //     Highcharts.chart('eventaudiencecontainer', {
-        //         chart: {
-        //             type: 'pie',
-        //             options3d: {
-        //                 enabled: true,
-        //                 alpha: 45
-        //             }
-        //         },
-        //         title: {
-        //             text: 'Audience Categories'
-        //         },
-        //         subtitle: {
-        //             text: 'Sum of Categories'
-        //         },
-        //         plotOptions: {
-        //             pie: {
-        //                 innerSize: 100,
-        //                 depth: 45
-        //             }
-        //         },
-        //         series: [{
-        //             name: 'Number of events tailored to',
-        //             data: data
-        //         }]
-        //     });
-        // });
-
-    });
 </script>
 
 </html>

@@ -2,6 +2,9 @@ var global1;
 var global2;
 var global3;
 var global7;
+var $table = $('#fresh-table'),
+  $alertBtn = $('#alertBtn'),
+  full_screen = false;
 
 $().ready(function () {
 
@@ -327,6 +330,60 @@ $().ready(function () {
   global7 = refireTable7;
 
 
+  $table.bootstrapTable({
+    toolbar: ".toolbar",
+
+    showRefresh: true,
+    search: true,
+    showToggle: true,
+    showColumns: true,
+    pagination: true,
+    striped: true,
+    pageSize: 8,
+    pageList: [8, 10, 25, 50, 100],
+
+    formatShowingRows: function (pageFrom, pageTo, totalRows) {
+      //do nothing here, we don't want to show the text "showing x of y from..." 
+    },
+    formatRecordsPerPage: function (pageNumber) {
+      return pageNumber + " rows visible";
+    },
+    icons: {
+      refresh: 'fa fa-refresh',
+      toggle: 'fa fa-th-list',
+      columns: 'fa fa-columns',
+      detailOpen: 'fa fa-plus-circle',
+      detailClose: 'fa fa-minus-circle'
+    }
+  });
+
+  $(window).resize(function () {
+    $table.bootstrapTable('resetView');
+  });
+
+  window.operateEvents = {
+    'click .like': function (e, value, row, index) {
+      alert('You click like icon, row: ' + JSON.stringify(row));
+      console.log(value, row, index);
+    },
+    'click .edit': function (e, value, row, index) {
+      alert('You click edit icon, row: ' + JSON.stringify(row));
+      console.log(value, row, index);
+    },
+    'click .remove': function (e, value, row, index) {
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: [row.id]
+      });
+
+    }
+  };
+
+  $alertBtn.click(function () {
+    alert("You pressed on Alert");
+  });
+
+
   $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#addnewnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#addnewdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
@@ -351,6 +408,20 @@ $().ready(function () {
   document.getElementById('pendingverifyformdiv').appendChild = "<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='pendingadd(" + obj[0].report_id + ")' type='button' class='btn btn-success' id='addpendingConfirm' data-toggle='modal' data-target='#verifypendingEvent'>Save</button>";
 
 });
+
+function operateFormatter(value, row, index) {
+  return [
+    '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+    '<i class="fa fa-heart"></i>',
+    '</a>',
+    '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+    '<i class="fa fa-edit"></i>',
+    '</a>',
+    '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+    '<i class="fa fa-remove"></i>',
+    '</a>'
+  ].join('');
+}
 
 var pendingid;
 
