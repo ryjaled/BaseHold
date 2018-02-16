@@ -14,15 +14,17 @@ $().ready(function () {
   var dataTable1 = $('#level1list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '22%' },
+      { "targets": 0, width: '27%' },
       { "targets": 1, width: '17%' },
-      { "targets": 2, width: '17%'} ,
-      { "targets": 3, width: '17%'} ,
+      { "targets": 2, width: '15%'} ,
+      { "targets": 3, width: '15%'} ,
       { "targets": 4, width: '15%'} ,
+      { "targets": 5, width: '7%' },
+      { "targets": [6], "visible": false, "searchable": false, width: '5%'},
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[6, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -39,17 +41,17 @@ $().ready(function () {
   var dataTable2 = $('#level2list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '10%'},
-      { "targets": 1, width: '10%'},
+      { "targets": 0, width: '25%'},
+      { "targets": 1, width: '15%'},
       { "targets": 2, width: '10%'},
       { "targets": 3, width: '15%'},
-      { "targets": 4, width: "7%"} ,
-      { "targets": 5, width: "7%"} ,
-      { "targets": 6, width: "10%" },
+      { "targets": 4, width: "15%"} ,
+      { "targets": 5, width: "15%"} ,
+      { "targets": 6, width: "5%" },
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[1, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -66,12 +68,12 @@ $().ready(function () {
   var dataTable3 = $('#level3list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '7%' },
-      { "targets": 1, width: '25%' },
+      { "targets": 0, width: '17%' },
+      { "targets": 1, width: '15%' },
       { "targets": 2, width: '15%' },
       { "targets": 3, width: '15%' },
       { "targets": 4, width: '15%' },
-      { "targets": 5, width: '15%' },
+      { "targets": 5, width: '5%' },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
@@ -2497,6 +2499,63 @@ function reactivateUsersComplete(xhr, status) {
       }
     });
 
+}
+
+function reassignEventToggle(id,region) {
+  event.preventDefault();
+
+  sessionStorage.reassignId = id;
+  sessionStorage.regionId = region;
+
+  var theUrl = "databasehandler.php?cmd=34&region=" + region;
+
+  $.ajax(theUrl,
+  {
+    async: true,
+    complete: reassignEventToggleComplete
+  });
+
+}
+
+function reassignEventToggleComplete(xhr,status){
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  UIkit.modal('#modal-overflow-reassign').show();
+}
+
+function reassignEvent() {
+
+  var comments = $('#commentsForReassign').val();
+  var newteammember = $('#reassignMember').val();
+
+  var theUrl = "databasehandler.php?cmd=33&eventid=" + sessionStorage.reassignId + "&reporter=" + newteammember + "&reason=" + comments;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: reassignEventComplete
+    });
+
+  $('#commentsForReassign').val("");
+}
+
+function reassignEventComplete(xhr, status) {
+
+  console.log(xhr);
+
+  $.notify({
+    icon: "info_outline",
+    message: "Event Reassigned Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
 }
 
 /////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////

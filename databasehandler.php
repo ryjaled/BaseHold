@@ -108,6 +108,9 @@
 		case 33:
 			reassignEvent();
 			break;
+		case 34:
+			getUsersPerRegion();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -976,6 +979,26 @@
 				echo json_encode($data);
 
 	}
+
+	function getUsersPerRegion(){
+      include("users.php");
+
+		$user = new users();
+
+		$region=$_REQUEST['region'];
+
+		$validation = $user->getUsersByRegion($region);
+
+		$data = array();
+
+		while($row = $user->fetch()){
+			$success="true";
+			array_push($data,$row);
+
+		}
+
+		echo json_encode($data);
+	}
 	 
 	function login(){
 		include("users.php");
@@ -1064,20 +1087,18 @@
 	}
 
 	function reassignEvent(){
-      include("events.php");
+		include("events.php");
+		
 		$event = new events();
+		
 
 		$eventid=$_REQUEST['eventid'];
 		$reporter=$_REQUEST['reporter'];
 		$reason=$_REQUEST['reason'];
 
-		$result = $event->reassignEvents($eventid,$reporter,$reason);
+		$result = $event->reassignEvent($eventid,$reporter,$reason);
 
-		while($row = $event->fetch()){
-			$success="true";
-		}
-
-		echo json_encode($row);
+		echo json_encode($result);
 
 	}
 

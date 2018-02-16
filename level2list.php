@@ -46,7 +46,9 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 $sql = "select e.event_id, e.eventtitle, e.date_to_be_organized, r.regionname as region, u.firstname as user, u.lastname, e.is_verified, e.is_approved from events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where (e.region = '$id')";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' )";
+	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR firstname LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR lastname LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("level2list.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
