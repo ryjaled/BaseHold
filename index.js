@@ -340,133 +340,6 @@ $().ready(function () {
 /////////////GENERAL FUNCTIONALITY///////////////////////////////////////
 /////////////GENERAL FUNCTIONALITY///////////////////////////////////////
 
-function loginUser(){
-  event.preventDefault();
-  var email = $('#useremail').val();
-  var password = $('#userpassword').val();
-
-  var theUrl="databasehandler.php?cmd=1&email="+email+"&password="+password;
-  $.ajax(theUrl,
-        {
-          async:true,
-          complete:loginUserComplete
-        });
-}
-
-function loginUserComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  // console.log(obj);
-  //localstorage and cookie creation
-  localStorage.levelid = obj.userid;
-  document.cookie = "userlevelid="+obj.userid;
-  //sessionstorage creation
-  sessionStorage.userid = obj.userid;
-  sessionStorage.firstname = obj.firstname;
-  sessionStorage.lastname = obj.lastname;
-  sessionStorage.level = obj.level;
-  sessionStorage.region = obj.region;
-
-  // console.log(sessionStorage.userid, sessionStorage.firstname, sessionStorage.lastname, sessionStorage.level);
-
-  if(sessionStorage.level == '1')
-  {
-    window.location = "level1H.html";
-  } else if (sessionStorage.level == '2'){
-    window.location = "level2H.html";
-  }else if (sessionStorage.level == '3'){
-    window.location = "level3H.html";
-  }else if (sessionStorage.level == '4'){
-    window.location = "dashboard.html";
-  }else{
-
-    $.notify({
-       icon: "info_outline",
-       message: "Failed To Log In. Please check your details and try again."
-
-   },{
-       type: 'danger',
-       timer: 4000,
-       placement: {
-           from: 'top',
-           align: 'right'
-       }
-   });
-
-  }
-
-
-}
-
-function welcomeToHomeLevel1(){
-
-
-  if(sessionStorage.level == "1"){
-    // alert(sessionStorage.level);
-  } else {
-    window.location.href="404.html";
-  }
-
-
-
-    document.getElementById('logout').value="Logout"
-    // _fetchMyEvents(sessionStorage.userid);
-
-
-}
-
-function welcomeToHomeLevel2(){
-
-
-  if(sessionStorage.level == "2"){
-    // alert(sessionStorage.level);
-  } else {
-    window.location.href="404.html";
-  }
-
-      document.getElementById('logout').value="Logout"
-      _fetchMyEvents(sessionStorage.userid);
-
-}
-
-function welcomeToHomeLevel3(){
-
-
-    if(sessionStorage.level == "3"){
-      // alert(sessionStorage.level);
-    } else {
-      window.location.href="404.html";
-    }
-
-        document.getElementById('logout').value="Logout";
-        fillDashRegionFigures();
-        fillDashTotalEvents();
-        fillDashTotalAttendees();
-        fillDashCommonPlace();
-        _fetchMyEvents(sessionStorage.userid);
-
-}
-
-function welcomeToHomeLevel4(){
-
-
-      if(sessionStorage.level == "3" || sessionStorage.level == "4"){
-
-      } else {
-        window.location.href="404.html";
-      }
-        // alert("asd"+sessionStorage.firstname);
-          $('#dashboardname').html(sessionStorage.firstname+" "+sessionStorage.lastname);
-          document.getElementById('dashboardname').value=sessionStorage.firstname;
-
-          // document.getElementById('logout').value="Logout";
-          fillDashRegionFigures();
-          fillDashTotalEvents();
-          fillDashTotalAttendees();
-          fillDashCommonPlace();
-          _fetchMyEvents(sessionStorage.userid);
-
-}
-
 function _fetchMyEvents(userid){
 
     var theUrl="databasehandler.php?cmd=3";
@@ -635,42 +508,6 @@ function approvalwindowComplete(xhr, status){
 
 }
 
-function helpApproval(){
-  toggleapprove(sessionStorage.pullapproved, sessionStorage.pullreportid);
-}
-
-function toggleapprove(val, id){
-
-    var theUrl="databasehandler.php?cmd=4&eventid="+id+"&approval="+val;
-
-    $.ajax(theUrl,
-          {
-            async:true,
-
-          });
-
-    window.location.href="level3H.html";
-}
-
-function viewer(val){
-    console.log('modal to view: ',val);
-}
-
-function clearaddfield() {
-  event.preventDefault();
-  document.getElementById('RegisterValidationDoc').reset();
-}
-
-function clearaddpendingfield() {
-  event.preventDefault();
-  document.getElementById('RegisterAddPendingValidationDoc').reset();
-}
-
-function clearpendingfield() {
-  event.preventDefault();
-  document.getElementById('RegisterPendingValidationDoc').reset();
-}
-
 function addevent(){
   event.preventDefault();
 
@@ -746,85 +583,6 @@ function addeventComplete(xhr,status){
          align: 'right'
      }
  });
-
-}
-
-function editevent(){
-  event.preventDefault();
-
-  var userid = sessionStorage.getItem("userid");
-  var eventtitle = $('#editaddnewtitle').val();
-  var date = $('#editaddnewdateselected').val();
-  var region = $('#editaddnewregion').val();
-  var town = $('#editaddnewtown').val();
-  var audiencecat = $('#editaddnewaudience').val();
-  var attendance = $('#editaddnewattendance').val();
-  var topics = $('#editaddnewtopics').val();
-  var complaints = $('#addcomplaints').val();
-  var summary = $('#addsummary').val();
-  var approved = 0;
-  var verified = 0;
-  var verifiedComments = "not verified";
-
-  var filesarray = [];
-  var inp = document.getElementById('input-id');
-  for (var i = 0; i < inp.files.length; ++i) {
-    var name = inp.files.item(i).name;
-    filesarray[i] = name;
-  }
-  var files = JSON.stringify(filesarray);
-  var picpath = files;
-  var foldname = userid + "_" + eventtitle;
-  var foldpath = foldname;
-
-  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "") ){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Fill Compulsory Fields."
-
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-    document.cookie = "foldname=" + foldname;
-
-    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
-      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
-
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: editEventComplete
-      });
-  }
-
-}
-
-function editEventComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  console.log(obj);
-  $('#input-id').fileinput('upload');
-  document.getElementById('RegisterValidationDoc').reset();
-  $('#input-id').fileinput('enable');
-  global1();
-  $.notify({
-     icon: "info_outline",
-     message: "Event Editted Successfully."
-
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
-     }
- });
-  global1();
 
 }
 
@@ -943,16 +701,6 @@ function addpendpendingevent() {
 
 }
 
-function deleteevent(pid){
-  var theUrl = "databasehandler.php?cmd=25&eventid=" + pid;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: global1,
-      complete: removependpendingeventComplete
-    });
-}
-
 function addpendpendingeventComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
   console.log(obj);
@@ -978,30 +726,6 @@ function addpendpendingeventComplete(xhr, status) {
     });
 
 
-}
-
-function removependpendingeventComplete(xhr, status) {
-  var obj = JSON.parse(xhr.responseText);
-
-  global1();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Event Removed Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-}
-
-function clearuseraddfield() {
-  event.preventDefault();
-  document.getElementById('AddUserForm').reset();
 }
 
 function addlevel1user() {
@@ -1135,6 +859,115 @@ function addlevel2userComplete(xhr, status) {
 
 }
 
+function clearaddfield() {
+  event.preventDefault();
+  document.getElementById('RegisterValidationDoc').reset();
+}
+
+function clearaddpendingfield() {
+  event.preventDefault();
+  document.getElementById('RegisterAddPendingValidationDoc').reset();
+}
+
+function clearpendingfield() {
+  event.preventDefault();
+  document.getElementById('RegisterPendingValidationDoc').reset();
+}
+
+function clearuseraddfield() {
+  event.preventDefault();
+  document.getElementById('AddUserForm').reset();
+}
+
+function deleteevent(pid) {
+  var theUrl = "databasehandler.php?cmd=25&eventid=" + pid;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global1,
+      complete: removependpendingeventComplete
+    });
+}
+
+function editevent() {
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventtitle = $('#editaddnewtitle').val();
+  var date = $('#editaddnewdateselected').val();
+  var region = $('#editaddnewregion').val();
+  var town = $('#editaddnewtown').val();
+  var audiencecat = $('#editaddnewaudience').val();
+  var attendance = $('#editaddnewattendance').val();
+  var topics = $('#editaddnewtopics').val();
+  var complaints = $('#addcomplaints').val();
+  var summary = $('#addsummary').val();
+  var approved = 0;
+  var verified = 0;
+  var verifiedComments = "not verified";
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    document.cookie = "foldname=" + foldname;
+
+    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: editEventComplete
+      });
+  }
+
+}
+
+function editEventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
+  $('#input-id').fileinput('upload');
+  document.getElementById('RegisterValidationDoc').reset();
+  $('#input-id').fileinput('enable');
+  global1();
+  $.notify({
+    icon: "info_outline",
+    message: "Event Editted Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+  global1();
+
+}
+
 function eventviewer(val) {
   // console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
@@ -1163,6 +996,77 @@ function eventviewerComplete(xhr, status) {
   $('#showaudience_category').val(obj[0].audience_category);
   $('#showaudience_attendance').val(obj[0].audience_attendance);
   $('#showevent_summary').val(obj[0].event_summary);
+
+}
+
+function generateInputs() {
+
+  var number = $('#createInputs').val();
+
+  for (var i = 0; i < number; i++) {
+    document.getElementById('place').appendChild = "<div><input/></div>";
+  }
+
+
+}
+
+function helpApproval() {
+  toggleapprove(sessionStorage.pullapproved, sessionStorage.pullreportid);
+}
+
+function loginUser() {
+  event.preventDefault();
+  var email = $('#useremail').val();
+  var password = $('#userpassword').val();
+
+  var theUrl = "databasehandler.php?cmd=1&email=" + email + "&password=" + password;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loginUserComplete
+    });
+}
+
+function loginUserComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+  // console.log(obj);
+  //localstorage and cookie creation
+  localStorage.levelid = obj.userid;
+  document.cookie = "userlevelid=" + obj.userid;
+  //sessionstorage creation
+  sessionStorage.userid = obj.userid;
+  sessionStorage.firstname = obj.firstname;
+  sessionStorage.lastname = obj.lastname;
+  sessionStorage.level = obj.level;
+  sessionStorage.region = obj.region;
+
+  // console.log(sessionStorage.userid, sessionStorage.firstname, sessionStorage.lastname, sessionStorage.level);
+
+  if (sessionStorage.level == '1') {
+    window.location = "level1H.html";
+  } else if (sessionStorage.level == '2') {
+    window.location = "level2H.html";
+  } else if (sessionStorage.level == '3') {
+    window.location = "level3H.html";
+  } else if (sessionStorage.level == '4') {
+    window.location = "dashboard.html";
+  } else {
+
+    $.notify({
+      icon: "info_outline",
+      message: "Failed To Log In. Please check your details and try again."
+
+    }, {
+        type: 'danger',
+        timer: 4000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+
 
 }
 
@@ -1221,91 +1125,123 @@ function passwordresetComplete(xhr, status) {
 
 }
 
-function generateInputs() {
+function removependpendingeventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
 
-  var number = $('#createInputs').val();
+  global1();
 
-  for (var i = 0; i < number; i++) {
-    document.getElementById('place').appendChild = "<div><input/></div>";
-  }
+  $.notify({
+    icon: "info_outline",
+    message: "Event Removed Successfully."
 
-
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
 }
 
-/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
-/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
-/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
-/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
-/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+function toggleapprove(val, id) {
 
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-
-function level1View(val) {
-  console.log('modal to view: ', val);
-  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  var theUrl = "databasehandler.php?cmd=4&eventid=" + id + "&approval=" + val;
 
   $.ajax(theUrl,
     {
       async: true,
-      complete: level1ViewComplete
+
     });
 
-  // $('#modalpop').click();
+  window.location.href = "level3H.html";
 }
 
-function level1ViewComplete(xhr, status) {
-  console.log(xhr);
-  var obj = JSON.parse(xhr.responseText);
-
-
-  // console.log(typeof(obj[0].picture_paths));
-  console.log(obj);
-
-  var picValues = "";
-  $('#pictureContainer').html("");
-  //console.log(obj[0].report_id);
-  var dform = new Date(obj[0].date_to_be_organized);
-  UIkit.modal('#modal-overflow').show();
-
-  //$('#report_id').val(obj[0].report_id);
-  // $('#eventtitle').innerHTML(obj[0].eventtitle);
-  document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-  document.getElementById('region').innerHTML=obj[0].regionname;
-  document.getElementById('town').innerHTML=obj[0].town;
-  document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-  document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
-  var logistics = obj[0].logistics; 
-  var strlenLogistics = obj[0].logistics.length;
-  document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
-
-  var mode = obj[0].mode_of_outreach; 
-  var strlenMode = obj[0].mode_of_outreach.length;
-  document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
-
-
-  var dateVerfied = new Date(obj[0].verified_timestamp);
-  var dateApproved = new Date(obj[0].approved_timestamp);
-
-
-  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
-  }
-  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
-  }
-  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+moment(dateVerfied).format('D MMMM Y')+" and approved on: "+moment(dateApproved).format('D MMMM Y');
-  }
-
-
-  //document.getElementById('complaints_raised').innerHTML= obj[0].approved_timestamp;
-   
+function viewer(val) {
+  console.log('modal to view: ', val);
 }
+
+function welcomeToHomeLevel1() {
+
+
+  if (sessionStorage.level == "1") {
+    // alert(sessionStorage.level);
+  } else {
+    window.location.href = "404.html";
+  }
+
+
+
+  document.getElementById('logout').value = "Logout"
+  // _fetchMyEvents(sessionStorage.userid);
+
+
+}
+
+function welcomeToHomeLevel2() {
+
+
+  if (sessionStorage.level == "2") {
+    // alert(sessionStorage.level);
+  } else {
+    window.location.href = "404.html";
+  }
+
+  document.getElementById('logout').value = "Logout"
+  _fetchMyEvents(sessionStorage.userid);
+
+}
+
+function welcomeToHomeLevel3() {
+
+
+  if (sessionStorage.level == "3") {
+    // alert(sessionStorage.level);
+  } else {
+    window.location.href = "404.html";
+  }
+
+  document.getElementById('logout').value = "Logout";
+  fillDashRegionFigures();
+  fillDashTotalEvents();
+  fillDashTotalAttendees();
+  fillDashCommonPlace();
+  _fetchMyEvents(sessionStorage.userid);
+
+}
+
+function welcomeToHomeLevel4() {
+
+
+  if (sessionStorage.level == "3" || sessionStorage.level == "4") {
+
+  } else {
+    window.location.href = "404.html";
+  }
+  // alert("asd"+sessionStorage.firstname);
+  $('#dashboardname').html(sessionStorage.firstname + " " + sessionStorage.lastname);
+  document.getElementById('dashboardname').value = sessionStorage.firstname;
+
+  // document.getElementById('logout').value="Logout";
+  fillDashRegionFigures();
+  fillDashTotalEvents();
+  fillDashTotalAttendees();
+  fillDashCommonPlace();
+  _fetchMyEvents(sessionStorage.userid);
+
+}
+
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
 function addnewevent(){
   event.preventDefault();
@@ -1457,6 +1393,285 @@ function addneweventComplete(xhr,status){
 
 }
 
+function addReportModal(val) {
+
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadEventReport
+    });
+
+}
+
+function addNewReport() {
+
+  var addnewreportobservation = $('#report_observations').val();
+  var addnewreportchallenge = $('#report_challenges').val();
+  var addnewreportcomplaint = $('#report_complaints').val();
+  //var addnewreportinput = $('#input-id').val();
+  var addnewreportmembers = $('#report_members').val();
+
+  var report_event_id = sessionStorage.report_event_id;
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = sessionStorage.userid + "_" + report_event_id;
+  var foldpath = foldname;
+
+  document.cookie = ("foldname=" + foldname);
+
+  if ((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportmembers == "")) {
+
+    $.notify({
+      icon: "info_outline",
+      message: "PLEASE FILL OUT ALL FIELDS TO CONTINUE."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+  else {
+
+    var theUrl = "databasehandler.php?cmd=30&eventid=" + report_event_id + "&challenges=" + addnewreportchallenge + "&complaints=" + addnewreportcomplaint + "&observations=" + addnewreportobservation + "&picpath=" + picpath + "&foldpath=" + foldpath + "&members=" + addnewreportmembers;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: addNewReportComplete
+      });
+  }
+}
+
+function addNewReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+
+  $('#input-id').fileinput('upload');
+  $('#input-id').fileinput('reset');
+  $('#input-id').fileinput('enable');
+  UIkit.modal('#modal-report').hide();
+
+  $('#report_observations').val("");
+  $('#report_challenges').val("");
+  $('#report_complaints').val("");
+  $('#input-id').val("");
+  $('#report_members').val("");
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report created successfully for verification."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function deleteReport(val) {
+
+  var theUrl = "databasehandler.php?cmd=32&reportid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: deleteReportComplete
+    });
+}
+
+function deleteReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+
+  UIkit.modal('#modal-overflow-2-report').hide();
+
+  // $('#report_observations').val("");
+  // $('#report_challenges').val("");
+  // $('#report_complaints').val("");
+  // $('#input-id').val("");
+  // $('#report_members').val("");
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report deleted successfully."
+
+  }, {
+      type: 'danger',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function editNewEvent() {
+
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventid = sessionStorage.getItem("eventneededid");
+  var eventtitle = $('#editaddnewtitle').val();
+  var date = $('#editaddnewdateselected').val();
+  var region = $('#editaddnewregion').val();
+  var town = $('#editaddnewtown').val();
+  var audiencecat = $('#editaddnewaudience').val();
+  var attendance = $('#editaddnewattendance').val();
+
+  var topic = $('#editaddnewtopics').val();
+
+  var logistics = "";
+  var communicationMode = "";
+
+
+  var addnewpowerpoint = $('#editaddnewpowerpoint').val();
+  var addnewoneonone = $('#editaddnewoneonone').val();
+  var addnewroadshow = $('#editaddnewroadshow').val();
+  var addnewdurbar = $('#editaddnewdurbar').val();
+  var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
+  var addnewbus = $('#editaddnewbus').val();
+  var addnewsoundsystem = $('#editaddnewsoundsystem').val();
+  var addnewflyer = $('#editaddnewflyer').val();
+  var addnewpen = $('#editaddnewpen').val();
+  var addnewtapemeasure = $('#editaddnewtapemeasure').val();
+  var addnewtowel = $('#editaddnewtowel').val();
+  var addnewmug = $('#editaddnewmug').val();
+  var addnewshirt = $('#editaddnewshirt').val();
+  var addnewnotepad = $('#editaddnewnotepad').val();
+  var addnewpowerblock = $('#editaddnewpowerblock').val();
+
+
+  // communications mode select
+  if ($('#editaddnewpowerpoint').is(":checked")) {
+    communicationMode = communicationMode + addnewpowerpoint + ",";
+  }
+  if ($('#editaddnewoneonone').is(":checked")) {
+    communicationMode = communicationMode + addnewoneonone + ",";
+  }
+  if ($('#editaddnewroadshow').is(":checked")) {
+    communicationMode = communicationMode + addnewroadshow + ",";
+  }
+  if ($('#editaddnewdurbar').is(":checked")) {
+    communicationMode = communicationMode + addnewdurbar + ",";
+  }
+  if ($('#editaddnewsmallgroupmeeting').is(":checked")) {
+    communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
+  }
+
+
+  // logistics select
+  if ($('#editaddnewbus').is(":checked")) {
+    logistics = logistics + addnewbus + ",";
+  }
+  if ($('#editaddnewsoundsystem').is(":checked")) {
+    logistics = logistics + addnewsoundsystem + ",";
+  }
+  if ($('#editaddnewflyer').is(":checked")) {
+    logistics = logistics + addnewflyer + ",";
+  }
+  if ($('#editaddnewpen').is(":checked")) {
+    logistics = logistics + addnewpen + ",";
+  }
+  if ($('#editaddnewtapemeasure').is(":checked")) {
+    logistics = logistics + addnewtapemeasure + ",";
+  }
+  if ($('#editaddnewtowel').is(":checked")) {
+    logistics = logistics + addnewtowel + ",";
+  }
+  if ($('#editaddnewmug').is(":checked")) {
+    logistics = logistics + addnewmug + ",";
+  }
+  if ($('#editaddnewshirt').is(":checked")) {
+    logistics = logistics + addnewshirt + ",";
+  }
+  if ($('#editaddnewnotepad').is(":checked")) {
+    logistics = logistics + addnewnotepad + ",";
+  }
+  if ($('#editaddnewpowerblock').is(":checked")) {
+    logistics = logistics + addnewpowerblock + ",";
+  }
+
+
+  if ((eventtitle == "") || (date == "") || (topic == "") || (town == "") || (attendance == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ((region == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please select the region this altered event will be held in."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ((audiencecat == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please select the audience category this altered event will be held for."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }
+  else {
+
+    var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+      "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid + "&eventid=" + eventid;
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: editNewEventComplete
+      });
+  }
+}
+
+function editNewEventComplete() {
+  UIkit.modal('#edit-modal-overflow').hide();
+  global1();
+}
+
 function level1Edit(val){
   event.preventDefault();
 
@@ -1488,178 +1703,67 @@ function level1EditComplete(xhr,status){
     
 }
 
-function editNewEvent(){
-
-  event.preventDefault();
-  
-    var userid = sessionStorage.getItem("userid");
-    var eventid = sessionStorage.getItem("eventneededid");
-    var eventtitle = $('#editaddnewtitle').val();
-    var date = $('#editaddnewdateselected').val();
-    var region = $('#editaddnewregion').val();
-    var town = $('#editaddnewtown').val();
-    var audiencecat = $('#editaddnewaudience').val();
-    var attendance = $('#editaddnewattendance').val();
-  
-    var topic = $('#editaddnewtopics').val();
-  
-    var logistics = "";
-    var communicationMode = "";
-  
-  
-    var addnewpowerpoint = $('#editaddnewpowerpoint').val();
-    var addnewoneonone = $('#editaddnewoneonone').val();
-    var addnewroadshow = $('#editaddnewroadshow').val();
-    var addnewdurbar = $('#editaddnewdurbar').val();
-    var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
-    var addnewbus = $('#editaddnewbus').val();
-    var addnewsoundsystem = $('#editaddnewsoundsystem').val();
-    var addnewflyer = $('#editaddnewflyer').val();
-    var addnewpen = $('#editaddnewpen').val();
-    var addnewtapemeasure = $('#editaddnewtapemeasure').val();
-    var addnewtowel = $('#editaddnewtowel').val();
-    var addnewmug = $('#editaddnewmug').val();
-    var addnewshirt = $('#editaddnewshirt').val();
-    var addnewnotepad = $('#editaddnewnotepad').val();
-    var addnewpowerblock = $('#editaddnewpowerblock').val();
-  
-  
-    // communications mode select
-      if ($('#editaddnewpowerpoint').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewpowerpoint + ",";
-      }
-      if ($('#editaddnewoneonone').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewoneonone + ",";
-      }
-      if ($('#editaddnewroadshow').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewroadshow + ",";
-      }
-      if ($('#editaddnewdurbar').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewdurbar + ",";
-      }
-      if ($('#editaddnewsmallgroupmeeting').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
-      }
-  
-  
-      // logistics select
-      if ($('#editaddnewbus').is(":checked"))
-      {
-        logistics = logistics + addnewbus+ ",";
-      }
-      if ($('#editaddnewsoundsystem').is(":checked"))
-      {
-        logistics = logistics + addnewsoundsystem+ ",";
-      }
-      if ($('#editaddnewflyer').is(":checked"))
-      {
-        logistics = logistics + addnewflyer+ ",";
-      }
-      if ($('#editaddnewpen').is(":checked"))
-      {
-        logistics = logistics + addnewpen+ ",";
-      }
-      if ($('#editaddnewtapemeasure').is(":checked"))
-      {
-        logistics = logistics + addnewtapemeasure+ ",";
-      }
-      if ($('#editaddnewtowel').is(":checked"))
-      {
-        logistics = logistics + addnewtowel+ ",";
-      }
-      if ($('#editaddnewmug').is(":checked"))
-      {
-        logistics = logistics + addnewmug+ ",";
-      }
-      if ($('#editaddnewshirt').is(":checked"))
-      {
-        logistics = logistics + addnewshirt+ ",";
-      }
-      if ($('#editaddnewnotepad').is(":checked"))
-      {
-        logistics = logistics + addnewnotepad+ ",";
-      }
-      if ($('#editaddnewpowerblock').is(":checked"))
-      {
-        logistics = logistics + addnewpowerblock+ ",";
-      }
-  
-  
-    if ((eventtitle == "") || (date == "") || (topic == "") || (town == "") || (attendance == "")  ) 
-    {
-      $.notify({
-        icon: "info_outline",
-        message: "Please Fill Compulsory Fields."
-  
-      }, {
-          type: 'danger',
-          timer: 500,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-    } else if ((region == ""))
-    {
-      $.notify({
-        icon: "info_outline",
-        message: "Please select the region this altered event will be held in."
-  
-      }, {
-          type: 'danger',
-          timer: 500,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-    } else if ((audiencecat == ""))
-    {
-      $.notify({
-        icon: "info_outline",
-        message: "Please select the audience category this altered event will be held for."
-  
-      }, {
-          type: 'danger',
-          timer: 500,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-    }
-    else{
-  
-      var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid + "&eventid=" + eventid;
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: editNewEventComplete
-        });
-    }
-}
-
-function editNewEventComplete(){
-  UIkit.modal('#edit-modal-overflow').hide();
-  global1();
-}
-
-function addReportModal(val){
-  
+function level1View(val) {
+  console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
-  sessionStorage.report_event_id = val;
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: loadEventReport
-      });
- 
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level1ViewComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level1ViewComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+
+  // console.log(typeof(obj[0].picture_paths));
+  console.log(obj);
+
+  var picValues = "";
+  $('#pictureContainer').html("");
+  //console.log(obj[0].report_id);
+  var dform = new Date(obj[0].date_to_be_organized);
+  UIkit.modal('#modal-overflow').show();
+
+  //$('#report_id').val(obj[0].report_id);
+  // $('#eventtitle').innerHTML(obj[0].eventtitle);
+  document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('region').innerHTML = obj[0].regionname;
+  document.getElementById('town').innerHTML = obj[0].town;
+  document.getElementById('audience_category').innerHTML = obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML = obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics;
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  var mode = obj[0].mode_of_outreach;
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('complaints_raised').innerHTML = mode.substring(0, strlenMode - 1);
+
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+
+
+  if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('event_summary').innerHTML = "This event has not yet been verified nor approved.";
+  }
+  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
+    document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + " and approved on: " + moment(dateApproved).format('D MMMM Y');
+  }
+
+
+  //document.getElementById('complaints_raised').innerHTML= obj[0].approved_timestamp;
+
 }
 
 function loadEventReport(xhr, status){
@@ -1711,90 +1815,6 @@ function loadEventReport(xhr, status){
   $('#addbuttonreport').show();
 
   //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button> <button class='uk-button uk-button-secondary' type='button' onclick='addNewReport()>Add Report</button>");
-
-}
-
-function addNewReport(){
-
-  var addnewreportobservation = $('#report_observations').val();
-  var addnewreportchallenge = $('#report_challenges').val();
-  var addnewreportcomplaint = $('#report_complaints').val();
-  //var addnewreportinput = $('#input-id').val();
-  var addnewreportmembers = $('#report_members').val();
-
-  var report_event_id = sessionStorage.report_event_id;
-
-  var filesarray = [];
-  var inp = document.getElementById('input-id');
-  for (var i = 0; i < inp.files.length; ++i) {
-    var name = inp.files.item(i).name;
-    filesarray[i] = name;
-  }
-  var files = JSON.stringify(filesarray);
-  var picpath = files;
-  var foldname = sessionStorage.userid + "_" + report_event_id;
-  var foldpath = foldname;
-
-  document.cookie = ("foldname=" + foldname);
-
-  if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportmembers == "") )
-  {
-
-    $.notify({
-      icon: "info_outline",
-      message: "PLEASE FILL OUT ALL FIELDS TO CONTINUE."
-  
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-
-  }
-  else{
-
-    var theUrl = "databasehandler.php?cmd=30&eventid=" + report_event_id + "&challenges=" + addnewreportchallenge + "&complaints=" + addnewreportcomplaint + "&observations=" + addnewreportobservation + "&picpath=" + picpath + "&foldpath=" + foldpath + "&members=" + addnewreportmembers;
-    
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: addNewReportComplete
-        });
-  }
-}
-
-function addNewReportComplete(xhr,status){
-
-  var obj = JSON.parse(xhr.responseText);
-
-  $('#input-id').fileinput('upload');
-  $('#input-id').fileinput('reset');
-  $('#input-id').fileinput('enable');
-  UIkit.modal('#modal-report').hide();
-
-  $('#report_observations').val("");
-  $('#report_challenges').val("");
-  $('#report_complaints').val("");
-  $('#input-id').val("");
-  $('#report_members').val("");
-
-  global1();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Report created successfully for verification."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
 
 }
 
@@ -1914,19 +1934,6 @@ function level1ReportViewComplete(xhr, status) {
   
 }
 
-//for report editing
-function viewReportModal(val) {
-
-  var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
-  sessionStorage.report_event_id = val;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: loadViewEventReport
-    });
-
-}
-
 function loadViewEventReport(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
@@ -1981,42 +1988,14 @@ function loadViewEventReport(xhr, status) {
   //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");//<button class='uk-button uk-button-secondary' type='button' onclick='#'>Edit Report</button>");
 }
 
-function deleteReport(val) {
+function viewReportModal(val) {
 
-    var theUrl = "databasehandler.php?cmd=32&reportid=" + val;
-
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: deleteReportComplete
-      });
-}
-
-function deleteReportComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-
-  UIkit.modal('#modal-overflow-2-report').hide();
-
-  // $('#report_observations').val("");
-  // $('#report_challenges').val("");
-  // $('#report_complaints').val("");
-  // $('#input-id').val("");
-  // $('#report_members').val("");
-
-  global1();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Report deleted successfully."
-
-  }, {
-      type: 'danger',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
+  var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
+  sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadViewEventReport
     });
 
 }
@@ -2033,24 +2012,12 @@ function deleteReportComplete(xhr, status) {
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 
-function help(){
-  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-}
-
-function verifier(id, verifyCheck, approveCheck){
-  if(approveCheck == 1){
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-  }
-  if((approveCheck == 0) && (verifyCheck == 0)){
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-  }
-  if ((approveCheck == 0) && (verifyCheck == 1)) {
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>UnVerify</button>");
-  }
-}
-
 function _level2cancel(){
   window.location.href="level2H.html";
+}
+
+function help() {
+  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
 
 function level2View(val) {
@@ -2105,40 +2072,6 @@ function level2ViewComplete(xhr, status) {
   }
 
 
-}
-
-function verifyEventToggle(id, verState){
-  sessionStorage.verifyingId = id;
-  sessionStorage.verifyingState = verState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-comments').show();
-
-}
-
-function verifyEvent(){
-  var comments = $('#commentsForVerification').val();
-  var theUrl="databasehandler.php?cmd=5&eventid="+sessionStorage.verifyingId+"&verify="+sessionStorage.verifyingState+"&verifycomments="+comments;
-  $.ajax(theUrl,
-    {
-      async:true,
-      complete: global2
-    });
-
-    $('#commentsForVerification').val("");
-}
-
-function reportHelp(){
-  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-}
-
-function reportApprover(id, verifyCheck, approveCheck){
-  if(approveCheck == 1){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-  }
-  if(approveCheck == 0){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-  }
 }
 
 function level2ReportView(val) {
@@ -2251,6 +2184,52 @@ function level2ReportViewComplete(xhr, status) {
   //$('#report_photos').html();
   document.getElementById('report_photos').innerHTML = picValues;
   
+}
+
+function reportHelp() {
+  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+}
+
+function reportApprover(id, verifyCheck, approveCheck) {
+  if (approveCheck == 1) {
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if (approveCheck == 0) {
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+}
+
+function verifier(id, verifyCheck, approveCheck) {
+  if (approveCheck == 1) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if ((approveCheck == 0) && (verifyCheck == 0)) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+  if ((approveCheck == 0) && (verifyCheck == 1)) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>UnVerify</button>");
+  }
+}
+
+function verifyEventToggle(id, verState) {
+  sessionStorage.verifyingId = id;
+  sessionStorage.verifyingState = verState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-comments').show();
+
+}
+
+function verifyEvent() {
+  var comments = $('#commentsForVerification').val();
+  var theUrl = "databasehandler.php?cmd=5&eventid=" + sessionStorage.verifyingId + "&verify=" + sessionStorage.verifyingState + "&verifycomments=" + comments;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global2
+    });
+
+  $('#commentsForVerification').val("");
 }
 
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
