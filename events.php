@@ -231,6 +231,16 @@
 			return $this->query($strQuery);
 		}
 
+		function reassignEvent($eventid,$reporter,$reason){
+
+			$strQuery="update events set
+							creator='$reporter',
+							misc_reasons='$reason'
+							where event_id='$eventid'";
+
+			return $this->query($strQuery);
+		}
+
 		function toggleEvent($eventid, $approval, $approvedDate,$approveComments){
       
 			if($approval == "0"){

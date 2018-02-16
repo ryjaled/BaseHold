@@ -2,9 +2,7 @@ var global1;
 var global2;
 var global3;
 var global7;
-var $table = $('#fresh-table'),
-  $alertBtn = $('#alertBtn'),
-  full_screen = false;
+var pendingid;
 
 $().ready(function () {
 
@@ -65,6 +63,79 @@ $().ready(function () {
     }
   });
 
+  var dataTable3 = $('#level3list').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '7%' },
+      { "targets": 1, width: '25%' },
+      { "targets": 2, width: '15%' },
+      { "targets": 3, width: '15%' },
+      { "targets": 4, width: '15%' },
+      { "targets": 5, width: '15%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[3, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "level3list.php?usersessionid=" + sessionStorage.userid + "&userregion=" + sessionStorage.region, // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".level3list-error").html("");
+        $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#level3list_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable5 = $('#eventlogslist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[2, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "eventlogslist.php", // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".eventlogslist-error").html("");
+        $("#eventlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#eventlogslist_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable6 = $('#userlogslist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      // { "targets": 0, width: '10%' },
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[2, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "userlogslist.php", // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".userlogslist-error").html("");
+        $("#userlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#userlogslist_processing").css("display", "none");
+      }
+    }
+  });
+
   var dataTable7 = $('#level2reportlist').DataTable({
     "autoWidth": false,
     "columnDefs": [
@@ -87,32 +158,6 @@ $().ready(function () {
         $(".level2reportlist-error").html("");
         $("#level2reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level2reportlist_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable3 = $('#level3list').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '7%'},
-      { "targets": 1, width: '25%'},
-      { "targets": 2, width: '15%'},
-      { "targets": 3, width: '15%'},
-      { "targets": 4, width: '15%'},
-      { "targets": 5, width: '15%'},
-      {className: 'mdl-data-table__cell--non-numeric'},
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "level3list.php?usersessionid="+sessionStorage.userid+"&userregion="+sessionStorage.region, // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".level3list-error").html("");
-        $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#level3list_processing").css("display", "none");
       }
     }
   });
@@ -195,79 +240,6 @@ $().ready(function () {
     }
   });
 
-  var dataTable4 = $('#pending1list').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '20%' },
-      { "targets": 1, width: '12.5%' },
-      { "targets": 2, width: '12.5%' },
-      { "targets": 3, width: '12.5%' },
-      { "targets": 4, width: '12.5%' },
-      { "targets": 5, width: '12.5%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "level1pendinglist.php", // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".pending1list-error").html("");
-        $("#pending1list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#pending1list_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable5 = $('#eventlogslist').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '10%' },
-      { "targets": 1, width: '60%' },
-      { "targets": 2, width: '30%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "eventlogslist.php", // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".eventlogslist-error").html("");
-        $("#eventlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#eventlogslist_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable6 = $('#userlogslist').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      // { "targets": 0, width: '10%' },
-      { "targets": 0, width: '10%' },
-      { "targets": 1, width: '60%' },
-      { "targets": 2, width: '30%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "userlogslist.php", // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".userlogslist-error").html("");
-        $("#userlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#userlogslist_processing").css("display", "none");
-      }
-    }
-  });
-
   function refireTable1(){
     setTimeout(function () {
     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
@@ -294,21 +266,32 @@ $().ready(function () {
   global3 = refireTable3;
 
   setInterval(function () {
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
+
+  setInterval(function () {
+    dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
+
+  setInterval(function () {
     dataTable3.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
+
+  setInterval(function () {
+    dataTable5.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
 
+  setInterval(function () {
+    dataTable6.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+  setInterval(function () {
+    dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
 
   setInterval(function () {
     dataTable8.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
-
-  setInterval(function () {
-    dataTable5.ajax.reload(null, false); // user paging is not reset on reload
-  }, 2000);
-
-  setInterval(function () {
-    dataTable6.ajax.reload(null, false); // user paging is not reset on reload
-  }, 2000);
 
   setInterval(function () {
     level2usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
@@ -317,10 +300,6 @@ $().ready(function () {
   setInterval(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
   }, 3000);
-
-  // setInterval(function () {
-  //   dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  // }, 3000);
 
   function refireTable7(){
     setTimeout(function () {
@@ -355,21 +334,11 @@ $().ready(function () {
 
 });
 
-// function operateFormatter(value, row, index) {
-//   return [
-//     '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
-//     '<i class="fa fa-heart"></i>',
-//     '</a>',
-//     '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
-//     '<i class="fa fa-edit"></i>',
-//     '</a>',
-//     '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
-//     '<i class="fa fa-remove"></i>',
-//     '</a>'
-//   ].join('');
-// }
-
-var pendingid;
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
 
 function loginUser(){
   event.preventDefault();
@@ -1166,7 +1135,111 @@ function addlevel2userComplete(xhr, status) {
 
 }
 
+function eventviewer(val) {
+  // console.log('modal to edit: ', val);
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: eventviewerComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function eventviewerComplete(xhr, status) {
+  // console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  var dform = new Date(obj[0].date_organized);
+
+  $('#eventmodalshow').click();
+
+  $('#showeventtitle').val(obj[0].eventtitle);
+  $('#showdate_organized').val(moment(dform).format('D MMMM Y'));
+  $('#showregion').val(obj[0].region);
+  $('#showtown').val(obj[0].town);
+  $('#showaudience_category').val(obj[0].audience_category);
+  $('#showaudience_attendance').val(obj[0].audience_attendance);
+  $('#showevent_summary').val(obj[0].event_summary);
+
+}
+
+function passwordreset() {
+  event.preventDefault();
+
+  var currentpassword = $('#currentpassword').val();
+  var newpassword = $('#newpassword').val();
+  var confirmednewpassword = $('#confirmednewpassword').val();
+
+  if (newpassword == confirmednewpassword) {
+
+    var theUrl = "databasehandler.php?cmd=26&myid=" + sessionStorage.userid + "&confirmednewpassword=" + confirmednewpassword;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: passwordresetComplete
+      });
+
+  } else {
+
+    $.notify({
+      icon: "info_outline",
+      message: "New password is not the same as confirmed password."
+
+    }, {
+        type: 'warning',
+        timer: 1000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+
+}
+
+function passwordresetComplete(xhr, status) {
+  console.log(xhr);
+
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "Password Changed Successfully."
+
+  }, {
+      type: 'success',
+      timer: 1000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function generateInputs() {
+
+  var number = $('#createInputs').val();
+
+  for (var i = 0; i < number; i++) {
+    document.getElementById('place').appendChild = "<div><input/></div>";
+  }
+
+
+}
+
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
@@ -1952,8 +2025,9 @@ function deleteReportComplete(xhr, status) {
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
-
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
@@ -2185,11 +2259,15 @@ function level2ReportViewComplete(xhr, status) {
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+function _level3cancel() {
+  window.location.href = "level2H.html";
+}
 
 function approvehelp(){
   approver(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -2204,8 +2282,89 @@ function approver(id, verifyCheck, approveCheck){
   }
 }
 
-function _level3cancel(){
-  window.location.href="level2H.html";
+function ApproveReportToggle(id, approveState) {
+
+  sessionStorage.approvingReportId = id;
+  sessionStorage.approvingReportState = approveState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-report-comments').show();
+
+
+
+}
+
+function approveReport() {
+
+  var comments = $('#commentsForReportApproval').val();
+
+  var theUrl = "databasehandler.php?cmd=28&reportid=" + sessionStorage.approvingReportId + "&approval=" + sessionStorage.approvingReportState + "&verificationComments=" + comments;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global7
+    });
+
+  $('#commentsForReportApproval').val("");
+}
+
+function approveEventToggle(id, approveState) {
+
+  sessionStorage.approvingId = id;
+  sessionStorage.approvingState = approveState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-comments').show();
+
+
+}
+
+function approveEvent() {
+
+  var comments = $('#commentsForApproval').val();
+
+  var theUrl = "databasehandler.php?cmd=4&eventid=" + sessionStorage.approvingId + "&approve=" + sessionStorage.approvingState + "&approveComments=" + comments;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global3
+    });
+
+  $('#commentsForApproval').val("");
+}
+
+function deleteUsers(val) {
+  console.log('users', val);
+  var theUrl = "databasehandler.php?cmd=20&userid=" + val + "&myid=" + sessionStorage.userid;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: deleteUsersComplete
+    });
+}
+
+function deleteUsersComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "User Deactivated Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
 }
 
 function level3View(val) {
@@ -2258,19 +2417,6 @@ function level3ViewComplete(xhr, status) {
   }
 
 }
-
-// function reportHelp(){
-//   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-// }
-
-// function reportApprover(id, verifyCheck, approveCheck){
-//   if(approveCheck == 1){
-//     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-//   }
-//   if(approveCheck == 0){
-//     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-//   }
-// }
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -2344,196 +2490,47 @@ function level3ReportViewComplete(xhr, status) {
   console.log(obj[0].team_challenges);
 }
 
-function ApproveReportToggle(id, approveState){
-
-  sessionStorage.approvingReportId = id;
-  sessionStorage.approvingReportState = approveState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-report-comments').show();
-
- 
-  
-}
-
-function approveReport(){
-
-  var comments = $('#commentsForReportApproval').val();
-
-  var theUrl="databasehandler.php?cmd=28&reportid="+sessionStorage.approvingReportId+"&approval="+sessionStorage.approvingReportState+"&verificationComments="+comments;
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global7
-          });
-  
-  $('#commentsForReportApproval').val("");
-}
-
-
-function approveEventToggle(id, approveState){
-
-  sessionStorage.approvingId = id;
-  sessionStorage.approvingState = approveState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-comments').show();
-
-  
-}
-
-function approveEvent(){
-  
-  var comments = $('#commentsForApproval').val();
-
-  var theUrl="databasehandler.php?cmd=4&eventid="+sessionStorage.approvingId+"&approve="+sessionStorage.approvingState+"&approveComments="+comments;
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global3
-          });
-
-          $('#commentsForApproval').val("");
-}
-
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-
-function eventviewer(val) {
-  // console.log('modal to edit: ', val);
-  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+function reactivateUsers(val) {
+  console.log('users', val);
+  var theUrl = "databasehandler.php?cmd=21&userid=" + val + "&myid=" + sessionStorage.userid;
 
   $.ajax(theUrl,
     {
       async: true,
-      complete: eventviewerComplete
+      complete: reactivateUsersComplete
+    });
+}
+
+function reactivateUsersComplete(xhr, status) {
+  console.log(xhr);
+
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "User Reactivated Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
     });
 
-  // $('#modalpop').click();
 }
 
-function eventviewerComplete(xhr, status) {
-  // console.log(xhr);
-  var obj = JSON.parse(xhr.responseText);
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
-  var dform = new Date(obj[0].date_organized);
-
-  $('#eventmodalshow').click();
-
-  $('#showeventtitle').val(obj[0].eventtitle);
-  $('#showdate_organized').val(moment(dform).format('D MMMM Y'));
-  $('#showregion').val(obj[0].region);
-  $('#showtown').val(obj[0].town);
-  $('#showaudience_category').val(obj[0].audience_category);
-  $('#showaudience_attendance').val(obj[0].audience_attendance);
-  $('#showevent_summary').val(obj[0].event_summary);
-
-}
-
-function fillDashRegionFigures(sdate, edate) {
-
-  var theUrl = "databasehandler.php?cmd=10";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
-  }
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashRegionFiguresComplete
-  });
-
-}
-
-function fillDashRegionFiguresComplete(xhr, status) {
-
-  $('#dashboardtablebody').html('<th><td> Region</td><td class="text-right">Events Hosted</td><td class="text-right">Percentage %</td></th>');
-
-  var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
-
-  for (var i = 0; i < obj.length; i++){
-    $('#dashboardtablebody').append("<tr><td></td><td>"+obj[i].regname+"</td><td class='text-right'>"+obj[i].figures+"</td><td class='text-right'>"+obj[i].percentage+"</td></tr><tr>");
-  }
-
-}
-
-function fillDashTotalEvents() {
-
-  var theUrl = "databasehandler.php?cmd=11";
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashTotalEventsComplete
-  });
-
-}
-
-function fillDashTotalEventsComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
-
-  $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
-  // document.getElementById('totalEventsHoted').value = obj.total;
-
-
-
-}
-
-function fillDashTotalAttendees() {
-
-  var theUrl = "databasehandler.php?cmd=13";
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashTotalAttendeesComplete
-  });
-
-}
-
-function fillDashTotalAttendeesComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
-
-  $('#totalAttendees').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
-  // document.getElementById('totalEventsHoted').value = obj.total;
-
-
-
-}
-
-function fillDashCommonPlace() {
-
-  var theUrl = "databasehandler.php?cmd=14";
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashCommonPlaceComplete
-  });
-
-}
-
-function fillDashCommonPlaceComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-  console.log("obj", obj);
-
-  $('#commonAudience').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].audience_category+"<p>");
-
-
-}
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
 
 function dashEventsDisplay(val) {
   console.log('evend it:', val);
@@ -2565,38 +2562,38 @@ function dashEventsDisplayComplete(xhr, status) {
   console.log("show dashboard events modal");
   UIkit.modal('#dasheventsdisplay').show();
 
-    //$('#report_id').val(obj[0].report_id);
-    // $('#eventtitle').innerHTML(obj[0].eventtitle);
-    document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-    document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-    document.getElementById('region').innerHTML=obj[0].region;
-    document.getElementById('town').innerHTML=obj[0].town;
-    document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-    document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-    document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-    document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-    document.getElementById('event_summary').innerHTML=obj[0].event_summary;
+  //$('#report_id').val(obj[0].report_id);
+  // $('#eventtitle').innerHTML(obj[0].eventtitle);
+  document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('region').innerHTML = obj[0].region;
+  document.getElementById('town').innerHTML = obj[0].town;
+  document.getElementById('audience_category').innerHTML = obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML = obj[0].audience_attendance;
+  document.getElementById('team_challenges').innerHTML = obj[0].team_challenges;
+  document.getElementById('complaints_raised').innerHTML = obj[0].complaints_raised;
+  document.getElementById('event_summary').innerHTML = obj[0].event_summary;
 
-    picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
+  picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
 
-    var jsonarray = JSON.parse(obj[0].picture_paths);
-    for(var i = 0; i < jsonarray.length; i++) {
-      var obj2 = jsonarray[i];
+  var jsonarray = JSON.parse(obj[0].picture_paths);
+  for (var i = 0; i < jsonarray.length; i++) {
+    var obj2 = jsonarray[i];
 
-      var user_id = ""+obj[0].reporter;
-      var event_header = ""+obj[0].eventtitle;
-      var picture_header = ""+obj2;
+    var user_id = "" + obj[0].reporter;
+    var event_header = "" + obj[0].eventtitle;
+    var picture_header = "" + obj2;
 
 
-      picValues = picValues + "<div>";
-      picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-      picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-      picValues = picValues + "</a>";
-      picValues = picValues + "</div>";
+    picValues = picValues + "<div>";
+    picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/" + user_id + "_" + event_header + "/" + picture_header + "' caption='Caption 1'>";
+    picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/" + user_id + "_" + event_header + "/" + picture_header + "'/>";
+    picValues = picValues + "</a>";
+    picValues = picValues + "</div>";
 
   }
   picValues = picValues + "</div>";
-  document.getElementById('pictureContainerLevel4users').innerHTML=picValues;
+  document.getElementById('pictureContainerLevel4users').innerHTML = picValues;
 
 }
 
@@ -2630,260 +2627,15 @@ function dashUsersDisplayComplete(xhr, status) {
   UIkit.modal('#dashusersdisplay').show();
 
 
-  document.getElementById('eventtitle').innerHTML=obj[0].firstname+" "+obj[0].lastname;
-  document.getElementById('date_organized').innerHTML=obj[0].email;
+  document.getElementById('eventtitle').innerHTML = obj[0].firstname + " " + obj[0].lastname;
+  document.getElementById('date_organized').innerHTML = obj[0].email;
 
-  document.getElementById('region').innerHTML=obj[0].region;
-  document.getElementById('town').innerHTML=obj[0].level;
-
-}
-
-function deleteUsers(val) {
-  console.log('users', val);
-  var theUrl = "databasehandler.php?cmd=20&userid=" + val +"&myid="+ sessionStorage.userid;
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: deleteUsersComplete
-    });
-
-  // $('#modalpop').click();
-}
-
-function deleteUsersComplete(xhr, status) {
-  console.log(xhr);
-  var obj = JSON.parse(xhr.responseText);
-
-  console.log(obj);
-  //level2usersdatatable.ajax.reload();
-  $.notify({
-    icon: "info_outline",
-    message: "User Deactivated Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
+  document.getElementById('region').innerHTML = obj[0].region;
+  document.getElementById('town').innerHTML = obj[0].level;
 
 }
 
-function reactivateUsers(val) {
-  console.log('users', val);
-  var theUrl = "databasehandler.php?cmd=21&userid=" + val + "&myid="+ sessionStorage.userid;
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: reactivateUsersComplete
-    });
-}
-
-function reactivateUsersComplete(xhr, status) {
-  console.log(xhr);
-
-  //level2usersdatatable.ajax.reload();
-  $.notify({
-    icon: "info_outline",
-    message: "User Reactivated Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-
-}
-
-function passwordreset(){
-  event.preventDefault();
-
-  var currentpassword = $('#currentpassword').val();
-  var newpassword = $('#newpassword').val();
-  var confirmednewpassword = $('#confirmednewpassword').val();
-
-  if(newpassword == confirmednewpassword){
-
-    var theUrl = "databasehandler.php?cmd=26&myid=" + sessionStorage.userid + "&confirmednewpassword="+ confirmednewpassword;
-
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: passwordresetComplete
-      });
-
-  } else {
-
-    $.notify({
-      icon: "info_outline",
-      message: "New password is not the same as confirmed password."
-
-    }, {
-        type: 'warning',
-        timer: 1000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-
-  }
-
-}
-
-function passwordresetComplete(xhr, status) {
-  console.log(xhr);
-
-  //level2usersdatatable.ajax.reload();
-  $.notify({
-    icon: "info_outline",
-    message: "Password Changed Successfully."
-
-  }, {
-      type: 'success',
-      timer: 1000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-
-}
-
-function generateInputs(){
-
-  var number = $('#createInputs').val();
-
-  for(var i = 0; i < number; i++){
-    document.getElementById('place').appendChild="<div><input/></div>";
-  }
-
-
-}
-
-function searchdash(){
-  if ($('#addnewdateselected').val() == "") {
-    
-    $.notify({
-      icon: "info_outline",
-      message: "Please Select Start Date."
-
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  } else if ($('#addenddateselected').val() == ""){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Select End Date."
-
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-    loadDashData();
-    $('#searchregionarea').show();
-    $('#datafield').show();
-  }
-
-}
-
-function loadDashData(){
-  var sdate = $('#addnewdateselected').val();
-  var edate = $('#addenddateselected').val();
-
-  //alert(sdate+' '+edate);
-
-  fillDashRegionFigures(sdate, edate);
-  fillDashTotalEvents(sdate, edate);
-  fillDashTotalAttendees(sdate, edate);
-  fillDashCommonPlace(sdate, edate);
-  dashGraphEventData(sdate, edate);
-  dashGraphAudienceData(sdate, edate);
-  dashGraphUserData(sdate, edate);
-}
-
-function regionfillDashTotalEvents(sdate,edate, region) {
-
-  var theUrl = "databasehandler.php?cmd=11";
-  if (typeof (region) === 'undefined') {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
-  }
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashTotalEventsComplete
-    });
-
-}
-
-function regionfillDashTotalAttendees(sdate, edate, region) {
-
-  var theUrl = "databasehandler.php?cmd=13";
-  if (typeof (region) === 'undefined') {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
-  }
-  
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashTotalAttendeesComplete
-    });
-
-}
-
-function regionfillDashCommonPlace(sdate, edate, region) {
-  var theUrl = "databasehandler.php?cmd=14";
-  if (typeof (region) === 'undefined') {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
-  }
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashCommonPlaceComplete
-    });
-}
-
-function regionloadDashData(region) {
-  var sdate = $('#addnewdateselected').val();
-  var edate = $('#addenddateselected').val();
-
-  if(region == 0){
-    fillDashTotalEvents(sdate, edate);
-    fillDashTotalAttendees(sdate, edate);
-    fillDashCommonPlace(sdate, edate);
-  }else{
-    regionfillDashTotalEvents(sdate, edate, region);
-    regionfillDashTotalAttendees(sdate, edate, region);
-    regionfillDashCommonPlace(sdate, edate, region);
-  }
-}
-
-function dashGraphEventData(sdate, edate){
+function dashGraphEventData(sdate, edate) {
   var theUrl = "databasehandler.php?cmd=15";
   if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
     theUrl;
@@ -3030,4 +2782,226 @@ function dashGraphUserData(sdate, edate) {
     });
   });
 }
+
+function fillDashRegionFigures(sdate, edate) {
+
+  var theUrl = "databasehandler.php?cmd=10";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashRegionFiguresComplete
+    });
+
+}
+
+function fillDashRegionFiguresComplete(xhr, status) {
+
+  $('#dashboardtablebody').html('<th><td> Region</td><td class="text-right">Events Hosted</td><td class="text-right">Percentage %</td></th>');
+
+  var obj = JSON.parse(xhr.responseText);
+  // console.log("obj", obj);
+
+  for (var i = 0; i < obj.length; i++) {
+    $('#dashboardtablebody').append("<tr><td></td><td>" + obj[i].regname + "</td><td class='text-right'>" + obj[i].figures + "</td><td class='text-right'>" + obj[i].percentage + "</td></tr><tr>");
+  }
+
+}
+
+function fillDashTotalEvents() {
+
+  var theUrl = "databasehandler.php?cmd=11";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalEventsComplete
+    });
+
+}
+
+function fillDashTotalEventsComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+  // console.log("obj", obj);
+
+  $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>" + obj[0].total + "<p>");
+  // document.getElementById('totalEventsHoted').value = obj.total;
+
+
+
+}
+
+function fillDashTotalAttendees() {
+
+  var theUrl = "databasehandler.php?cmd=13";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalAttendeesComplete
+    });
+
+}
+
+function fillDashTotalAttendeesComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+  // console.log("obj", obj);
+
+  $('#totalAttendees').html("<p style='font-weight: bold; font-size: 1.3em;'>" + obj[0].total + "<p>");
+  // document.getElementById('totalEventsHoted').value = obj.total;
+
+
+
+}
+
+function fillDashCommonPlace() {
+
+  var theUrl = "databasehandler.php?cmd=14";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashCommonPlaceComplete
+    });
+
+}
+
+function fillDashCommonPlaceComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+  console.log("obj", obj);
+
+  $('#commonAudience').html("<p style='font-weight: bold; font-size: 1.3em;'>" + obj[0].audience_category + "<p>");
+
+
+}
+
+function loadDashData() {
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  //alert(sdate+' '+edate);
+
+  fillDashRegionFigures(sdate, edate);
+  fillDashTotalEvents(sdate, edate);
+  fillDashTotalAttendees(sdate, edate);
+  fillDashCommonPlace(sdate, edate);
+  dashGraphEventData(sdate, edate);
+  dashGraphAudienceData(sdate, edate);
+  dashGraphUserData(sdate, edate);
+}
+
+function regionfillDashTotalEvents(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=11";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalEventsComplete
+    });
+
+}
+
+function regionfillDashTotalAttendees(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=13";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalAttendeesComplete
+    });
+
+}
+
+function regionfillDashCommonPlace(sdate, edate, region) {
+  var theUrl = "databasehandler.php?cmd=14";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashCommonPlaceComplete
+    });
+}
+
+function regionloadDashData(region) {
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  if (region == 0) {
+    fillDashTotalEvents(sdate, edate);
+    fillDashTotalAttendees(sdate, edate);
+    fillDashCommonPlace(sdate, edate);
+  } else {
+    regionfillDashTotalEvents(sdate, edate, region);
+    regionfillDashTotalAttendees(sdate, edate, region);
+    regionfillDashCommonPlace(sdate, edate, region);
+  }
+}
+
+function searchdash() {
+  if ($('#addnewdateselected').val() == "") {
+
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select Start Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ($('#addenddateselected').val() == "") {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select End Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    loadDashData();
+    $('#searchregionarea').show();
+    $('#datafield').show();
+  }
+
+}
+
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+
 
