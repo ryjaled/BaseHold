@@ -105,140 +105,12 @@
 		case 32:
 			deleteReport();
 			break;
+		case 33:
+			reassignEvent();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
-	}
-
-
-   function loginUser()
-   {
-
-      include("users.php");
-      $user = new users();
-
-      if($_REQUEST['email']=="")
-      {
-        echo '{"result": 0, "message": "No user email. Failed to log in."}';
-        exit();
-      }
-
-      $email = $_REQUEST['email'];
-      $password = $_REQUEST['password'];
-      // echo $email;
-      // echo $password;
-      $validation = $user->login($email,$password);
-      // echo $validation;
-			if($validation==false){
-
-			   echo '{"result":0,"message":"Validation failed"}';
-
-			}
-			else{
-
-				// $array=array('result'=>1,'message'=>'User logged in','email'=>$email,'password'=>$password);
-				echo json_encode($validation);
-			}
-
-	}
-
-	function changePassword()
-	{
-
-		 include("users.php");
-		 $user = new users();
-
-	 	 $myid = $_REQUEST['myid'];
-	 	 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
-
-	 	 $validation = $user->updatepassword($myid,$confirmednewpassword);
-		 
-		 if($validation==false){
-				echo '{"result":0,"message":"Validation failed"}';
-		 }
-		 else{
-			 echo json_encode($validation);
-		 }
-
- 	}
-
-	function addLevel1User()
-   {
-
-    	include("users.php");
-
-		$user = new users();
-
-		$firstname=$_REQUEST['useraddfname'];
-		$lastname=$_REQUEST['useraddlname'];
-		$email=$_REQUEST['useraddemail'];
-		$password=$_REQUEST['useraddpword'];
-		$region=$_REQUEST['region'];
-		$level=$_REQUEST['level'];
-		$myid=$_REQUEST['myid'];
-
-		$validation = $user->addNewUser($firstname,$lastname,$email,$password,$region,$level);
-
-		$user2 = new users();
-
-		$result = $user2->getID($firstname);
-
-		$usersdata = array();
-
-		while($row = $user2->fetch()){
-				array_push($usersdata,$row);
-		}
-
-		echo json_encode($usersdata);
-
-	}
-
-	function fetchAddUserLog()
-   {
-
-    	include("logs.php");
-
-		$log = new logs();
-
-		$actedon=$_REQUEST['acted_on_id'];
-		$myid=$_REQUEST['myid'];
-
-		$log->addUserLog($myid,$actedon,"added");
-
-	}
-
-	function deleteUser()
-   {
-      include("users.php");
-			include("logs.php");
-
-		$user = new users();
-		$log = new logs();
-
-		$userid=$_REQUEST['userid'];
-		$myid=$_REQUEST['myid'];
-
-		$validation = $user->deleteUser($userid);
-		$log->addUserLog($myid, $userid, "deactivated the user:");
-
-		echo json_encode($validation);
-	}
-
-	function reactivateUser()
-   {
-      include("users.php");
-			include("logs.php");
-
-		$user = new users();
-		$log = new logs();
-
-		$userid=$_REQUEST['userid'];
-		$myid=$_REQUEST['myid'];
-
-		$validation = $user->reactivateUser($userid);
-		$log->addUserLog($myid, $userid, "activated the user:");
-
-		echo json_encode($validation);
 	}
 
 	function addEvent(){
@@ -273,6 +145,36 @@
 		}
 	}
 
+	function addLevel1User(){
+
+    	include("users.php");
+
+		$user = new users();
+
+		$firstname=$_REQUEST['useraddfname'];
+		$lastname=$_REQUEST['useraddlname'];
+		$email=$_REQUEST['useraddemail'];
+		$password=$_REQUEST['useraddpword'];
+		$region=$_REQUEST['region'];
+		$level=$_REQUEST['level'];
+		$myid=$_REQUEST['myid'];
+
+		$validation = $user->addNewUser($firstname,$lastname,$email,$password,$region,$level);
+
+		$user2 = new users();
+
+		$result = $user2->getID($firstname);
+
+		$usersdata = array();
+
+		while($row = $user2->fetch()){
+				array_push($usersdata,$row);
+		}
+
+		echo json_encode($usersdata);
+
+	}
+
 	function addPendingEvent(){
 		include("events.php");
 		include("logs.php");
@@ -301,8 +203,99 @@
 		}
 	}
 
-	function deleteAnEvent()
- 	{
+	function addReport(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+		$myArray = array();
+
+		$eventtitle = '';
+		$reporter= '';
+		$region = '';
+
+		$eventid=$_REQUEST['eventid'];
+		$challenges=$_REQUEST['challenges'];
+		$complaints=$_REQUEST['complaints'];
+		$summary=$_REQUEST['observations'];
+		$picpath=$_REQUEST['picpath'];
+		$foldpath=$_REQUEST['foldpath'];
+		$teammembers=$_REQUEST['members'];
+		
+		$verify=$event->addNewReport($eventid,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers);
+
+		$myArray = explode(',', $teammembers);
+		for ($i=0; $i < count($myArray); $i++) { 
+			$verifyadd=$event->addTeamMembers($eventid,$myArray[$i]);
+		}
+
+		$result=$event->getAnEvent($eventid);
+		while($row = $event->fetch()){
+			$eventtitle = $row['eventtitle'];
+			$reporter= $row['creator'];
+			$region = $row['region'];
+		}
+
+		$log->addReportLog($eventtitle,$reporter,"added a new report for: ", $region);
+
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			$verify=$event->addNewReportEventUpdate($eventid,1);
+			echo '{"result":1,"message":"Event added"}';
+
+		}
+	}
+
+	function adminLogin(){
+		include("users.php");
+		$username=$_REQUEST['username'];
+		$password=$_REQUEST['password'];
+		$user = new users();
+		$user2 = new users();
+
+		$verify = $user->adminLogin($username,$password);
+
+		if($verify==false){
+
+				echo '{"result":0,"message":"Wrong User information"}';
+
+
+		}
+		else{
+			session_start();
+			$_SESSION=$verify;
+
+
+			$array=array('result'=>1,'message'=>'User logged in',
+		'username'=>$username,'password'=>$password);
+			echo json_encode($array);
+		}
+
+	}
+
+	function changePassword(){
+
+		 include("users.php");
+		 $user = new users();
+
+	 	 $myid = $_REQUEST['myid'];
+	 	 $confirmednewpassword = $_REQUEST['confirmednewpassword'];
+
+	 	 $validation = $user->updatepassword($myid,$confirmednewpassword);
+		 
+		 if($validation==false){
+				echo '{"result":0,"message":"Validation failed"}';
+		 }
+		 else{
+			 echo json_encode($validation);
+		 }
+
+	}
+
+	function deleteAnEvent(){
  			$success="";
 			include("events.php");
 
@@ -314,58 +307,120 @@
 
  			echo json_encode($result);
 
- 	}
+	}
+	 
+	function deleteReport(){
+		include("events.php");
 
-	function getEvents()
-	{
-			$success="";
-			include("events.php");
-			$event = new events();
+		$event = new events();
 
-			$result = $event->getEvents();
-
-
-			$data = array();
-
+		if(isset($_REQUEST['eventid'])){
+			$eventid=$_REQUEST['eventid'];
+			$verify=$event->deleteReportwithEventid($eventid);
+			$verify=$event->addNewReportEventUpdate($eventid,0);
+		}elseif (isset($_REQUEST['reportid'])) {
+			$reportid=$_REQUEST['reportid'];
+			$verify=$event->getAReport($reportid);
 			while($row = $event->fetch()){
-					$success="true";
-					// $data[]=$row;
-					array_push($data,$row);
+				$eventid = $row['event_id'];
+			}	
+			$verify=$event->deleteReport($reportid);
+			$verify=$event->addNewReportEventUpdate($eventid,0);
+		}
 
-				}
+		if($verify==""){
+			echo '{"result":0,"message":"Report not deleted"}';
+		}
+		else{
+			echo '{"result":1,"message":"Report deleted"}';
 
-				echo json_encode($data);
+		}
+	}
+
+	function deleteUser(){
+      include("users.php");
+			include("logs.php");
+
+		$user = new users();
+		$log = new logs();
+
+		$userid=$_REQUEST['userid'];
+		$myid=$_REQUEST['myid'];
+
+		$validation = $user->deleteUser($userid);
+		$log->addUserLog($myid, $userid, "deactivated the user:");
+
+		echo json_encode($validation);
+	}
+
+	function editEvent(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+
+		$eventtitle=$_REQUEST['eventtitle'];
+		$eventtopic=$_REQUEST['eventtopic'];
+		$date=$_REQUEST['date'];
+		$converted_date = strtotime($date);
+		$final_date = date("Y-m-d H:i:s", $converted_date);
+		$region=$_REQUEST['region'];
+		$town=$_REQUEST['town'];
+		$audiencecat=$_REQUEST['audiencecat'];
+		$attendance=$_REQUEST['attendance'];
+		$logistics=$_REQUEST['logistics'];
+		$mode_of_outreach=$_REQUEST['outreach'];
+		$reporter=$_REQUEST['reporter'];
+		$eventid=$_REQUEST['eventid'];
+		
+		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
+
+		$log->addEventLog($eventtitle,$reporter,"edited a future event", $region);
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			echo '{"result":1,"message":"Event added"}';
+
+		}
+	}
+
+	function fetchAddUserLog(){
+
+    	include("logs.php");
+
+		$log = new logs();
+
+		$actedon=$_REQUEST['acted_on_id'];
+		$myid=$_REQUEST['myid'];
+
+		$log->addUserLog($myid,$actedon,"added");
 
 	}
 
-	function getCalEvents()
-	{
-			$success="";
-			include("events.php");
-			$event = new events();
+	function getAllUsers(){
 
-			$result = $event->getEvents();
+		include("users.php");
+		$user = new users();
 
+		$user_id=$_REQUEST['userid'];
 
-			$data = array();
+		$result = $user->getUser($user_id);
 
-			while($row = $event->fetch()){
-					$success="true";
-					$data['title']=$row['eventtitle'];
-					//$data['start']=date_format($row['date_organized'],"D M d Y H:i:s");
-					$data['start']=substr($row['date_to_be_organized'], 0, -9);
-					$data['className']='success';
-					$data['eventid']=$row['event_id'];
-					$moredata[] = $data;
-				}
-				//echo date("D M d Y H:i:s");
-				echo json_encode($moredata);
+		$usersdata = array();
+
+		while($row = $user->fetch()){
+				array_push($usersdata,$row);
+		}
+
+		echo json_encode($usersdata);
+
 
 
 	}
 
-	function getAnEvent()
- 	{
+	function getAnEvent(){
  			$success="";
  			include("events.php");
  			$event = new events();
@@ -385,31 +440,70 @@
 
  				echo json_encode($data);
 	}
+	
+	function getAnEventwithReportinfo(){
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
 
-	function getAReport()
-	{
-			$success="";
-			include("events.php");
-			$event = new events();
-
-			$reportid=$_REQUEST['reportid'];
-
-			$result = $event->getAReport($reportid);
-
+			$eventid=$_REQUEST['eventid'];
 			$data = array();
 
+			$result = $event->getAnEvent($eventid);
+
 			while($row = $event->fetch()){
-					$success="true";
-					// $data[]=$row;
-					array_push($data,$row);
+ 					$success="true";
+					 // $data[]=$row;
+					$data['approved_timestamp'] = $row['approved_timestamp'];
+					$data['audience_category'] = $row['audience_category'];
+					$data['firstname'] = $row['firstname'];
+					$data['lastname'] = $row['lastname'];
+					$data['date_to_be_organized'] = $row['date_to_be_organized'];
+					$data['event_id'] = $row['event_id'];
+					$data['eventtitle'] = $row['eventtitle'];
+					$data['eventtopic'] = $row['eventtopic'];
+					$data['expected_audience_attendance'] = $row['expected_audience_attendance'];
+					$data['is_approved'] = $row['is_approved'];
+					$data['is_verified'] = $row['is_verified'];
+					$data['logistics'] = $row['logistics'];
+					$data['mode_of_outreach'] = $row['mode_of_outreach'];
+					$data['regionname'] = $row['regionname'];
+					$data['town'] = $row['town'];
+					$data['verification_comments'] = $row['verification_comments'];
+					$data['verified_timestamp'] = $row['verified_timestamp'];
+ 					//array_push($data,$row);
+
+ 				}
+
+			$result = $event->getReportwithEventid($eventid);
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+					 // $data[]=$row;
+					$data['team_challenges'] = $row['team_challenges'];
+					$data['complaints_raised'] = $row['complaints_raised'];
+					$data['event_summary'] = $row['event_summary'];
+					$data['picture_paths'] = $row['picture_paths'];
+					$data['folder_paths'] = $row['folder_paths'];
+					$data['team_members'] = $row['team_members'];
+					$data['report_id'] = $row['report_id'];
+					$data['date_reported'] = $row['date_reported'];
+					//array_push($moredata,$data);
+
+					$result = $event->getAReport($data['report_id']);
+
+					while($row = $event->fetch()){
+						$success="true";
+						$data['report_approve'] = $row['reportapprove'];
+
+					}
 
 				}
 
-			echo json_encode($data);
-   }
+ 				echo json_encode($data);
+	}
 
-	function getAPendingEvent()
- 	{
+	function getAPendingEvent(){
  			$success="";
  			include("events.php");
  			$event = new events();
@@ -434,247 +528,53 @@
 
  	}
 
-	function getRegions()
- 	{
- 			$success="";
- 			include("events.php");
- 			$event = new events();
-
- 			$result = $event->getRegions();
-
- 			$data = array();
-
- 			while($row = $event->fetch()){
- 					$success="true";
- 					array_push($data,$row);
-
- 				}
-
- 				echo json_encode($data);
-
-	}
-
-	function getDashRegionFigures()
-	{
-			$success="";
-			include("events.php");
-		   $event = new events();
-			$total="";
-			
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region= '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			} 
-
-		   $result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
-		   while($row = $event->fetch()){
-			   $success="true";
-			   $total = $row['total'];
-		   }
-
-			$result = $event->getDashRegionFigures($s_final_date,$e_final_date,$region);
-
-			$data = array();
-
-			while($row = $event->fetch()){
-			   $success="true";
-			   $data['regname']=$row['regname'];
-			   $data['figures']=$row['figures'];
-			   $decimal = $row['figures'] / $total;
-			   $percentage = number_format(($decimal * 100),2, '.', '');
-			   $data['percentage'] = $percentage.'%';
-			   $moredata[] = $data;
-			}
-
-				echo json_encode($moredata);
-
-   }
-
-   function getDashTotalEvents()
-	{
+	function getAReport(){
 			$success="";
 			include("events.php");
 			$event = new events();
 
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region= '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			} 
+			$reportid=$_REQUEST['reportid'];
 
-			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
-
-			$data = array();
-			$sdata = array();
-
-			while($row = $event->fetch()){
-				$success="true";
-				$total = $row['total'];
-				if ($total == null) {
-					$sdata['total'] = '0';
-					array_push($data,$sdata);
-				}else{
-					array_push($data,$row);
-				}
-				
-			}
-
-				echo json_encode($data);
-
-   }
-
-   function getDashTotalAttendees()
-	{
-			$success="";
-			include("events.php");
-			$event = new events();
-			$total = '';
-			$moredata = array();
-
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region = '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			}
-
-			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
-
-			$data = array();
-			$sdata = array();
-
-			while($row = $event->fetch()){
-				$success="true";
-				$total = $row['total'];
-				if ($total == null) {
-					$sdata['total'] = '0';
-					array_push($data,$sdata);
-				}else{
-					array_push($data,$row);
-				}
-				
-			}
-
-				echo json_encode($data);
-
-   }
-
-   function getDashTopRegion()
-	{
-			$success="";
-			include("events.php");
-			$event = new events();
-
-			$result = $event->getDashTopRegion();
+			$result = $event->getAReport($reportid);
 
 			$data = array();
 
 			while($row = $event->fetch()){
 					$success="true";
+					// $data[]=$row;
 					array_push($data,$row);
 
 				}
-
-				echo json_encode($data);
-
-   }
-
-   function getDashTopAudienceCategory()
-   {
-		   $success="";
-		   include("events.php");
-			$event = new events();
-			
-			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-			{ 
-				$sdate='';
-				$edate=''; 
-				$s_final_date = '';
-				$e_final_date = '';
-				$region = '';
-			}else{
-				if (!isset($_REQUEST['region'])) {
-					$region='';
-				}else{
-					$region=$_REQUEST['region'];
-				}
-				$sdate=$_REQUEST['sdate'];
-				$edate=$_REQUEST['edate'];
-				$s_converted_date = strtotime($sdate);
-				$e_converted_date = strtotime($edate);
-				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-			}
-
-		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
-
-			$data = array();
-			$sdata = array();
-			
-			$sdata['audience_category'] = 'None';
-			$sdata['total'] = '0';
-			array_push($data,$sdata);
-
-		   while($row = $event->fetch()){
-				$success="true";
-				if (count($row)>1) {
-					$data = array();
-					array_push($data,$row);
-				}
-				
-			}
 
 			echo json_encode($data);
+	}
 
-   }
+	function getCalEvents(){
+			$success="";
+			include("events.php");
+			$event = new events();
 
-	function getDashGraphEventData()
-	{
+			$result = $event->getEvents();
+
+
+			$data = array();
+
+			while($row = $event->fetch()){
+					$success="true";
+					$data['title']=$row['eventtitle'];
+					//$data['start']=date_format($row['date_organized'],"D M d Y H:i:s");
+					$data['start']=substr($row['date_to_be_organized'], 0, -9);
+					$data['className']='success';
+					$data['eventid']=$row['event_id'];
+					$moredata[] = $data;
+				}
+				//echo date("D M d Y H:i:s");
+				echo json_encode($moredata);
+
+
+	}
+
+	function getDashGraphEventData(){
 				$success="";
 				include("events.php");
 				$event = new events();
@@ -714,45 +614,7 @@
 
 	}
 
-	function getDashPieEventData()
-	{
-				$success="";
-				include("events.php");
-				$event = new events();
-
-				if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
-				{ 
-					$sdate='';
-					$edate=''; 
-					$s_final_date = '';
-					$e_final_date = '';
-				}else{
-					$sdate=$_REQUEST['sdate'];
-					$edate=$_REQUEST['edate'];
-					$s_converted_date = strtotime($sdate);
-					$e_converted_date = strtotime($edate);
-					$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
-					$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
-				}
-
-				$result = $event->getDashPieEventData($s_final_date,$e_final_date);
-
-				$data = array();
-
-				while($row = $event->fetch()){
-						$success="true";
-						$data[]=$row['audience'];
-						$data[]=(int)$row['totals'];
-						$moredata[] = $data;
-						$data =[];
-					}
-
-					echo json_encode($moredata);
-
-	}
-
-	function getDashOutreachEventData()
-	{
+	function getDashOutreachEventData(){
 				$success="";
 				include("events.php");
 				$event = new events();
@@ -825,126 +687,296 @@
 
 	}
 
-  	function transposeData($data)
-	{
-		$retData = array();
-			foreach ($data as $row => $columns) {
-				foreach ($columns as $row2 => $column2) {
-					$retData[$row2][$row] = $column2;
+	function getDashPieEventData(){
+				$success="";
+				include("events.php");
+				$event = new events();
+
+				if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+				{ 
+					$sdate='';
+					$edate=''; 
+					$s_final_date = '';
+					$e_final_date = '';
+				}else{
+					$sdate=$_REQUEST['sdate'];
+					$edate=$_REQUEST['edate'];
+					$s_converted_date = strtotime($sdate);
+					$e_converted_date = strtotime($edate);
+					$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+					$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
 				}
+
+				$result = $event->getDashPieEventData($s_final_date,$e_final_date);
+
+				$data = array();
+
+				while($row = $event->fetch()){
+						$success="true";
+						$data[]=$row['audience'];
+						$data[]=(int)$row['totals'];
+						$moredata[] = $data;
+						$data =[];
+					}
+
+					echo json_encode($moredata);
+
+	}
+
+	function getRegions(){
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+ 			$result = $event->getRegions();
+
+ 			$data = array();
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+ 					array_push($data,$row);
+
+ 				}
+
+ 				echo json_encode($data);
+
+	}
+
+	function getDashRegionFigures(){
+			$success="";
+			include("events.php");
+		   $event = new events();
+			$total="";
+			
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region= '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			} 
+
+		   $result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
+		   while($row = $event->fetch()){
+			   $success="true";
+			   $total = $row['total'];
+		   }
+
+			$result = $event->getDashRegionFigures($s_final_date,$e_final_date,$region);
+
+			$data = array();
+
+			while($row = $event->fetch()){
+			   $success="true";
+			   $data['regname']=$row['regname'];
+			   $data['figures']=$row['figures'];
+			   $decimal = $row['figures'] / $total;
+			   $percentage = number_format(($decimal * 100),2, '.', '');
+			   $data['percentage'] = $percentage.'%';
+			   $moredata[] = $data;
 			}
-		return $retData;
-	}
 
-	function toggleApprove()
-	{	
-		$eventtitle='';
-		$reporter='';
-		$region='';
-		
-		 include("logs.php");
-		 include("events.php");
-		 $event = new events();
-		 $log = new logs();
-		 $eventid=$_REQUEST['eventid'];
-		 $approval=$_REQUEST['approve'];
-		 $approveComments=$_REQUEST['approveComments'];
-		 $approvedDate = date("Y-m-d H:i:s");
-		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate,$approveComments);
+				echo json_encode($moredata);
 
-		 $receipt=$event->getAnEvent($eventid);
-		 while($row = $event->fetch()){
-			$eventtitle=$row['eventtitle'];
-			$reporter=$row['creator'];
-			$region=$row['region'];
-		 }
+   }
 
-		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
+	function getDashTopAudienceCategory(){
+		   $success="";
+		   include("events.php");
+			$event = new events();
+			
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
 
-		 echo json_encode($approve);
+		   $result = $event->getDashTopAudienceCategory($s_final_date,$e_final_date,$region);
 
-	}
+			$data = array();
+			$sdata = array();
+			
+			$sdata['audience_category'] = 'None';
+			$sdata['total'] = '0';
+			array_push($data,$sdata);
 
-	function toggleApproveReport()
-	{	
-		$eventtitle='';
-		$reporter='';
-		$region='';
+		   while($row = $event->fetch()){
+				$success="true";
+				if (count($row)>1) {
+					$data = array();
+					array_push($data,$row);
+				}
+				
+			}
 
-		 include("logs.php");
-		 include("events.php");
-		 $event = new events();
-		 $log = new logs();
-		 $reportid=$_REQUEST['reportid'];
-		 $approval=$_REQUEST['approval'];
-		 $verificationComments = $_REQUEST['verificationComments'];
-		 $date = date("Y-m-d H:i:s");
-		 $verify=$event->toggleReport($reportid,$approval,$date,$verificationComments);
-
-		 $receipt=$event->getAReport($reportid);
-		 while($row = $event->fetch()){
-			$eventtitle=$row['eventtitle'];
-			$reporter=$row['creator'];
-			$region=$row['region'];
-		 }
-
-		 $log->addEventApproveLog($eventtitle,$reporter,"has approved a report: ", $region);
-		 echo json_encode($approval);
+			echo json_encode($data);
 
 	}
+	
+	function getDashTopRegion(){
+			$success="";
+			include("events.php");
+			$event = new events();
 
-	function toggleVerify()
-	{	
-		$eventtitle='';
-		$reporter='';
-		$region='';
+			$result = $event->getDashTopRegion();
 
-		include("logs.php");
-		include("events.php");
+			$data = array();
 
-		$event = new events();
-		$log = new logs();
+			while($row = $event->fetch()){
+					$success="true";
+					array_push($data,$row);
 
-		$eventid=$_REQUEST['eventid'];
-		$isVerify=$_REQUEST['verify'];
-		$commentToVerify = $_REQUEST['verifycomments'];
-		$verifiedDate = date("Y-m-d H:i:s");
-		$verify=$event->toggleVerify($eventid,$isVerify,$verifiedDate,$commentToVerify);
+				}
 
-		$receipt=$event->getAnEvent($eventid);
-		 while($row = $event->fetch()){
-			$eventtitle=$row['eventtitle'];
-			$reporter=$row['creator'];
-			$region=$row['region'];
-		 }
-
-		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
-
-		echo json_encode($isVerify);
+				echo json_encode($data);
 
 	}
+	
+	function getDashTotalAttendees(){
+			$success="";
+			include("events.php");
+			$event = new events();
+			$total = '';
+			$moredata = array();
 
-	function getAllUsers(){
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region = '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			}
 
-		include("users.php");
-		$user = new users();
+			$result = $event->getDashTotalAttendees($s_final_date,$e_final_date,$region);
 
-		$user_id=$_REQUEST['userid'];
+			$data = array();
+			$sdata = array();
 
-		$result = $user->getUser($user_id);
+			while($row = $event->fetch()){
+				$success="true";
+				$total = $row['total'];
+				if ($total == null) {
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}else{
+					array_push($data,$row);
+				}
+				
+			}
 
-		$usersdata = array();
-
-		while($row = $user->fetch()){
-				array_push($usersdata,$row);
-		}
-
-		echo json_encode($usersdata);
-
-
+				echo json_encode($data);
 
 	}
-	//Logs user into system
+	
+	function getDashTotalEvents(){
+			$success="";
+			include("events.php");
+			$event = new events();
+
+			if(!isset($_REQUEST['sdate']) || !isset($_REQUEST['edate']))
+			{ 
+				$sdate='';
+				$edate=''; 
+				$s_final_date = '';
+				$e_final_date = '';
+				$region= '';
+			}else{
+				if (!isset($_REQUEST['region'])) {
+					$region='';
+				}else{
+					$region=$_REQUEST['region'];
+				}
+				$sdate=$_REQUEST['sdate'];
+				$edate=$_REQUEST['edate'];
+				$s_converted_date = strtotime($sdate);
+				$e_converted_date = strtotime($edate);
+				$s_final_date = date("Y-m-d H:i:s", $s_converted_date);
+				$e_final_date = date("Y-m-d H:i:s", $e_converted_date);
+			} 
+
+			$result = $event->getDashTotalEvents($s_final_date,$e_final_date,$region);
+
+			$data = array();
+			$sdata = array();
+
+			while($row = $event->fetch()){
+				$success="true";
+				$total = $row['total'];
+				if ($total == null) {
+					$sdata['total'] = '0';
+					array_push($data,$sdata);
+				}else{
+					array_push($data,$row);
+				}
+				
+			}
+
+				echo json_encode($data);
+
+   }
+	
+	function getEvents(){
+			$success="";
+			include("events.php");
+			$event = new events();
+
+			$result = $event->getEvents();
+
+
+			$data = array();
+
+			while($row = $event->fetch()){
+					$success="true";
+					// $data[]=$row;
+					array_push($data,$row);
+
+				}
+
+				echo json_encode($data);
+
+	}
+	 
 	function login(){
 		include("users.php");
 		$username=$_REQUEST['username'];
@@ -985,200 +1017,163 @@
 
 	}
 
-	function adminLogin(){
-		include("users.php");
-		$username=$_REQUEST['username'];
-		$password=$_REQUEST['password'];
-		$user = new users();
-		$user2 = new users();
+   function loginUser(){
 
-		$verify = $user->adminLogin($username,$password);
+      include("users.php");
+      $user = new users();
 
-		if($verify==false){
+      if($_REQUEST['email']=="")
+      {
+        echo '{"result": 0, "message": "No user email. Failed to log in."}';
+        exit();
+      }
 
-				echo '{"result":0,"message":"Wrong User information"}';
+      $email = $_REQUEST['email'];
+      $password = $_REQUEST['password'];
+      // echo $email;
+      // echo $password;
+      $validation = $user->login($email,$password);
+      // echo $validation;
+			if($validation==false){
 
+			   echo '{"result":0,"message":"Validation failed"}';
 
-		}
-		else{
-			session_start();
-			$_SESSION=$verify;
+			}
+			else{
 
-
-			$array=array('result'=>1,'message'=>'User logged in',
-		'username'=>$username,'password'=>$password);
-			echo json_encode($array);
-		}
+				// $array=array('result'=>1,'message'=>'User logged in','email'=>$email,'password'=>$password);
+				echo json_encode($validation);
+			}
 
 	}
 	
-	function editEvent(){
-		include("events.php");
-		include("logs.php");
+	function reactivateUser(){
+      include("users.php");
+			include("logs.php");
 
-		$event = new events();
+		$user = new users();
 		$log = new logs();
 
-		$eventtitle=$_REQUEST['eventtitle'];
-		$eventtopic=$_REQUEST['eventtopic'];
-		$date=$_REQUEST['date'];
-		$converted_date = strtotime($date);
-		$final_date = date("Y-m-d H:i:s", $converted_date);
-		$region=$_REQUEST['region'];
-		$town=$_REQUEST['town'];
-		$audiencecat=$_REQUEST['audiencecat'];
-		$attendance=$_REQUEST['attendance'];
-		$logistics=$_REQUEST['logistics'];
-		$mode_of_outreach=$_REQUEST['outreach'];
+		$userid=$_REQUEST['userid'];
+		$myid=$_REQUEST['myid'];
+
+		$validation = $user->reactivateUser($userid);
+		$log->addUserLog($myid, $userid, "activated the user:");
+
+		echo json_encode($validation);
+	}
+
+	function reassignEvent(){
+      include("events.php");
+		$event = new events();
+
+		$eventid=$_REQUEST['eventid'];
 		$reporter=$_REQUEST['reporter'];
-		$eventid=$_REQUEST['eventid'];
-		
-		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
+		$reason=$_REQUEST['reason'];
 
-		$log->addEventLog($eventtitle,$reporter,"edited a future event", $region);
-		if($verify==""){
-			echo '{"result":0,"message":"Event not added"}';
-		}
-		else{
-			echo '{"result":1,"message":"Event added"}';
+		$result = $event->reassignEvents($eventid,$reporter,$reason);
 
+		while($row = $event->fetch()){
+			$success="true";
 		}
+
+		echo json_encode($row);
+
 	}
 
-	function addReport(){
-		include("events.php");
+	function transposeData($data){
+		$retData = array();
+			foreach ($data as $row => $columns) {
+				foreach ($columns as $row2 => $column2) {
+					$retData[$row2][$row] = $column2;
+				}
+			}
+		return $retData;
+	}
+
+	function toggleApprove(){	
+		$eventtitle='';
+		$reporter='';
+		$region='';
+		
+		 include("logs.php");
+		 include("events.php");
+		 $event = new events();
+		 $log = new logs();
+		 $eventid=$_REQUEST['eventid'];
+		 $approval=$_REQUEST['approve'];
+		 $approveComments=$_REQUEST['approveComments'];
+		 $approvedDate = date("Y-m-d H:i:s");
+		 $approve=$event->toggleEvent($eventid,$approval,$approvedDate,$approveComments);
+
+		 $receipt=$event->getAnEvent($eventid);
+		 while($row = $event->fetch()){
+			$eventtitle=$row['eventtitle'];
+			$reporter=$row['creator'];
+			$region=$row['region'];
+		 }
+
+		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
+
+		 echo json_encode($approve);
+
+	}
+
+	function toggleApproveReport(){	
+		$eventtitle='';
+		$reporter='';
+		$region='';
+
+		 include("logs.php");
+		 include("events.php");
+		 $event = new events();
+		 $log = new logs();
+		 $reportid=$_REQUEST['reportid'];
+		 $approval=$_REQUEST['approval'];
+		 $verificationComments = $_REQUEST['verificationComments'];
+		 $date = date("Y-m-d H:i:s");
+		 $verify=$event->toggleReport($reportid,$approval,$date,$verificationComments);
+
+		 $receipt=$event->getAReport($reportid);
+		 while($row = $event->fetch()){
+			$eventtitle=$row['eventtitle'];
+			$reporter=$row['creator'];
+			$region=$row['region'];
+		 }
+
+		 $log->addEventApproveLog($eventtitle,$reporter,"has approved a report: ", $region);
+		 echo json_encode($approval);
+
+	}
+
+	function toggleVerify(){	
+		$eventtitle='';
+		$reporter='';
+		$region='';
+
 		include("logs.php");
+		include("events.php");
 
 		$event = new events();
 		$log = new logs();
-		$myArray = array();
-
-		$eventtitle = '';
-		$reporter= '';
-		$region = '';
 
 		$eventid=$_REQUEST['eventid'];
-		$challenges=$_REQUEST['challenges'];
-		$complaints=$_REQUEST['complaints'];
-		$summary=$_REQUEST['observations'];
-		$picpath=$_REQUEST['picpath'];
-		$foldpath=$_REQUEST['foldpath'];
-		$teammembers=$_REQUEST['members'];
-		
-		$verify=$event->addNewReport($eventid,$challenges,$complaints,$summary,$picpath,$foldpath,$teammembers);
+		$isVerify=$_REQUEST['verify'];
+		$commentToVerify = $_REQUEST['verifycomments'];
+		$verifiedDate = date("Y-m-d H:i:s");
+		$verify=$event->toggleVerify($eventid,$isVerify,$verifiedDate,$commentToVerify);
 
-		$myArray = explode(',', $teammembers);
-		for ($i=0; $i < count($myArray); $i++) { 
-			$verifyadd=$event->addTeamMembers($eventid,$myArray[$i]);
-		}
+		$receipt=$event->getAnEvent($eventid);
+		 while($row = $event->fetch()){
+			$eventtitle=$row['eventtitle'];
+			$reporter=$row['creator'];
+			$region=$row['region'];
+		 }
 
-		$result=$event->getAnEvent($eventid);
-		while($row = $event->fetch()){
-			$eventtitle = $row['eventtitle'];
-			$reporter= $row['creator'];
-			$region = $row['region'];
-		}
+		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
 
-		$log->addReportLog($eventtitle,$reporter,"added a new report for: ", $region);
+		echo json_encode($isVerify);
 
-		if($verify==""){
-			echo '{"result":0,"message":"Event not added"}';
-		}
-		else{
-			$verify=$event->addNewReportEventUpdate($eventid,1);
-			echo '{"result":1,"message":"Event added"}';
-
-		}
-	}
-
-	function getAnEventwithReportinfo(){
- 			$success="";
- 			include("events.php");
- 			$event = new events();
-
-			$eventid=$_REQUEST['eventid'];
-			$data = array();
-
-			$result = $event->getAnEvent($eventid);
-
-			while($row = $event->fetch()){
- 					$success="true";
-					 // $data[]=$row;
-					$data['approved_timestamp'] = $row['approved_timestamp'];
-					$data['audience_category'] = $row['audience_category'];
-					$data['firstname'] = $row['firstname'];
-					$data['lastname'] = $row['lastname'];
-					$data['date_to_be_organized'] = $row['date_to_be_organized'];
-					$data['event_id'] = $row['event_id'];
-					$data['eventtitle'] = $row['eventtitle'];
-					$data['eventtopic'] = $row['eventtopic'];
-					$data['expected_audience_attendance'] = $row['expected_audience_attendance'];
-					$data['is_approved'] = $row['is_approved'];
-					$data['is_verified'] = $row['is_verified'];
-					$data['logistics'] = $row['logistics'];
-					$data['mode_of_outreach'] = $row['mode_of_outreach'];
-					$data['regionname'] = $row['regionname'];
-					$data['town'] = $row['town'];
-					$data['verification_comments'] = $row['verification_comments'];
-					$data['verified_timestamp'] = $row['verified_timestamp'];
- 					//array_push($data,$row);
-
- 				}
-
-			$result = $event->getReportwithEventid($eventid);
-
- 			while($row = $event->fetch()){
- 					$success="true";
-					 // $data[]=$row;
-					$data['team_challenges'] = $row['team_challenges'];
-					$data['complaints_raised'] = $row['complaints_raised'];
-					$data['event_summary'] = $row['event_summary'];
-					$data['picture_paths'] = $row['picture_paths'];
-					$data['folder_paths'] = $row['folder_paths'];
-					$data['team_members'] = $row['team_members'];
-					$data['report_id'] = $row['report_id'];
-					$data['date_reported'] = $row['date_reported'];
-					//array_push($moredata,$data);
-
-					$result = $event->getAReport($data['report_id']);
-
-					while($row = $event->fetch()){
-						$success="true";
-						$data['report_approve'] = $row['reportapprove'];
-
-					}
-
-				}
-
- 				echo json_encode($data);
-	}
-
-	function deleteReport(){
-		include("events.php");
-
-		$event = new events();
-
-		if(isset($_REQUEST['eventid'])){
-			$eventid=$_REQUEST['eventid'];
-			$verify=$event->deleteReportwithEventid($eventid);
-			$verify=$event->addNewReportEventUpdate($eventid,0);
-		}elseif (isset($_REQUEST['reportid'])) {
-			$reportid=$_REQUEST['reportid'];
-			$verify=$event->getAReport($reportid);
-			while($row = $event->fetch()){
-				$eventid = $row['event_id'];
-			}	
-			$verify=$event->deleteReport($reportid);
-			$verify=$event->addNewReportEventUpdate($eventid,0);
-		}
-
-		if($verify==""){
-			echo '{"result":0,"message":"Report not deleted"}';
-		}
-		else{
-			echo '{"result":1,"message":"Report deleted"}';
-
-		}
 	}
 
 ?>
