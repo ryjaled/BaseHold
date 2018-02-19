@@ -7,7 +7,7 @@ $folder = $_COOKIE["foldname"];
 $uploads_dir = 'uploads';
 
 if(!is_dir($uploads_dir."/".$folder)) {
-    mkdir($uploads_dir."/".$folder);
+    mkdir($uploads_dir."/".$folder, 0744);
 }
 
 foreach ($_FILES["files"]["error"] as $key => $error) {

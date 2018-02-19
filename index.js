@@ -2501,10 +2501,11 @@ function reactivateUsersComplete(xhr, status) {
 
 }
 
-function reassignEventToggle(id,region) {
-  event.preventDefault();
+function reassignEventToggle(id,creator,region) {
+  // /event.preventDefault();
 
   sessionStorage.reassignId = id;
+  sessionStorage.reassigncreatorId = creator;
   sessionStorage.regionId = region;
 
   var theUrl = "databasehandler.php?cmd=34&region=" + region;
@@ -2524,38 +2525,37 @@ function reassignEventToggleComplete(xhr,status){
   var userValues = "";
   $('#reassignMember').html("");    
 
-  userValues = userValues + "<select class='selectpicker' data-style='btn' title='Select User'>";
+  userValues = userValues + "<select id='reassignMemberName' class='form-control' data-style='btn' title='Select User'><option value='0'>Select User</option>";
   for (var i = 0; i < obj.length; i++) {
     var user_id = obj[i].userid;
     var user_name = obj[i].firstname + ' ' + obj[i].lastname;
-    userValues = userValues + "<option value='" + user_id + "'>" + user_name + "</option>"; 
+    if (user_id == sessionStorage.reassigncreatorId) {
+      userValues = userValues + ""; 
+    }else{
+      userValues = userValues + "<option value='" + user_id + "'>" + user_name + "</option>"; 
+    }
+    
   }
   userValues = userValues + "</select>";
 
-  userValues = userValues + "<div class='btn-group bootstrap-select'>";
-  userValues = userValues + "<button type='button' class='dropdown-toggle bs-placeholder btn' data-toggle='dropdown' role='button' title='Select User'>";
-  userValues = userValues + "<span class='filter-option pull-left'>Select User</span>&nbsp;";
+  // userValues = userValues + "<div class='btn-group bootstrap-select'>";
+  // userValues = userValues + "<button type='button' class='dropdown-toggle bs-placeholder btn' data-toggle='dropdown' role='button' title='Select User'>";
+  // userValues = userValues + "<span class='filter-option pull-left'>Select User</span>&nbsp;";
+  // userValues = userValues + "<span class='bs-caret'><span class='caret'></span></span></button><div class='dropdown-menu open' role='combobox'>";
+  // userValues = userValues + "<ul class='dropdown-menu inner' role='listbox' aria-expanded='false'>";
   // for (var i = 0; i < obj.length; i++) {
-  //   j = i + 1;
+  //   j = i +1;
   //   var user_name = obj[i].firstname + ' ' + obj[i].lastname;
-  //   userValues = userValues + "<button type='button' class='dropdown-toggle bs-placeholder btn' data-toggle='dropdown' role='button' title='"+ user_name +"'>";
-  //   userValues = userValues + "<span class='filter-option pull-left'>" + user_name +"</span>&nbsp;";
+  //   userValues = userValues + "<li data-original-index='" + j + "'><a tabindex='0' class='' data-tokens='null' role='option' aria-disabled='false' aria-selected='false'><span class='text'>" + user_name +"</span><span class='material-icons  check-mark'> done </span></a></li>";
   // }
-  userValues = userValues + "<span class='bs-caret'><span class='caret'></span></span></button><div class='dropdown-menu open' role='combobox'>";
-  userValues = userValues + "<ul class='dropdown-menu inner' role='listbox' aria-expanded='false'>";
-  for (var i = 0; i < obj.length; i++) {
-    j = i +1;
-    var user_name = obj[i].firstname + ' ' + obj[i].lastname;
-    userValues = userValues + "<li data-original-index='" + j + "'><a tabindex='0' class='' data-tokens='null' role='option' aria-disabled='false' aria-selected='false'><span class='text'>" + user_name +"</span><span class='material-icons  check-mark'> done </span></a></li>";
-  }
-  userValues = userValues + "</ul></div>";
-  userValues = userValues + "<select name='reassignMember' class='selectpicker' data-style='btn' title='Select User' data-size='11' tabindex='-98'><option class='bs-title-option' value=''>Select User</option>";
-  for (var i = 0; i < obj.length; i++) {
-    var user_id = obj[i].userid;
-    var user_name = obj[i].firstname + ' ' + obj[i].lastname;
-    userValues = userValues + "<option value='" + user_id + "'>" + user_name + "</option>"; 
-  }
-  userValues = userValues + "</select></div>";
+  // userValues = userValues + "</ul></div>";
+  // userValues = userValues + "<select name='reassignMember' class='selectpicker' data-style='btn' title='Select User' data-size='11' tabindex='-98'><option class='bs-title-option' value=''>Select User</option>";
+  // for (var i = 0; i < obj.length; i++) {
+  //   var user_id = obj[i].userid;
+  //   var user_name = obj[i].firstname + ' ' + obj[i].lastname;
+  //   userValues = userValues + "<option value='" + user_id + "'>" + user_name + "</option>"; 
+  // }
+  // userValues = userValues + "</select></div>";
 
   document.getElementById('reassignMember').innerHTML = userValues;
 
@@ -2565,7 +2565,7 @@ function reassignEventToggleComplete(xhr,status){
 function reassignEvent() {
 
   var comments = $('#commentsForReassign').val();
-  var newteammember = $('#reassignMember').val();
+  var newteammember = $('#reassignMemberName').val();
 
   var theUrl = "databasehandler.php?cmd=33&eventid=" + sessionStorage.reassignId + "&reporter=" + newteammember + "&reason=" + comments;
 
