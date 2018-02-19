@@ -247,16 +247,14 @@ $().ready(function () {
     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
     }, 500);
   }
-
   global1 = refireTable1;
 
   function refireTable2(){
-        setTimeout(function () {
-        dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-        // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
-      }, 500);
+    setTimeout(function () {
+      dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+      // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
+    }, 500);
   }
-
   global2 = refireTable2;
 
   function refireTable3(){
@@ -264,8 +262,14 @@ $().ready(function () {
       dataTable3.ajax.reload(null, false);
     }, 500);
   }
-
   global3 = refireTable3;
+
+  function refireTable7() {
+    setTimeout(function () {
+      dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+    }, 500);
+  }
+  global7 = refireTable7;
 
   setInterval(function () {
     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
@@ -289,7 +293,7 @@ $().ready(function () {
 
   setInterval(function () {
     dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  }, 5000);
+  }, 10000);
 
   setInterval(function () {
     dataTable8.ajax.reload(null, false); // user paging is not reset on reload
@@ -302,13 +306,6 @@ $().ready(function () {
   setInterval(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
   }, 3000);
-
-  function refireTable7(){
-    setTimeout(function () {
-      dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-    }, 500);
-  }
-  global7 = refireTable7;
 
 
   $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
@@ -2179,6 +2176,14 @@ function level2ReportViewComplete(xhr, status) {
 
   //$('#report_photos').html();
   document.getElementById('report_photos').innerHTML = picValues;
+
+  if (obj[0].reportapprove == 0) {
+    approvebutton = "<button class='uk-button uk-button-default' type='button' style='background-color: green; color: white;' onclick='ApproveReportToggle("+obj[0].report_id+",0)'>Approve</button><button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>";
+    document.getElementById('approveformdivbuttons').innerHTML = approvebutton;
+  }else{
+    approvebutton = "<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>";
+    document.getElementById('approveformdivbuttons').innerHTML = approvebutton;
+  }
   
 }
 
