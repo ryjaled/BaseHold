@@ -273,6 +273,11 @@ $().ready(function () {
 
   global1 = refireTable1;
 
+  setInterval(function () {
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+
   function refireTable2(){
         setTimeout(function () {
         dataTable2.ajax.reload(null, false); // user paging is not reset on reload
@@ -281,6 +286,12 @@ $().ready(function () {
   }
 
   global2 = refireTable2;
+
+  setInterval(function () {
+    dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+
 
   function refireTable3(){
     setTimeout(function () {
@@ -1997,6 +2008,20 @@ function level2ViewComplete(xhr, status) {
   var strlenLogistics = obj[0].logistics.length;
   document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
 
+
+
+  if(sessionStorage.pullverified == 0){
+    document.getElementById('verification_comments').innerHTML= "No comments yet. Event is still unverfied. ";
+  }
+  else if(sessionStorage.pullverified == 1){
+    document.getElementById('verification_comments').innerHTML= obj[0].verification_comments;
+  }
+
+
+
+
+
+
   var mode = obj[0].mode_of_outreach; 
   var strlenMode = obj[0].mode_of_outreach.length;
   document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
@@ -2044,7 +2069,7 @@ function reportApprover(id, verifyCheck, approveCheck){
     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
   }
   if(approveCheck == 0){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Approve Report</button>");
   }
 }
 
@@ -2227,6 +2252,30 @@ function level3ViewComplete(xhr, status) {
   var mode = obj[0].mode_of_outreach; 
   var strlenMode = obj[0].mode_of_outreach.length;
   document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
+
+
+
+
+
+  if(sessionStorage.pullverified == 0){
+    document.getElementById('verification_comments').innerHTML= "No comments yet. Event is still unverfied. ";
+  }
+  else if(sessionStorage.pullverified == 1){
+    document.getElementById('verification_comments').innerHTML= obj[0].verification_comments;
+  }
+
+  if(sessionStorage.pullapproved == 0){
+    document.getElementById('approval_comments').innerHTML= "No comments yet. Event is still unapproved. ";
+  }
+  else if(sessionStorage.pullapproved == 1){
+    document.getElementById('approval_comments').innerHTML= obj[0].approval_comments;
+  }
+
+
+
+
+
+
 
   if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
     document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
