@@ -326,9 +326,16 @@
 			$verify=$event->getAReport($reportid);
 			while($row = $event->fetch()){
 				$eventid = $row['event_id'];
+				$folder = $row['folder_paths'];
+				$files = $row['picture_paths'];
 			}	
 			$verify=$event->deleteReport($reportid);
 			$verify=$event->addNewReportEventUpdate($eventid,0);
+
+			$filess = (json_decode($files));
+			for ($i=0; $i < count($filess); $i++) { 
+				unlink('uploads/'.$folder.'/'.$filess[$i]);
+			}
 		}
 
 		if($verify==""){

@@ -1507,12 +1507,6 @@ function deleteReportComplete(xhr, status) {
 
   UIkit.modal('#modal-overflow-2-report').hide();
 
-  // $('#report_observations').val("");
-  // $('#report_challenges').val("");
-  // $('#report_complaints').val("");
-  // $('#input-id').val("");
-  // $('#report_members').val("");
-
   global1();
 
   $.notify({
