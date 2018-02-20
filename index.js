@@ -2240,27 +2240,6 @@ function level2ViewComplete(xhr, status) {
 
 }
 
-function verifyEventToggle(id, verState){
-  sessionStorage.verifyingId = id;
-  sessionStorage.verifyingState = verState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-comments').show();
-
-}
-
-function verifyEvent(){
-  var comments = $('#commentsForVerification').val();
-  var theUrl="databasehandler.php?cmd=5&eventid="+sessionStorage.verifyingId+"&verify="+sessionStorage.verifyingState+"&verifycomments="+comments;
-  $.ajax(theUrl,
-    {
-      async:true,
-      complete: global2
-    });
-
-    $('#commentsForVerification').val("");
-}
-
 function reportHelp(){
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
