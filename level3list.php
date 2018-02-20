@@ -65,11 +65,16 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row['firstname'].' '.$row['lastname'];
     $nestedData[] = date('jS F Y', strtotime($row['verified_timestamp']));
 
-    if( $row['is_approved'] == "0"){
-        $verifyLabel = "<p style='color: red'>Not Approved</p>";
-      } else {
-        $verifyLabel = "<p style='color: green'>Approved</p>";
-      }
+      if( $row['is_approved'] == "0"){
+        $verifyLabel = "<p style='color: grey; margin-top: 20px;'>Pending</p>";
+      } 
+      if( $row['is_approved'] == "1"){
+         $verifyLabel = "<p style='color: green; margin-top: 20px;'>Approved</p>";
+      } 
+      if( $row['is_approved'] == "2"){
+         $verifyLabel = "<p style='color: red; margin-top: 20px;'>Rejected</p>";
+      } 
+
     $nestedData[] = $verifyLabel;
     // $nestedData[] = $row['report_id'];
 
@@ -79,7 +84,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	if( ($row['is_approved'] == "0") )
     {
       // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
-      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='approveEventToggle(".$queryID.",\"".$queryApprove."\")' href='#'>Approve</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='approveEventToggle(".$queryID.",\"".$queryApprove."\")' href='#'>Approve</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li><li><a onclick='' href='#' style='color: red;'>Reject</a></li></ul></div>";
     }
     if( ($row['is_approved'] == "1") && ($row['is_reported'] == "0"))
     {

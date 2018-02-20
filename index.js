@@ -1765,6 +1765,58 @@ function level1EditComplete(xhr,status){
   $('#editaddnewtown').val(obj[0].town);
   $('#editaddnewtopics').val(obj[0].eventtopic);
 
+  //split the mode outreach
+  obj[0].mode_of_outreach
+  //split the mode outreach
+  // check which ones are in it...and for each particular one - trigger the checkbox if the string contains it
+  obj[0].logistics
+
+  var variousModes = obj[0].mode_of_outreach.split(',');
+  for(var i = 0; i < variousModes.length; i++){
+
+        if(variousModes[i] == "PowerPoint Presentation")
+          $("#editaddnewpowerpoint").attr("checked", true);
+        if(variousModes[i] == "One-on-one")
+          $("#editaddnewoneonone").attr("checked", true);
+        if(variousModes[i] == "Road Show")
+          $("#editaddnewroadshow").attr("checked", true);
+        if(variousModes[i] == "Durbar")
+          $("#editaddnewdurbar").attr("checked", true);
+        if(variousModes[i] == "Small group meeting")
+          $("#editaddnewsmallgroupmeeting").attr("checked", true);
+
+  }
+
+
+  var variousLogistics = obj[0].logistics.split(',');
+  for(var i = 0; i < variousLogistics.length; i++){
+
+    if(variousLogistics[i] == "Bus(es)")
+       $("#editaddnewbus").attr("checked", true);
+    if(variousLogistics[i] == "Sound System(s)")
+       $("#editaddnewsoundsystem").attr("checked", true);
+    if(variousLogistics[i] == "Flyer(s)")
+       $("#editaddnewflyer").attr("checked", true);
+    if(variousLogistics[i] == "Pen(s)")
+       $("#editaddnewpen").attr("checked", true);
+    if(variousLogistics[i] == "Tape Measure(s)")
+       $("#editaddnewtapemeasure").attr("checked", true);
+    if(variousLogistics[i] == "Towel(s)")
+       $("#editaddnewtowel").attr("checked", true);
+    if(variousLogistics[i] == "Mug(s)")
+       $("#editaddnewmug").attr("checked", true);
+    if(variousLogistics[i] == "T-shirt(s)")
+       $("#editaddnewshirt").attr("checked", true);
+    if(variousLogistics[i] == " Notepad(s)")
+       $("#editaddnewnotepad").attr("checked", true);
+    if(variousLogistics[i] == " Power Block(s)")
+       $("#editaddnewpowerblock").attr("checked", true);
+
+
+
+  }
+  
+
   var theUrla = "databasehandler.php?cmd=35";
   $.ajax({
     type: 'POST',
@@ -1879,10 +1931,13 @@ function level1ViewComplete(xhr, status) {
     $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+  if ((obj[0].is_verified == 2) || (obj[0].is_approved == 2)){
+    $('#statusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>EVENT PROPOSAL REJECTED</center></div>");
   }
   
 
@@ -1896,8 +1951,6 @@ function level1ViewComplete(xhr, status) {
     document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + " and approved on: " + moment(dateApproved).format('D MMMM Y');
   }
 
-
-  //document.getElementById('complaints_raised').innerHTML= obj[0].approved_timestamp;
 
 }
 
@@ -2199,16 +2252,17 @@ function level2ViewComplete(xhr, status) {
   }
 
 
-
-
   if(obj[0].is_verified == 1){
     $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+  if ((obj[0].is_verified == 2) || (obj[0].is_approved == 2)){
+    $('#statusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>EVENT PROPOSAL REJECTED</center></div>");
   }
 
 
@@ -2294,11 +2348,10 @@ function level2ReportViewComplete(xhr, status) {
   }
 
   if(obj[0].reportapprove == 0){
-    alert("here");
-    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
+    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center></div>");
   }
   if(obj[0].reportapprove == 1){
-    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'>Report verifier's comments: "+obj[0].reportverificationcomments+"</center></div>");
   }
   if(obj[0].reportapprove == 2){
     $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
@@ -2574,7 +2627,7 @@ function level3ViewComplete(xhr, status) {
     document.getElementById('approval_comments').innerHTML= "No comments yet. Event is still unapproved. ";
   }
   else if(sessionStorage.pullapproved == 1){
-    document.getElementById('approval_comments').innerHTML= obj[0].approval_comments;
+    document.getElementById('approval_comments').innerHTML= obj[0].approved_comments;
   }
 
 
@@ -2583,10 +2636,13 @@ function level3ViewComplete(xhr, status) {
     $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+  if ((obj[0].is_verified == 2) || (obj[0].is_approved == 2)){
+    $('#statusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>EVENT PROPOSAL REJECTED</center></div>");
   }
 
 
