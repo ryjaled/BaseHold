@@ -3019,9 +3019,14 @@ function fillDashRegionFiguresComplete(xhr, status) {
 
 }
 
-function fillDashTotalEvents() {
+function fillDashTotalEvents(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=11";
+  if ((typeof (sdate) == 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
     {
@@ -3043,9 +3048,14 @@ function fillDashTotalEventsComplete(xhr, status) {
 
 }
 
-function fillDashTotalAttendees() {
+function fillDashTotalAttendees(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=13";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
     {
@@ -3067,9 +3077,14 @@ function fillDashTotalAttendeesComplete(xhr, status) {
 
 }
 
-function fillDashCommonPlace() {
+function fillDashCommonPlace(sdate, edate) {
 
   var theUrl = "databasehandler.php?cmd=14";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
 
   $.ajax(theUrl,
     {
@@ -3092,8 +3107,6 @@ function fillDashCommonPlaceComplete(xhr, status) {
 function loadDashData() {
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
-
-  //alert(sdate+' '+edate);
 
   fillDashRegionFigures(sdate, edate);
   fillDashTotalEvents(sdate, edate);
@@ -3157,7 +3170,7 @@ function regionloadDashData(region) {
   var sdate = $('#addnewdateselected').val();
   var edate = $('#addenddateselected').val();
 
-  if (region == 0) {
+  if (region == 0) { 
     fillDashTotalEvents(sdate, edate);
     fillDashTotalAttendees(sdate, edate);
     fillDashCommonPlace(sdate, edate);
