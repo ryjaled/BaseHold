@@ -888,6 +888,16 @@ function deleteevent(pid) {
     });
 }
 
+function denyEvent(eid,level) {
+  var theUrl = "databasehandler.php?cmd=36&eventid=" + eid;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global1,
+      complete: removependpendingeventComplete
+    });
+}
+
 function editevent() {
   event.preventDefault();
 

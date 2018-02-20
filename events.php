@@ -85,7 +85,7 @@
 
 		function denyReport($reportid,$comments){
 
-				$strQuery="update reports set is_approved='2', verification_comments='',verified_timestamp='0000-00-00 00:00:00',nonapproval_comments='$comments' where report_id='$eventid'";
+				$strQuery="update reports set is_approved='2', verification_comments='',verified_timestamp='0000-00-00 00:00:00',nonapproval_comments='$comments' where report_id='$reportid'";
 
 			return $this->query($strQuery);
 		}

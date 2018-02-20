@@ -387,10 +387,10 @@
 
 		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
 		if($verify==""){
-			echo '{"result":0,"message":"Event not added"}';
+			echo '{"result":0,"message":"Event not denied"}';
 		}
 		else{
-			echo '{"result":1,"message":"Event added"}';
+			echo '{"result":1,"message":"Event denied"}';
 
 		}
 	}
@@ -412,7 +412,7 @@
 			echo '{"result":0,"message":"Event not added"}';
 		}
 		else{
-			echo '{"result":1,"message":"Event added"}';
+			echo '{"result":1,"message":"Report Denied"}';
 
 		}
 	}

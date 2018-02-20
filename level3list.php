@@ -38,13 +38,13 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,e.creator,u.firstname, u.lastname,r.regionname,e.region,e.town,e.is_reported FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
+$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,e.creator,u.firstname, u.lastname,r.regionname,e.region,e.town,e.is_reported FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant' and e.is_approved < '2'";
 $query=mysqli_query($conn, $sql) or die("level3list.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 // $sql = "select report_id, eventtitle, date_organized, region from reports where reporter = '$id'";
-$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,e.creator,u.firstname, u.lastname,r.regionname,e.region,e.town,e.is_reported FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
+$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,e.creator,u.firstname, u.lastname,r.regionname,e.region,e.town,e.is_reported FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant' and e.is_approved < '2'";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
   $sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR firstname LIKE '".$requestData['search']['value']."%' ";
@@ -79,7 +79,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	if( ($row['is_approved'] == "0") )
     {
       // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
-      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='approveEventToggle(".$queryID.",\"".$queryApprove."\")' href='#'>Approve</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='approveEventToggle(".$queryID.",\"".$queryApprove."\")' href='#'>Approve</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>Deny</a></li></ul></div>";
     }
     if( ($row['is_approved'] == "1") && ($row['is_reported'] == "0"))
     {
