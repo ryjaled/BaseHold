@@ -150,7 +150,7 @@ $().ready(function () {
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[3, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -1759,12 +1759,72 @@ function level1EditComplete(xhr,status){
  
   UIkit.modal('#edit-modal-overflow').show();
   
-    $('#editaddnewdateselected').val(moment(obj[0].date_to_be_organized).format('dddd, D MMMM Y'));
-    $('#editaddnewtitle').val(obj[0].eventtitle);
-    $('#editaddnewattendance').val(obj[0].expected_audience_attendance);
-    $('#editaddnewtown').val(obj[0].town);
-    $('#editaddnewtopics').val(obj[0].eventtopic);
-    
+  $('#editaddnewdateselected').val(moment(obj[0].date_to_be_organized).format('dddd, D MMMM Y'));
+  $('#editaddnewtitle').val(obj[0].eventtitle);
+  $('#editaddnewattendance').val(obj[0].expected_audience_attendance);
+  $('#editaddnewtown').val(obj[0].town);
+  $('#editaddnewtopics').val(obj[0].eventtopic);
+
+  var theUrla = "databasehandler.php?cmd=35";
+  $.ajax({
+    type: 'POST',
+    url: theUrla,
+    success: function (data) {
+      var mydrop = JSON.parse(data);
+      if (mydrop == "") {
+        alert("Database Error");
+      } else {
+        var dropdown = "";
+        $('#editaudiencedropdown').html("");
+
+        dropdown = dropdown + "<select id='editaddnewaudience' class='form-control' data-style='btn' title='Select Audience'>";
+        for (var i = 0; i < mydrop.length; i++) {
+          var drop_id = mydrop[i].aud_id;
+          var drop_name = mydrop[i].aud_name;
+          if (drop_name == obj[0].audience_category) {
+            dropdown = dropdown + "<option value='" + drop_name + "' selected>" + drop_name + "</option>";
+          } else {
+            dropdown = dropdown + "<option value='" + drop_name + "'>" + drop_name + "</option>";
+          }
+
+        }
+        dropdown = dropdown + "</select>";
+
+        document.getElementById('editaudiencedropdown').innerHTML = dropdown;
+      }
+    }
+  });
+
+  var theUrlr = "databasehandler.php?cmd=8";
+  $.ajax({
+    type: 'POST',
+    url: theUrlr,
+    success: function (data) {
+      var mydrop = JSON.parse(data);
+      if (mydrop == "") {
+        alert("Database Error");
+      } else {
+        var dropdown = "";
+        $('#editregiondropdown').html("");
+
+        dropdown = dropdown + "<select id='editaddnewregion' class='form-control' data-style='btn' title='Select Region'>";
+        for (var i = 0; i < mydrop.length; i++) {
+          var drop_id = mydrop[i].region_id;
+          var drop_name = mydrop[i].regionname;
+          if (drop_id == obj[0].region) {
+            dropdown = dropdown + "<option value='" + drop_id + "' selected>" + drop_name + "</option>";
+          } else {
+            dropdown = dropdown + "<option value='" + drop_id + "'>" + drop_name + "</option>";
+          }
+
+        }
+        dropdown = dropdown + "</select>";
+
+        document.getElementById('editregiondropdown').innerHTML = dropdown;
+      }
+    }
+  });
+
 }
 
 function level1View(val) {
