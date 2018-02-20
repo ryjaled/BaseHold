@@ -119,7 +119,7 @@
 		}
 
     	function getAnEvent($eventid){
-			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.verification_comments,e.verified_timestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
+			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.approved_comments,e.verification_comments,e.verified_timestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
       	return $this->query($strQuery);
 		}
 
@@ -232,7 +232,7 @@
 		
 		function getReportwithEventid($event_id){
 
-			$strQuery="select team_challenges, complaints_raised, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported from reports where event_id='$event_id' ";
+			$strQuery="select team_challenges, complaints_raised, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported,verification_comments from reports where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 

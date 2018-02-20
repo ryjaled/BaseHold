@@ -482,6 +482,7 @@
 					$data['town'] = $row['town'];
 					$data['verification_comments'] = $row['verification_comments'];
 					$data['verified_timestamp'] = $row['verified_timestamp'];
+					$data['event_approved_comments'] = $row['approved_comments'];
  					//array_push($data,$row);
 
  				}
@@ -499,6 +500,7 @@
 					$data['team_members'] = $row['team_members'];
 					$data['report_id'] = $row['report_id'];
 					$data['date_reported'] = $row['date_reported'];
+					$data['report_approve_comments'] = $row['verification_comments'];
 					//array_push($moredata,$data);
 
 					$result = $event->getAReport($data['report_id']);
