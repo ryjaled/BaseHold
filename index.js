@@ -249,6 +249,11 @@ $().ready(function () {
   }
   global1 = refireTable1;
 
+  setInterval(function () {
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+
   function refireTable2(){
     setTimeout(function () {
       dataTable2.ajax.reload(null, false); // user paging is not reset on reload
@@ -256,6 +261,12 @@ $().ready(function () {
     }, 500);
   }
   global2 = refireTable2;
+
+  setInterval(function () {
+    dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+
 
   function refireTable3(){
     setTimeout(function () {
@@ -1489,8 +1500,8 @@ function addNewReportComplete(xhr, status) {
 }
 
 function deleteReport(val) {
-
   var theUrl = "databasehandler.php?cmd=32&reportid=" + val;
+
 
   $.ajax(theUrl,
     {
@@ -1874,6 +1885,17 @@ function level1ViewComplete(xhr, status) {
   var dateVerfied = new Date(obj[0].verified_timestamp);
   var dateApproved = new Date(obj[0].approved_timestamp);
 
+  
+  if(obj[0].is_verified == 1){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
+    $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+  
 
   if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
     document.getElementById('event_summary').innerHTML = "This event has not yet been verified nor approved.";
@@ -2178,6 +2200,29 @@ function level2ViewComplete(xhr, status) {
   var strlenLogistics = obj[0].logistics.length;
   document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
 
+
+
+  if(sessionStorage.pullverified == 0){
+    document.getElementById('verification_comments').innerHTML= "No comments yet. Event is still unverfied. ";
+  }
+  else if(sessionStorage.pullverified == 1){
+    document.getElementById('verification_comments').innerHTML= obj[0].verification_comments;
+  }
+
+
+
+
+  if(obj[0].is_verified == 1){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
+    $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+
+
   var mode = obj[0].mode_of_outreach; 
   var strlenMode = obj[0].mode_of_outreach.length;
   document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
@@ -2193,6 +2238,40 @@ function level2ViewComplete(xhr, status) {
   }
 
 
+}
+
+function verifyEventToggle(id, verState){
+  sessionStorage.verifyingId = id;
+  sessionStorage.verifyingState = verState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-comments').show();
+
+}
+
+function verifyEvent(){
+  var comments = $('#commentsForVerification').val();
+  var theUrl="databasehandler.php?cmd=5&eventid="+sessionStorage.verifyingId+"&verify="+sessionStorage.verifyingState+"&verifycomments="+comments;
+  $.ajax(theUrl,
+    {
+      async:true,
+      complete: global2
+    });
+
+    $('#commentsForVerification').val("");
+}
+
+function reportHelp(){
+  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+}
+
+function reportApprover(id, verifyCheck, approveCheck){
+  if(approveCheck == 1){
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if(approveCheck == 0){
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Approve Report</button>");
+  }
 }
 
 function level2ReportView(val) {
@@ -2257,6 +2336,17 @@ function level2ReportViewComplete(xhr, status) {
   }
   if((obj[0].reportverifiedtimestamp == "")){
     document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  }
+
+  if(obj[0].reportapprove == 0){
+    alert("here");
+    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
+  }
+  if(obj[0].reportapprove == 1){
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+  }
+  if(obj[0].reportapprove == 2){
+    $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
   }
 
   document.getElementById('report_1').innerHTML=obj[0].event_summary;
@@ -2514,6 +2604,39 @@ function level3ViewComplete(xhr, status) {
   var strlenMode = obj[0].mode_of_outreach.length;
   document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
 
+
+
+
+
+  if(sessionStorage.pullverified == 0){
+    document.getElementById('verification_comments').innerHTML= "No comments yet. Event is still unverfied. ";
+  }
+  else if(sessionStorage.pullverified == 1){
+    document.getElementById('verification_comments').innerHTML= obj[0].verification_comments;
+  }
+
+  if(sessionStorage.pullapproved == 0){
+    document.getElementById('approval_comments').innerHTML= "No comments yet. Event is still unapproved. ";
+  }
+  else if(sessionStorage.pullapproved == 1){
+    document.getElementById('approval_comments').innerHTML= obj[0].approval_comments;
+  }
+
+
+
+  if(obj[0].is_verified == 1){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
+    $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+
+
+
+
   if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
     document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
   }
@@ -2585,6 +2708,17 @@ function level3ReportViewComplete(xhr, status) {
   }
   if((obj[0].reportverifiedtimestamp == "")){
     document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  }
+
+  if(obj[0].reportapprove == 0){
+    alert("here");
+    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
+  }
+  if(obj[0].reportapprove == 1){
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+  }
+  if(obj[0].reportapprove == 2){
+    $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
   }
 
   document.getElementById('report_1').innerHTML=obj[0].event_summary;

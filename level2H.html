@@ -252,6 +252,9 @@
                 <div class="uk-modal-header">
                     <h2 class="uk-modal-title">Event Details</h2>
                 </div>
+                <div id="statusBanner">
+                    
+                </div>
     
                 <div class="uk-modal-body" uk-overflow-auto>
     
@@ -285,8 +288,13 @@
                     <br/>
     
                     <div class="uk-comment-body">
-                    <dt>SUMMARY</dt>
+                        <dt>CONFIRMATION TIMES:</dt>
                     <dd id="event_summary"></dd>
+
+                    <br/><br/>
+
+                    <dt>VERIFICATION COMMENTS</dt>
+                    <dd id="verification_comments"></dd>
                     </div>
     
                     <center><hr class="uk-divider-small" style="margin:5%;"></center>
@@ -383,6 +391,9 @@
                 <div class="uk-modal-header">
                     <h2 class="uk-modal-title">Approve Report Comments</h2>
                 </div>
+                <div id="statusBannerReport">
+                        
+                </div>
     
                 <div class="uk-modal-body" uk-overflow-auto>
     
@@ -409,8 +420,9 @@
     
                 </article>
 
-                <div class="uk-modal-footer uk-text-right" id="verifycommentformdivbuttons">
-                    <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;" onclick="approveReport()">Submit</button>
+
+                <div class="uk-modal-footer uk-text-right" id="approvereportformdivbuttons">
+                    <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
                     <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
                 </div>
         
