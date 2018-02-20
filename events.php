@@ -74,9 +74,9 @@
 
 		function denyEvent($eventid,$comments,$level){
 
-			if ($level == 0) {
+			if ($level == 2) {
 				$strQuery="update events set is_verified='2', nonapproval_comments='$comments' where event_id='$eventid'";
-			}elseif ($level == 1) {
+			}elseif ($level == 3) {
 				$strQuery="update events set is_approved='2', nonapproval_comments='$comments' where event_id='$eventid'";
 			}
 

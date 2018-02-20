@@ -114,6 +114,12 @@
 		case 35:
 			getAudiences();
 			break;
+		case 36:
+			denyEvent();
+			break;
+		case 37:
+			denyReport();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -373,13 +379,35 @@
 		$event = new events();
 		$log = new logs();
 
-		$mode_of_outreach=$_REQUEST['outreach'];
-		$reporter=$_REQUEST['reporter'];
+		$comments=$_REQUEST['comments'];
 		$eventid=$_REQUEST['eventid'];
+		$level=$_REQUEST['level'];
 		
-		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
+		$verify=$event->denyEvent($eventid,$comments,$level);
 
-		$log->addEventLog($eventtitle,$reporter,"edited a future event", $region);
+		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			echo '{"result":1,"message":"Event added"}';
+
+		}
+	}
+	
+	function denyReport(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+
+		$comments=$_REQUEST['comments'];
+		$reportid=$_REQUEST['reportid'];
+		
+		$verify=$event->denyReport($reportid,$comments);
+
+		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
 		}
