@@ -38,7 +38,7 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id'";
+$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id' ORDER BY r.date_reported DESC";
 $query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
@@ -47,6 +47,8 @@ $sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' )";
 }
+$sql.=" ORDER BY r.date_reported DESC";
+
 $query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
 //$sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir']." LIMIT ".$requestData['start']." ,".$requestData['length']."   ";

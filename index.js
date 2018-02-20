@@ -2,6 +2,7 @@ var global1;
 var global2;
 var global3;
 var global7;
+var pendingid;
 
 $().ready(function () {
 
@@ -13,15 +14,17 @@ $().ready(function () {
   var dataTable1 = $('#level1list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '22%' },
+      { "targets": 0, width: '27%' },
       { "targets": 1, width: '17%' },
-      { "targets": 2, width: '17%'} ,
-      { "targets": 3, width: '17%'} ,
+      { "targets": 2, width: '15%'} ,
+      { "targets": 3, width: '15%'} ,
       { "targets": 4, width: '15%'} ,
+      { "targets": 5, width: '7%' },
+      { "targets": [6], "visible": false, "searchable": false, width: '5%'},
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[6, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -38,17 +41,17 @@ $().ready(function () {
   var dataTable2 = $('#level2list').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '10%'},
-      { "targets": 1, width: '10%'},
+      { "targets": 0, width: '25%'},
+      { "targets": 1, width: '15%'},
       { "targets": 2, width: '10%'},
       { "targets": 3, width: '15%'},
-      { "targets": 4, width: "7%"} ,
-      { "targets": 5, width: "7%"} ,
-      { "targets": 6, width: "10%" },
+      { "targets": 4, width: "15%"} ,
+      { "targets": 5, width: "15%"} ,
+      { "targets": 6, width: "5%" },
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[1, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -58,6 +61,79 @@ $().ready(function () {
         $(".level2list-error").html("");
         $("#level2list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level2list_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable3 = $('#level3list').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '17%' },
+      { "targets": 1, width: '15%' },
+      { "targets": 2, width: '15%' },
+      { "targets": 3, width: '15%' },
+      { "targets": 4, width: '15%' },
+      { "targets": 5, width: '5%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[3, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "level3list.php?usersessionid=" + sessionStorage.userid + "&userregion=" + sessionStorage.region, // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".level3list-error").html("");
+        $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#level3list_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable5 = $('#eventlogslist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[2, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "eventlogslist.php", // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".eventlogslist-error").html("");
+        $("#eventlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#eventlogslist_processing").css("display", "none");
+      }
+    }
+  });
+
+  var dataTable6 = $('#userlogslist').DataTable({
+    "autoWidth": false,
+    "columnDefs": [
+      // { "targets": 0, width: '10%' },
+      { "targets": 0, width: '10%' },
+      { "targets": 1, width: '60%' },
+      { "targets": 2, width: '30%' },
+      { className: 'mdl-data-table__cell--non-numeric' },
+    ],
+    "responsive": true,
+    "order": [[2, "desc"]],
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+      url: "userlogslist.php", // json datasource
+      type: "post",  // method  , by default get
+      error: function () {  // error handling
+        $(".userlogslist-error").html("");
+        $("#userlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
+        $("#userlogslist_processing").css("display", "none");
       }
     }
   });
@@ -74,7 +150,7 @@ $().ready(function () {
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
-    "order": [[2, "desc"]],
+    "order": [[3, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -84,32 +160,6 @@ $().ready(function () {
         $(".level2reportlist-error").html("");
         $("#level2reportlist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
         $("#level2reportlist_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable3 = $('#level3list').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '7%'},
-      { "targets": 1, width: '25%'},
-      { "targets": 2, width: '15%'},
-      { "targets": 3, width: '15%'},
-      { "targets": 4, width: '15%'},
-      { "targets": 5, width: '15%'},
-      {className: 'mdl-data-table__cell--non-numeric'},
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "level3list.php?usersessionid="+sessionStorage.userid+"&userregion="+sessionStorage.region, // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".level3list-error").html("");
-        $("#level3list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#level3list_processing").css("display", "none");
       }
     }
   });
@@ -192,94 +242,19 @@ $().ready(function () {
     }
   });
 
-  var dataTable4 = $('#pending1list').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '20%' },
-      { "targets": 1, width: '12.5%' },
-      { "targets": 2, width: '12.5%' },
-      { "targets": 3, width: '12.5%' },
-      { "targets": 4, width: '12.5%' },
-      { "targets": 5, width: '12.5%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "level1pendinglist.php", // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".pending1list-error").html("");
-        $("#pending1list").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#pending1list_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable5 = $('#eventlogslist').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      { "targets": 0, width: '10%' },
-      { "targets": 1, width: '60%' },
-      { "targets": 2, width: '30%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "eventlogslist.php", // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".eventlogslist-error").html("");
-        $("#eventlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#eventlogslist_processing").css("display", "none");
-      }
-    }
-  });
-
-  var dataTable6 = $('#userlogslist').DataTable({
-    "autoWidth": false,
-    "columnDefs": [
-      // { "targets": 0, width: '10%' },
-      { "targets": 0, width: '10%' },
-      { "targets": 1, width: '60%' },
-      { "targets": 2, width: '30%' },
-      { className: 'mdl-data-table__cell--non-numeric' },
-    ],
-    "responsive": true,
-    "order": [[2, "desc"]],
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      url: "userlogslist.php", // json datasource
-      type: "post",  // method  , by default get
-      error: function () {  // error handling
-        $(".userlogslist-error").html("");
-        $("#userlogslist").append('<tbody class="sample-data-error"><tr><th class="col-sm-12">No data found in the server</th></tr></tbody>');
-        $("#userlogslist_processing").css("display", "none");
-      }
-    }
-  });
-
   function refireTable1(){
     setTimeout(function () {
     dataTable1.ajax.reload(null, false); // user paging is not reset on reload
     }, 500);
   }
-
   global1 = refireTable1;
 
   function refireTable2(){
-        setTimeout(function () {
-        dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-        // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
-      }, 500);
+    setTimeout(function () {
+      dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+      // $('#spin').html('<div class="uk-overlay-default uk-position-cover"></div><div class="uk-overlay uk-position-bottom uk-dark"><center><div style="position: absolute; bottom: 500px;" uk-spinner></div></center></div>');
+    }, 500);
   }
-
   global2 = refireTable2;
 
   function refireTable3(){
@@ -287,25 +262,42 @@ $().ready(function () {
       dataTable3.ajax.reload(null, false);
     }, 500);
   }
-
   global3 = refireTable3;
+
+  function refireTable7() {
+    setTimeout(function () {
+      dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+    }, 500);
+  }
+  global7 = refireTable7;
+
+  setInterval(function () {
+    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
+
+  setInterval(function () {
+    dataTable2.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
 
   setInterval(function () {
     dataTable3.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
+
+  setInterval(function () {
+    dataTable5.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
 
+  setInterval(function () {
+    dataTable6.ajax.reload(null, false); // user paging is not reset on reload
+  }, 5000);
+
+  setInterval(function () {
+    dataTable7.ajax.reload(null, false); // user paging is not reset on reload
+  }, 10000);
 
   setInterval(function () {
     dataTable8.ajax.reload(null, false); // user paging is not reset on reload
   }, 5000);
-
-  setInterval(function () {
-    dataTable5.ajax.reload(null, false); // user paging is not reset on reload
-  }, 2000);
-
-  setInterval(function () {
-    dataTable6.ajax.reload(null, false); // user paging is not reset on reload
-  }, 2000);
 
   setInterval(function () {
     level2usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
@@ -314,17 +306,6 @@ $().ready(function () {
   setInterval(function () {
     level3usersdatatable.ajax.reload(null, false); // user paging is not reset on reload
   }, 3000);
-
-  // setInterval(function () {
-  //   dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-  // }, 3000);
-
-  function refireTable7(){
-    setTimeout(function () {
-      dataTable7.ajax.reload(null, false); // user paging is not reset on reload
-    }, 500);
-  }
-  global7 = refireTable7;
 
 
   $('#adddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
@@ -349,137 +330,14 @@ $().ready(function () {
   document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
 
   document.getElementById('pendingverifyformdiv').appendChild = "<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='pendingadd(" + obj[0].report_id + ")' type='button' class='btn btn-success' id='addpendingConfirm' data-toggle='modal' data-target='#verifypendingEvent'>Save</button>";
-
+ 
 });
 
-var pendingid;
-
-function loginUser(){
-  event.preventDefault();
-  var email = $('#useremail').val();
-  var password = $('#userpassword').val();
-
-  var theUrl="databasehandler.php?cmd=1&email="+email+"&password="+password;
-  $.ajax(theUrl,
-        {
-          async:true,
-          complete:loginUserComplete
-        });
-}
-
-function loginUserComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  // console.log(obj);
-  //localstorage and cookie creation
-  localStorage.levelid = obj.userid;
-  document.cookie = "userlevelid="+obj.userid;
-  //sessionstorage creation
-  sessionStorage.userid = obj.userid;
-  sessionStorage.firstname = obj.firstname;
-  sessionStorage.lastname = obj.lastname;
-  sessionStorage.level = obj.level;
-  sessionStorage.region = obj.region;
-
-  // console.log(sessionStorage.userid, sessionStorage.firstname, sessionStorage.lastname, sessionStorage.level);
-
-  if(sessionStorage.level == '1')
-  {
-    window.location = "level1H.html";
-  } else if (sessionStorage.level == '2'){
-    window.location = "level2H.html";
-  }else if (sessionStorage.level == '3'){
-    window.location = "level3H.html";
-  }else if (sessionStorage.level == '4'){
-    window.location = "dashboard.html";
-  }else{
-
-    $.notify({
-       icon: "info_outline",
-       message: "Failed To Log In. Please check your details and try again."
-
-   },{
-       type: 'danger',
-       timer: 4000,
-       placement: {
-           from: 'top',
-           align: 'right'
-       }
-   });
-
-  }
-
-
-}
-
-function welcomeToHomeLevel1(){
-
-
-  if(sessionStorage.level == "1"){
-    // alert(sessionStorage.level);
-  } else {
-    window.location.href="404.html";
-  }
-
-
-
-    document.getElementById('logout').value="Logout"
-    // _fetchMyEvents(sessionStorage.userid);
-
-
-}
-
-function welcomeToHomeLevel2(){
-
-
-  if(sessionStorage.level == "2"){
-    // alert(sessionStorage.level);
-  } else {
-    window.location.href="404.html";
-  }
-
-      document.getElementById('logout').value="Logout"
-      _fetchMyEvents(sessionStorage.userid);
-
-}
-
-function welcomeToHomeLevel3(){
-
-
-    if(sessionStorage.level == "3"){
-      // alert(sessionStorage.level);
-    } else {
-      window.location.href="404.html";
-    }
-
-        document.getElementById('logout').value="Logout";
-        fillDashRegionFigures();
-        fillDashTotalEvents();
-        fillDashTotalAttendees();
-        fillDashCommonPlace();
-        _fetchMyEvents(sessionStorage.userid);
-
-}
-
-function welcomeToHomeLevel4(){
-
-
-      if(sessionStorage.level == "3" || sessionStorage.level == "4"){
-
-      } else {
-        window.location.href="404.html";
-      }
-        // alert("asd"+sessionStorage.firstname);
-          $('#dashboardname').html(sessionStorage.firstname+" "+sessionStorage.lastname);
-          document.getElementById('dashboardname').value=sessionStorage.firstname;
-
-          // document.getElementById('logout').value="Logout";
-          fillDashRegionFigures();
-          fillDashTotalEvents();
-          fillDashTotalAttendees();
-          fillDashCommonPlace();
-          _fetchMyEvents(sessionStorage.userid);
-
-}
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
 
 function _fetchMyEvents(userid){
 
@@ -649,42 +507,6 @@ function approvalwindowComplete(xhr, status){
 
 }
 
-function helpApproval(){
-  toggleapprove(sessionStorage.pullapproved, sessionStorage.pullreportid);
-}
-
-function toggleapprove(val, id){
-
-    var theUrl="databasehandler.php?cmd=4&eventid="+id+"&approval="+val;
-
-    $.ajax(theUrl,
-          {
-            async:true,
-
-          });
-
-    window.location.href="level3H.html";
-}
-
-function viewer(val){
-    console.log('modal to view: ',val);
-}
-
-function clearaddfield() {
-  event.preventDefault();
-  document.getElementById('RegisterValidationDoc').reset();
-}
-
-function clearaddpendingfield() {
-  event.preventDefault();
-  document.getElementById('RegisterAddPendingValidationDoc').reset();
-}
-
-function clearpendingfield() {
-  event.preventDefault();
-  document.getElementById('RegisterPendingValidationDoc').reset();
-}
-
 function addevent(){
   event.preventDefault();
 
@@ -760,85 +582,6 @@ function addeventComplete(xhr,status){
          align: 'right'
      }
  });
-
-}
-
-function editevent(){
-  event.preventDefault();
-
-  var userid = sessionStorage.getItem("userid");
-  var eventtitle = $('#editaddnewtitle').val();
-  var date = $('#editaddnewdateselected').val();
-  var region = $('#editaddnewregion').val();
-  var town = $('#editaddnewtown').val();
-  var audiencecat = $('#editaddnewaudience').val();
-  var attendance = $('#editaddnewattendance').val();
-  var topics = $('#editaddnewtopics').val();
-  var complaints = $('#addcomplaints').val();
-  var summary = $('#addsummary').val();
-  var approved = 0;
-  var verified = 0;
-  var verifiedComments = "not verified";
-
-  var filesarray = [];
-  var inp = document.getElementById('input-id');
-  for (var i = 0; i < inp.files.length; ++i) {
-    var name = inp.files.item(i).name;
-    filesarray[i] = name;
-  }
-  var files = JSON.stringify(filesarray);
-  var picpath = files;
-  var foldname = userid + "_" + eventtitle;
-  var foldpath = foldname;
-
-  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "") ){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Fill Compulsory Fields."
-
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-    document.cookie = "foldname=" + foldname;
-
-    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
-      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
-
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: editEventComplete
-      });
-  }
-
-}
-
-function editEventComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  console.log(obj);
-  $('#input-id').fileinput('upload');
-  document.getElementById('RegisterValidationDoc').reset();
-  $('#input-id').fileinput('enable');
-  global1();
-  $.notify({
-     icon: "info_outline",
-     message: "Event Editted Successfully."
-
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
-     }
- });
-  global1();
 
 }
 
@@ -957,16 +700,6 @@ function addpendpendingevent() {
 
 }
 
-function deleteevent(pid){
-  var theUrl = "databasehandler.php?cmd=25&eventid=" + pid;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: global1,
-      complete: removependpendingeventComplete
-    });
-}
-
 function addpendpendingeventComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
   console.log(obj);
@@ -992,30 +725,6 @@ function addpendpendingeventComplete(xhr, status) {
     });
 
 
-}
-
-function removependpendingeventComplete(xhr, status) {
-  var obj = JSON.parse(xhr.responseText);
-
-  global1();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Event Removed Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-}
-
-function clearuseraddfield() {
-  event.preventDefault();
-  document.getElementById('AddUserForm').reset();
 }
 
 function addlevel1user() {
@@ -1149,73 +858,390 @@ function addlevel2userComplete(xhr, status) {
 
 }
 
+function clearaddfield() {
+  event.preventDefault();
+  document.getElementById('RegisterValidationDoc').reset();
+}
 
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+function clearaddpendingfield() {
+  event.preventDefault();
+  document.getElementById('RegisterAddPendingValidationDoc').reset();
+}
 
-function level1View(val) {
-  console.log('modal to view: ', val);
+function clearpendingfield() {
+  event.preventDefault();
+  document.getElementById('RegisterPendingValidationDoc').reset();
+}
+
+function clearuseraddfield() {
+  event.preventDefault();
+  document.getElementById('AddUserForm').reset();
+}
+
+function deleteevent(pid) {
+  var theUrl = "databasehandler.php?cmd=25&eventid=" + pid;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global1,
+      complete: removependpendingeventComplete
+    });
+}
+
+function editevent() {
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventtitle = $('#editaddnewtitle').val();
+  var date = $('#editaddnewdateselected').val();
+  var region = $('#editaddnewregion').val();
+  var town = $('#editaddnewtown').val();
+  var audiencecat = $('#editaddnewaudience').val();
+  var attendance = $('#editaddnewattendance').val();
+  var topics = $('#editaddnewtopics').val();
+  var complaints = $('#addcomplaints').val();
+  var summary = $('#addsummary').val();
+  var approved = 0;
+  var verified = 0;
+  var verifiedComments = "not verified";
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = userid + "_" + eventtitle;
+  var foldpath = foldname;
+
+  if ((eventtitle == "") || (date == "") || (region == "") || (challenges == "") || (complaints == "") || (summary == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    document.cookie = "foldname=" + foldname;
+
+    var theUrl = "databasehandler.php?cmd=x&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance
+      + "&challenges=" + challenges + "&complaints=" + complaints + "&isVerified=" + verified + "&isApproved=" + approved + "&verifiedComments=" + verifiedComments + "&summary=" + summary + "&picpath=" + picpath + "&reporter=" + userid + "&foldpath=" + foldpath;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: editEventComplete
+      });
+  }
+
+}
+
+function editEventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
+  $('#input-id').fileinput('upload');
+  document.getElementById('RegisterValidationDoc').reset();
+  $('#input-id').fileinput('enable');
+  global1();
+  $.notify({
+    icon: "info_outline",
+    message: "Event Editted Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+  global1();
+
+}
+
+function eventviewer(val) {
+  // console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
     {
       async: true,
-      complete: level1ViewComplete
+      complete: eventviewerComplete
     });
 
   // $('#modalpop').click();
 }
 
-function level1ViewComplete(xhr, status) {
-  console.log(xhr);
+function eventviewerComplete(xhr, status) {
+  // console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
 
+  var dform = new Date(obj[0].date_organized);
 
-  // console.log(typeof(obj[0].picture_paths));
-  console.log(obj);
+  $('#eventmodalshow').click();
 
-  var picValues = "";
-  $('#pictureContainer').html("");
-  //console.log(obj[0].report_id);
-  var dform = new Date(obj[0].date_to_be_organized);
-  UIkit.modal('#modal-overflow').show();
+  $('#showeventtitle').val(obj[0].eventtitle);
+  $('#showdate_organized').val(moment(dform).format('D MMMM Y'));
+  $('#showregion').val(obj[0].region);
+  $('#showtown').val(obj[0].town);
+  $('#showaudience_category').val(obj[0].audience_category);
+  $('#showaudience_attendance').val(obj[0].audience_attendance);
+  $('#showevent_summary').val(obj[0].event_summary);
 
-  //$('#report_id').val(obj[0].report_id);
-  // $('#eventtitle').innerHTML(obj[0].eventtitle);
-  document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-  document.getElementById('region').innerHTML=obj[0].regionname;
-  document.getElementById('town').innerHTML=obj[0].town;
-  document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-  document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
-  var logistics = obj[0].logistics; 
-  var strlenLogistics = obj[0].logistics.length;
-  document.getElementById('team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
-
-  var mode = obj[0].mode_of_outreach; 
-  var strlenMode = obj[0].mode_of_outreach.length;
-  document.getElementById('complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
-
-
-  var dateVerfied = new Date(obj[0].verified_timestamp);
-  var dateApproved = new Date(obj[0].approved_timestamp);
-
-
-  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
-  }
-  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
-  }
-  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
-    document.getElementById('event_summary').innerHTML= "This event has been previously verified on: "+moment(dateVerfied).format('D MMMM Y')+" and approved on: "+moment(dateApproved).format('D MMMM Y');
-  }
-
-
-  //document.getElementById('complaints_raised').innerHTML= obj[0].approved_timestamp;
-   
 }
+
+function generateInputs() {
+
+  var number = $('#createInputs').val();
+
+  for (var i = 0; i < number; i++) {
+    document.getElementById('place').appendChild = "<div><input/></div>";
+  }
+
+
+}
+
+function helpApproval() {
+  toggleapprove(sessionStorage.pullapproved, sessionStorage.pullreportid);
+}
+
+function loginUser() {
+  event.preventDefault();
+  var email = $('#useremail').val();
+  var password = $('#userpassword').val();
+
+  var theUrl = "databasehandler.php?cmd=1&email=" + email + "&password=" + password;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loginUserComplete
+    });
+}
+
+function loginUserComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+  // console.log(obj);
+  //localstorage and cookie creation
+  localStorage.levelid = obj.userid;
+  document.cookie = "userlevelid=" + obj.userid;
+  //sessionstorage creation
+  sessionStorage.userid = obj.userid;
+  sessionStorage.firstname = obj.firstname;
+  sessionStorage.lastname = obj.lastname;
+  sessionStorage.level = obj.level;
+  sessionStorage.region = obj.region;
+
+  // console.log(sessionStorage.userid, sessionStorage.firstname, sessionStorage.lastname, sessionStorage.level);
+
+  if (sessionStorage.level == '1') {
+    window.location = "level1H.html";
+  } else if (sessionStorage.level == '2') {
+    window.location = "level2H.html";
+  } else if (sessionStorage.level == '3') {
+    window.location = "level3H.html";
+  } else if (sessionStorage.level == '4') {
+    window.location = "dashboard.html";
+  } else {
+
+    $.notify({
+      icon: "info_outline",
+      message: "Failed To Log In. Please check your details and try again."
+
+    }, {
+        type: 'danger',
+        timer: 4000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+
+
+}
+
+function passwordreset() {
+  event.preventDefault();
+
+  var currentpassword = $('#currentpassword').val();
+  var newpassword = $('#newpassword').val();
+  var confirmednewpassword = $('#confirmednewpassword').val();
+
+  if (newpassword == confirmednewpassword) {
+
+    var theUrl = "databasehandler.php?cmd=26&myid=" + sessionStorage.userid + "&confirmednewpassword=" + confirmednewpassword;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: passwordresetComplete
+      });
+
+  } else {
+
+    $.notify({
+      icon: "info_outline",
+      message: "New password is not the same as confirmed password."
+
+    }, {
+        type: 'warning',
+        timer: 1000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+
+}
+
+function passwordresetComplete(xhr, status) {
+  console.log(xhr);
+
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "Password Changed Successfully."
+
+  }, {
+      type: 'success',
+      timer: 1000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function removependpendingeventComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Event Removed Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
+
+function toggleapprove(val, id) {
+
+  var theUrl = "databasehandler.php?cmd=4&eventid=" + id + "&approval=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+
+    });
+
+  window.location.href = "level3H.html";
+}
+
+function viewer(val) {
+  console.log('modal to view: ', val);
+}
+
+function welcomeToHomeLevel1() {
+
+
+  if (sessionStorage.level == "1") {
+    getaudiences();
+    getregions();
+  } else {
+    window.location.href = "404.html";
+  }
+
+
+  
+  document.getElementById('logout').value = "Logout"
+  // _fetchMyEvents(sessionStorage.userid);
+
+
+}
+
+function welcomeToHomeLevel2() {
+
+
+  if (sessionStorage.level == "2") {
+    // alert(sessionStorage.level);
+  } else {
+    window.location.href = "404.html";
+  }
+
+  document.getElementById('logout').value = "Logout"
+  _fetchMyEvents(sessionStorage.userid);
+
+}
+
+function welcomeToHomeLevel3() {
+
+
+  if (sessionStorage.level == "3") {
+    // alert(sessionStorage.level);
+  } else {
+    window.location.href = "404.html";
+  }
+
+  document.getElementById('logout').value = "Logout";
+  fillDashRegionFigures();
+  fillDashTotalEvents();
+  fillDashTotalAttendees();
+  fillDashCommonPlace();
+  _fetchMyEvents(sessionStorage.userid);
+
+}
+
+function welcomeToHomeLevel4() {
+
+
+  if (sessionStorage.level == "3" || sessionStorage.level == "4") {
+
+  } else {
+    window.location.href = "404.html";
+  }
+  // alert("asd"+sessionStorage.firstname);
+  $('#dashboardname').html(sessionStorage.firstname + " " + sessionStorage.lastname);
+  document.getElementById('dashboardname').value = sessionStorage.firstname;
+
+  // document.getElementById('logout').value="Logout";
+  fillDashRegionFigures();
+  fillDashTotalEvents();
+  fillDashTotalAttendees();
+  fillDashCommonPlace();
+  _fetchMyEvents(sessionStorage.userid);
+
+}
+
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+/////////////GENERAL FUNCTIONALITY///////////////////////////////////////
+
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
 function addnewevent(){
   event.preventDefault();
@@ -1347,9 +1373,10 @@ function addnewevent(){
 function addneweventComplete(xhr,status){
 
   var obj = JSON.parse(xhr.responseText);
-  console.log('LOOK HERE' , obj);
+  console.log('added' , obj);
 
   document.getElementById('RegisterValidationDoc').reset();
+  global1();
 
   $.notify({
     icon: "info_outline",
@@ -1364,7 +1391,348 @@ function addneweventComplete(xhr,status){
      }
   });
 
- alert(global1);
+}
+
+function addReportModal(val) {
+
+  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+  sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadEventReport
+    });
+
+}
+
+function addNewReport() {
+
+  var addnewreportobservation = $('#report_observations').val();
+  var addnewreportchallenge = $('#report_challenges').val();
+  var addnewreportcomplaint = $('#report_complaints').val();
+  //var addnewreportinput = $('#input-id').val();
+  var addnewreportmembers = $('#report_members').val();
+
+  var report_event_id = sessionStorage.report_event_id;
+
+  var filesarray = [];
+  var inp = document.getElementById('input-id');
+  for (var i = 0; i < inp.files.length; ++i) {
+    var name = inp.files.item(i).name;
+    filesarray[i] = name;
+  }
+  var files = JSON.stringify(filesarray);
+  var picpath = files;
+  var foldname = sessionStorage.userid + "_" + report_event_id;
+  var foldpath = foldname;
+
+  document.cookie = ("foldname=" + foldname);
+
+  if ((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportmembers == "")) {
+
+    $.notify({
+      icon: "info_outline",
+      message: "PLEASE FILL OUT ALL FIELDS TO CONTINUE."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
+  }
+  else {
+
+    var theUrl = "databasehandler.php?cmd=30&eventid=" + report_event_id + "&challenges=" + addnewreportchallenge + "&complaints=" + addnewreportcomplaint + "&observations=" + addnewreportobservation + "&picpath=" + picpath + "&foldpath=" + foldpath + "&members=" + addnewreportmembers;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: addNewReportComplete
+      });
+  }
+}
+
+function addNewReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+
+  $('#input-id').fileinput('upload');
+  $('#input-id').fileinput('reset');
+  $('#input-id').fileinput('enable');
+  UIkit.modal('#modal-report').hide();
+
+  $('#report_observations').val("");
+  $('#report_challenges').val("");
+  $('#report_complaints').val("");
+  $('#input-id').val("");
+  $('#report_members').val("");
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report created successfully for verification."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function deleteReport(val) {
+
+  var theUrl = "databasehandler.php?cmd=32&reportid=" + val;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: deleteReportComplete
+    });
+}
+
+function deleteReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+
+  UIkit.modal('#modal-overflow-2-report').hide();
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report deleted successfully."
+
+  }, {
+      type: 'danger',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function editNewEvent() {
+
+  event.preventDefault();
+
+  var userid = sessionStorage.getItem("userid");
+  var eventid = sessionStorage.getItem("eventneededid");
+  var eventtitle = $('#editaddnewtitle').val();
+  var date = $('#editaddnewdateselected').val();
+  var region = $('#editaddnewregion').val();
+  var town = $('#editaddnewtown').val();
+  var audiencecat = $('#editaddnewaudience').val();
+  var attendance = $('#editaddnewattendance').val();
+
+  var topic = $('#editaddnewtopics').val();
+
+  var logistics = "";
+  var communicationMode = "";
+
+
+  var addnewpowerpoint = $('#editaddnewpowerpoint').val();
+  var addnewoneonone = $('#editaddnewoneonone').val();
+  var addnewroadshow = $('#editaddnewroadshow').val();
+  var addnewdurbar = $('#editaddnewdurbar').val();
+  var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
+  var addnewbus = $('#editaddnewbus').val();
+  var addnewsoundsystem = $('#editaddnewsoundsystem').val();
+  var addnewflyer = $('#editaddnewflyer').val();
+  var addnewpen = $('#editaddnewpen').val();
+  var addnewtapemeasure = $('#editaddnewtapemeasure').val();
+  var addnewtowel = $('#editaddnewtowel').val();
+  var addnewmug = $('#editaddnewmug').val();
+  var addnewshirt = $('#editaddnewshirt').val();
+  var addnewnotepad = $('#editaddnewnotepad').val();
+  var addnewpowerblock = $('#editaddnewpowerblock').val();
+
+
+  // communications mode select
+  if ($('#editaddnewpowerpoint').is(":checked")) {
+    communicationMode = communicationMode + addnewpowerpoint + ",";
+  }
+  if ($('#editaddnewoneonone').is(":checked")) {
+    communicationMode = communicationMode + addnewoneonone + ",";
+  }
+  if ($('#editaddnewroadshow').is(":checked")) {
+    communicationMode = communicationMode + addnewroadshow + ",";
+  }
+  if ($('#editaddnewdurbar').is(":checked")) {
+    communicationMode = communicationMode + addnewdurbar + ",";
+  }
+  if ($('#editaddnewsmallgroupmeeting').is(":checked")) {
+    communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
+  }
+
+
+  // logistics select
+  if ($('#editaddnewbus').is(":checked")) {
+    logistics = logistics + addnewbus + ",";
+  }
+  if ($('#editaddnewsoundsystem').is(":checked")) {
+    logistics = logistics + addnewsoundsystem + ",";
+  }
+  if ($('#editaddnewflyer').is(":checked")) {
+    logistics = logistics + addnewflyer + ",";
+  }
+  if ($('#editaddnewpen').is(":checked")) {
+    logistics = logistics + addnewpen + ",";
+  }
+  if ($('#editaddnewtapemeasure').is(":checked")) {
+    logistics = logistics + addnewtapemeasure + ",";
+  }
+  if ($('#editaddnewtowel').is(":checked")) {
+    logistics = logistics + addnewtowel + ",";
+  }
+  if ($('#editaddnewmug').is(":checked")) {
+    logistics = logistics + addnewmug + ",";
+  }
+  if ($('#editaddnewshirt').is(":checked")) {
+    logistics = logistics + addnewshirt + ",";
+  }
+  if ($('#editaddnewnotepad').is(":checked")) {
+    logistics = logistics + addnewnotepad + ",";
+  }
+  if ($('#editaddnewpowerblock').is(":checked")) {
+    logistics = logistics + addnewpowerblock + ",";
+  }
+
+
+  if ((eventtitle == "") || (date == "") || (topic == "") || (town == "") || (attendance == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Fill Compulsory Fields."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ((region == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please select the region this altered event will be held in."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ((audiencecat == "")) {
+    $.notify({
+      icon: "info_outline",
+      message: "Please select the audience category this altered event will be held for."
+
+    }, {
+        type: 'danger',
+        timer: 500,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  }
+  else {
+
+    var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
+      "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid + "&eventid=" + eventid;
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: editNewEventComplete
+      });
+  }
+}
+
+function editNewEventComplete() {
+  UIkit.modal('#edit-modal-overflow').hide();
+  global1();
+}
+
+function getaudiences() {
+  var theUrl = "databasehandler.php?cmd=35";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: getaudiencesComplete
+    });
+}
+
+function getaudiencesComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+
+  var dropdown = "";
+  $('#audiencedropdown').html("");
+
+  dropdown = dropdown + "<select id='addnewaudience' class='form-control' data-style='btn' title='Select Audience'><option value='0'>Select Audience</option>";
+  for (var i = 0; i < obj.length; i++) {
+    var drop_id = obj[i].aud_id;
+    var drop_name = obj[i].aud_name;
+    // if (user_id == sessionStorage.reassigncreatorId) {
+    //   dropdown = dropdown + "";
+    // } else {
+    dropdown = dropdown + "<option value='" + drop_name + "'>" + drop_name + "</option>";
+    //}
+
+  }
+  dropdown = dropdown + "</select>";
+
+  document.getElementById('audiencedropdown').innerHTML = dropdown;
+
+}
+
+function getregions() {
+  var theUrl = "databasehandler.php?cmd=8";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: getregionsComplete
+    });
+}
+
+function getregionsComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+
+  var dropdown = "";
+  $('#regiondropdown').html("");
+
+  dropdown = dropdown + "<select id='addnewregion' class='form-control' data-style='btn' title='Select Audience'><option value='0'>Select Region</option>";
+  for (var i = 0; i < obj.length; i++) {
+    var drop_id = obj[i].region_id;
+    var drop_name = obj[i].regionname;
+    // if (user_id == sessionStorage.reassigncreatorId) {
+    //   dropdown = dropdown + "";
+    // } else {
+    dropdown = dropdown + "<option value='" + drop_id + "'>" + drop_name + "</option>";
+    //}
+
+  }
+  dropdown = dropdown + "</select>";
+
+  document.getElementById('regiondropdown').innerHTML = dropdown;
 
 }
 
@@ -1391,186 +1759,135 @@ function level1EditComplete(xhr,status){
  
   UIkit.modal('#edit-modal-overflow').show();
   
-    $('#editaddnewdateselected').val(moment(obj[0].date_to_be_organized).format('dddd, D MMMM Y'));
-    $('#editaddnewtitle').val(obj[0].eventtitle);
-    $('#editaddnewattendance').val(obj[0].expected_audience_attendance);
-    $('#editaddnewtown').val(obj[0].town);
-    $('#editaddnewtopics').val(obj[0].eventtopic);
-    
-}
+  $('#editaddnewdateselected').val(moment(obj[0].date_to_be_organized).format('dddd, D MMMM Y'));
+  $('#editaddnewtitle').val(obj[0].eventtitle);
+  $('#editaddnewattendance').val(obj[0].expected_audience_attendance);
+  $('#editaddnewtown').val(obj[0].town);
+  $('#editaddnewtopics').val(obj[0].eventtopic);
 
-function editNewEvent(){
+  var theUrla = "databasehandler.php?cmd=35";
+  $.ajax({
+    type: 'POST',
+    url: theUrla,
+    success: function (data) {
+      var mydrop = JSON.parse(data);
+      if (mydrop == "") {
+        alert("Database Error");
+      } else {
+        var dropdown = "";
+        $('#editaudiencedropdown').html("");
 
-  event.preventDefault();
-  
-    var userid = sessionStorage.getItem("userid");
-    var eventid = sessionStorage.getItem("eventneededid");
-    var eventtitle = $('#editaddnewtitle').val();
-    var date = $('#editaddnewdateselected').val();
-    var region = $('#editaddnewregion').val();
-    var town = $('#editaddnewtown').val();
-    var audiencecat = $('#editaddnewaudience').val();
-    var attendance = $('#editaddnewattendance').val();
-  
-    var topic = $('#editaddnewtopics').val();
-  
-    var logistics = "";
-    var communicationMode = "";
-  
-  
-    var addnewpowerpoint = $('#editaddnewpowerpoint').val();
-    var addnewoneonone = $('#editaddnewoneonone').val();
-    var addnewroadshow = $('#editaddnewroadshow').val();
-    var addnewdurbar = $('#editaddnewdurbar').val();
-    var addnewsmallgroupmeeting = $('#editaddnewsmallgroupmeeting').val();
-    var addnewbus = $('#editaddnewbus').val();
-    var addnewsoundsystem = $('#editaddnewsoundsystem').val();
-    var addnewflyer = $('#editaddnewflyer').val();
-    var addnewpen = $('#editaddnewpen').val();
-    var addnewtapemeasure = $('#editaddnewtapemeasure').val();
-    var addnewtowel = $('#editaddnewtowel').val();
-    var addnewmug = $('#editaddnewmug').val();
-    var addnewshirt = $('#editaddnewshirt').val();
-    var addnewnotepad = $('#editaddnewnotepad').val();
-    var addnewpowerblock = $('#editaddnewpowerblock').val();
-  
-  
-    // communications mode select
-      if ($('#editaddnewpowerpoint').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewpowerpoint + ",";
-      }
-      if ($('#editaddnewoneonone').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewoneonone + ",";
-      }
-      if ($('#editaddnewroadshow').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewroadshow + ",";
-      }
-      if ($('#editaddnewdurbar').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewdurbar + ",";
-      }
-      if ($('#editaddnewsmallgroupmeeting').is(":checked"))
-      {
-        communicationMode = communicationMode + addnewsmallgroupmeeting + ",";
-      }
-  
-  
-      // logistics select
-      if ($('#editaddnewbus').is(":checked"))
-      {
-        logistics = logistics + addnewbus+ ",";
-      }
-      if ($('#editaddnewsoundsystem').is(":checked"))
-      {
-        logistics = logistics + addnewsoundsystem+ ",";
-      }
-      if ($('#editaddnewflyer').is(":checked"))
-      {
-        logistics = logistics + addnewflyer+ ",";
-      }
-      if ($('#editaddnewpen').is(":checked"))
-      {
-        logistics = logistics + addnewpen+ ",";
-      }
-      if ($('#editaddnewtapemeasure').is(":checked"))
-      {
-        logistics = logistics + addnewtapemeasure+ ",";
-      }
-      if ($('#editaddnewtowel').is(":checked"))
-      {
-        logistics = logistics + addnewtowel+ ",";
-      }
-      if ($('#editaddnewmug').is(":checked"))
-      {
-        logistics = logistics + addnewmug+ ",";
-      }
-      if ($('#editaddnewshirt').is(":checked"))
-      {
-        logistics = logistics + addnewshirt+ ",";
-      }
-      if ($('#editaddnewnotepad').is(":checked"))
-      {
-        logistics = logistics + addnewnotepad+ ",";
-      }
-      if ($('#editaddnewpowerblock').is(":checked"))
-      {
-        logistics = logistics + addnewpowerblock+ ",";
-      }
-  
-  
-    if ((eventtitle == "") || (date == "") || (topic == "") || (town == "") || (attendance == "")  ) 
-    {
-      $.notify({
-        icon: "info_outline",
-        message: "Please Fill Compulsory Fields."
-  
-      }, {
-          type: 'danger',
-          timer: 500,
-          placement: {
-            from: 'top',
-            align: 'right'
+        dropdown = dropdown + "<select id='editaddnewaudience' class='form-control' data-style='btn' title='Select Audience'>";
+        for (var i = 0; i < mydrop.length; i++) {
+          var drop_id = mydrop[i].aud_id;
+          var drop_name = mydrop[i].aud_name;
+          if (drop_name == obj[0].audience_category) {
+            dropdown = dropdown + "<option value='" + drop_name + "' selected>" + drop_name + "</option>";
+          } else {
+            dropdown = dropdown + "<option value='" + drop_name + "'>" + drop_name + "</option>";
           }
-        });
-    } else if ((region == ""))
-    {
-      $.notify({
-        icon: "info_outline",
-        message: "Please select the region this altered event will be held in."
-  
-      }, {
-          type: 'danger',
-          timer: 500,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-    } else if ((audiencecat == ""))
-    {
-      $.notify({
-        icon: "info_outline",
-        message: "Please select the audience category this altered event will be held for."
-  
-      }, {
-          type: 'danger',
-          timer: 500,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
+
+        }
+        dropdown = dropdown + "</select>";
+
+        document.getElementById('editaudiencedropdown').innerHTML = dropdown;
+      }
     }
-    else{
-  
-      var theUrl = "databasehandler.php?cmd=29&eventtitle=" + eventtitle + "&date=" + date + "&region=" + region + "&town=" + town + "&audiencecat=" + audiencecat + "&attendance=" + attendance +
-         "&outreach=" + communicationMode + "&eventtopic=" + topic + "&logistics=" + logistics + "&reporter=" + userid + "&eventid=" + eventid;
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: editNewEventComplete
-        });
+  });
+
+  var theUrlr = "databasehandler.php?cmd=8";
+  $.ajax({
+    type: 'POST',
+    url: theUrlr,
+    success: function (data) {
+      var mydrop = JSON.parse(data);
+      if (mydrop == "") {
+        alert("Database Error");
+      } else {
+        var dropdown = "";
+        $('#editregiondropdown').html("");
+
+        dropdown = dropdown + "<select id='editaddnewregion' class='form-control' data-style='btn' title='Select Region'>";
+        for (var i = 0; i < mydrop.length; i++) {
+          var drop_id = mydrop[i].region_id;
+          var drop_name = mydrop[i].regionname;
+          if (drop_id == obj[0].region) {
+            dropdown = dropdown + "<option value='" + drop_id + "' selected>" + drop_name + "</option>";
+          } else {
+            dropdown = dropdown + "<option value='" + drop_id + "'>" + drop_name + "</option>";
+          }
+
+        }
+        dropdown = dropdown + "</select>";
+
+        document.getElementById('editregiondropdown').innerHTML = dropdown;
+      }
     }
+  });
+
 }
 
-function editNewEventComplete(){
-  UIkit.modal('#edit-modal-overflow').hide();
-  global1();
-}
-
-function addReportModal(val){
-  
+function level1View(val) {
+  console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
-  sessionStorage.report_event_id = val;
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: loadEventReport
-      });
- 
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: level1ViewComplete
+    });
+
+  // $('#modalpop').click();
+}
+
+function level1ViewComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+
+  // console.log(typeof(obj[0].picture_paths));
+  console.log(obj);
+
+  var picValues = "";
+  $('#pictureContainer').html("");
+  //console.log(obj[0].report_id);
+  var dform = new Date(obj[0].date_to_be_organized);
+  UIkit.modal('#modal-overflow').show();
+
+  //$('#report_id').val(obj[0].report_id);
+  // $('#eventtitle').innerHTML(obj[0].eventtitle);
+  document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('region').innerHTML = obj[0].regionname;
+  document.getElementById('town').innerHTML = obj[0].town;
+  document.getElementById('audience_category').innerHTML = obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML = obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics;
+  var strlenLogistics = obj[0].logistics.length;
+  document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  var mode = obj[0].mode_of_outreach;
+  var strlenMode = obj[0].mode_of_outreach.length;
+  document.getElementById('complaints_raised').innerHTML = mode.substring(0, strlenMode - 1);
+
+
+  var dateVerfied = new Date(obj[0].verified_timestamp);
+  var dateApproved = new Date(obj[0].approved_timestamp);
+
+
+  if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('event_summary').innerHTML = "This event has not yet been verified nor approved.";
+  }
+  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+  }
+  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
+    document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + " and approved on: " + moment(dateApproved).format('D MMMM Y');
+  }
+
+
+  //document.getElementById('complaints_raised').innerHTML= obj[0].approved_timestamp;
+
 }
 
 function loadEventReport(xhr, status){
@@ -1622,90 +1939,6 @@ function loadEventReport(xhr, status){
   $('#addbuttonreport').show();
 
   //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button> <button class='uk-button uk-button-secondary' type='button' onclick='addNewReport()>Add Report</button>");
-
-}
-
-function addNewReport(){
-
-  var addnewreportobservation = $('#report_observations').val();
-  var addnewreportchallenge = $('#report_challenges').val();
-  var addnewreportcomplaint = $('#report_complaints').val();
-  //var addnewreportinput = $('#input-id').val();
-  var addnewreportmembers = $('#report_members').val();
-
-  var report_event_id = sessionStorage.report_event_id;
-
-  var filesarray = [];
-  var inp = document.getElementById('input-id');
-  for (var i = 0; i < inp.files.length; ++i) {
-    var name = inp.files.item(i).name;
-    filesarray[i] = name;
-  }
-  var files = JSON.stringify(filesarray);
-  var picpath = files;
-  var foldname = sessionStorage.userid + "_" + report_event_id;
-  var foldpath = foldname;
-
-  document.cookie = ("foldname=" + foldname);
-
-  if((addnewreportobservation == "") || (addnewreportchallenge == "") || (addnewreportcomplaint == "") || (addnewreportmembers == "") )
-  {
-
-    $.notify({
-      icon: "info_outline",
-      message: "PLEASE FILL OUT ALL FIELDS TO CONTINUE."
-  
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-
-  }
-  else{
-
-    var theUrl = "databasehandler.php?cmd=30&eventid=" + report_event_id + "&challenges=" + addnewreportchallenge + "&complaints=" + addnewreportcomplaint + "&observations=" + addnewreportobservation + "&picpath=" + picpath + "&foldpath=" + foldpath + "&members=" + addnewreportmembers;
-    
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: addNewReportComplete
-        });
-  }
-}
-
-function addNewReportComplete(xhr,status){
-
-  var obj = JSON.parse(xhr.responseText);
-
-  $('#input-id').fileinput('upload');
-  $('#input-id').fileinput('reset');
-  $('#input-id').fileinput('enable');
-  UIkit.modal('#modal-report').hide();
-
-  $('#report_observations').val("");
-  $('#report_challenges').val("");
-  $('#report_complaints').val("");
-  $('#input-id').val("");
-  $('#report_members').val("");
-
-  global1();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Report created successfully for verification."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
 
 }
 
@@ -1822,19 +2055,6 @@ function level1ReportViewComplete(xhr, status) {
   
 }
 
-//for report editing
-function viewReportModal(val) {
-
-  var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
-  sessionStorage.report_event_id = val;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: loadViewEventReport
-    });
-
-}
-
 function loadViewEventReport(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
@@ -1889,42 +2109,14 @@ function loadViewEventReport(xhr, status) {
   //$('#reportverifyformdiv').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");//<button class='uk-button uk-button-secondary' type='button' onclick='#'>Edit Report</button>");
 }
 
-function deleteReport(val) {
+function viewReportModal(val) {
 
-    var theUrl = "databasehandler.php?cmd=32&reportid=" + val;
-
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: deleteReportComplete
-      });
-}
-
-function deleteReportComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-
-  UIkit.modal('#modal-overflow-2-report').hide();
-
-  // $('#report_observations').val("");
-  // $('#report_challenges').val("");
-  // $('#report_complaints').val("");
-  // $('#input-id').val("");
-  // $('#report_members').val("");
-
-  global1();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Report deleted successfully."
-
-  }, {
-      type: 'danger',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
+  var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
+  sessionStorage.report_event_id = val;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: loadViewEventReport
     });
 
 }
@@ -1933,31 +2125,20 @@ function deleteReportComplete(xhr, status) {
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
-
+/////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
-
-function help(){
-  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-}
-
-function verifier(id, verifyCheck, approveCheck){
-  if(approveCheck == 1){
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-  }
-  if((approveCheck == 0) && (verifyCheck == 0)){
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-  }
-  if ((approveCheck == 0) && (verifyCheck == 1)) {
-    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>UnVerify</button>");
-  }
-}
+/////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 
 function _level2cancel(){
   window.location.href="level2H.html";
+}
+
+function help() {
+  verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
 
 function level2View(val) {
@@ -2012,40 +2193,6 @@ function level2ViewComplete(xhr, status) {
   }
 
 
-}
-
-function verifyEventToggle(id, verState){
-  sessionStorage.verifyingId = id;
-  sessionStorage.verifyingState = verState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-comments').show();
-
-}
-
-function verifyEvent(){
-  var comments = $('#commentsForVerification').val();
-  var theUrl="databasehandler.php?cmd=5&eventid="+sessionStorage.verifyingId+"&verify="+sessionStorage.verifyingState+"&verifycomments="+comments;
-  $.ajax(theUrl,
-    {
-      async:true,
-      complete: global2
-    });
-
-    $('#commentsForVerification').val("");
-}
-
-function reportHelp(){
-  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-}
-
-function reportApprover(id, verifyCheck, approveCheck){
-  if(approveCheck == 1){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-  }
-  if(approveCheck == 0){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-  }
 }
 
 function level2ReportView(val) {
@@ -2157,7 +2304,61 @@ function level2ReportViewComplete(xhr, status) {
 
   //$('#report_photos').html();
   document.getElementById('report_photos').innerHTML = picValues;
+
+  if (obj[0].reportapprove == 0) {
+    approvebutton = "<button class='uk-button uk-button-default' type='button' style='background-color: green; color: white;' onclick='ApproveReportToggle("+obj[0].report_id+",0)'>Approve</button><button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>";
+    document.getElementById('approveformdivbuttons').innerHTML = approvebutton;
+  }else{
+    approvebutton = "<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>";
+    document.getElementById('approveformdivbuttons').innerHTML = approvebutton;
+  }
   
+}
+
+function reportHelp() {
+  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
+}
+
+function reportApprover(id, verifyCheck, approveCheck) {
+  if (approveCheck == 1) {
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if (approveCheck == 0) {
+    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+}
+
+function verifier(id, verifyCheck, approveCheck) {
+  if (approveCheck == 1) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
+  if ((approveCheck == 0) && (verifyCheck == 0)) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
+  }
+  if ((approveCheck == 0) && (verifyCheck == 1)) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>UnVerify</button>");
+  }
+}
+
+function verifyEventToggle(id, verState) {
+  sessionStorage.verifyingId = id;
+  sessionStorage.verifyingState = verState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-comments').show();
+
+}
+
+function verifyEvent() {
+  var comments = $('#commentsForVerification').val();
+  var theUrl = "databasehandler.php?cmd=5&eventid=" + sessionStorage.verifyingId + "&verify=" + sessionStorage.verifyingState + "&verifycomments=" + comments;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global2
+    });
+
+  $('#commentsForVerification').val("");
 }
 
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
@@ -2166,11 +2367,15 @@ function level2ReportViewComplete(xhr, status) {
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 2 FUNCTIONALITY///////////////////////////////////////
 
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+function _level3cancel() {
+  window.location.href = "level2H.html";
+}
 
 function approvehelp(){
   approver(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -2185,8 +2390,89 @@ function approver(id, verifyCheck, approveCheck){
   }
 }
 
-function _level3cancel(){
-  window.location.href="level2H.html";
+function ApproveReportToggle(id, approveState) {
+
+  sessionStorage.approvingReportId = id;
+  sessionStorage.approvingReportState = approveState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-report-comments').show();
+
+
+
+}
+
+function approveReport() {
+
+  var comments = $('#commentsForReportApproval').val();
+
+  var theUrl = "databasehandler.php?cmd=28&reportid=" + sessionStorage.approvingReportId + "&approval=" + sessionStorage.approvingReportState + "&verificationComments=" + comments;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global7
+    });
+
+  $('#commentsForReportApproval').val("");
+}
+
+function approveEventToggle(id, approveState) {
+
+  sessionStorage.approvingId = id;
+  sessionStorage.approvingState = approveState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-comments').show();
+
+
+}
+
+function approveEvent() {
+
+  var comments = $('#commentsForApproval').val();
+
+  var theUrl = "databasehandler.php?cmd=4&eventid=" + sessionStorage.approvingId + "&approve=" + sessionStorage.approvingState + "&approveComments=" + comments;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: global3
+    });
+
+  $('#commentsForApproval').val("");
+}
+
+function deleteUsers(val) {
+  console.log('users', val);
+  var theUrl = "databasehandler.php?cmd=20&userid=" + val + "&myid=" + sessionStorage.userid;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: deleteUsersComplete
+    });
+}
+
+function deleteUsersComplete(xhr, status) {
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "User Deactivated Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
 }
 
 function level3View(val) {
@@ -2239,19 +2525,6 @@ function level3ViewComplete(xhr, status) {
   }
 
 }
-
-// function reportHelp(){
-//   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-// }
-
-// function reportApprover(id, verifyCheck, approveCheck){
-//   if(approveCheck == 1){
-//     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-//   }
-//   if(approveCheck == 0){
-//     $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Verify</button>");
-//   }
-// }
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -2325,196 +2598,142 @@ function level3ReportViewComplete(xhr, status) {
   console.log(obj[0].team_challenges);
 }
 
-function ApproveReportToggle(id, approveState){
-
-  sessionStorage.approvingReportId = id;
-  sessionStorage.approvingReportState = approveState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-report-comments').show();
-
- 
-  
-}
-
-function approveReport(){
-
-  var comments = $('#commentsForReportApproval').val();
-
-  var theUrl="databasehandler.php?cmd=28&reportid="+sessionStorage.approvingReportId+"&approval="+sessionStorage.approvingReportState+"&verificationComments="+comments;
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global7
-          });
-  
-  $('#commentsForReportApproval').val("");
-}
-
-
-function approveEventToggle(id, approveState){
-
-  sessionStorage.approvingId = id;
-  sessionStorage.approvingState = approveState;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-comments').show();
-
-  
-}
-
-function approveEvent(){
-  
-  var comments = $('#commentsForApproval').val();
-
-  var theUrl="databasehandler.php?cmd=4&eventid="+sessionStorage.approvingId+"&approve="+sessionStorage.approvingState+"&approveComments="+comments;
-  
-    $.ajax(theUrl,
-          {
-            async:true,
-            complete: global3
-          });
-
-          $('#commentsForApproval').val("");
-}
-
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
-
-function eventviewer(val) {
-  // console.log('modal to edit: ', val);
-  var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
+function reactivateUsers(val) {
+  console.log('users', val);
+  var theUrl = "databasehandler.php?cmd=21&userid=" + val + "&myid=" + sessionStorage.userid;
 
   $.ajax(theUrl,
     {
       async: true,
-      complete: eventviewerComplete
+      complete: reactivateUsersComplete
+    });
+}
+
+function reactivateUsersComplete(xhr, status) {
+  console.log(xhr);
+
+  //level2usersdatatable.ajax.reload();
+  $.notify({
+    icon: "info_outline",
+    message: "User Reactivated Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
     });
 
-  // $('#modalpop').click();
 }
 
-function eventviewerComplete(xhr, status) {
-  // console.log(xhr);
+function reassignEventToggle(id,creator,region) {
+  // /event.preventDefault();
+
+  sessionStorage.reassignId = id;
+  sessionStorage.reassigncreatorId = creator;
+  sessionStorage.regionId = region;
+
+  var theUrl = "databasehandler.php?cmd=34&region=" + region;
+
+  $.ajax(theUrl,
+  {
+    async: true,
+    complete: reassignEventToggleComplete
+  });
+
+}
+
+function reassignEventToggleComplete(xhr,status){
   var obj = JSON.parse(xhr.responseText);
+  console.log(obj);
 
-  var dform = new Date(obj[0].date_organized);
+  var userValues = "";
+  $('#reassignMember').html("");    
 
-  $('#eventmodalshow').click();
-
-  $('#showeventtitle').val(obj[0].eventtitle);
-  $('#showdate_organized').val(moment(dform).format('D MMMM Y'));
-  $('#showregion').val(obj[0].region);
-  $('#showtown').val(obj[0].town);
-  $('#showaudience_category').val(obj[0].audience_category);
-  $('#showaudience_attendance').val(obj[0].audience_attendance);
-  $('#showevent_summary').val(obj[0].event_summary);
-
-}
-
-function fillDashRegionFigures(sdate, edate) {
-
-  var theUrl = "databasehandler.php?cmd=10";
-  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  userValues = userValues + "<select id='reassignMemberName' class='form-control' data-style='btn' title='Select User'><option value='0'>Select User</option>";
+  for (var i = 0; i < obj.length; i++) {
+    var user_id = obj[i].userid;
+    var user_name = obj[i].firstname + ' ' + obj[i].lastname;
+    if (user_id == sessionStorage.reassigncreatorId) {
+      userValues = userValues + ""; 
+    }else{
+      userValues = userValues + "<option value='" + user_id + "'>" + user_name + "</option>"; 
+    }
+    
   }
+  userValues = userValues + "</select>";
+
+  // userValues = userValues + "<div class='btn-group bootstrap-select'>";
+  // userValues = userValues + "<button type='button' class='dropdown-toggle bs-placeholder btn' data-toggle='dropdown' role='button' title='Select User'>";
+  // userValues = userValues + "<span class='filter-option pull-left'>Select User</span>&nbsp;";
+  // userValues = userValues + "<span class='bs-caret'><span class='caret'></span></span></button><div class='dropdown-menu open' role='combobox'>";
+  // userValues = userValues + "<ul class='dropdown-menu inner' role='listbox' aria-expanded='false'>";
+  // for (var i = 0; i < obj.length; i++) {
+  //   j = i +1;
+  //   var user_name = obj[i].firstname + ' ' + obj[i].lastname;
+  //   userValues = userValues + "<li data-original-index='" + j + "'><a tabindex='0' class='' data-tokens='null' role='option' aria-disabled='false' aria-selected='false'><span class='text'>" + user_name +"</span><span class='material-icons  check-mark'> done </span></a></li>";
+  // }
+  // userValues = userValues + "</ul></div>";
+  // userValues = userValues + "<select name='reassignMember' class='selectpicker' data-style='btn' title='Select User' data-size='11' tabindex='-98'><option class='bs-title-option' value=''>Select User</option>";
+  // for (var i = 0; i < obj.length; i++) {
+  //   var user_id = obj[i].userid;
+  //   var user_name = obj[i].firstname + ' ' + obj[i].lastname;
+  //   userValues = userValues + "<option value='" + user_id + "'>" + user_name + "</option>"; 
+  // }
+  // userValues = userValues + "</select></div>";
+
+  document.getElementById('reassignMember').innerHTML = userValues;
+
+  UIkit.modal('#modal-overflow-reassign').show();
+}
+
+function reassignEvent() {
+
+  var comments = $('#commentsForReassign').val();
+  var newteammember = $('#reassignMemberName').val();
+
+  var theUrl = "databasehandler.php?cmd=33&eventid=" + sessionStorage.reassignId + "&reporter=" + newteammember + "&reason=" + comments;
 
   $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashRegionFiguresComplete
-  });
+    {
+      async: true,
+      complete: reassignEventComplete
+    });
 
+  $('#commentsForReassign').val("");
 }
 
-function fillDashRegionFiguresComplete(xhr, status) {
+function reassignEventComplete(xhr, status) {
 
-  $('#dashboardtablebody').html('<th><td> Region</td><td class="text-right">Events Hosted</td><td class="text-right">Percentage %</td></th>');
+  console.log(xhr);
 
-  var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
+  $.notify({
+    icon: "info_outline",
+    message: "Event Reassigned Successfully."
 
-  for (var i = 0; i < obj.length; i++){
-    $('#dashboardtablebody').append("<tr><td></td><td>"+obj[i].regname+"</td><td class='text-right'>"+obj[i].figures+"</td><td class='text-right'>"+obj[i].percentage+"</td></tr><tr>");
-  }
-
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
 }
 
-function fillDashTotalEvents() {
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 3 FUNCTIONALITY///////////////////////////////////////
 
-  var theUrl = "databasehandler.php?cmd=11";
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashTotalEventsComplete
-  });
-
-}
-
-function fillDashTotalEventsComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
-
-  $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
-  // document.getElementById('totalEventsHoted').value = obj.total;
-
-
-
-}
-
-function fillDashTotalAttendees() {
-
-  var theUrl = "databasehandler.php?cmd=13";
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashTotalAttendeesComplete
-  });
-
-}
-
-function fillDashTotalAttendeesComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-  // console.log("obj", obj);
-
-  $('#totalAttendees').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].total+"<p>");
-  // document.getElementById('totalEventsHoted').value = obj.total;
-
-
-
-}
-
-function fillDashCommonPlace() {
-
-  var theUrl = "databasehandler.php?cmd=14";
-
-  $.ajax(theUrl,
-  {
-    async: true,
-    complete: fillDashCommonPlaceComplete
-  });
-
-}
-
-function fillDashCommonPlaceComplete(xhr, status) {
-
-  var obj = JSON.parse(xhr.responseText);
-  console.log("obj", obj);
-
-  $('#commonAudience').html("<p style='font-weight: bold; font-size: 1.3em;'>"+obj[0].audience_category+"<p>");
-
-
-}
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
 
 function dashEventsDisplay(val) {
   console.log('evend it:', val);
@@ -2546,38 +2765,38 @@ function dashEventsDisplayComplete(xhr, status) {
   console.log("show dashboard events modal");
   UIkit.modal('#dasheventsdisplay').show();
 
-    //$('#report_id').val(obj[0].report_id);
-    // $('#eventtitle').innerHTML(obj[0].eventtitle);
-    document.getElementById('eventtitle').innerHTML=obj[0].eventtitle;
-    document.getElementById('date_organized').innerHTML=moment(dform).format('D MMMM Y');
-    document.getElementById('region').innerHTML=obj[0].region;
-    document.getElementById('town').innerHTML=obj[0].town;
-    document.getElementById('audience_category').innerHTML=obj[0].audience_category;
-    document.getElementById('audience_attendance').innerHTML=obj[0].audience_attendance;
-    document.getElementById('team_challenges').innerHTML=obj[0].team_challenges;
-    document.getElementById('complaints_raised').innerHTML=obj[0].complaints_raised;
-    document.getElementById('event_summary').innerHTML=obj[0].event_summary;
+  //$('#report_id').val(obj[0].report_id);
+  // $('#eventtitle').innerHTML(obj[0].eventtitle);
+  document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
+  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('region').innerHTML = obj[0].region;
+  document.getElementById('town').innerHTML = obj[0].town;
+  document.getElementById('audience_category').innerHTML = obj[0].audience_category;
+  document.getElementById('audience_attendance').innerHTML = obj[0].audience_attendance;
+  document.getElementById('team_challenges').innerHTML = obj[0].team_challenges;
+  document.getElementById('complaints_raised').innerHTML = obj[0].complaints_raised;
+  document.getElementById('event_summary').innerHTML = obj[0].event_summary;
 
-    picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
+  picValues = picValues + "<div class='uk-child-width-expand@s uk-text-center' uk-grid uk-lightbox='animation: slide'>";
 
-    var jsonarray = JSON.parse(obj[0].picture_paths);
-    for(var i = 0; i < jsonarray.length; i++) {
-      var obj2 = jsonarray[i];
+  var jsonarray = JSON.parse(obj[0].picture_paths);
+  for (var i = 0; i < jsonarray.length; i++) {
+    var obj2 = jsonarray[i];
 
-      var user_id = ""+obj[0].reporter;
-      var event_header = ""+obj[0].eventtitle;
-      var picture_header = ""+obj2;
+    var user_id = "" + obj[0].reporter;
+    var event_header = "" + obj[0].eventtitle;
+    var picture_header = "" + obj2;
 
 
-      picValues = picValues + "<div>";
-      picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/"+user_id+"_"+event_header+"/"+picture_header+"' caption='Caption 1'>";
-      picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+user_id+"_"+event_header+"/"+picture_header+"'/>";
-      picValues = picValues + "</a>";
-      picValues = picValues + "</div>";
+    picValues = picValues + "<div>";
+    picValues = picValues + "<a onclick='closemodal1()' class='uk-inline' href='uploads/" + user_id + "_" + event_header + "/" + picture_header + "' caption='Caption 1'>";
+    picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/" + user_id + "_" + event_header + "/" + picture_header + "'/>";
+    picValues = picValues + "</a>";
+    picValues = picValues + "</div>";
 
   }
   picValues = picValues + "</div>";
-  document.getElementById('pictureContainerLevel4users').innerHTML=picValues;
+  document.getElementById('pictureContainerLevel4users').innerHTML = picValues;
 
 }
 
@@ -2611,282 +2830,15 @@ function dashUsersDisplayComplete(xhr, status) {
   UIkit.modal('#dashusersdisplay').show();
 
 
-  document.getElementById('eventtitle').innerHTML=obj[0].firstname+" "+obj[0].lastname;
-  document.getElementById('date_organized').innerHTML=obj[0].email;
+  document.getElementById('eventtitle').innerHTML = obj[0].firstname + " " + obj[0].lastname;
+  document.getElementById('date_organized').innerHTML = obj[0].email;
 
-  document.getElementById('region').innerHTML=obj[0].region;
-  document.getElementById('town').innerHTML=obj[0].level;
-
-}
-
-function deleteUsers(val) {
-  console.log('users', val);
-  var theUrl = "databasehandler.php?cmd=20&userid=" + val +"&myid="+ sessionStorage.userid;
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: deleteUsersComplete
-    });
-
-  // $('#modalpop').click();
-}
-
-function deleteUsersComplete(xhr, status) {
-  console.log(xhr);
-  var obj = JSON.parse(xhr.responseText);
-
-  console.log(obj);
-  //level2usersdatatable.ajax.reload();
-  $.notify({
-    icon: "info_outline",
-    message: "User Deactivated Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
+  document.getElementById('region').innerHTML = obj[0].region;
+  document.getElementById('town').innerHTML = obj[0].level;
 
 }
 
-function reactivateUsers(val) {
-  console.log('users', val);
-  var theUrl = "databasehandler.php?cmd=21&userid=" + val + "&myid="+ sessionStorage.userid;
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: reactivateUsersComplete
-    });
-}
-
-function reactivateUsersComplete(xhr, status) {
-  console.log(xhr);
-
-  //level2usersdatatable.ajax.reload();
-  $.notify({
-    icon: "info_outline",
-    message: "User Reactivated Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-
-}
-
-function passwordreset(){
-  event.preventDefault();
-
-  var currentpassword = $('#currentpassword').val();
-  var newpassword = $('#newpassword').val();
-  var confirmednewpassword = $('#confirmednewpassword').val();
-
-  if(newpassword == confirmednewpassword){
-
-    var theUrl = "databasehandler.php?cmd=26&myid=" + sessionStorage.userid + "&confirmednewpassword="+ confirmednewpassword;
-
-    $.ajax(theUrl,
-      {
-        async: true,
-        complete: passwordresetComplete
-      });
-
-  } else {
-
-    $.notify({
-      icon: "info_outline",
-      message: "New password is not the same as confirmed password."
-
-    }, {
-        type: 'warning',
-        timer: 1000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-
-  }
-
-}
-
-function passwordresetComplete(xhr, status) {
-  console.log(xhr);
-
-  //level2usersdatatable.ajax.reload();
-  $.notify({
-    icon: "info_outline",
-    message: "Password Changed Successfully."
-
-  }, {
-      type: 'success',
-      timer: 1000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-
-}
-
-function generateInputs(){
-
-  var number = $('#createInputs').val();
-
-  for(var i = 0; i < number; i++){
-    document.getElementById('place').appendChild="<div><input/></div>";
-  }
-
-
-}
-
-function addneweventComplete(xhr,status){
-  var obj = JSON.parse(xhr.responseText);
-  console.log('LOOK HERE' , obj);
-
-  document.getElementById('RegisterValidationDoc').reset();
-
-  $.notify({
-     icon: "info_outline",
-     message: "Event submitted successfully for verification and approval."
-
- },{
-     type: 'success',
-     timer: 2000,
-     placement: {
-         from: 'top',
-         align: 'right'
-     }
- });
-
-
-}
-
-function searchdash(){
-  if ($('#addnewdateselected').val() == "") {
-    
-    $.notify({
-      icon: "info_outline",
-      message: "Please Select Start Date."
-
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  } else if ($('#addenddateselected').val() == ""){
-    $.notify({
-      icon: "info_outline",
-      message: "Please Select End Date."
-
-    }, {
-        type: 'danger',
-        timer: 2000,
-        placement: {
-          from: 'top',
-          align: 'right'
-        }
-      });
-  }else{
-    loadDashData();
-    $('#searchregionarea').show();
-    $('#datafield').show();
-  }
-
-}
-
-function loadDashData(){
-  var sdate = $('#addnewdateselected').val();
-  var edate = $('#addenddateselected').val();
-
-  //alert(sdate+' '+edate);
-
-  fillDashRegionFigures(sdate, edate);
-  fillDashTotalEvents(sdate, edate);
-  fillDashTotalAttendees(sdate, edate);
-  fillDashCommonPlace(sdate, edate);
-  dashGraphEventData(sdate, edate);
-  dashGraphAudienceData(sdate, edate);
-  dashGraphUserData(sdate, edate);
-}
-
-function regionfillDashTotalEvents(sdate,edate, region) {
-
-  var theUrl = "databasehandler.php?cmd=11";
-  if (typeof (region) === 'undefined') {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
-  }
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashTotalEventsComplete
-    });
-
-}
-
-function regionfillDashTotalAttendees(sdate, edate, region) {
-
-  var theUrl = "databasehandler.php?cmd=13";
-  if (typeof (region) === 'undefined') {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
-  }
-  
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashTotalAttendeesComplete
-    });
-
-}
-
-function regionfillDashCommonPlace(sdate, edate, region) {
-  var theUrl = "databasehandler.php?cmd=14";
-  if (typeof (region) === 'undefined') {
-    theUrl;
-  } else {
-    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
-  }
-
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: fillDashCommonPlaceComplete
-    });
-}
-
-function regionloadDashData(region) {
-  var sdate = $('#addnewdateselected').val();
-  var edate = $('#addenddateselected').val();
-
-  if(region == 0){
-    fillDashTotalEvents(sdate, edate);
-    fillDashTotalAttendees(sdate, edate);
-    fillDashCommonPlace(sdate, edate);
-  }else{
-    regionfillDashTotalEvents(sdate, edate, region);
-    regionfillDashTotalAttendees(sdate, edate, region);
-    regionfillDashCommonPlace(sdate, edate, region);
-  }
-}
-
-function dashGraphEventData(sdate, edate){
+function dashGraphEventData(sdate, edate) {
   var theUrl = "databasehandler.php?cmd=15";
   if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
     theUrl;
@@ -3033,4 +2985,239 @@ function dashGraphUserData(sdate, edate) {
     });
   });
 }
+
+function fillDashRegionFigures(sdate, edate) {
+
+  var theUrl = "databasehandler.php?cmd=10";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashRegionFiguresComplete
+    });
+
+}
+
+function fillDashRegionFiguresComplete(xhr, status) {
+
+  $('#dashboardtablebody').html('<th><td> Region</td><td class="text-right">Events Hosted</td><td class="text-right">Percentage %</td></th>');
+
+  var obj = JSON.parse(xhr.responseText);
+  // console.log("obj", obj);
+
+  for (var i = 0; i < obj.length; i++) {
+    $('#dashboardtablebody').append("<tr><td></td><td>" + obj[i].regname + "</td><td class='text-right'>" + obj[i].figures + "</td><td class='text-right'>" + obj[i].percentage + "</td></tr><tr>");
+  }
+
+}
+
+function fillDashTotalEvents(sdate, edate) {
+
+  var theUrl = "databasehandler.php?cmd=11";
+  if ((typeof (sdate) == 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalEventsComplete
+    });
+
+}
+
+function fillDashTotalEventsComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+  // console.log("obj", obj);
+
+  $('#totalEventsHoted').html("<p style='font-weight: bold; font-size: 1.3em;'>" + obj[0].total + "<p>");
+  // document.getElementById('totalEventsHoted').value = obj.total;
+
+
+
+}
+
+function fillDashTotalAttendees(sdate, edate) {
+
+  var theUrl = "databasehandler.php?cmd=13";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalAttendeesComplete
+    });
+
+}
+
+function fillDashTotalAttendeesComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+  // console.log("obj", obj);
+
+  $('#totalAttendees').html("<p style='font-weight: bold; font-size: 1.3em;'>" + obj[0].total + "<p>");
+  // document.getElementById('totalEventsHoted').value = obj.total;
+
+
+
+}
+
+function fillDashCommonPlace(sdate, edate) {
+
+  var theUrl = "databasehandler.php?cmd=14";
+  if ((typeof (sdate) === 'undefined') && (typeof (edate) === 'undefined')) {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashCommonPlaceComplete
+    });
+
+}
+
+function fillDashCommonPlaceComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
+  console.log("obj", obj);
+
+  $('#commonAudience').html("<p style='font-weight: bold; font-size: 1.3em;'>" + obj[0].audience_category + "<p>");
+
+
+}
+
+function loadDashData() {
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  fillDashRegionFigures(sdate, edate);
+  fillDashTotalEvents(sdate, edate);
+  fillDashTotalAttendees(sdate, edate);
+  fillDashCommonPlace(sdate, edate);
+  dashGraphEventData(sdate, edate);
+  dashGraphAudienceData(sdate, edate);
+  dashGraphUserData(sdate, edate);
+}
+
+function regionfillDashTotalEvents(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=11";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalEventsComplete
+    });
+
+}
+
+function regionfillDashTotalAttendees(sdate, edate, region) {
+
+  var theUrl = "databasehandler.php?cmd=13";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashTotalAttendeesComplete
+    });
+
+}
+
+function regionfillDashCommonPlace(sdate, edate, region) {
+  var theUrl = "databasehandler.php?cmd=14";
+  if (typeof (region) === 'undefined') {
+    theUrl;
+  } else {
+    theUrl += "&sdate=" + sdate + "&edate=" + edate + "&region=" + region;
+  }
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fillDashCommonPlaceComplete
+    });
+}
+
+function regionloadDashData(region) {
+  var sdate = $('#addnewdateselected').val();
+  var edate = $('#addenddateselected').val();
+
+  if (region == 0) { 
+    fillDashTotalEvents(sdate, edate);
+    fillDashTotalAttendees(sdate, edate);
+    fillDashCommonPlace(sdate, edate);
+  } else {
+    regionfillDashTotalEvents(sdate, edate, region);
+    regionfillDashTotalAttendees(sdate, edate, region);
+    regionfillDashCommonPlace(sdate, edate, region);
+  }
+}
+
+function searchdash() {
+  if ($('#addnewdateselected').val() == "") {
+
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select Start Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ($('#addenddateselected').val() == "") {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select End Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    loadDashData();
+    $('#searchregionarea').show();
+    $('#datafield').show();
+  }
+
+}
+
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+/////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+
 

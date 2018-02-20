@@ -1,86 +1,88 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-        <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png" />
-        <link rel="icon" type="image/png" href="images/NCA.png" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>NCA Outreach Portal</title>
-        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-        <meta name="viewport" content="width=device-width" />
-        <!-- Bootstrap core CSS     -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <!--  Material Dashboard CSS    -->
-        <link href='assets/css/material-kit.css' rel='stylesheet' />
-        <link href="assets/css/material-dashboard.css?v=1.2.1" rel="stylesheet" />
-        <link href='assets/css/fullcalendar.css' rel='stylesheet' />
-        <!--  CSS for full input     -->
-        <link href='assets/css/fileinput.min.css' rel='stylesheet' />
-        <!--     Fonts and icons     -->
-        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="assets/css/material.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="images/NCA.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>NCA Outreach Portal</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--  Material Dashboard CSS    -->
+    <link href='assets/css/material-kit.css' rel='stylesheet' />
+    <link href="assets/css/material-dashboard.css?v=1.2.1" rel="stylesheet" />
+    <link href='assets/css/fullcalendar.css' rel='stylesheet' />
+    <!--  CSS for full input     -->
+    <link href='assets/css/fileinput.min.css' rel='stylesheet' />
+    <!--     Fonts and icons     -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/material.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
 
 
-        <link href='assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <link href='assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 
-         <!-- UIkit CSS -->
-        <link rel="stylesheet" href="assets/css/uikit.min.css" />
-        <style>
-            h2{
-                color: black;
-                font-weight: 100;
-            }
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="assets/css/uikit.min.css" />
+    <style>
+        h2 {
+            color: black;
+            font-weight: 100;
+        }
 
-            #wrap {
-                width: 1100px;
-                margin: 0 auto;
-            }
+        #wrap {
+            width: 1100px;
+            margin: 0 auto;
+        }
 
-            #external-events {
-                float: left;
-                width: 150px;
-                padding: 0 10px;
-                text-align: left;
-            }
+        #external-events {
+            float: left;
+            width: 150px;
+            padding: 0 10px;
+            text-align: left;
+        }
 
-            #external-events h4 {
-                font-size: 16px;
-                margin-top: 0;
-                padding-top: 1em;
-            }
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+        }
 
-            .external-event {
-                /* try to mimick the look of a real event */
-                margin: 10px 0;
-                padding: 2px 4px;
-                background: #3366CC;
-                color: #fff;
-                font-size: .85em;
-                cursor: pointer;
-            }
+        .external-event {
+            /* try to mimick the look of a real event */
+            margin: 10px 0;
+            padding: 2px 4px;
+            background: #3366CC;
+            color: #fff;
+            font-size: .85em;
+            cursor: pointer;
+        }
 
-            #external-events p {
-                margin: 1.5em 0;
-                font-size: 11px;
-                color: #666;
-            }
+        #external-events p {
+            margin: 1.5em 0;
+            font-size: 11px;
+            color: #666;
+        }
 
-            #external-events p input {
-                margin: 0;
-                vertical-align: middle;
-            }
+        #external-events p input {
+            margin: 0;
+            vertical-align: middle;
+        }
 
-            #calendar {
-                margin: 0 auto;
-                width: 900px;
-                background-color: #FFFFFF;
-                border-radius: 6px;
-                box-shadow: 0 1px 2px #C3C3C3;
-            }
-        </style>
+        #calendar {
+            margin: 0 auto;
+            width: 900px;
+            background-color: #FFFFFF;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px #C3C3C3;
+        }
+    </style>
 
 </head>
 
@@ -90,27 +92,25 @@
 
     <div class="wrapper wrapper-full-page">
 
-
-
         <!-- <div class="full-page login-page" filter-color="black" data-image="assets/img/login.jpeg"> -->
         <div class="full-page login-page" style="background-color:#44b8f8">
             <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
             <div class="content">
                 <div class="container">
-                  <a id="logout" class="btn btn-twitter" href="index.html" style="float: right;">
-                    <i class="material-icons">exit_to_app</i> Logout</a>
+                    <a id="logout" class="btn btn-twitter" href="index.html" style="float: right;">
+                        <i class="material-icons">exit_to_app</i> Logout</a>
                     <div class="row" style="margin-top: -7%;">
 
-                      <div class="text-left" style="font-weight: 200; color: white; font-size: 2em; margin-left: 5%; margin-top:1%;">
-                          EVENT APPROVAL
-                      </div>
+                        <div class="text-left" style="font-weight: 200; color: white; font-size: 2em; margin-left: 5%; margin-top:1%;">
+                            EVENT APPROVAL
+                        </div>
 
-                      <div class="text-left" style="font-weight: 100; color: white; font-size: 1.5em; margin-left: 5%; margin-top:1%;">
-                        Approving an event gives it clearance to influence dashboard statistical data
-                      </div>
+                        <div class="text-left" style="font-weight: 100; color: white; font-size: 1.5em; margin-left: 5%; margin-top:1%;">
+                            Approving an event gives it clearance to influence dashboard statistical data
+                        </div>
 
 
-                      <div class="card card-login card-hidden card-nav-tabs">
+                        <div class="card card-login card-hidden card-nav-tabs">
                             <div class="header" style="background-color:#424242">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
@@ -145,18 +145,19 @@
 
                                     <div class="tab-pane" id="myevent" style=" padding: 3%;">
                                         <div class="content">
-                                        <table id="level3list" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
-                                            <thead style="text-align: left;">
-                                                <tr style="text-align: left;">
+                                            <table id="level3list" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover"
+                                                width="100%">
+                                                <thead style="text-align: left;">
+                                                    <tr style="text-align: left;">
                                                         <th style="text-align: left; font-size: 1.0em;">Event Title</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Region</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Town</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Date Verified</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Approval Status</th>
                                                         <th style="text-align: left; font-size: 1.0em;">Action</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
+                                                    </tr>
+                                                </thead>
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="myreport" style=" padding: 3%;">
@@ -181,7 +182,7 @@
                                     <div class="tab-pane" id="level3users" style=" padding: 3%;">
                                         <form id="AddUserForm" action="" method="">
                                             <div class="card-content" style="padding: 2% 15%;">
-                                        
+
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
@@ -254,16 +255,16 @@
                                                         </div>
                                                     </div>
                                                     <br/>
-                                        
+
                                                 </div>
                                                 <br/>
-                                        
+
                                                 <div class="category form-category">
                                                     <small>(required)</small> - Required fields</div>
-                                        
+
                                                 <div class="form-footer text-right">
                                                     <div class="checkbox pull-left">
-                                        
+
                                                     </div>
                                                 </div>
                                                 <button type="submit" class="btn btn-default pull-left" onclick="clearuseraddfield()">Clear Fields</button>
@@ -274,7 +275,8 @@
                                         <h2 style="font-weight: 900;color: #aaa" class="col-sm-12 text-center">Users List</h2>
 
                                         <div class="content">
-                                            <table id="level3userstable" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
+                                            <table id="level3userstable" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover"
+                                                width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>First Name</th>
@@ -292,263 +294,284 @@
                                     </div>
                                     <div class="tab-pane" id="level3dashboard" style=" padding: 3%;">
                                         <div class="content">
-                                          <div class="container-fluid">
+                                            <div class="container-fluid">
 
-                                            <div class="col-md-2"></div>
-                                            <div class="col-md-8">
-                                                <div class="card card-stats">
-                                                    <div data-background-color="grey">
-                                                        <i class="material-icons">search</i>
-                                                    </div>
-                                                    <div class="card-content">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                        Start date
-                                                                        <small>(required)</small>
-                                                                    </label>
-                                                                    <input id="addnewdateselected" type="text" class="form-control datetimepicker" required="true" onkeydown="return false;"/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label style="font-weight: 900; color: #aaa" class="control-label">
-                                                                        End date
-                                                                        <small>(required)</small>
-                                                                    </label>
-                                                                    <input id="addenddateselected" class="form-control datetimepickker" type="text" required="true" onkeydown="return false;"/>
-                                                                </div>
-                                                            </div>
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-8">
+                                                    <div class="card card-stats">
+                                                        <div data-background-color="grey">
+                                                            <i class="material-icons">search</i>
                                                         </div>
-                                                        <button id="dashsearchinfo" type="submit" class="btn btn-twitter col-sm-12" onclick="searchdash(); return false">Search</button>
+                                                        <div class="card-content">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                            Start date
+                                                                            <small>(required)</small>
+                                                                        </label>
+                                                                        <input id="addnewdateselected" type="text" class="form-control datetimepicker" required="true" onkeydown="return false;"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label style="font-weight: 900; color: #aaa" class="control-label">
+                                                                            End date
+                                                                            <small>(required)</small>
+                                                                        </label>
+                                                                        <input id="addenddateselected" class="form-control datetimepickker" type="text" required="true" onkeydown="return false;"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button id="dashsearchinfo" type="submit" class="btn btn-twitter col-sm-12" onclick="searchdash(); return false">Search</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-2"></div>
-                                        
-                                            <br />
-                                            <div id="datafield" class="row" style="display:none;">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="card">
-                                                            <div class="card-header card-header-icon" data-background-color="green">
-                                                                <i class="material-icons">&#xE894;</i>
-                                                            </div>
-                                                            <div class="card-content">
-                                                                <h3 class="card-title">National Outreach Event Created by Region</h4>
-                                                                <div class="row">
-                                                                    <div class="col-md-7">
-                                                                        <div class="table-responsive table-sales">
-                                                                            <table class="table">
-                                                                                <tbody id="dashboardtablebody">
+                                                <div class="col-md-2"></div>
+
+                                                <br />
+                                                <div id="datafield" class="row" style="display:none;">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="card">
+                                                                <div class="card-header card-header-icon" data-background-color="green">
+                                                                    <i class="material-icons">&#xE894;</i>
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <h3 class="card-title">National Outreach Event Created by Region</h3>
+                                                                    <div class="row">
+                                                                        <div class="col-md-7">
+                                                                            <div class="table-responsive table-sales">
+                                                                                <table class="table">
+                                                                                    <tbody id="dashboardtablebody">
                                                                                         <th>
                                                                                             <td>Region</td>
                                                                                             <td class="text-right">Events Hosted</td>
                                                                                             <td class="text-right">Percentage %</td>
                                                                                         </th>
 
-                                                                                </tbody>
-                                                                            </table>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4 col-md-offset-1" style="margin-top: 7%; margin-left: 8%;">
+                                                                            <div>
+                                                                                <img src="images/gh.svg" style="height: 40%; width:40%">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-4 col-md-offset-1" style="margin-top: 7%; margin-left: 8%;">
-                                                                        <div><img src="images/gh.svg" style="height: 40%; width:40%"></div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <br/>
-                                                <select id="searchregion" class="selectpicker" data-style="btn" title="All Regions" data-size="11" style="background-color:#000000;" onchange="regionloadDashData(this.options[this.selectedIndex].value)">
-                                                    <option value="0">All Regions</option>
-                                                    <option value="1">Ashanti</option>
-                                                    <option value="2">Brong Ahafo</option>
-                                                    <option value="3">Central</option>
-                                                    <option value="4">Eastern</option>
-                                                    <option value="5">Greater Accra</option>
-                                                    <option value="6">Northern</option>
-                                                    <option value="7">Upper East</option>
-                                                    <option value="8">Upper West</option>
-                                                    <option value="9">Volta</option>
-                                                    <option value="10">Western</option>
-                                                </select>
-                                                <br/>
+                                                    <br/>
+                                                    <select id="searchregion" class="selectpicker" data-style="btn" title="All Regions" data-size="11" style="background-color:#000000;"
+                                                        onchange="regionloadDashData(this.options[this.selectedIndex].value)">
+                                                        <option value="0">All Regions</option>
+                                                        <option value="1">Ashanti</option>
+                                                        <option value="2">Brong Ahafo</option>
+                                                        <option value="3">Central</option>
+                                                        <option value="4">Eastern</option>
+                                                        <option value="5">Greater Accra</option>
+                                                        <option value="6">Northern</option>
+                                                        <option value="7">Upper East</option>
+                                                        <option value="8">Upper West</option>
+                                                        <option value="9">Volta</option>
+                                                        <option value="10">Western</option>
+                                                    </select>
+                                                    <br/>
 
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="card card-stats">
-                                                            <div data-background-color="orange">
-                                                                <i class="material-icons">date_range</i>
-                                                            </div>
-                                                            <div class="card-content">
-                                                                <p class="category">Total Events</p>
-                                                                <p style="font-weight: bold; font-size: 2em;" id="totalEventsHoted" class="card-title"></p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <div class="stats">
-                                                                    <p>From 8 regions</p>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="card card-stats">
+                                                                <div data-background-color="orange">
+                                                                    <i class="material-icons">date_range</i>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="card card-stats">
-                                                            <div data-background-color="rose">
-                                                                <i class="material-icons">equalizer</i>
-                                                            </div>
-                                                            <div class="card-content">
-                                                                <p class="category">Total Attendees</p>
-                                                                <p style="font-weight: bold; font-size: 2em;" id="totalAttendees" class="card-title"></p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <div class="stats">
-                                                                    <p>Estimated attendants to events</p>
+                                                                <div class="card-content">
+                                                                    <p class="category">Total Events</p>
+                                                                    <p style="font-weight: bold; font-size: 2em;" id="totalEventsHoted" class="card-title"></p>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="card card-stats">
-                                                            <div data-background-color="green">
-                                                                <i class="material-icons">store</i>
-                                                            </div>
-                                                            <div class="card-content">
-                                                                <p class="category">Common Category</p>
-                                                                <p style="font-weight: bold; font-size: 2em;" id="commonAudience" class="card-title"></p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <div class="stats">
-                                                                    <p>From 15 other possible categories</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="" >
-                                                    <div class="card" style="margin-top: 5%;">
-                                                    <div class="card-header">
-                                                        <br/>
-                                                        <h4 class="card-title">Statistics  -
-                                                            <small class="category">Visualize outreach user data</small>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="card-content">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <ul class="nav nav-pills nav-pills-icons nav-pills-rose nav-stacked" role="tablist">
-                                                                
-                                                                    <li class="active">
-                                                                        <a href="#eventstats" role="tab" data-toggle="tab">
-                                                                            <center><i class="material-icons" style="margin-right: 10px">schedule</i></center> Event Data
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#userstats" role="tab" data-toggle="tab">
-                                                                        <center>
-                                                                            <i class="material-icons">face</i></center> Outreach User
-                                                                            Data
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#audiencestats" role="tab" data-toggle="tab">
-                                                                            <center>
-                                                                            <i class="material-icons">record_voice_over</i>
-                                                                            </center>
-                                                                            Audience Categories Reached Out To
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="tab-content">
-                                                                    <div class="tab-pane active" id="eventstats">
-                                                                        <div id="eventcontainer" style="max-width:100%; height:300px;"></div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="userstats">
-                                                                        <div id="eventusercontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="audiencestats">
-                                                                        <div id="eventaudiencecontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
+                                                                <div class="card-footer">
+                                                                    <div class="stats">
+                                                                        <p>From 8 regions</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="col-md-4">
+                                                            <div class="card card-stats">
+                                                                <div data-background-color="rose">
+                                                                    <i class="material-icons">equalizer</i>
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <p class="category">Total Attendees</p>
+                                                                    <p style="font-weight: bold; font-size: 2em;" id="totalAttendees" class="card-title"></p>
+                                                                </div>
+                                                                <div class="card-footer">
+                                                                    <div class="stats">
+                                                                        <p>Estimated attendants to events</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="card card-stats">
+                                                                <div data-background-color="green">
+                                                                    <i class="material-icons">store</i>
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <p class="category">Common Category</p>
+                                                                    <p style="font-weight: bold; font-size: 2em;" id="commonAudience" class="card-title"></p>
+                                                                </div>
+                                                                <div class="card-footer">
+                                                                    <div class="stats">
+                                                                        <p>From 15 other possible categories</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
 
+                                                    <div class="">
+                                                        <div class="card" style="margin-top: 5%;">
+                                                            <div class="card-header">
+                                                                <br/>
+                                                                <h4 class="card-title">Statistics -
+                                                                    <small class="category">Visualize outreach user data</small>
+                                                                </h4>
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <ul class="nav nav-pills nav-pills-icons nav-pills-rose nav-stacked" role="tablist">
+
+                                                                            <li class="active">
+                                                                                <a href="#eventstats" role="tab" data-toggle="tab">
+                                                                                    <center>
+                                                                                        <i class="material-icons" style="margin-right: 10px">schedule</i>
+                                                                                    </center> Event Data
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#userstats" role="tab" data-toggle="tab">
+                                                                                    <center>
+                                                                                        <i class="material-icons">face</i>
+                                                                                    </center> Outreach User Data
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#audiencestats" role="tab" data-toggle="tab">
+                                                                                    <center>
+                                                                                        <i class="material-icons">record_voice_over</i>
+                                                                                    </center>
+                                                                                    Audience Categories Reached Out To
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="tab-content">
+                                                                            <div class="tab-pane active" id="eventstats">
+                                                                                <div id="eventcontainer" style="max-width:100%; height:300px;"></div>
+                                                                            </div>
+                                                                            <div class="tab-pane" id="userstats">
+                                                                                <div id="eventusercontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
+                                                                            </div>
+                                                                            <div class="tab-pane" id="audiencestats">
+                                                                                <div id="eventaudiencecontainer" style="max-width:100%; height:300px;" overflow="hidden"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                          </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="changelogs" style=" padding: 3%;">
-                                      <div class="content">
+                                        <div class="content">
 
-                                        <center>
-                                        <p style="font-weight: 600;">Legend:</p>
-                                        <ul>
-                                                <li style="display:inline-block; margin-left: 0px;"><i style="padding: 20px;color: black;" class='fa fa-calendar-plus-o fa-lg'></i>Future event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: orange;"  class='fa fa-pencil-square-o fa-lg'></i>Edited event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-check-circle-o fa-lg'></i>Verified event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-check fa-lg'></i>Approved event</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: green;"  class='fa fa-thumbs-o-up fa-lg'></i>Approved report</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style="padding: 20px;color: blue;"  class='fa fa-calendar-plus-o fa-lg'></i>Added report</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px; color: green'   class='fa fa-plus fa-lg'></i>Added user</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px; color: red'  class='fa fa-ban fa-lg'></i>Deactivated user</li>
-                                                <li style="display:inline-block; margin-left: 7px;">  </li>
-                                                <li style="display:inline-block; margin-left: 7px;"><i style='padding: 20px;color:green' class='fa fa-circle fa-lg' color: 'green'></i>Activated user</li>      
-                                        </ul>
-                                    </center>
-                                    
-                                            
-                                          <div class="row">
-                                              <h2 style="font-weight: 900;color: #aaa; margin-top: 50px;" class="col-sm-12 text-center">Event Logs</h2>
-                                             
-                                                    
-                                          </div>
-                                          <table id="eventlogslist" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Action</th>
-                                                      <th>Activity</th>
-                                                      <th>Date</th>
-                                                  </tr>
-                                              </thead>
-
-                                          </table>
+                                            <center>
+                                                <p style="font-weight: 600;">Legend:</p>
+                                                <ul>
+                                                    <li style="display:inline-block; margin-left: 0px;">
+                                                        <i style="padding: 20px;color: black;" class='fa fa-calendar-plus-o fa-lg'></i>Future event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style="padding: 20px;color: orange;" class='fa fa-pencil-square-o fa-lg'></i>Edited event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style="padding: 20px;color: green;" class='fa fa-check-circle-o fa-lg'></i>Verified event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style="padding: 20px;color: green;" class='fa fa-check fa-lg'></i>Approved event</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style="padding: 20px;color: green;" class='fa fa-thumbs-o-up fa-lg'></i>Approved report</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style="padding: 20px;color: blue;" class='fa fa-calendar-plus-o fa-lg'></i>Added report</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style='padding: 20px; color: green' class='fa fa-plus fa-lg'></i>Added user</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style='padding: 20px; color: red' class='fa fa-ban fa-lg'></i>Deactivated user</li>
+                                                    <li style="display:inline-block; margin-left: 7px;"> </li>
+                                                    <li style="display:inline-block; margin-left: 7px;">
+                                                        <i style='padding: 20px;color:green' class='fa fa-circle fa-lg' color:
+                                                            'green'></i>Activated user</li>
+                                                </ul>
+                                            </center>
 
 
-                                          <div class="row">
-                                              <h2 style="font-weight: 900;color: #aaa; margin-top: 10%;" class="col-sm-12 text-center">User Logs</h2>
-                                              
-                                          </div>
-                                          <table id="userlogslist" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover" width="100%">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Action</th>
-                                                      <th>Activity</th>
-                                                      <th>Date</th>
-                                                  </tr>
-                                              </thead>
+                                            <div class="row">
+                                                <h2 style="font-weight: 900;color: #aaa; margin-top: 50px;" class="col-sm-12 text-center">Event Logs</h2>
 
-                                          </table>
-                                      </div>
+
+                                            </div>
+                                            <table id="eventlogslist" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover"
+                                                width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Action</th>
+                                                        <th>Activity</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+
+
+                                            <div class="row">
+                                                <h2 style="font-weight: 900;color: #aaa; margin-top: 10%;" class="col-sm-12 text-center">User Logs</h2>
+
+                                            </div>
+                                            <table id="userlogslist" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-no-bordered table-hover"
+                                                width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Action</th>
+                                                        <th>Activity</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="tab-pane" id="changepassword" style=" padding: 3%;">
 
                                         <div style="margin-left: 20%; margin-right: 20%;">
 
-                                            <center><label style="font-weight: 900; font-size: 1.5em;">NEW PASSWORD</label></center>
+                                            <center>
+                                                <label style="font-weight: 900; font-size: 1.5em;">NEW PASSWORD</label>
+                                            </center>
 
                                             <div class="form-group">
                                                 <label style="font-weight: 900; color: #aaa; font-size: 1.0em;" class="control-label">
@@ -568,7 +591,7 @@
                                             </div>
 
                                             <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="passwordreset()">Reset Passowrd</button>
-                                          </div>
+                                        </div>
 
 
                                     </div>
@@ -580,24 +603,22 @@
 
 
 
-                        </div>
                     </div>
                 </div>
             </div>
-
-
-            <footer class="footer" style="background-color:#44b8f8">
-                <div class="container">
-                    <p class="copyright pull-right">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>
-                        <a href="#" style="color: black"> National Communications Authority </a>
-                    </p>
-                </div>
-            </footer>
         </div>
+
+        <footer class="footer" style="background-color:#44b8f8">
+            <div class="container">
+                <p class="copyright pull-right">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    <a href="#" style="color: black"> National Communications Authority </a>
+                </p>
+            </div>
+        </footer>
     </div>
     <script type="text/javascript" charset="utf8" src="assets/js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" charset="utf8" src="assets/js/jquery.dataTables.min.js"></script>
@@ -609,270 +630,294 @@
     <script src="assets/js/uikit-icons.min.js"></script>
 
 
-      <button id="viewEvent2Button" type="button" hidden class="btn btn-primary btn-lg" data-toggle="modal" data-target="#viewEvent2">
+    <button id="viewEvent2Button" type="button" hidden class="btn btn-primary btn-lg" data-toggle="modal" data-target="#viewEvent2"></button>
 
-      </button>
+    <div id="modal-overflow-3" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog">
 
-        <div id="modal-overflow-3" class="uk-modal-container" uk-modal>
-            <div class="uk-modal-dialog">
-    
-                <button class="uk-modal-close-default" type="button" uk-close></button>
-    
-                <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">Event Details</h2>
-                </div>
-    
-                <div class="uk-modal-body" uk-overflow-auto>
-    
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Event Details</h2>
+            </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+
                 <article class="uk-comment">
                     <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                    <div class="uk-width-auto">
-                        <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                        <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
-                    </div>
-                    <div class="uk-width-expand">
-                        <h4 class="uk-comment-title uk-margin-remove"><a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
-                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                            <li><a href="#" id="date_organized">23 January 2018</a></li>
-                        </ul>
-                    </div>
-                    </header>
-    
-                    <div class="row">
-                    <dl class="uk-description-list">
-                        <div class="col-sm-6">
-                        <dt>REGION</dt>
-                        <dd id="region"></dd>
-                        </div>
-                        <div class="col-sm-6">
-                        <dt>TOWN</dt>
-                        <dd id="town"></dd>
-                        </div>
-                        </dl>
-                    </div>
-    
-                    <br/>
-    
-                    <div class="uk-comment-body">
-                    <dt>CHECKS</dt>
-                    <dd style="font-weight: 600" id="event_summary"></dd>
-                    <dd style="font-weight: 600" id="event_summary_2"></dd>
-                    </div>
-    
-                    <center><hr class="uk-divider-small" style="margin:5%;"></center>
-    
-                    <div class="row">
-                    <dl class="uk-description-list">
-                        <div class="col-sm-6">
-                        <dt>AUDIENCE CATEGORY</dt>
-                        <dd id="audience_category"></dd>
-                        </div>
-                        <div class="col-sm-6">
-                        <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                        <dd id="audience_attendance"></dd>
-                        </div>
-                        </dl>
-                    </div>
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                    <dt>LOGISTICS UTILIZED</dt>
-                    <dd id="team_challenges"></dd>
-                    </div>
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                    <dt>MODE OF COMMUNICATION USED</dt>
-                    <dd id="complaints_raised"></dd>
-
-                    </div>
-                    </div>
-
-    
-                    </article>
-
-
-                <div class="uk-modal-footer uk-text-right" id="approveformdivbuttons">
-                    <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
-                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                </div>
-    
-                </div>
-    
-                
-    
-            </div>
-        </div>
-
-
-
-
-
-
-
-        <div id="modal-overflow-comments" class="uk-modal-container" uk-modal>
-                <div class="uk-modal-dialog">
-        
-                    <button class="uk-modal-close-default" type="button" uk-close></button>
-        
-                    <div class="uk-modal-header">
-                        <h2 class="uk-modal-title">Approval Comments</h2>
-                    </div>
-        
-                    <div class="uk-modal-body" uk-overflow-auto>
-        
-                    <article class="uk-comment">
-                        <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
                         <div class="uk-width-auto">
                             <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
                             <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
                         </div>
-                        </header>
-        
-                        <div class="row">
-                            <dl class="uk-description-list">
-                                    <div class="uk-margin">
-                                        <textarea id="commentsForApproval" class="uk-textarea" rows="5" placeholder="Please enter approval Comments"></textarea>
-                                    </div>
-                                </div>
-                            </dl>
+                        <div class="uk-width-expand">
+                            <h4 class="uk-comment-title uk-margin-remove">
+                                <a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a>
+                            </h4>
+                            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                <li>
+                                    <a href="#" id="date_organized">23 January 2018</a>
+                                </li>
+                            </ul>
                         </div>
-        
-                        <br/>
-        
-                        
-        
-                    </article>
-    
-                    <div class="uk-modal-footer uk-text-right" id="verifycommentformdivbuttons">
-                        <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;" onclick="approveEvent()">Submit</button>
-                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    </header>
+
+                    <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="col-sm-6">
+                                <dt>REGION</dt>
+                                <dd id="region"></dd>
+                            </div>
+                            <div class="col-sm-6">
+                                <dt>TOWN</dt>
+                                <dd id="town"></dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <br/>
+
+                    <div class="uk-comment-body">
+                        <dt>CHECKS</dt>
+                        <dd style="font-weight: 600" id="event_summary"></dd>
+                        <dd style="font-weight: 600" id="event_summary_2"></dd>
+                    </div>
+
+                    <center>
+                        <hr class="uk-divider-small" style="margin:5%;">
+                    </center>
+
+                    <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="col-sm-6">
+                                <dt>AUDIENCE CATEGORY</dt>
+                                <dd id="audience_category"></dd>
+                            </div>
+                            <div class="col-sm-6">
+                                <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                                <dd id="audience_attendance"></dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                        <dt>LOGISTICS UTILIZED</dt>
+                        <dd id="team_challenges"></dd>
+                    </div>
+
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                        <dt>MODE OF COMMUNICATION USED</dt>
+                        <dd id="complaints_raised"></dd>
+
                     </div>
             
-        
-                    </div>
-        
-                    
-                </div>
+                </article>
             </div>
 
 
+            <div class="uk-modal-footer uk-text-right" id="approveformdivbuttons">
+                <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            </div>
 
+        </div>
 
+    </div>
 
+    <div id="modal-overflow-comments" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog">
 
+            <button class="uk-modal-close-default" type="button" uk-close></button>
 
-        <!-- UI kit modal -->
-        <div id="modal-overflow-2-report" class="uk-modal-container" uk-modal>
-            <div class="uk-modal-dialog">
-    
-                <button class="uk-modal-close-default" type="button" uk-close></button>
-    
-                <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">Event Report Details</h2>
-                </div>
-    
-                <div class="uk-modal-body" uk-overflow-auto>
-    
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Approval Comments</h2>
+            </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+
                 <article class="uk-comment">
                     <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                    <div class="uk-width-auto">
-                        <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                        <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
-                    </div>
-                    <div class="uk-width-expand">
-                        <h4 class="uk-comment-title uk-margin-remove"><a id="report_eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
-                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                            <li><a href="#" id="report_date_organized">23 January 2018</a></li>
-                        </ul>
-                    </div>
+                        <div class="uk-width-auto">
+                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                        </div>
                     </header>
-    
+
                     <div class="row">
-                    <dl class="uk-description-list">
-                        <div class="col-sm-6">
-                        <dt>REGION</dt>
-                        <dd id="report_region"></dd>
-                        </div>
-                        <div class="col-sm-6">
-                        <dt>TOWN</dt>
-                        <dd id="report_town"></dd>
-                        </div>
+                        <dl class="uk-description-list">
+                            <div class="uk-margin">
+                                <textarea id="commentsForApproval" class="uk-textarea" rows="5" placeholder="Please enter approval Comments"></textarea>
+                            </div>
                         </dl>
                     </div>
-    
-                    <br/>
-    
-                    <div class="uk-comment-body">
-                    <dt>SUMMARY</dt>
-                    <dd style="font-weight: 600" id="report_event_summary"></dd>
-                    <dd style="font-weight: 600" id="report_event_summary_2"></dd>
-                    </div>
-    
-                    <center><hr class="uk-divider-small" style="margin:5%;"></center>
-    
-                    <div class="row">
-                    <dl class="uk-description-list">
-                        <div class="col-sm-6">
-                        <dt>AUDIENCE CATEGORY</dt>
-                        <dd id="report_audience_category"></dd>
-                        </div>
-                        <div class="col-sm-6">
-                        <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                        <dd id="report_audience_attendance"></dd>
-                        </div>
-                        </dl>
-                    </div>
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                    <dt>LOGISTICS UTILIZED</dt>
-                    <dd id="report_team_challenges"></dd>
-                    </div>
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                    <dt>MODE OF COMMUNICATION USED</dt>
-                    <dd id="report_complaints_raised"></dd>
-
-                    <dt>TEAM OBSERVATIONS</dt>
-                    <dd id="report_1"></dd>
-
-                    <dt>CONSUMER CHALLENGES</dt>
-                    <dd id="report_2"></dd>
-
                     
-                    <dt>TEAM CHALLENGES</dt>
+                </article>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right" id="verifycommentformdivbuttons">
+                <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;" onclick="approveEvent()">Submit</button>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="modal-overflow-reassign" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog">
+    
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+    
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Reassignment Reason</h2>
+            </div>
+    
+            <div class="uk-modal-body" uk-overflow-auto>
+                <article class="uk-comment">
+                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                        <div class="uk-width-auto">
+                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                        </div>
+                    </header>
+                    <div class="col-sm-12">
+                        <label style="font-weight: 900; color: #aaa" class="control-label">OTHER MEMBERS
+                            <small>(required)</small>
+                        </label>
+                        <div id="reassignMember" class="form-group"></div>
+                    </div>
+                    <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="uk-margin">
+                                <textarea id="commentsForReassign" class="uk-textarea" rows="5" placeholder="Please enter Reasons"></textarea>
+                            </div>
+                        </dl>
+                    </div>
+    
+                </article>
+            </div>
+    
+            <div class="uk-modal-footer uk-text-right" id="verifycommentformdivbuttons">
+                <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;" onclick="reassignEvent()">Submit</button>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            </div>
+    
+    
+        </div>
+    </div>
+
+    <!-- UI kit modal -->
+    <div id="modal-overflow-2-report" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Event Report Details</h2>
+            </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+
+                <article class="uk-comment">
+                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                        <div class="uk-width-auto">
+                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
+                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
+                        </div>
+                        <div class="uk-width-expand">
+                            <h4 class="uk-comment-title uk-margin-remove">
+                                <a id="report_eventtitle" class="uk-link-reset" href="#">Author: Admin1</a>
+                            </h4>
+                            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                <li>
+                                    <a href="#" id="report_date_organized">23 January 2018</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+
+                    <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="col-sm-6">
+                                <dt>REGION</dt>
+                                <dd id="report_region"></dd>
+                            </div>
+                            <div class="col-sm-6">
+                                <dt>TOWN</dt>
+                                <dd id="report_town"></dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <br/>
+
+                    <div class="uk-comment-body">
+                        <dt>SUMMARY</dt>
+                        <dd style="font-weight: 600" id="report_event_summary"></dd>
+                        <dd style="font-weight: 600" id="report_event_summary_2"></dd>
+                    </div>
+
+                    <center>
+                        <hr class="uk-divider-small" style="margin:5%;">
+                    </center>
+
+                    <div class="row">
+                        <dl class="uk-description-list">
+                            <div class="col-sm-6">
+                                <dt>AUDIENCE CATEGORY</dt>
+                                <dd id="report_audience_category"></dd>
+                            </div>
+                            <div class="col-sm-6">
+                                <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
+                                <dd id="report_audience_attendance"></dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                        <dt>LOGISTICS UTILIZED</dt>
+                        <dd id="report_team_challenges"></dd>
+                    </div>
+
+                    <div class="uk-comment-body" style="margin-top: 20px">
+                        <dt>MODE OF COMMUNICATION USED</dt>
+                        <dd id="report_complaints_raised"></dd>
+
+                        <dt>TEAM OBSERVATIONS</dt>
+                        <dd id="report_1"></dd>
+
+                        <dt>CONSUMER CHALLENGES</dt>
+                        <dd id="report_2"></dd>
+
+
+                        <dt>TEAM CHALLENGES</dt>
                         <dd id="report_4"></dd>
 
-                    <div style="margin: 20px 0px">
-                        <b>
-                        <small>REPORT CREATED ON:</small>
-                        <small id="report_3"></small>
-                        </b>
-                    </div>
+                        <div style="margin: 20px 0px">
+                            <b>
+                                <small>REPORT CREATED ON:</small>
+                                <small id="report_3"></small>
+                            </b>
+                        </div>
 
                         <dt>PHOTOS:</dt>
                         <div id="report_photos"></div>
-                        
+
                     </div>
-                    </div>
 
-    
-                    </article>
+                </article>
 
-
-                <div class="uk-modal-footer uk-text-right" id="approveformdivbuttons">
-                    <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
-                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                </div>
-    
-                </div>
-    
-                
-    
             </div>
+
+
+            <div class="uk-modal-footer uk-text-right" id="approveformdivbuttons">
+                <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            </div>
+
         </div>
+    </div>
 
-
-
-<script src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -916,7 +961,7 @@
 <!-- Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
 <script src="assets/js/jquery.tagsinput.js"></script>
 <!-- Material Dashboard javascript methods -->
-<script src="assets/js/material-dashboard.js?v=1.2.1"></script>
+<!-- <script src="assets/js/material-dashboard.js?v=1.2.1"></script> -->
 
 <!-- File input js -->
 <script src="assets/js/fileinput.js" type="text/javascript"></script>
@@ -927,279 +972,133 @@
 <script src="highcharts/exporting.js"></script>
 <script>
 
-$(document).ready(function () {
+    $(document).ready(function () {
 
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
 
-            /*  className colors
+        /*  className colors
 
-            className: default(transparent), important(red), chill(pink), success(green), info(blue)
+        className: default(transparent), important(red), chill(pink), success(green), info(blue)
 
-            */
+        */
 
-            /* initialize the external events
-            -----------------------------------------------------------------*/
+        /* initialize the external events
+        -----------------------------------------------------------------*/
 
-            $('#external-events div.external-event').each(function () {
-                var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
-                };
+        $('#external-events div.external-event').each(function () {
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            };
 
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject);
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
 
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 999,
-                    revert: true,      // will cause the event to go back to its
-                    revertDuration: 0  //  original position after the drag
-                });
-
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
             });
-
-            /* initialize the calendar
-            -----------------------------------------------------------------*/
-
-            var calendar = $('#calendar').fullCalendar({
-                header: {
-                    left: 'title',
-                    center: 'agendaDay,agendaWeek,month',
-                    right: 'prev,next today'
-                },
-                editable: true,
-                firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
-                selectable: true,
-                defaultView: 'month',
-
-                axisFormat: 'h:mm',
-                columnFormat: {
-                    month: 'ddd',    // Mon
-                    week: 'ddd d', // Mon 7
-                    day: 'dddd M/d',  // Monday 9/7
-                    agendaDay: 'dddd d'
-                },
-                titleFormat: {
-                    month: 'MMMM yyyy', // September 2009
-                    week: "MMMM yyyy", // September 2009
-                    day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
-                },
-                allDaySlot: false,
-                selectHelper: true,
-                select: function (start, end, allDay) {
-                    // var dateselect = start;
-                    // document.getElementById("dateselected").value = dateselect;
-                    // $("#myModal").modal("show");
-                    var title = prompt('Event Title:');
-                    if (title) {
-                        calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: dateselect,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true // make the event "stick"
-                        );
-                    }
-                    calendar.fullCalendar('unselect');
-                },
-                droppable: true, // this allows things to be dropped onto the calendar !!!
-                drop: function (date, allDay) { // this function is called when something is dropped
-
-                    // retrieve the dropped element's stored Event Object
-                    var originalEventObject = $(this).data('eventObject');
-
-                    // we need to copy it, so that multiple events don't have a reference to the same object
-                    var copiedEventObject = $.extend({}, originalEventObject);
-
-                    // assign it the date that was reported
-                    copiedEventObject.start = date;
-                    copiedEventObject.allDay = allDay;
-
-                    // render the event on the calendar
-                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
-
-                },
-                events: {
-                    url: 'databasehandler.php?cmd=7',
-                    type: 'POST',
-                    dataType: 'json'
-                },
-                eventClick: function (calEvent, jsEvent) {
-                    eventviewer(calEvent.eventid);
-                    //alert('Event: ' + calEvent.eventid);
-
-                    // change the border color just for fun
-                    $(this).css('border-color', 'white');
-
-                }
-            });
-
 
         });
+
+        /* initialize the calendar
+        -----------------------------------------------------------------*/
+
+        var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: 'title',
+                center: 'agendaDay,agendaWeek,month',
+                right: 'prev,next today'
+            },
+            editable: true,
+            firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+            selectable: true,
+            defaultView: 'month',
+
+            axisFormat: 'h:mm',
+            columnFormat: {
+                month: 'ddd',    // Mon
+                week: 'ddd d', // Mon 7
+                day: 'dddd M/d',  // Monday 9/7
+                agendaDay: 'dddd d'
+            },
+            titleFormat: {
+                month: 'MMMM yyyy', // September 2009
+                week: "MMMM yyyy", // September 2009
+                day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
+            },
+            allDaySlot: false,
+            selectHelper: true,
+            select: function (start, end, allDay) {
+                // var dateselect = start;
+                // document.getElementById("dateselected").value = dateselect;
+                // $("#myModal").modal("show");
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+                        {
+                            title: title,
+                            start: dateselect,
+                            end: end,
+                            allDay: allDay
+                        },
+                        true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            drop: function (date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+
+            },
+            events: {
+                url: 'databasehandler.php?cmd=7',
+                type: 'POST',
+                dataType: 'json'
+            },
+            eventClick: function (calEvent, jsEvent) {
+                eventviewer(calEvent.eventid);
+                //alert('Event: ' + calEvent.eventid);
+
+                // change the border color just for fun
+                $(this).css('border-color', 'white');
+
+            }
+        });
+
+
+    });
     function submitevent() {
         $("#myModal").modal("hide");
     }
-
-    $("#input-id").fileinput({
-        showUpload: false,
-        showCaption: false,
-        browseOnZoneClick: true,
-        uploadUrl: "uploads.php",
-        //uploadUrl: "server/index.php",
-        uploadAsync: true
-    });
-
 		// var foldname = document.getElementById("neworgcompname").value;
 
 		// 	setCookie("foldname", foldname, 1);
 
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        // $.getJSON('databasehandler.php?cmd=15', function (data) {
-
-        //     Highcharts.chart('eventcontainer', {
-        //         chart: {
-        //             zoomType: 'x'
-        //         },
-        //         title: {
-        //             text: 'Events Per Day'
-        //         },
-        //         subtitle: {
-        //             text: document.ontouchstart === undefined ?
-        //                 'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        //         },
-        //         xAxis: {
-        //             type: 'datetime',
-        //             visible: false
-        //         },
-        //         yAxis: {
-        //             title: {
-        //                 text: 'Events'
-        //             }
-        //         },
-        //         legend: {
-        //             enabled: false
-        //         },
-        //         plotOptions: {
-        //             area: {
-        //                 fillColor: {
-        //                     linearGradient: {
-        //                         x1: 0,
-        //                         y1: 0,
-        //                         x2: 0,
-        //                         y2: 1
-        //                     },
-        //                     stops: [
-        //                         [0, Highcharts.getOptions().colors[0]],
-        //                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-        //                     ]
-        //                 },
-        //                 marker: {
-        //                     radius: 2
-        //                 },
-        //                 lineWidth: 1,
-        //                 states: {
-        //                     hover: {
-        //                         lineWidth: 1
-        //                     }
-        //                 },
-        //                 threshold: null
-        //             }
-        //         },
-
-        //         series: [{
-        //             type: 'area',
-        //             name: 'Number of Events',
-        //             data: data
-        //         }]
-        //     });
-        // });
-
-        // $.getJSON('databasehandler.php?cmd=17', function (data) {
-
-        //     Highcharts.chart('eventusercontainer', {
-        //         chart: {
-        //             type: 'column'
-        //         },
-        //         title: {
-        //             text: 'Outreach Categories Per Region'
-        //         },
-        //         xAxis: {
-        //             categories: data.categories
-        //         },
-        //         yAxis: {
-        //             min: 0,
-        //             title: {
-        //                 text: 'Total Audience Attended'
-        //             }
-        //         },
-        //         tooltip: {
-        //             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-        //             shared: true
-        //         },
-        //         plotOptions: {
-        //             column: {
-        //                 stacking: 'percent'
-        //             }
-        //         },
-        //         series: data.series
-        //         // [{
-        //         //     name: 'John',
-        //         //     data: [5, 3, 4, 7, 2]
-        //         // }, {
-        //         //     name: 'Jane',
-        //         //     data: [2, 2, 3, 2, 1]
-        //         // }, {
-        //         //     name: 'Joe',
-        //         //     data: [3, 4, 4, 2, 5]
-        //         // }]
-        //     });
-        // });
-
-        // $.getJSON('databasehandler.php?cmd=16', function (data) {
-        //     //var piedata = JSON.parse(data);
-        //     console.log(data);
-        //     Highcharts.chart('eventaudiencecontainer', {
-        //         chart: {
-        //             type: 'pie',
-        //             options3d: {
-        //                 enabled: true,
-        //                 alpha: 45
-        //             }
-        //         },
-        //         title: {
-        //             text: 'Audience Categories'
-        //         },
-        //         subtitle: {
-        //             text: 'Sum of Categories'
-        //         },
-        //         plotOptions: {
-        //             pie: {
-        //                 innerSize: 100,
-        //                 depth: 45
-        //             }
-        //         },
-        //         series: [{
-        //             name: 'Number of events tailored to',
-        //             data: data
-        //         }]
-        //     });
-        // });
-
-    });
 </script>
 
 </html>

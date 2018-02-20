@@ -108,6 +108,11 @@
 			return $this->query($strQuery);
 		}
 
+		function getAudiences(){
+			$strQuery="select * from audiences";
+      	return $this->query($strQuery);
+		}
+
 		function getEvents(){
 			$strQuery="select * from events where is_approved =1";
       	return $this->query($strQuery);
@@ -228,6 +233,16 @@
 		function getReportwithEventid($event_id){
 
 			$strQuery="select team_challenges, complaints_raised, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported from reports where event_id='$event_id' ";
+			return $this->query($strQuery);
+		}
+
+		function reassignEvent($eventid,$reporter,$reason){
+
+			$strQuery="update events set
+							creator='$reporter',
+							misc_reasons='$reason'
+							where event_id='$eventid'";
+
 			return $this->query($strQuery);
 		}
 
