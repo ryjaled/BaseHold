@@ -249,11 +249,6 @@ $().ready(function () {
   }
   global1 = refireTable1;
 
-  setInterval(function () {
-    dataTable1.ajax.reload(null, false); // user paging is not reset on reload
-  }, 5000);
-
-
   function refireTable2(){
     setTimeout(function () {
       dataTable2.ajax.reload(null, false); // user paging is not reset on reload
@@ -261,12 +256,6 @@ $().ready(function () {
     }, 500);
   }
   global2 = refireTable2;
-
-  setInterval(function () {
-    dataTable2.ajax.reload(null, false); // user paging is not reset on reload
-  }, 5000);
-
-
 
   function refireTable3(){
     setTimeout(function () {
