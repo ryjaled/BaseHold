@@ -1212,6 +1212,16 @@ function level1ViewComplete(xhr, status) {
   var dateVerfied = new Date(obj[0].verified_timestamp);
   var dateApproved = new Date(obj[0].approved_timestamp);
 
+  if(obj[0].is_verified == 1){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
+    $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
+  
 
   if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
     document.getElementById('event_summary').innerHTML= "This event has not yet been verified nor approved.";
@@ -2020,6 +2030,15 @@ function level2ViewComplete(xhr, status) {
 
 
 
+  if(obj[0].is_verified == 1){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
+    $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
 
 
   var mode = obj[0].mode_of_outreach; 
@@ -2135,6 +2154,17 @@ function level2ReportViewComplete(xhr, status) {
   }
   if((obj[0].reportverifiedtimestamp == "")){
     document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  }
+
+  if(obj[0].reportapprove == 0){
+    alert("here");
+    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
+  }
+  if(obj[0].reportapprove == 1){
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+  }
+  if(obj[0].reportapprove == 2){
+    $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
   }
 
   document.getElementById('report_1').innerHTML=obj[0].event_summary;
@@ -2273,6 +2303,15 @@ function level3ViewComplete(xhr, status) {
 
 
 
+  if(obj[0].is_verified == 1){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+  }
+  if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
+    $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
+  }
 
 
 
@@ -2361,6 +2400,17 @@ function level3ReportViewComplete(xhr, status) {
   }
   if((obj[0].reportverifiedtimestamp == "")){
     document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  }
+
+  if(obj[0].reportapprove == 0){
+    alert("here");
+    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
+  }
+  if(obj[0].reportapprove == 1){
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+  }
+  if(obj[0].reportapprove == 2){
+    $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
   }
 
   document.getElementById('report_1').innerHTML=obj[0].event_summary;

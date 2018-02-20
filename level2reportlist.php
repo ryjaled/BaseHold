@@ -63,11 +63,16 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = date('jS F Y', strtotime($row['date_reported']));
 
     if( $row['is_approved'] == "0"){
-        $approveLabel = "<p style='color: red; margin-top: 20px;'>Not Approved</p>";
+        $approveLabel = "<p style='color: grey; margin-top: 20px;'>Pending</p>";
 				// $buttonshow = "<button onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
-      } else {
+      } 
+      if( $row['is_approved'] == "1"){
         $approveLabel = "<p style='color: green; margin-top: 20px;'>Approved</p>";
-				// $buttonshow = "<button hidden onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
+				// $buttonshow = "<button onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
+      }
+      if( $row['is_approved'] == "2"){
+        $approveLabel = "<p style='color: red; margin-top: 20px;'>Rejected</p>";
+				// $buttonshow = "<button onclick='editor({$row['event_id']},{$row['report_id']})' class='btn btn-just-icon btn-success' rel='tooltip' data-placement='bottom' title='View & Verify'><i class='material-icons'>assignment</i></button>";
       }
 
       $nestedData[] = $approveLabel;

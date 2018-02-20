@@ -63,17 +63,26 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData[] = $enddate;
 	
 	if( $row['is_verified'] == "0"){
-        $verifyLabel = "<p style='color: red; margin-top: 20px;'>Not Verified</p>";
-      } else {
+        $verifyLabel = "<p style='color: grey; margin-top: 20px;'>Pending</p>";
+	  } 
+	  if( $row['is_verified'] == "1"){
         $verifyLabel = "<p style='color: green; margin-top: 20px;'>Verified</p>";
-      }
+	  } 
+	  if( $row['is_verified'] == "2"){
+        $verifyLabel = "<p style='color: red; margin-top: 20px;'>Rejected</p>";
+	  } 
     $nestedData[] = $verifyLabel;
 
     if( $row['is_approved'] == "0"){
-        $approveLabel = "<p style='color: red; margin-top: 20px;'>Not Approved</p>";
-      } else {
+        $approveLabel = "<p style='color: grey; margin-top: 20px;'>Pending</p>";
+	  } 
+	  if( $row['is_approved'] == "1"){
         $approveLabel = "<p style='color: green; margin-top: 20px;'>Approved</p>";
-      }
+	  } 
+	  if( $row['is_approved'] == "2"){
+        $approveLabel = "<p style='color: red; margin-top: 20px;'>Rejected</p>";
+	  } 
+	  
 	$nestedData[] = $approveLabel;
 	
 	if( ($row['is_verified'] == "0") && ($row['is_approved'] == "0") )
