@@ -75,9 +75,9 @@
 		function denyEvent($eventid,$comments,$level){
 
 			if ($level == 2) {
-				$strQuery="update events set is_verified='2', nonapproval_comments='$comments' where event_id='$eventid'";
+				$strQuery="update events set is_verified='2', is_approved='0',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
 			}elseif ($level == 3) {
-				$strQuery="update events set is_approved='2', nonapproval_comments='$comments' where event_id='$eventid'";
+				$strQuery="update events set is_verified='2', is_approved='2',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
 			}
 
 			return $this->query($strQuery);
@@ -85,7 +85,7 @@
 
 		function denyReport($reportid,$comments){
 
-				$strQuery="update reports set is_approved='2', nonapproval_comments='$comments' where report_id='$eventid'";
+				$strQuery="update reports set is_approved='2', verification_comments='',verified_timestamp='0000-00-00 00:00:00',nonapproval_comments='$comments' where report_id='$eventid'";
 
 			return $this->query($strQuery);
 		}
