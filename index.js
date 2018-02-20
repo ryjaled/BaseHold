@@ -888,14 +888,44 @@ function deleteevent(pid) {
     });
 }
 
-function denyEvent(eid,level) {
-  var theUrl = "databasehandler.php?cmd=36&eventid=" + eid;
+function denyEvent() {
+  var comments = $('#commentsForDeny').val();
+
+  var theUrl = "databasehandler.php?cmd=36&eventid=" + sessionStorage.denyeventId + "&comments=" + comments + "&level=" + sessionStorage.denyLevel;
   $.ajax(theUrl,
     {
       async: true,
-      complete: global1,
-      complete: removependpendingeventComplete
+      complete: denyEventComplete
     });
+
+  $('#commentsForDeny').val("");
+}
+
+function denyEventComplete(xhr, status) {
+
+  console.log(xhr);
+
+  $.notify({
+    icon: "info_outline",
+    message: "Event Denied Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
+
+function denyEventModal(id, verState) {
+  sessionStorage.denyeventId = id;
+  sessionStorage.denyLevel = verState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-deny-comments').show();
+
 }
 
 function editevent() {
