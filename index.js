@@ -2039,9 +2039,6 @@ function level1ReportViewComplete(xhr, status) {
     picValues = picValues + "</a>";
     picValues = picValues + "</div>";
 
-    
-    
-
   }
 
 
