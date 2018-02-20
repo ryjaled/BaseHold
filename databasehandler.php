@@ -111,6 +111,9 @@
 		case 34:
 			getUsersPerRegion();
 			break;
+		case 35:
+			getAudiences();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -426,8 +429,6 @@
 
 		echo json_encode($usersdata);
 
-
-
 	}
 
 	function getAnEvent(){
@@ -730,6 +731,25 @@
 					}
 
 					echo json_encode($moredata);
+
+	}
+
+	function getAudiences(){
+ 			$success="";
+ 			include("events.php");
+ 			$event = new events();
+
+ 			$result = $event->getAudiences();
+
+ 			$data = array();
+
+ 			while($row = $event->fetch()){
+ 					$success="true";
+ 					array_push($data,$row);
+
+ 				}
+
+ 				echo json_encode($data);
 
 	}
 

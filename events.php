@@ -108,6 +108,11 @@
 			return $this->query($strQuery);
 		}
 
+		function getAudiences(){
+			$strQuery="select * from audiences";
+      	return $this->query($strQuery);
+		}
+
 		function getEvents(){
 			$strQuery="select * from events where is_approved =1";
       	return $this->query($strQuery);

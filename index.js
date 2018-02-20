@@ -330,7 +330,7 @@ $().ready(function () {
   document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
 
   document.getElementById('pendingverifyformdiv').appendChild = "<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='pendingadd(" + obj[0].report_id + ")' type='button' class='btn btn-success' id='addpendingConfirm' data-toggle='modal' data-target='#verifypendingEvent'>Save</button>";
-
+ 
 });
 
 /////////////GENERAL FUNCTIONALITY///////////////////////////////////////
@@ -1164,13 +1164,14 @@ function welcomeToHomeLevel1() {
 
 
   if (sessionStorage.level == "1") {
-    // alert(sessionStorage.level);
+    getaudiences();
+    getregions();
   } else {
     window.location.href = "404.html";
   }
 
 
-
+  
   document.getElementById('logout').value = "Logout"
   // _fetchMyEvents(sessionStorage.userid);
 
@@ -1663,6 +1664,76 @@ function editNewEvent() {
 function editNewEventComplete() {
   UIkit.modal('#edit-modal-overflow').hide();
   global1();
+}
+
+function getaudiences() {
+  var theUrl = "databasehandler.php?cmd=35";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: getaudiencesComplete
+    });
+}
+
+function getaudiencesComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+
+  var dropdown = "";
+  $('#audiencedropdown').html("");
+
+  dropdown = dropdown + "<select id='addnewaudience' class='form-control' data-style='btn' title='Select Audience'><option value='0'>Select Audience</option>";
+  for (var i = 0; i < obj.length; i++) {
+    var drop_id = obj[i].aud_id;
+    var drop_name = obj[i].aud_name;
+    // if (user_id == sessionStorage.reassigncreatorId) {
+    //   dropdown = dropdown + "";
+    // } else {
+    dropdown = dropdown + "<option value='" + drop_name + "'>" + drop_name + "</option>";
+    //}
+
+  }
+  dropdown = dropdown + "</select>";
+
+  document.getElementById('audiencedropdown').innerHTML = dropdown;
+
+}
+
+function getregions() {
+  var theUrl = "databasehandler.php?cmd=8";
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: getregionsComplete
+    });
+}
+
+function getregionsComplete(xhr, status) {
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log(obj);
+
+  var dropdown = "";
+  $('#regiondropdown').html("");
+
+  dropdown = dropdown + "<select id='addnewregion' class='form-control' data-style='btn' title='Select Audience'><option value='0'>Select Region</option>";
+  for (var i = 0; i < obj.length; i++) {
+    var drop_id = obj[i].region_id;
+    var drop_name = obj[i].regionname;
+    // if (user_id == sessionStorage.reassigncreatorId) {
+    //   dropdown = dropdown + "";
+    // } else {
+    dropdown = dropdown + "<option value='" + drop_id + "'>" + drop_name + "</option>";
+    //}
+
+  }
+  dropdown = dropdown + "</select>";
+
+  document.getElementById('regiondropdown').innerHTML = dropdown;
+
 }
 
 function level1Edit(val){
