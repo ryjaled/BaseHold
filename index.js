@@ -2240,19 +2240,6 @@ function level2ViewComplete(xhr, status) {
 
 }
 
-function reportHelp(){
-  reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
-}
-
-function reportApprover(id, verifyCheck, approveCheck){
-  if(approveCheck == 1){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
-  }
-  if(approveCheck == 0){
-    $('#approvereportformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='ApproveReportToggle(" + id + "," + approveCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Approve Report</button>");
-  }
-}
-
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=27&reportid=" + val;

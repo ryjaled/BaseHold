@@ -391,9 +391,6 @@
                 <div class="uk-modal-header">
                     <h2 class="uk-modal-title">Approve Report Comments</h2>
                 </div>
-                <div id="statusBannerReport">
-                        
-                </div>
     
                 <div class="uk-modal-body" uk-overflow-auto>
     
@@ -420,9 +417,11 @@
     
                 </article>
 
-
-                <div class="uk-modal-footer uk-text-right" id="approvereportformdivbuttons">
-                    <!-- <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;">Verify</button> -->
+                <div class="uk-modal-footer uk-text-right" id="verifycommentformdivbuttons">
+                
+                    <button class="uk-button uk-button-default uk-modal-close" type="button" style="background-color: green; color: white;"
+                        onclick="approveReport()">Submit</button>
+                
                     <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
                 </div>
         
@@ -441,6 +440,10 @@
 
                 <div class="uk-modal-header">
                     <h2 class="uk-modal-title">Event Report Details</h2>
+                </div>
+
+                <div id="statusBannerReport">
+                
                 </div>
 
                 <div class="uk-modal-body" uk-overflow-auto>
