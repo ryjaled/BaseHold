@@ -72,6 +72,24 @@
 			return $this->query($strQuery);
 		}
 
+		function denyEvent($eventid,$comments,$level){
+
+			if ($level == 0) {
+				$strQuery="update events set is_verified='2', nonapproval_comments='$comments' where event_id='$eventid'";
+			}elseif ($level == 1) {
+				$strQuery="update events set is_approved='2', nonapproval_comments='$comments' where event_id='$eventid'";
+			}
+
+			return $this->query($strQuery);
+		}
+
+		function denyReport($reportid,$comments){
+
+				$strQuery="update reports set is_approved='2', nonapproval_comments='$comments' where report_id='$eventid'";
+
+			return $this->query($strQuery);
+		}
+
 		function editEvent($eventtitle,$topic,$date,$audience,$expected_audience_attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid){
 
 			$strQuery="update events set
