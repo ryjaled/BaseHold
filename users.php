@@ -70,6 +70,10 @@ include_once("database.php");
 			return $this->query($strQuery);
 		}
 
+		function getUsersByRegion($region){
+			$strQuery="SELECT userid,firstname,lastname from users where region = '$region' AND level < '3'";
+      	return $this->query($strQuery);
+		}
 
 		function updatepassword($id, $password){
 			$strQuery="update users set password=MD5('$password') where userid='$id'";

@@ -31,22 +31,24 @@ $columns = array(
 // datatable column index  => database column name
 	0 => 'evemtttile',
     1 => 'regionname',
-    2 => 'town',
+    2 => 'user',
     3 => 'verified_timestamp',
     4 => 'is_approved',
     5 => 'event_id'
 );
 
 // getting total number records without any search
-$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,u.firstname, u.lastname,r.regionname,e.town FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
+$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,e.creator,u.firstname, u.lastname,r.regionname,e.region,e.town,e.is_reported FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
 $query=mysqli_query($conn, $sql) or die("level3list.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 // $sql = "select report_id, eventtitle, date_organized, region from reports where reporter = '$id'";
-$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,u.firstname, u.lastname,r.regionname,e.town FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
+$sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_approved,e.creator,u.firstname, u.lastname,r.regionname,e.region,e.town,e.is_reported FROM events as e inner join region as r on r.region_id= e.region inner join users as u on u.userid = e.creator WHERE e.is_verified='$constant'";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-	$sql.=" AND eventtitle LIKE '".$requestData['search']['value']."%'";
+  $sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR firstname LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR lastname LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("level3list.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
@@ -60,7 +62,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
     $nestedData[] = $row['eventtitle'];
     $nestedData[] = $row['regionname'];
-    $nestedData[] = $row['town'];
+    $nestedData[] = $row['firstname'].' '.$row['lastname'];
     $nestedData[] = date('jS F Y', strtotime($row['verified_timestamp']));
 
     if( $row['is_approved'] == "0"){
@@ -79,7 +81,12 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
       // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
       $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='approveEventToggle(".$queryID.",\"".$queryApprove."\")' href='#'>Approve</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
     }
-    if( ($row['is_approved'] == "1") )
+    if( ($row['is_approved'] == "1") && ($row['is_reported'] == "0"))
+    {
+      // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+      $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a style='color: red' onclick='reassignEventToggle({$row['event_id']},{$row['creator']},{$row['region']})' href='#'>Reassign Event</a></li><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";
+    }
+    if( ($row['is_approved'] == "1") && ($row['is_reported'] == "1"))
     {
       // $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
       $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level3View({$row['event_id']})' href='#'>View Details</a></li></ul></div>";

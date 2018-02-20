@@ -25,81 +25,76 @@
 </head>
 
 <body onload="welcomeToHomeLevel4()">
-        <div class="wrapper">
-            <div class="sidebar" data-active-color="blue" data-background-color="black" data-image="assets/img/register.jpeg">
-                <!--
-            Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
-            Tip 2: you can also add an image using data-image tag
-            Tip 3: you can change the color of the sidebar with data-background-color="white | black"
-        -->
-                <div class="logo">
-                    <center>
-                        <a href="http://www.nca.org.gh" class="logo-normal">
-                            <img src="images/NCA.png" style="height: 30%; width: 30%;">
-                        </a>
-                        <a href="#" class="simple-text" style="font-size: 120%">
-                            N.C.A
-                        </a>
-                    </center>
-                </div>
-                <div class="sidebar-wrapper">
-                    <div class="user">
-                        <div class="photo">
-                            <img src="assets/img/default-avatar.png" />
-                        </div>
-                        <div class="info">
-                            <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                                <p id="dashboardname"></p>
-                            </a>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <ul class="nav">
-                            <li >
-                                <a href="dashboard.html">
-                                    <i class="material-icons">dashboard</i>
-                                    <p> Dashboard </p>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="dashboardusers.html">
-                                    <i class="material-icons">supervisor_account</i>
-                                    <p> Users </p>
-                                </a>
-
-                            </li>
-                            <li>
-                                 <a href="dashboardevents.html">
-                                     <i class="material-icons">explore</i>
-                                     <p> Events </p>
-                                 </a>
-                            </li>
-                            <li>
-                                    <a href="dashboardcalendar.html">
-                                        <i class="material-icons">date_range</i>
-                                        <p> Calendar </p>
-                                    </a>
-                               </li>
-
-                                                      <li>
-                                                              <a href="dashboardpassword.html">
-                                                                  <i class="material-icons">lock_open</i>
-                                                                  <p> Change My Password </p>
-                                                              </a>
-                                                         </li>
-
-                               <li>
-                                    <a href="index.html">
-                                        <i class="material-icons">power_settings_new</i>
-                                        <p> Sign Out </p>
-                                    </a>
-                               </li>
-
-
-                        </ul>
-                </div>
+    <div class="wrapper">
+        <div class="sidebar" data-active-color="blue" data-background-color="black" data-image="assets/img/register.jpeg">
+            <div class="logo">
+                <center>
+                    <a href="http://www.nca.org.gh" class="logo-normal">
+                        <img src="images/NCA.png" style="height: 30%; width: 30%;">
+                    </a>
+                    <a href="#" class="simple-text" style="font-size: 120%">
+                        N.C.A
+                    </a>
+                </center>
             </div>
-            <div class="main-panel" style="background-color:rgb(34,88, 115)">
+            <div class="sidebar-wrapper">
+                <div class="user">
+                    <div class="photo">
+                        <img src="assets/img/default-avatar.png" />
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                            <p id="dashboardname"></p>
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li >
+                        <a href="dashboard.html">
+                            <i class="material-icons">dashboard</i>
+                            <p> Dashboard </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="dashboardusers.html">
+                            <i class="material-icons">supervisor_account</i>
+                            <p> Users </p>
+                        </a>
+
+                    </li>
+                    <li>
+                            <a href="dashboardevents.html">
+                                <i class="material-icons">explore</i>
+                                <p> Events </p>
+                            </a>
+                    </li>
+                    <li>
+                        <a href="dashboardcalendar.html">
+                            <i class="material-icons">date_range</i>
+                            <p> Calendar </p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="dashboardpassword.html">
+                            <i class="material-icons">lock_open</i>
+                            <p> Change My Password </p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="index.html">
+                            <i class="material-icons">power_settings_new</i>
+                            <p> Sign Out </p>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel" style="background-color:rgb(34,88, 115)">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-minimize">
@@ -136,20 +131,20 @@
                                         <!--        Here you can write extra buttons/actions for the toolbar              -->
                                     </div>
 
-                                        <table id="dashboarduserdatatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Mail</th>
-                                                    <th>Region</th>
-                                                    <th>Clearance Level</th>
-                                                    <th>Status</th>
+                                    <table id="dashboarduserdatatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Mail</th>
+                                                <th>Region</th>
+                                                <th>Clearance Level</th>
+                                                <th>Status</th>
 
-                                                </tr>
-                                            </thead>
+                                            </tr>
+                                        </thead>
 
-                                        </table>
+                                    </table>
                                     <!-- </div> -->
                                 </div>
                                 <!-- end content-->
@@ -158,68 +153,6 @@
                         </div>
                         <!-- end col-md-12 -->
                     </div>
-                    <!-- end row -->
-
-
-                    <div id="dashusersdisplay" class="uk-modal-container" uk-modal>
-                    <div class="uk-modal-dialog">
-
-                        <button class="uk-modal-close-default" type="button" uk-close></button>
-
-                        <div class="uk-modal-header">
-                            <h2 class="uk-modal-title">User Details</h2>
-                        </div>
-
-                        <div class="uk-modal-body" uk-overflow-auto>
-
-                          <article class="uk-comment">
-                            <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                            <div class="uk-width-auto">
-                                <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                                <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
-                            </div>
-                            <div class="uk-width-expand">
-                                <h4 class="uk-comment-title uk-margin-remove"><a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a></h4>
-                                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                    <li><a href="#" id="date_organized"></a></li>
-                                </ul>
-                            </div>
-                            </header>
-
-                            <div class="row">
-                              <dl class="uk-description-list">
-                                <div class="col-sm-6">
-                                  <dt>REGION</dt>
-                                  <dd id="region"></dd>
-                                </div>
-                                <div class="col-sm-6">
-                                  <dt>TOWN</dt>
-                                  <dd id="town"></dd>
-                                </div>
-                                  </dl>
-                              </div>
-
-                              <br/>
-                            </div>
-
-
-                            </article>
-
-                            <!-- <div id="verifyformdiv">top</div> -->
-                            <!-- <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button> -->
-
-                        </div>
-
-                        <div class="uk-modal-footer uk-text-right" id="verifyformdiv">
-                            <!-- <button style="background-color: orange;" class="uk-button uk-button-secondary uk-modal-close" data-toggle="modal" onclick="helpApproval()" type="button">Toggle Approval</button> -->
-                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                        </div>
-
-                    </div>
-                    </div>
-
-
-
                 </div>
             </div>
             <footer class="footer">
@@ -318,46 +251,6 @@
       }
     });
 
-
-
-        $('#datatables').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            responsive: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            }
-
-        });
-
-
-        var table = $('#dashboarduserdatatables').DataTable();
-
-        // Edit record
-        table.on('click', '.edit', function() {
-            $tr = $(this).closest('tr');
-
-            var data = table.row($tr).data();
-            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-        });
-
-        // Delete a record
-        table.on('click', '.remove', function(e) {
-            $tr = $(this).closest('tr');
-            table.row($tr).remove().draw();
-            e.preventDefault();
-        });
-
-        //Like record
-        table.on('click', '.like', function() {
-            alert('You clicked on Like button');
-        });
-
-        $('.card .material-datatables label').addClass('form-group');
     });
 </script>
 
