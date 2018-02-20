@@ -2537,7 +2537,7 @@ function level3View(val) {
 function level3ViewComplete(xhr, status) {
   console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
-
+  console.log(obj);
   sessionStorage.pullreportid = obj[0].event_id;
   sessionStorage.pullverified = obj[0].is_verified;
   sessionStorage.pullapproved = obj[0].is_approved;

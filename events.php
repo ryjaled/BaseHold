@@ -244,7 +244,7 @@
 		}
 
 		function getAReport($reportid){
-			$strQuery="SELECT e.approved_timestamp,e.creator,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,e.region,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
+			$strQuery="SELECT e.approved_comments,e.approved_timestamp,e.creator,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,e.region,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
 			return $this->query($strQuery);
 		}		
 		

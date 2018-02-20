@@ -366,6 +366,29 @@
 		echo json_encode($validation);
 	}
 
+	function denyEvent(){
+		include("events.php");
+		include("logs.php");
+
+		$event = new events();
+		$log = new logs();
+
+		$mode_of_outreach=$_REQUEST['outreach'];
+		$reporter=$_REQUEST['reporter'];
+		$eventid=$_REQUEST['eventid'];
+		
+		$verify=$event->editEvent($eventtitle,$eventtopic,$final_date,$audiencecat,$attendance,$region,$town,$logistics,$mode_of_outreach,$reporter,$eventid);
+
+		$log->addEventLog($eventtitle,$reporter,"edited a future event", $region);
+		if($verify==""){
+			echo '{"result":0,"message":"Event not added"}';
+		}
+		else{
+			echo '{"result":1,"message":"Event added"}';
+
+		}
+	}
+
 	function editEvent(){
 		include("events.php");
 		include("logs.php");
