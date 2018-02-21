@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 21, 2018 at 11:03 AM
+-- Generation Time: Feb 21, 2018 at 03:09 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -270,14 +270,24 @@ INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `dat
 (138, 'sdf', 5, 'has approved an event: ', '2018-02-21 09:58:10', 2),
 (139, 'sd', 5, 'edited a future event', '2018-02-21 09:58:27', 2),
 (140, 'sd', 5, 'has verified an event: ', '2018-02-21 09:58:41', 2),
-(141, 'sdf', 5, 'added a new report for: ', '2018-02-21 09:59:15', 2);
+(141, 'sdf', 5, 'added a new report for: ', '2018-02-21 09:59:15', 2),
+(142, 'sd', 5, 'edited a future event', '2018-02-21 10:20:14', 2),
+(143, 'sdf', 5, 'added a new report for: ', '2018-02-21 10:21:41', 2),
+(144, 'sdf', 5, 'has approved a report: ', '2018-02-21 10:21:52', 2),
+(145, 'sd', 5, 'has verified an event: ', '2018-02-21 11:29:32', 2),
+(146, 'sd', 5, 'has approved an event: ', '2018-02-21 11:29:40', 2),
+(147, 'sd', 5, 'added a new report for: ', '2018-02-21 11:30:47', 2),
+(148, 'sd', 5, 'added a future event', '2018-02-21 11:36:09', 2),
+(149, 'sd', 5, 'edited a future event', '2018-02-21 11:37:08', 2),
+(150, 'sd', 5, 'has verified an event: ', '2018-02-21 11:37:19', 2),
+(151, 'sd', 5, 'added a new report for: ', '2018-02-21 13:48:19', 2);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `events`
 --
--- Creation: Feb 21, 2018 at 08:40 AM
+-- Creation: Feb 21, 2018 at 02:09 PM
 --
 
 DROP TABLE IF EXISTS `events`;
@@ -289,7 +299,7 @@ CREATE TABLE `events` (
   `region` varchar(300) NOT NULL,
   `town` varchar(300) NOT NULL,
   `logistics` varchar(2000) NOT NULL,
-  `mode_of_outreach` varchar(30) NOT NULL,
+  `mode_of_outreach` varchar(300) NOT NULL,
   `audience_category` varchar(300) NOT NULL,
   `expected_audience_attendance` varchar(300) NOT NULL,
   `is_verified` int(10) NOT NULL DEFAULT '0',
@@ -316,8 +326,9 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `nonapproval_comments`, `verification_comments`, `approved_comments`, `creator`, `verified_timestamp`, `approved_timestamp`, `is_reported`, `misc_reasons`, `deny_status`) VALUES
-(49, 'sdf', 'sd', '2018-02-21 00:00:00', '2', 'sd', 'Pen(s),', 'Durbar,', 'Schools', '23', 1, 1, '', 'sd', 'sd', 5, '2018-02-21 10:55:07', '2018-02-21 10:58:10', 0, '', 0),
-(50, 'sd', 'sd', '2018-02-17 00:00:00', '2', 'sd', 'Notepad(s),', 'Road Show,', 'Religious Bodies', '3', 2, 2, 'sd', '', '', 5, '', '', 0, '', 0);
+(49, 'sdf', 'sd', '2018-02-21 00:00:00', '2', 'sd', 'Pen(s),', 'Durbar,', 'Schools', '23', 1, 1, '', 'sd', 'sd', 5, '2018-02-21 10:55:07', '2018-02-21 10:58:10', 1, '', 0),
+(50, 'sd', 'sd', '2018-02-17 00:00:00', '2', 'sd', 'Notepad(s),', 'Road Show,', 'Religious Bodies', '3', 1, 1, 'sd', 'sd', 'd', 5, '2018-02-21 12:29:32', '2018-02-21 12:29:40', 1, '', 1),
+(51, 'sd', 'fdf', '2018-02-07 00:00:00', '2', 'ad', 'Notepad(s),', 'Durbar,', 'Corporate', '33', 2, 2, 'sd', '', '', 5, '', '', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -380,7 +391,10 @@ CREATE TABLE `reportmembers` (
 --
 
 INSERT INTO `reportmembers` (`report_members_id`, `event_id`, `role`, `name`) VALUES
-(71, 49, '', 'sd');
+(71, 49, '', 'sd'),
+(72, 49, '', 's'),
+(73, 50, '', 'df'),
+(74, 50, '', 'sd');
 
 -- --------------------------------------------------------
 
@@ -412,6 +426,14 @@ CREATE TABLE `reports` (
 --   `event_id`
 --       `events` -> `event_id`
 --
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `nonapproval_comments`, `event_summary`, `picture_paths`, `folder_paths`, `team_members`, `date_reported`, `verified_timestamp`) VALUES
+(159, 49, 'sd', 'sd', 1, 'fg', '', 'sd', '[\"9uRzYv4.jpg\"]', '5_49', 's', '2018-02-21 10:21:41', '2018-02-21 11:21:52'),
+(161, 50, 'sd', 'sd', 2, '', 'sdsd', 'sd', '[\"1920x1080-px-Arrow-TV-series-arrows-computer-mice-1226519-wallhere.com.jpg\"]', '5_50', 'sd', '2018-02-21 13:48:19', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
