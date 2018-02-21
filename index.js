@@ -1896,6 +1896,9 @@ function level1ViewComplete(xhr, status) {
   console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
 
+  $('#logisticsTable').html("");
+  $('#modeTable').html("");
+
 
   // console.log(typeof(obj[0].picture_paths));
   console.log(obj);
@@ -1909,18 +1912,45 @@ function level1ViewComplete(xhr, status) {
   //$('#report_id').val(obj[0].report_id);
   // $('#eventtitle').innerHTML(obj[0].eventtitle);
   document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML = moment(dform).format('D MMMM Y');
+  document.getElementById('date_organized').innerHTML = moment(moment(obj[0].date_to_be_organized).format('D MMMM Y')).format('D MMMM Y');
   document.getElementById('region').innerHTML = obj[0].regionname;
   document.getElementById('town').innerHTML = obj[0].town;
   document.getElementById('audience_category').innerHTML = obj[0].audience_category;
   document.getElementById('audience_attendance').innerHTML = obj[0].expected_audience_attendance;
   var logistics = obj[0].logistics;
   var strlenLogistics = obj[0].logistics.length;
-  document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  // document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
+
+  var logisticsView = obj[0].logistics.split(',');
+  for(var i = 0; i < logisticsView.length; i++){
+
+        tabledata = "<tr>"+
+        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
+        "</tr>";
+    $('#logisticsTable').append(tabledata);
+
+
+  }
+
+  var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
+  for(var i = 0; i < modeOfOutreachView.length; i++){
+
+       
+          tabledata = "<tr>"+
+          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "</tr>";
+        $('#modeTable').append(tabledata);
+
+
+  }
+
+
+
 
   var mode = obj[0].mode_of_outreach;
   var strlenMode = obj[0].mode_of_outreach.length;
-  document.getElementById('complaints_raised').innerHTML = mode.substring(0, strlenMode - 1);
+  // document.getElementById('complaints_raised').innerHTML = mode.substring(0, strlenMode - 1);
 
 
   var dateVerfied = new Date(obj[0].verified_timestamp);
@@ -1942,13 +1972,16 @@ function level1ViewComplete(xhr, status) {
   
 
   if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('event_summary').innerHTML = "This event has not yet been verified nor approved.";
+    document.getElementById('epv').innerHTML = "Not verified yet";
+    document.getElementById('epa').innerHTML = "Not approved yet";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+    document.getElementById('epv').innerHTML = moment(dateVerfied).format('D MMMM Y');
+    document.getElementById('epa').innerHTML = "Not approved yet.";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('event_summary').innerHTML = "This event has been previously verified on: " + moment(dateVerfied).format('D MMMM Y') + " and approved on: " + moment(dateApproved).format('D MMMM Y');
+    document.getElementById('epv').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
+    document.getElementById('epa').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
   }
 
 
