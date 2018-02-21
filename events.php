@@ -8,7 +8,6 @@
 		* Creates a new constructor of the class
 		*/
 		function events(){
-
 		}
 
 		function addTeamMembers($event_id,$name){
