@@ -71,7 +71,7 @@ include_once("database.php");
 		}
 
 		function getUsersByRegion($region){
-			$strQuery="SELECT userid,firstname,lastname from users where region = '$region' AND level < '3'";
+			$strQuery="SELECT userid,firstname,lastname from users where region = '$region' AND level < '2'";
       	return $this->query($strQuery);
 		}
 
