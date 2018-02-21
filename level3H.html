@@ -644,89 +644,114 @@
                         
            </div>
 
-            <div class="uk-modal-body" uk-overflow-auto>
-
-                <article class="uk-comment">
-                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                        <div class="uk-width-auto">
-                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
-                        </div>
-                        <div class="uk-width-expand">
-                            <h4 class="uk-comment-title uk-margin-remove">
-                                <a id="eventtitle" class="uk-link-reset" href="#">Author: Admin1</a>
-                            </h4>
-                            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                <li>
-                                    <a href="#" id="date_organized">23 January 2018</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </header>
-
-                    <div class="row">
-                        <dl class="uk-description-list">
-                            <div class="col-sm-6">
-                                <dt>REGION</dt>
-                                <dd id="region"></dd>
-                            </div>
-                            <div class="col-sm-6">
-                                <dt>TOWN</dt>
-                                <dd id="town"></dd>
-                            </div>
-                        </dl>
-                    </div>
-
-                    <br/>
-
-                    <div class="uk-comment-body">
-                    <dt>CONFIRMATION TIMES:</dt>
-                    <dd id="event_summary"></dd>
-
-                    <br/><br/>
-
-                    <dt>VERIFICATION COMMENTS</dt>
-                    <dd id="verification_comments"></dd>
-
-                    <br/><br/>
-
-                    <dt>APPROVAL COMMENTS</dt>
-                    <dd id="approval_comments"></dd>
-
-                    <dd id="event_summary_2"></dd>
-
-                    </div>
-
-                    <center>
-                        <hr class="uk-divider-small" style="margin:5%;">
-                    </center>
-
-                    <div class="row">
-                        <dl class="uk-description-list">
-                            <div class="col-sm-6">
-                                <dt>AUDIENCE CATEGORY</dt>
-                                <dd id="audience_category"></dd>
-                            </div>
-                            <div class="col-sm-6">
-                                <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                                <dd id="audience_attendance"></dd>
-                            </div>
-                        </dl>
-                    </div>
-
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                        <dt>LOGISTICS UTILIZED</dt>
-                        <dd id="team_challenges"></dd>
-                    </div>
-
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                        <dt>MODE OF COMMUNICATION USED</dt>
-                        <dd id="complaints_raised"></dd>
-
-                    </div>
             
-                </article>
-            </div>
+           <div class="uk-modal-body" uk-overflow-auto>
+                
+                             <div class="row">
+                                     <div style="color: black; margin-top: 0px; font-size: 1.0em;">
+                                             <span style="margin-left: 10%;"><i class="fa fa-globe fa-lg"></i> Region: <span id="region" style="margin-top: -50px; font-weight: bold; text-transform: uppercase;"></span></span>
+                        
+                                             <span style="margin-left: 40%;"><i class="fa fa-map-marker fa-lg"></i> Town: <span id="town" style="margin-top: -10px; font-weight: bold; text-transform: uppercase;"></span></span>
+                                     </div>
+                            </div>
+                
+                             <div class="row">
+                                 <div>
+                                     <div class="uk-inline">
+                                        <img src="images/skyback.png" alt="">
+                                          <div class="uk-overlay uk-overlay-primary uk-position-cover">
+                                            <center><p id="eventtitle" style="font-weight: 400px; font-size: 1.5em; text-transform: uppercase; color: white; margin-top: 10px;" >asdasdsasdasdasdjkasdn a sdjknfnasdfkj n  sdjfknsadkfjna </p></center>
+                                            <center><p id="date_organized" style="font-size: 0.7em; text-transform: uppercase; color: white; margin-top: -15px;">23 january 2017</p></center>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+                
+                           
+                
+                            <div class="row" style="margin: 3% 10% 0% 10%;">
+                                    <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
+                                    <table class="uk-table uk-table-striped">
+                
+                                            <thead>
+                                                <tr>
+                                                    <th>DETAIL</th>
+                                                    <th>DATE</th>
+                                                </tr>
+                                            </thead>
+                
+                                            <tbody>
+                                                <tr>
+                                                    <td>EVENT PREVIOUSLY VERIFIED ON</td>
+                                                    <td id="epv"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>EVENT PREVIOUSLY APPROVED ON</td>
+                                                    <td id="epa"></td>
+                                                </tr>
+                                            </tbody>
+                                    </table>
+                            </div>
+                
+                            <div class="row" style="margin: 0% 10% 3% 10%;">
+                
+                                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                            <div>
+                                                <center>
+                                                <div class="uk-card uk-card-default uk-card-body">
+                                                        <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="audience_category" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                  </div>
+                                                </center>
+                                            </div>
+                
+                                            <div>
+                                                <center>
+                                                 <div class="uk-card uk-card-default uk-card-body">
+                                                         <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="audience_attendance" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                 </div>
+                                                </center>
+                                            </div>
+                                        </div>
+                            </div>
+                
+                            <div class="row" style="margin: 0% 10% 5% 10%;">
+                                    
+                                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                            <div>
+                                                <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
+                                                <table class="uk-table">
+                                                        
+                                                <thead>
+                                                    <tr>
+                                                        <th>Intended outreach communication mode</th>
+                                                    </tr>
+                                                </thead>
+                            
+                                                <tbody id="modeTable">
+                                                   
+                                                </tbody>
+                                                </table>
+                                            </div>
+                
+                                            <div>
+                                                    <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
+                                                    <table class="uk-table">
+                                                            
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Materials needed for the meeting</th>
+                                                            </tr>
+                                                        </thead>
+                                
+                                                        <tbody id="logisticsTable">
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                            </div>
+                                        </div>
+                            </div>
+                
+                            </div>
 
 
             <div class="uk-modal-footer uk-text-right" id="approveformdivbuttons">
