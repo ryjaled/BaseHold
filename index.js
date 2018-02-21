@@ -907,6 +907,7 @@ function denyEventComplete(xhr, status) {
 
   global1();
   global2();
+  global3();
 
   $.notify({
     icon: "info_outline",
