@@ -2407,7 +2407,6 @@ function level2ReportViewComplete(xhr, status) {
   }
 
   if(obj[0].reportapprove == 0){
-    alert("here");
     $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
   }
   if(obj[0].reportapprove == 1){
