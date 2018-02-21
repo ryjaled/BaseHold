@@ -2029,7 +2029,7 @@ function level1ViewComplete(xhr, status) {
   //$('#report_id').val(obj[0].report_id);
   // $('#eventtitle').innerHTML(obj[0].eventtitle);
   document.getElementById('eventtitle').innerHTML = obj[0].eventtitle;
-  document.getElementById('date_organized').innerHTML = moment(moment(obj[0].date_to_be_organized).format('D MMMM Y')).format('D MMMM Y');
+  document.getElementById('date_organized').innerHTML = moment(obj[0].date_to_be_organized).format('D MMMM Y');
   document.getElementById('region').innerHTML = obj[0].regionname;
   document.getElementById('town').innerHTML = obj[0].town;
   document.getElementById('audience_category').innerHTML = obj[0].audience_category;
@@ -2093,12 +2093,12 @@ function level1ViewComplete(xhr, status) {
     document.getElementById('epa').innerHTML = "Not approved yet";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('epv').innerHTML = moment(dateVerfied).format('D MMMM Y');
+    document.getElementById('epv').innerHTML = moment(obj[0].verified_timestamp).format('D MMMM Y');
     document.getElementById('epa').innerHTML = "Not approved yet.";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('epv').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('epa').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
+    document.getElementById('epv').innerHTML = moment(obj[0].verified_timestamp).format('D MMMM Y');
+    document.getElementById('epa').innerHTML = moment(obj[0].approved_timestamp).format('D MMMM Y');
   }
 
 
