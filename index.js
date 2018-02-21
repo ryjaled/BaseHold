@@ -905,6 +905,9 @@ function denyEventComplete(xhr, status) {
 
   console.log(xhr);
 
+  global1();
+  global2();
+
   $.notify({
     icon: "info_outline",
     message: "Event Denied Successfully."
@@ -945,7 +948,7 @@ function denyReportComplete(xhr, status) {
 
   console.log(xhr);
 
-  global1();
+  global7();
 
   $.notify({
     icon: "info_outline",
