@@ -143,7 +143,7 @@
 		}
 
     	function getAnEvent($eventid){
-			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.approved_comments,e.verification_comments,e.verified_timestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
+			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.approved_comments,e.verification_comments,e.verified_timestamp,e.nonapproval_comments,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
       	return $this->query($strQuery);
 		}
 
