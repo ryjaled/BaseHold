@@ -929,7 +929,7 @@ function denyEventModal(id, verState) {
 }
 
 function denyReport() {
-  var comments = $('#commentsForDeny').val();
+  var comments = $('#commentsForRDeny').val();
 
   var theUrl = "databasehandler.php?cmd=37&reportid=" + sessionStorage.denyreportId + "&comments=" + comments;
   $.ajax(theUrl,
@@ -938,12 +938,14 @@ function denyReport() {
       complete: denyReportComplete
     });
 
-  $('#commentsForDeny').val("");
+  $('#commentsForRDeny').val("");
 }
 
 function denyReportComplete(xhr, status) {
 
   console.log(xhr);
+
+  global1();
 
   $.notify({
     icon: "info_outline",
@@ -960,10 +962,10 @@ function denyReportComplete(xhr, status) {
 }
 
 function denyReportModal(id) {
-  sessionStorage.denyreporttId = id;
+  sessionStorage.denyreportId = id;
 
   event.preventDefault();
-  UIkit.modal('#modal-overflow-deny-comments').show();
+  UIkit.modal('#modal-overflow-rdeny-comments').show();
 
 }
 
@@ -1583,6 +1585,38 @@ function deleteReportComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
   UIkit.modal('#modal-overflow-2-report').hide();
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report deleted successfully."
+
+  }, {
+      type: 'danger',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function deleteDeniedReport(val) {
+  var theUrl = "databasehandler.php?cmd=32&eventid=" + val;
+
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: deleteDeniedReportComplete
+    });
+}
+
+function deleteDeniedReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
 
   global1();
 

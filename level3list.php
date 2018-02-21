@@ -66,10 +66,11 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = date('jS F Y', strtotime($row['verified_timestamp']));
 
     if( $row['is_approved'] == "0"){
-        $verifyLabel = "<p style='color: red'>Not Approved</p>";
-      } else {
-        $verifyLabel = "<p style='color: green'>Approved</p>";
-      }
+        $verifyLabel = "<p style='color: grey'>Pending</p>";
+      } 
+    if( $row['is_approved'] == "1"){
+      $verifyLabel = "<p style='color: green'>Approved</p>";
+    }
     $nestedData[] = $verifyLabel;
     // $nestedData[] = $row['report_id'];
 

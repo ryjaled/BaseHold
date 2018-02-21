@@ -407,6 +407,12 @@
 		
 		$verify=$event->denyReport($reportid,$comments);
 
+		$row=$event->getAReport($reportid);
+		while ($row = $event->fetch()) {
+			$eventid = $row['event_id'];
+		}
+		$row=$event->denyNewReportEventUpdate($eventid);
+
 		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not added"}';
@@ -534,6 +540,9 @@
 					$data['verification_comments'] = $row['verification_comments'];
 					$data['verified_timestamp'] = $row['verified_timestamp'];
 					$data['event_approved_comments'] = $row['approved_comments'];
+					$data['event_deny_comments'] = $row['nonapproval_comments'];
+					$data['is_reported'] = $row['is_reported'];
+					$data['report_deny_status_from_event'] = $row['deny_status'];
  					//array_push($data,$row);
 
  				}
@@ -552,6 +561,8 @@
 					$data['report_id'] = $row['report_id'];
 					$data['date_reported'] = $row['date_reported'];
 					$data['report_approve_comments'] = $row['verification_comments'];
+					$data['report_deny_comments'] = $row['nonapproval_comments'];
+					$data['report_approval_status'] = $row['is_approved'];
 					//array_push($moredata,$data);
 
 					$result = $event->getAReport($data['report_id']);

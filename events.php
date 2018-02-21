@@ -21,7 +21,7 @@
 
 		function addNewReportEventUpdate($event_id,$value){
 
-			$strQuery="update events set is_reported='$value' where event_id='$event_id' ";
+			$strQuery="update events set is_reported='$value',deny_status='0' where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 
@@ -87,6 +87,12 @@
 
 				$strQuery="update reports set is_approved='2', verification_comments='',verified_timestamp='0000-00-00 00:00:00',nonapproval_comments='$comments' where report_id='$reportid'";
 
+			return $this->query($strQuery);
+		}
+
+		function denyNewReportEventUpdate($event_id){
+
+			$strQuery="update events set deny_status='1' where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 
@@ -250,7 +256,7 @@
 		
 		function getReportwithEventid($event_id){
 
-			$strQuery="select team_challenges, complaints_raised, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported,verification_comments from reports where event_id='$event_id' ";
+			$strQuery="select team_challenges, complaints_raised, is_approved, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported,verification_comments,nonapproval_comments from reports where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 
