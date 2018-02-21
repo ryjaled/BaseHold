@@ -396,11 +396,15 @@
 	}
 	
 	function denyReport(){
+		include("emails.php");
 		include("events.php");
 		include("logs.php");
+		include("users.php");
 
+		$email = new emails();
 		$event = new events();
 		$log = new logs();
+		$user = new users();
 
 		$comments=$_REQUEST['comments'];
 		$reportid=$_REQUEST['reportid'];
@@ -410,8 +414,20 @@
 		$row=$event->getAReport($reportid);
 		while ($row = $event->fetch()) {
 			$eventid = $row['event_id'];
+			$eventtitle = $row['eventtitle'];
+			$reason = $row['nonapproval_comments'];
+			$date = strtotime($row['date_to_be_organized']);
+			$creator = $row['creator'];
+			$final_date = date("l d, F Y", $date);
 		}
+		$row=$user->getUser($creator);
+		while ($row = $user->fetch()) {
+			$senderemail = $row['email'];	
+		}
+
 		$row=$event->denyNewReportEventUpdate($eventid);
+
+		$row=$email->denyemail($eventtitle,$final_date,$senderemail);
 
 		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
 		if($verify==""){
