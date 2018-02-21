@@ -39,12 +39,12 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved,e.is_reported FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id' order by e.event_id DESC";
+$sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id' order by e.event_id DESC";
 $query=mysqli_query($conn, $sql) or die("level1list.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
-$sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved,e.is_reported FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id' ";
+$sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id' ";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND eventtitle LIKE '".$requestData['search']['value']."%' ";
 }
@@ -107,6 +107,16 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	{
 		// $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
 		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level1View({$row['event_id']})' href='#'>View Details</a></li><li><a onclick='level1ReportView({$row['event_id']})' href='#'>View Report</a></li></ul></div>";//<li><a onclick='deleteReportModal({$row['event_id']})' href='#'>Delete Report</a></li>
+	}
+	if( ($row['is_verified'] == "1") && ($row['is_approved'] == "1") && ($row['is_reported'] == "1") && ($row['deny_status'] == "1") )
+	{
+		// $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level1View({$row['event_id']})' href='#'>View Details</a></li><li><a onclick='level1ReportView({$row['event_id']})' href='#'>View Report</a></li><li><a onclick='deleteDeniedReport({$row['event_id']})' href='#'>Delete Report</a></li></ul></div>";
+	}
+	if( ($row['is_verified'] == "2") || ($row['is_approved'] == "2") )
+	{
+		// $buttonshow = "<a rel='tooltip' data-placement='bottom' title='View' onclick='level1viewer({$row['event_id']})' class='btn btn-success btn-just-icon '><i class='material-icons'>assignment</i></a><a rel='tooltip' data-placement='bottom' title='Edit' onclick='' class='btn btn-warning btn-just-icon '><i class='material-icons'>visibility</i></a><a rel='tooltip' data-placement='bottom' title='Delete' onclick='' class='btn btn-danger btn-just-icon '><i class='material-icons'>cancel</i></a>";
+		$buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level1Edit({$row['event_id']})' href='#'>Edit Event</a></li><li><a onclick='level1View({$row['event_id']})' href='#'>View Details</a></li><li><a onclick='deleteevent({$row['event_id']})' href='#'>Delete Event</a></li></ul></div>";
 	}
 
 	$nestedData[] = $buttonshow;

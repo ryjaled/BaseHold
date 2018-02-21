@@ -888,6 +888,91 @@ function deleteevent(pid) {
     });
 }
 
+function denyEvent() {
+  var comments = $('#commentsForDeny').val();
+
+  var theUrl = "databasehandler.php?cmd=36&eventid=" + sessionStorage.denyeventId + "&comments=" + comments + "&level=" + sessionStorage.denyLevel;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: denyEventComplete
+    });
+
+  $('#commentsForDeny').val("");
+}
+
+function denyEventComplete(xhr, status) {
+
+  console.log(xhr);
+
+  global1();
+  global2();
+  global3();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Event Denied Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
+
+function denyEventModal(id, verState) {
+  sessionStorage.denyeventId = id;
+  sessionStorage.denyLevel = verState;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-deny-comments').show();
+
+}
+
+function denyReport() {
+  var comments = $('#commentsForRDeny').val();
+
+  var theUrl = "databasehandler.php?cmd=37&reportid=" + sessionStorage.denyreportId + "&comments=" + comments;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: denyReportComplete
+    });
+
+  $('#commentsForRDeny').val("");
+}
+
+function denyReportComplete(xhr, status) {
+
+  console.log(xhr);
+
+  global7();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report Denied Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
+
+function denyReportModal(id) {
+  sessionStorage.denyreportId = id;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-rdeny-comments').show();
+
+}
+
 function editevent() {
   event.preventDefault();
 
@@ -1504,6 +1589,38 @@ function deleteReportComplete(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
 
   UIkit.modal('#modal-overflow-2-report').hide();
+
+  global1();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report deleted successfully."
+
+  }, {
+      type: 'danger',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+
+}
+
+function deleteDeniedReport(val) {
+  var theUrl = "databasehandler.php?cmd=32&eventid=" + val;
+
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: deleteDeniedReportComplete
+    });
+}
+
+function deleteDeniedReportComplete(xhr, status) {
+
+  var obj = JSON.parse(xhr.responseText);
 
   global1();
 
@@ -2623,7 +2740,7 @@ function level3View(val) {
 function level3ViewComplete(xhr, status) {
   console.log(xhr);
   var obj = JSON.parse(xhr.responseText);
-
+  console.log(obj);
   sessionStorage.pullreportid = obj[0].event_id;
   sessionStorage.pullverified = obj[0].is_verified;
   sessionStorage.pullapproved = obj[0].is_approved;

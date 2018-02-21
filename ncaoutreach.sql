@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 13, 2018 at 11:04 AM
+-- Generation Time: Feb 21, 2018 at 11:03 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -46,13 +46,13 @@ CREATE TABLE `audiences` (
 --
 
 INSERT INTO `audiences` (`aud_id`, `aud_name`) VALUES
-(1, 'Corporate'),
-(2, 'Education'),
-(3, 'Healthcare'),
-(4, 'Hospitality'),
-(5, 'Market'),
-(6, 'Mixed'),
-(7, 'Transportation');
+(1, 'Artisans'),
+(2, 'Communities'),
+(3, 'Corporate'),
+(4, 'Religious Bodies'),
+(5, 'Schools'),
+(6, 'Villages'),
+(7, 'Others');
 
 -- --------------------------------------------------------
 
@@ -183,14 +183,101 @@ INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `dat
 (49, 'test1', 5, 'has approved an event: ', '2018-02-12 16:36:18', 2),
 (52, 'sd', 5, 'has approved a report: ', '2018-02-12 16:41:15', 2),
 (53, 'testtt', 5, 'Added a new report for ', '2018-02-13 09:28:31', 2),
-(54, 'test1', 5, 'edited a Future event', '2018-02-13 09:29:14', 4);
+(54, 'test1', 5, 'edited a Future event', '2018-02-13 09:29:14', 4),
+(55, 'sdsd', 5, 'added a new report for: ', '2018-02-13 10:44:23', 3),
+(56, 'sd', 5, 'added a new report for: ', '2018-02-13 12:06:51', 2),
+(57, 'sd', 5, 'has approved a report: ', '2018-02-13 12:07:35', 2),
+(58, 'Event at mendskrom', 5, 'added a future event', '2018-02-14 09:26:26', 2),
+(59, 'Event at mendskrom', 5, 'has verified an event: ', '2018-02-14 09:46:04', 2),
+(60, 'Event at mendskrom', 5, 'has approved an event: ', '2018-02-14 09:46:57', 2),
+(61, 'Event at mendskrom', 5, 'edited a future event', '2018-02-14 09:47:57', 2),
+(62, 'Event at mendskrom', 5, 'has verified an event: ', '2018-02-14 09:48:23', 2),
+(63, 'Event at mendskrom', 5, 'has approved an event: ', '2018-02-14 09:52:42', 2),
+(64, 'Event at mendskrom', 5, 'added a new report for: ', '2018-02-14 09:53:20', 2),
+(65, 'Event at mendskrom', 5, 'has approved a report: ', '2018-02-14 09:55:51', 2),
+(66, 'dd', 5, 'added a future event', '2018-02-14 15:11:01', 2),
+(67, 'sdddddd', 5, 'added a future event', '2018-02-14 15:17:00', 3),
+(68, 'sddsdaasasas', 5, 'added a future event', '2018-02-14 15:19:02', 2),
+(69, 'heyy', 5, 'added a future event', '2018-02-14 15:19:39', 4),
+(70, 'sdsadqw', 5, 'added a future event', '2018-02-14 15:21:43', 5),
+(71, '32', 5, 'added a future event', '2018-02-14 15:22:46', 2),
+(72, '1ow', 5, 'added a future event', '2018-02-14 15:23:41', 7),
+(73, 'wdsd', 5, 'added a future event', '2018-02-14 15:26:09', 2),
+(74, 'wdsd', 5, 'has verified an event: ', '2018-02-14 15:35:06', 2),
+(75, 'wdsd', 5, 'has approved an event: ', '2018-02-14 15:37:14', 2),
+(76, '1ow', 5, 'edited a future event', '2018-02-14 15:37:39', 2),
+(77, '1ow', 5, 'has verified an event: ', '2018-02-14 15:40:40', 2),
+(78, '1ow', 5, 'has approved an event: ', '2018-02-14 15:40:53', 2),
+(79, '1ow', 5, 'added a new report for: ', '2018-02-14 15:42:50', 2),
+(80, 'sde33', 5, 'added a future event', '2018-02-16 10:03:03', 3),
+(81, 'sde33', 5, 'edited a future event', '2018-02-16 10:03:31', 2),
+(82, 'zxx', 5, 'added a future event', '2018-02-16 10:07:54', 2),
+(83, 'zxx', 5, 'has verified an event: ', '2018-02-16 10:08:14', 2),
+(84, 'zxx', 5, 'has approved an event: ', '2018-02-16 10:09:56', 2),
+(85, 'sde33', 5, 'has verified an event: ', '2018-02-16 15:21:08', 2),
+(86, 'sde33', 5, 'has approved an event: ', '2018-02-16 17:22:39', 2),
+(87, 'testtt', 5, 'added a new report for: ', '2018-02-19 12:52:58', 2),
+(88, 'testtt', 5, 'added a new report for: ', '2018-02-19 12:54:23', 2),
+(89, 'testtt', 5, 'added a new report for: ', '2018-02-19 13:01:20', 2),
+(90, 'testtt', 5, 'added a new report for: ', '2018-02-19 13:08:50', 2),
+(91, 'sde33', 5, 'added a new report for: ', '2018-02-19 13:09:37', 2),
+(92, 'sde33', 5, 'added a new report for: ', '2018-02-19 13:14:03', 2),
+(93, 'sde33', 5, 'added a new report for: ', '2018-02-19 13:15:24', 2),
+(94, 'sde33', 5, 'added a new report for: ', '2018-02-19 13:15:54', 2),
+(95, 'wdsd', 5, 'added a new report for: ', '2018-02-19 13:16:55', 2),
+(96, 'sde33', 5, 'added a new report for: ', '2018-02-19 13:48:07', 2),
+(97, 'sde33', 5, 'added a new report for: ', '2018-02-19 14:01:26', 2),
+(98, 'sde33', 5, 'added a new report for: ', '2018-02-19 14:08:16', 2),
+(99, 'sde33', 5, 'added a new report for: ', '2018-02-19 14:10:18', 2),
+(100, 'sde33', 5, 'added a new report for: ', '2018-02-19 14:10:57', 2),
+(101, 'wdsd', 5, 'added a new report for: ', '2018-02-19 14:13:40', 2),
+(102, 'wdsd', 5, 'added a new report for: ', '2018-02-19 14:14:34', 2),
+(103, 'wdsd', 5, 'added a new report for: ', '2018-02-19 14:15:32', 2),
+(104, 'wdsd', 5, 'added a new report for: ', '2018-02-19 15:54:49', 2),
+(105, 'wdsd', 5, 'added a new report for: ', '2018-02-19 15:58:55', 2),
+(106, 'wdsd', 5, 'has approved a report: ', '2018-02-19 16:32:47', 2),
+(107, 'test43', 5, 'added a future event', '2018-02-20 06:04:16', 2),
+(108, 'test43', 5, 'has verified an event: ', '2018-02-20 07:01:54', 2),
+(109, 'test43', 5, 'has approved an event: ', '2018-02-20 07:05:05', 2),
+(110, 'asd', 5, 'added a future event', '2018-02-20 08:07:58', 4),
+(111, '1ow', 5, 'added a new report for: ', '2018-02-20 08:11:06', 2),
+(112, 'asd', 5, 'has approved an event: ', '2018-02-20 10:02:57', 4),
+(113, 'dsds', 5, 'added a future event', '2018-02-20 11:18:48', 2),
+(114, 'dsds', 5, 'has verified an event: ', '2018-02-20 11:19:07', 2),
+(115, 'dsds', 5, 'has approved an event: ', '2018-02-20 11:19:25', 2),
+(116, 'dsds', 5, 'added a new report for: ', '2018-02-20 11:19:50', 2),
+(117, 'TOTaf', 5, 'added a future event', '2018-02-20 12:06:10', 2),
+(118, 'TOTaf', 5, 'has verified an event: ', '2018-02-20 12:06:54', 2),
+(119, 'TOTaf', 5, 'has approved an event: ', '2018-02-20 12:07:39', 2),
+(120, 'TOTaf', 5, 'added a new report for: ', '2018-02-20 12:09:00', 2),
+(121, 'TOTaf', 5, 'added a new report for: ', '2018-02-20 12:09:39', 2),
+(122, 'TOTaf', 5, 'has approved a report: ', '2018-02-20 12:27:13', 2),
+(123, '1ow', 5, 'has approved a report: ', '2018-02-20 12:29:33', 2),
+(124, 'wrgs', 5, 'added a future event', '2018-02-20 16:33:04', 2),
+(125, 'wrgs', 5, 'edited a future event', '2018-02-20 16:33:18', 2),
+(126, 'wrgs', 5, 'edited a future event', '2018-02-21 06:22:43', 2),
+(127, 'wrgs', 5, 'has verified an event: ', '2018-02-21 06:22:50', 2),
+(128, 'wrgs', 5, 'edited a future event', '2018-02-21 07:59:51', 2),
+(129, 'testtt', 5, 'added a new report for: ', '2018-02-21 08:11:23', 2),
+(130, 'testtt', 5, 'added a new report for: ', '2018-02-21 09:05:33', 2),
+(131, 'wrgs', 5, 'edited a future event', '2018-02-21 09:27:21', 2),
+(132, 'wrgs', 5, 'has verified an event: ', '2018-02-21 09:27:33', 2),
+(133, 'sd', 5, 'added a new report for: ', '2018-02-21 09:28:36', 2),
+(134, 'asd', 5, 'added a new report for: ', '2018-02-21 09:31:05', 4),
+(135, 'sdf', 5, 'added a future event', '2018-02-21 09:54:17', 3),
+(136, 'sd', 5, 'added a future event', '2018-02-21 09:54:33', 2),
+(137, 'sdf', 5, 'has verified an event: ', '2018-02-21 09:55:07', 2),
+(138, 'sdf', 5, 'has approved an event: ', '2018-02-21 09:58:10', 2),
+(139, 'sd', 5, 'edited a future event', '2018-02-21 09:58:27', 2),
+(140, 'sd', 5, 'has verified an event: ', '2018-02-21 09:58:41', 2),
+(141, 'sdf', 5, 'added a new report for: ', '2018-02-21 09:59:15', 2);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `events`
 --
--- Creation: Feb 12, 2018 at 03:26 PM
+-- Creation: Feb 21, 2018 at 08:40 AM
 --
 
 DROP TABLE IF EXISTS `events`;
@@ -207,12 +294,15 @@ CREATE TABLE `events` (
   `expected_audience_attendance` varchar(300) NOT NULL,
   `is_verified` int(10) NOT NULL DEFAULT '0',
   `is_approved` int(10) NOT NULL DEFAULT '0',
+  `nonapproval_comments` varchar(150) NOT NULL,
   `verification_comments` varchar(2000) NOT NULL,
   `approved_comments` varchar(100) NOT NULL,
   `creator` int(10) NOT NULL,
   `verified_timestamp` varchar(30) NOT NULL,
   `approved_timestamp` varchar(30) NOT NULL,
-  `is_reported` int(11) NOT NULL DEFAULT '0'
+  `is_reported` int(11) NOT NULL DEFAULT '0',
+  `misc_reasons` varchar(150) NOT NULL,
+  `deny_status` int(10) NOT NULL
 ) ;
 
 --
@@ -225,36 +315,9 @@ CREATE TABLE `events` (
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `verification_comments`, `approved_comments`, `creator`, `verified_timestamp`, `approved_timestamp`, `is_reported`) VALUES
-(27, 'test1', 'testttt', '2018-02-18 00:00:00', '4', 'dfsdf', 'Mug(s),', 'Durbar,', 'Communities', '34', 0, 0, 'trial', 'trial2', 5, '', '', 0),
-(28, 'testtt', 'Topic ', '2018-02-22 00:00:00', '2', 'rt', 'Pen(s),Mug(s),', 'Durbar,', 'Communities', '67', 1, 1, 'ghgggg', 'oyayy', 5, '2018-02-12 17:32:47', '2018-02-12 17:32:58', 0),
-(29, 'OH EBONY', 'GONE TOO SOON', '2018-02-09 00:00:00', '2', 'OH', 'Sound System(s),Towel(s),Notepad(s),', 'One-on-one,', 'Others', '32', 0, 0, 'doneeeeeeeeee', 'TodayS', 5, '', '', 0),
-(30, 'sd', 'sdd', '2018-02-21 00:00:00', '2', 'sad', 'Pen(s),Mug(s),', 'Road Show,Small group meeting,', 'Corporate', '12', 1, 1, 'verificationTouched', '', 5, '2018-02-09 14:27:12', '2018-02-09 15:55:57', 0),
-(31, 'sdsd', 'dsf', '2018-02-23 00:00:00', '3', '2', 'T-shirt(s),', 'One-on-one,Road Show,', 'Artisans', '2', 1, 1, 'verificationTouched', '', 5, '2018-02-09 16:30:05', '2018-02-09 16:30:11', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pending`
---
--- Creation: Jan 24, 2018 at 04:23 PM
---
-
-DROP TABLE IF EXISTS `pending`;
-CREATE TABLE `pending` (
-  `pending_id` int(11) NOT NULL,
-  `eventtitle` varchar(100) NOT NULL,
-  `date_to_be_organized` timestamp NULL DEFAULT NULL,
-  `region` int(10) NOT NULL,
-  `town` varchar(100) NOT NULL,
-  `audience_category` varchar(100) NOT NULL,
-  `status` enum('1','0') NOT NULL,
-  `reporter` int(10) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `pending`:
---
+INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `nonapproval_comments`, `verification_comments`, `approved_comments`, `creator`, `verified_timestamp`, `approved_timestamp`, `is_reported`, `misc_reasons`, `deny_status`) VALUES
+(49, 'sdf', 'sd', '2018-02-21 00:00:00', '2', 'sd', 'Pen(s),', 'Durbar,', 'Schools', '23', 1, 1, '', 'sd', 'sd', 5, '2018-02-21 10:55:07', '2018-02-21 10:58:10', 0, '', 0),
+(50, 'sd', 'sd', '2018-02-17 00:00:00', '2', 'sd', 'Notepad(s),', 'Road Show,', 'Religious Bodies', '3', 2, 2, 'sd', '', '', 5, '', '', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -317,23 +380,14 @@ CREATE TABLE `reportmembers` (
 --
 
 INSERT INTO `reportmembers` (`report_members_id`, `event_id`, `role`, `name`) VALUES
-(23, 27, '', 'df'),
-(24, 28, '', 'Brian'),
-(25, 28, '', 'Osman'),
-(26, 30, '', 'nb'),
-(27, 30, '', 'we'),
-(28, 30, '', 'fd'),
-(29, 30, '', 's'),
-(30, 31, '', 'gs'),
-(31, 28, '', 'dd'),
-(32, 28, '', 'ddf');
+(71, 49, '', 'sd');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `reports`
 --
--- Creation: Feb 02, 2018 at 10:00 AM
+-- Creation: Feb 19, 2018 at 02:12 PM
 --
 
 DROP TABLE IF EXISTS `reports`;
@@ -344,8 +398,9 @@ CREATE TABLE `reports` (
   `complaints_raised` varchar(1000) NOT NULL,
   `is_approved` int(10) NOT NULL,
   `verification_comments` varchar(2000) NOT NULL,
+  `nonapproval_comments` varchar(150) NOT NULL,
   `event_summary` varchar(2000) NOT NULL,
-  `picture_paths` varchar(2000) NOT NULL,
+  `picture_paths` varchar(55000) NOT NULL,
   `folder_paths` varchar(250) NOT NULL,
   `team_members` varchar(300) NOT NULL,
   `date_reported` timestamp NOT NULL,
@@ -384,7 +439,12 @@ CREATE TABLE `userlogs` (
 --
 
 INSERT INTO `userlogs` (`userlog_id`, `acted_id`, `acted_on_id`, `action`, `date`) VALUES
-(15, 3, 19, 'added', '2018-02-12 10:46:07');
+(15, 3, 19, 'added', '2018-02-12 10:46:07'),
+(16, 3, 20, 'added', '2018-02-13 13:42:44'),
+(17, 3, 20, 'deactivated the user:', '2018-02-13 13:42:47'),
+(18, 3, 20, 'activated the user:', '2018-02-13 13:43:12'),
+(19, 3, 20, 'deactivated the user:', '2018-02-13 13:45:25'),
+(20, 3, 20, 'activated the user:', '2018-02-13 13:46:11');
 
 -- --------------------------------------------------------
 
@@ -423,7 +483,8 @@ INSERT INTO `users` (`userid`, `firstname`, `lastname`, `email`, `password`, `re
 (16, 'Brian ', 'Martey', 'bm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '1', 'active'),
 (17, 'Brian1', 'MArtey', 'bnmm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 3, '2', 'active'),
 (18, 'BB', 'Martey', 'bnmm1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '2', 'active'),
-(19, 'daf', 'df', 'bnmm@nca.org.gh', 'c84258e9c39059a89ab77d846ddab909', 4, '2', 'active');
+(19, 'daf', 'df', 'bnmm@nca.org.gh', 'c84258e9c39059a89ab77d846ddab909', 4, '2', 'active'),
+(20, 'ryan', 'moujaled', 'ryan@nca.org.gh', '10c7ccc7a4f0aff03c915c485565b9da', 2, '1', 'active');
 
 --
 -- Indexes for dumped tables
@@ -452,12 +513,6 @@ ALTER TABLE `eventlogs`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`event_id`);
-
---
--- Indexes for table `pending`
---
-ALTER TABLE `pending`
-  ADD PRIMARY KEY (`pending_id`);
 
 --
 -- Indexes for table `region`
@@ -513,11 +568,6 @@ ALTER TABLE `eventlogs`
 --
 ALTER TABLE `events`
   MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `pending`
---
-ALTER TABLE `pending`
-  MODIFY `pending_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `region`
 --
