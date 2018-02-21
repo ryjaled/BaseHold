@@ -928,6 +928,45 @@ function denyEventModal(id, verState) {
 
 }
 
+function denyReport() {
+  var comments = $('#commentsForDeny').val();
+
+  var theUrl = "databasehandler.php?cmd=37&reportid=" + sessionStorage.denyreportId + "&comments=" + comments;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: denyReportComplete
+    });
+
+  $('#commentsForDeny').val("");
+}
+
+function denyReportComplete(xhr, status) {
+
+  console.log(xhr);
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report Denied Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
+
+function denyReportModal(id) {
+  sessionStorage.denyreporttId = id;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-deny-comments').show();
+
+}
+
 function editevent() {
   event.preventDefault();
 
