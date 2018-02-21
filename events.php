@@ -8,7 +8,6 @@
 		* Creates a new constructor of the class
 		*/
 		function events(){
-
 		}
 
 		function addTeamMembers($event_id,$name){
@@ -21,7 +20,7 @@
 
 		function addNewReportEventUpdate($event_id,$value){
 
-			$strQuery="update events set is_reported='$value' where event_id='$event_id' ";
+			$strQuery="update events set is_reported='$value',deny_status='0' where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 
@@ -74,10 +73,10 @@
 
 		function denyEvent($eventid,$comments,$level){
 
-			if ($level == 0) {
-				$strQuery="update events set is_verified='2', nonapproval_comments='$comments' where event_id='$eventid'";
-			}elseif ($level == 1) {
-				$strQuery="update events set is_approved='2', nonapproval_comments='$comments' where event_id='$eventid'";
+			if ($level == 2) {
+				$strQuery="update events set is_verified='2', is_approved='0',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
+			}elseif ($level == 3) {
+				$strQuery="update events set is_verified='2', is_approved='2',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
 			}
 
 			return $this->query($strQuery);
@@ -85,8 +84,14 @@
 
 		function denyReport($reportid,$comments){
 
-				$strQuery="update reports set is_approved='2', nonapproval_comments='$comments' where report_id='$eventid'";
+				$strQuery="update reports set is_approved='2', verification_comments='',verified_timestamp='0000-00-00 00:00:00',nonapproval_comments='$comments' where report_id='$reportid'";
 
+			return $this->query($strQuery);
+		}
+
+		function denyNewReportEventUpdate($event_id){
+
+			$strQuery="update events set deny_status='1' where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 
@@ -137,7 +142,7 @@
 		}
 
     	function getAnEvent($eventid){
-			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.approved_comments,e.verification_comments,e.verified_timestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
+			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.approved_comments,e.verification_comments,e.verified_timestamp,e.nonapproval_comments,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
       	return $this->query($strQuery);
 		}
 
@@ -244,13 +249,13 @@
 		}
 
 		function getAReport($reportid){
-			$strQuery="SELECT e.approved_comments,e.approved_timestamp,e.creator,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,e.region,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
+			$strQuery="SELECT e.approved_comments,e.approved_timestamp,e.creator,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,e.region,r.regionname,e.town,e.verification_comments,e.verified_timestamp,p.complaints_raised,p.date_reported,p.event_summary,p.folder_paths,p.is_approved as reportapprove,p.picture_paths,p.report_id,p.team_challenges,p.verification_comments as reportverificationcomments ,p.verified_timestamp as reportverifiedtimestamp,p.nonapproval_comments FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator inner join reports as p on p.event_id = e.event_id where report_id = '$reportid'";
 			return $this->query($strQuery);
 		}		
 		
 		function getReportwithEventid($event_id){
 
-			$strQuery="select team_challenges, complaints_raised, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported,verification_comments from reports where event_id='$event_id' ";
+			$strQuery="select team_challenges, complaints_raised, is_approved, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported,verification_comments,nonapproval_comments from reports where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 
