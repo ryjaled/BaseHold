@@ -120,6 +120,9 @@
 		case 37:
 			denyReport();
 			break;
+		case 38:
+			getComments();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -671,6 +674,25 @@
 				echo json_encode($moredata);
 
 
+	}
+
+	function getComments(){
+			$success="";
+			include("events.php");
+			$event = new events();
+
+			$eventid=$_REQUEST['eventid'];
+
+			$result = $event->getComments($eventid);
+
+			$data = array();
+
+			while($row = $event->fetch()){
+					$success="true";
+					array_push($data,$row);
+				}
+
+			echo json_encode($data);
 	}
 
 	function getDashGraphEventData(){
