@@ -1226,7 +1226,7 @@ function welcomeToHomeLevel2() {
 
 
   if (sessionStorage.level == "2") {
-    // alert(sessionStorage.level);
+    
   } else {
     window.location.href = "404.html";
   }
@@ -1240,7 +1240,6 @@ function welcomeToHomeLevel3() {
 
 
   if (sessionStorage.level == "3") {
-    // alert(sessionStorage.level);
   } else {
     window.location.href = "404.html";
   }
@@ -1262,7 +1261,7 @@ function welcomeToHomeLevel4() {
   } else {
     window.location.href = "404.html";
   }
-  // alert("asd"+sessionStorage.firstname);
+  
   $('#dashboardname').html(sessionStorage.firstname + " " + sessionStorage.lastname);
   document.getElementById('dashboardname').value = sessionStorage.firstname;
 
@@ -1959,6 +1958,8 @@ function level1View(val) {
   console.log('modal to view: ', val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
+  fetchCommentsLevel1Events(val);
+
   $.ajax(theUrl,
     {
       async: true,
@@ -2022,8 +2023,6 @@ function level1ViewComplete(xhr, status) {
   }
 
 
-
-
   var mode = obj[0].mode_of_outreach;
   var strlenMode = obj[0].mode_of_outreach.length;
   // document.getElementById('complaints_raised').innerHTML = mode.substring(0, strlenMode - 1);
@@ -2034,10 +2033,10 @@ function level1ViewComplete(xhr, status) {
 
   
   if(obj[0].is_verified == 1){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
@@ -2045,6 +2044,7 @@ function level1ViewComplete(xhr, status) {
   if ((obj[0].is_verified == 2) || (obj[0].is_approved == 2)){
     $('#statusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>EVENT PROPOSAL REJECTED</center></div>");
   }
+
   
 
   if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
@@ -2063,6 +2063,67 @@ function level1ViewComplete(xhr, status) {
 
 }
 
+function fetchCommentsLevel1Events(eventID){
+
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+
+  
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: fetchCommentsLevel1EventsComplete
+      });
+
+}
+
+function fetchCommentsLevel1EventsComplete(xhr, status){
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentHold').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+  }
+
+
+
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+    
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsHold').innerHTML = commentInsert;
+
+
+}
+
 function loadEventReport(xhr, status){
   var obj = JSON.parse(xhr.responseText);
 
@@ -2073,7 +2134,7 @@ function loadEventReport(xhr, status){
   document.getElementById('report_title').innerHTML = "Create Report";
 
   document.getElementById('report_eventtitle').innerHTML = obj[0].eventtitle;
-  document.getElementById('report_date_organized').innerHTML = moment(moment(obj[0].date_to_be_organized).format('D MMMM Y')).format('D MMMM Y');
+  document.getElementById('report_date_organized').innerHTML = moment(obj[0].date_to_be_organized).format('D MMMM Y');
   document.getElementById('report_region').innerHTML = obj[0].regionname;
   document.getElementById('report_town').innerHTML = obj[0].town;
   document.getElementById('report_audience_category').innerHTML = obj[0].audience_category;
@@ -2118,10 +2179,10 @@ function loadEventReport(xhr, status){
   var dateApproved = new Date(obj[0].approved_timestamp);
 
   if(obj[0].is_verified == 1){
-    $('#createstatusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#createstatusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#createstatusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
+    $('#createstatusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#createstatusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
@@ -2130,6 +2191,7 @@ function loadEventReport(xhr, status){
     $('#createstatusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>EVENT PROPOSAL REJECTED</center></div>");
   }
   
+  fetchCommentsLevel1AddReport(obj[0].event_id);
 
   if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
     document.getElementById('report_epv').innerHTML = "Not verified yet";
@@ -2140,8 +2202,8 @@ function loadEventReport(xhr, status){
     document.getElementById('report_epa').innerHTML = "Not approved yet.";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('report_epv').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('report_epa').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
+    document.getElementById('report_epv').innerHTML = moment(obj[0].verified_timestamp).format('D MMMM Y');
+    document.getElementById('report_epa').innerHTML = moment(obj[0].approved_timestamp).format('D MMMM Y');
   }
 
 
@@ -2158,7 +2220,69 @@ function loadEventReport(xhr, status){
 
 }
 
+
+function fetchCommentsLevel1AddReport(eventID){
+  
+    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+  
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: fetchCommentsLevel1AddReportComplete
+        });
+  
+  }
+  
+function fetchCommentsLevel1AddReportComplete(xhr, status){
+    console.log(xhr);
+    var obj = JSON.parse(xhr.responseText);
+  
+    console.log("Comments:", obj);
+  
+    var commentInsert = ""
+    $('#commentHold').html("");
+    for(var i = 0; i < obj.length; i++){
+      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+    }
+  
+  
+    for(var i = 0; i < obj.length; i++){
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+      commentInsert = commentInsert + "</div>";
+      
+      commentInsert = commentInsert + "<div>";
+      
+      if(obj[i].action == "verify"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "approve"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "deny"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      commentInsert = commentInsert + "</div>";
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+      commentInsert = commentInsert + "</div>";
+  
+    }
+  
+  
+  
+    // $('#commentsHold').html(commentInsert);
+    document.getElementById('commentsAddReport1').innerHTML = commentInsert;
+  
+  
+  }
+
+
 function level1ReportView(val) {
+  fetchCommentsLevel1ViewReport(val)
   console.log('modal to edit: ', val);
   var theUrl = "databasehandler.php?cmd=31&eventid=" + val;
   //sessionStorage.report_event_id = val;
@@ -2196,6 +2320,7 @@ function level1ReportViewComplete(xhr, status) {
 
   // document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
 
+  $('#report_logisticsTable_1').html("");
   var logisticsView = obj.logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
@@ -2207,6 +2332,7 @@ function level1ReportViewComplete(xhr, status) {
 
   }
 
+  $('#report_modeTable_1').html("");
   var modeOfOutreachView = obj.mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
@@ -2217,20 +2343,6 @@ function level1ReportViewComplete(xhr, status) {
         $('#report_modeTable_1').append(tabledata);
 
   }
-
-  if ((obj.verified_timestamp == "") && (obj.approved_timestamp == "")) {
-    document.getElementById('report_epv_1').innerHTML = "Not verified yet";
-    document.getElementById('report_epa_1').innerHTML = "Not approved yet";
-  }
-  if ((obj.verified_timestamp != "") && (obj.approved_timestamp == "")) {
-    document.getElementById('report_epv_1').innerHTML = moment(dateVerfied).format('D MMMM Y');
-    document.getElementById('report_epa_1').innerHTML = "Not approved yet.";
-  }
-  if ((obj.verified_timestamp != "") && (obj.approved_timestamp != "")) {
-    document.getElementById('report_epv_1').innerHTML = moment(moment(obj.verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('report_epa_1').innerHTML = moment(moment(obj.approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
-  }
-
 
 
   document.getElementById('report_1s').innerHTML = obj.event_summary;
@@ -2246,10 +2358,10 @@ function level1ReportViewComplete(xhr, status) {
     $('#report2_statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center></div>");
   }
   if(obj.report_approve == 1){
-    $('#report2_statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'>Report verifier's comments: "+obj.report_approve_comments+"</center></div>");
+    $('#report2_statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center></div>");
   }
   if(obj.report_approve == 2){
-    $('#report2_statusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj.report_approve_comments+"</center></div>");
+    $('#report2_statusBanner').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center></div>");
   }
 
 
@@ -2272,9 +2384,7 @@ function level1ReportViewComplete(xhr, status) {
     var picture_header = "" + obj2;
 
     var fold_header = obj.folder_paths;
-    //alert(fold_header);
-
-
+ 
     picValues = picValues + "<div>";
     picValues = picValues + "<a onclick='#' class='uk-inline' href='uploads/" + fold_header + "/" + picture_header + "' caption='Outreach Photo'>";
     picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/" + fold_header + "/" + picture_header + "'>";
@@ -2296,6 +2406,67 @@ function level1ReportViewComplete(xhr, status) {
   }
   
 }
+
+
+function fetchCommentsLevel1ViewReport(eventID){
+  
+    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+  
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: fetchCommentsLevel1ViewReportComplete
+        });
+  
+  }
+  
+  function fetchCommentsLevel1ViewReportComplete(xhr, status){
+    console.log(xhr);
+    var obj = JSON.parse(xhr.responseText);
+  
+    console.log("Comments:", obj);
+  
+    var commentInsert = ""
+    $('#commentHold').html("");
+    for(var i = 0; i < obj.length; i++){
+      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+    }
+  
+  
+    for(var i = 0; i < obj.length; i++){
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+      commentInsert = commentInsert + "</div>";
+      
+      commentInsert = commentInsert + "<div>";
+      
+      if(obj[i].action == "verify"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "approve"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "deny"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      commentInsert = commentInsert + "</div>";
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+      commentInsert = commentInsert + "</div>";
+  
+    }
+  
+  
+  
+    // $('#commentsHold').html(commentInsert);
+    document.getElementById('commentsViewReport2').innerHTML = commentInsert;
+  
+  
+  }
+
 
 function loadViewEventReport(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
@@ -2426,6 +2597,7 @@ function help() {
 
 function level2View(val) {
   console.log('modal to edit: ', val);
+  fetchCommentsLevel2View(val)
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
@@ -2500,10 +2672,10 @@ function level2ViewComplete(xhr, status) {
 
   
   if(obj[0].is_verified == 1){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
@@ -2529,8 +2701,69 @@ function level2ViewComplete(xhr, status) {
 
 }
 
+
+function fetchCommentsLevel2View(eventID){
+  
+    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+  
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: fetchCommentsLevel2ViewComplete
+        });
+  
+  }
+  
+function fetchCommentsLevel2ViewComplete(xhr, status){
+    console.log(xhr);
+    var obj = JSON.parse(xhr.responseText);
+  
+    console.log("Comments:", obj);
+  
+    var commentInsert = ""
+    $('#commentHold').html("");
+    for(var i = 0; i < obj.length; i++){
+      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+    }
+  
+  
+    for(var i = 0; i < obj.length; i++){
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+      commentInsert = commentInsert + "</div>";
+      
+      commentInsert = commentInsert + "<div>";
+    
+      if(obj[i].action == "verify"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "approve"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "deny"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      commentInsert = commentInsert + "</div>";
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+      commentInsert = commentInsert + "</div>";
+  
+    }
+  
+  
+  
+    // $('#commentsHold').html(commentInsert);
+    document.getElementById('commentsView2').innerHTML = commentInsert;
+  
+  
+  }
+
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
+  
   var theUrl = "databasehandler.php?cmd=27&reportid=" + val;
   //sessionStorage.report_event_id = val;
   $.ajax(theUrl,
@@ -2570,7 +2803,7 @@ function level2ReportViewComplete(xhr, status) {
   var strlenLogistics = obj[0].logistics.length;
 
   // document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
-
+  $('#report_logisticsTable_2').html("");
   var logisticsView = obj[0].logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
@@ -2582,6 +2815,7 @@ function level2ReportViewComplete(xhr, status) {
 
   }
 
+  $('#report_modeTable_2').html("");
   var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
@@ -2593,30 +2827,19 @@ function level2ReportViewComplete(xhr, status) {
 
   }
 
-  if ((obj.verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('report_epv_2').innerHTML = "Not verified yet";
-    document.getElementById('report_epa_2').innerHTML = "Not approved yet";
-  }
-  if ((obj.verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('report_epv_2').innerHTML = moment(dateVerfied).format('D MMMM Y');
-    document.getElementById('report_epa_2').innerHTML = "Not approved yet.";
-  }
-  if ((obj.verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('report_epv_2').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('report_epa_2').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
-  }
 
 
-
+  fetchCommentsLevel2Report(obj[0].event_id);
+  fetchCommentsLevel3Report(obj[0].event_id);
 
   if(obj[0].reportapprove == 0){
     $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center></div>");
   }
   if(obj[0].reportapprove == 1){
-    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'>Report verifier's comments: "+obj[0].reportverificationcomments+"</center></div>");
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center></div>");
   }
   if(obj[0].reportapprove == 2){
-    $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+    $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center></div>");
   }
 
   document.getElementById('report_1').innerHTML=obj[0].event_summary;
@@ -2648,7 +2871,6 @@ function level2ReportViewComplete(xhr, status) {
       var picture_header = ""+obj2;
 
       var fold_header = obj[0].folder_paths;
-      //alert(fold_header);
 
 
       picValues = picValues + "<div>";
@@ -2674,6 +2896,66 @@ function level2ReportViewComplete(xhr, status) {
   }
   
 }
+
+
+function fetchCommentsLevel2Report(eventID){
+    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+  
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: fetchCommentsLevel2ReportComplete
+        });
+  
+  }
+  
+function fetchCommentsLevel2ReportComplete(xhr, status){
+
+    console.log(xhr);
+    var obj = JSON.parse(xhr.responseText);
+  
+    console.log("Comments:", obj);
+  
+    var commentInsert = ""
+    $('#commentHold').html("");
+    for(var i = 0; i < obj.length; i++){
+      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+    }
+  
+  
+    for(var i = 0; i < obj.length; i++){
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+      commentInsert = commentInsert + "</div>";
+      
+      commentInsert = commentInsert + "<div>";
+      if(obj[i].action == "verify"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "approve"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "deny"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      commentInsert = commentInsert + "</div>";
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+      commentInsert = commentInsert + "</div>";
+  
+    }
+  
+  
+  
+    // $('#commentsHold').html(commentInsert);
+    document.getElementById('commentsViewReport2').innerHTML = commentInsert;
+  
+  
+  }
+
 
 function reportHelp() {
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -2837,7 +3119,7 @@ function deleteUsersComplete(xhr, status) {
 
 function level3View(val) {
   console.log('modal to view: ', val);
-  
+  fetchCommentsLevel3Event(val);
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
 
   $.ajax(theUrl,
@@ -2907,10 +3189,10 @@ function level3ViewComplete(xhr, status) {
 
   
   if(obj[0].is_verified == 1){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED</center></div>");
   }
   if ((obj[0].is_verified == 1) && (obj[0].is_approved == 1)){
-    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].verification_comments+"</center><center style='color: white;'> Approver's comments: "+obj[0].approved_comments+"</center></div>");
+    $('#statusBanner').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>VERIFIED & APPROVED</center></div>");
   }
   if ((obj[0].is_verified == 0) && (obj[0].is_approved == 0)){
     $('#statusBanner').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>PENDING VERIFICATION AND APPROVAL</center></div>");
@@ -2920,21 +3202,70 @@ function level3ViewComplete(xhr, status) {
   }
   
 
-  if ((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('epv').innerHTML = "Not verified yet";
-    document.getElementById('epa').innerHTML = "Not approved yet";
-  }
-  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
-    document.getElementById('epv').innerHTML = moment(dateVerfied).format('D MMMM Y');
-    document.getElementById('epa').innerHTML = "Not approved yet.";
-  }
-  if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('epv').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('epa').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
-  }
-
 
 }
+
+
+function fetchCommentsLevel3Event(eventID){
+
+    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+  
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: fetchCommentsLevel3EventComplete
+        });
+  
+  }
+  
+function fetchCommentsLevel3EventComplete(xhr, status){
+  
+    console.log(xhr);
+    var obj = JSON.parse(xhr.responseText);
+  
+    console.log("Comments:", obj);
+  
+    var commentInsert = ""
+    $('#commentHold').html("");
+    for(var i = 0; i < obj.length; i++){
+      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+    }
+  
+  
+    for(var i = 0; i < obj.length; i++){
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+      commentInsert = commentInsert + "</div>";
+      
+      commentInsert = commentInsert + "<div>";
+      if(obj[i].action == "verify"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "approve"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      if(obj[i].action == "deny"){
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+      }
+      commentInsert = commentInsert + "</div>";
+  
+      commentInsert = commentInsert + "<div>";
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+      commentInsert = commentInsert + "</div>";
+  
+    }
+  
+  
+  
+    // $('#commentsHold').html(commentInsert);
+    document.getElementById('commentsView3').innerHTML = commentInsert;
+  
+  
+  }
+
+
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -3010,8 +3341,7 @@ function level3ReportViewComplete(xhr, status) {
     document.getElementById('report_epa_2').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
   }
 
-
-
+  fetchCommentsLevel3Report(obj[0].event_id);
 
   if(obj[0].reportapprove == 0){
     $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center></div>");
@@ -3024,7 +3354,6 @@ function level3ReportViewComplete(xhr, status) {
   }
 
   document.getElementById('report_1').innerHTML=obj[0].event_summary;
-  console.log("as");
   console.log(obj[0].event_summary);
   document.getElementById('report_2').innerHTML=obj[0].complaints_raised;
   console.log(obj[0].eventcomplaints_raised_summary);
@@ -3051,7 +3380,6 @@ function level3ReportViewComplete(xhr, status) {
       var picture_header = ""+obj2;
 
       var fold_header = obj[0].folder_paths;
-      //alert(fold_header);
 
 
       picValues = picValues + "<div>";
@@ -3078,6 +3406,67 @@ function level3ReportViewComplete(xhr, status) {
   
 
 }
+
+
+function fetchCommentsLevel3Report(eventID){
+  
+      var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+    
+        $.ajax(theUrl,
+          {
+            async: true,
+            complete: fetchCommentsLevel3ReportComplete
+          });
+    
+    }
+    
+  function fetchCommentsLevel3ReportComplete(xhr, status){
+    
+      console.log(xhr);
+      var obj = JSON.parse(xhr.responseText);
+    
+      console.log("3Comments:", obj);
+    
+      var commentInsert = ""
+      $('#commentsReport3').html("");
+      for(var i = 0; i < obj.length; i++){
+        console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+      }
+    
+    
+      for(var i = 0; i < obj.length; i++){
+    
+        commentInsert = commentInsert + "<div>";
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+        commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+        commentInsert = commentInsert + "</div>";
+        
+        commentInsert = commentInsert + "<div>";
+        if(obj[i].action == "verify"){
+          commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+        }
+        if(obj[i].action == "approve"){
+          commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+        }
+        if(obj[i].action == "deny"){
+          commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+        }
+        commentInsert = commentInsert + "</div>";
+    
+        commentInsert = commentInsert + "<div>";
+        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+        commentInsert = commentInsert + "</div>";
+    
+      }
+    
+    
+    
+      // $('#commentsHold').html(commentInsert);
+      document.getElementById('commentsReport3').innerHTML = commentInsert;
+    
+    
+    }
+  
 
 function reactivateUsers(val) {
   console.log('users', val);

@@ -472,75 +472,97 @@
            
 
             <div class="row" style="margin: 3% 10% 0% 10%;">
-                    <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
 
                     <div class="uk-margin-medium-top">
                         <ul class="uk-flex-center" uk-tab>
-                            <li class="uk-active"><a href="#">Last Confirmed Dates</a></li>
-                            <li><a href="#">Confirmation Comments History</a></li>
+                            <li class="uk-active"><a href="#">EVENT DETAILS</a></li>
+                            <li><a href="#">VIEW COMMENTS</a></li>
                         </ul>
 
                         <ul class="uk-switcher uk-margin">
                             <li>
-                                <table class="uk-table uk-table-striped">
+
+                                <div class="row" style="margin: 0% 10% 3% 10%;">
                                     
-                                        <thead>
-                                            <tr>
-                                                <th>DETAIL</th>
-                                                <th>DATE</th>
-                                            </tr>
-                                        </thead>
-            
-                                        <tbody>
-                                            <tr>
-                                                <td>EVENT PREVIOUSLY VERIFIED ON</td>
-                                                <td id="epv"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>EVENT PREVIOUSLY APPROVED ON</td>
-                                                <td id="epa"></td>
-                                            </tr>
-                                        </tbody>
-                                </table>
+                                                <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                                    <div>
+                                                        <center>
+                                                        <div class="uk-card uk-card-default uk-card-body">
+                                                                <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="audience_category" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                            </div>
+                                                        </center>
+                                                    </div>
+                        
+                                                    <div>
+                                                        <center>
+                                                            <div class="uk-card uk-card-default uk-card-body">
+                                                                    <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="audience_attendance" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                            </div>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                    </div>
+                        
+                                    <div class="row" style="margin: 0% 10% 5% 10%;">
+                                            
+                                                <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                                    <div>
+                                                        <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
+                                                        <table class="uk-table">
+                                                                
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Intended outreach communication mode</th>
+                                                            </tr>
+                                                        </thead>
+                                    
+                                                        <tbody id="modeTable">
+                                                            
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+                        
+                                                    <div>
+                                                            <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
+                                                            <table class="uk-table">
+                                                                    
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Materials needed for the meeting</th>
+                                                                    </tr>
+                                                                </thead>
+                                        
+                                                                <tbody id="logisticsTable">
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+                                    
                             </li>
                             <li>
+                                <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span><br/><br/>
                                 <div class="uk-child-width-1-3@s" uk-grid>
+                                    
                                     <div>
-                                        <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                        <div class="uk-panel">XX MONTH 2018</div>
+                                    <div class="uk-panel" style="text-transform: capitalize; font-weight: bold;">USER</div>
+                                    <div class="uk-panel"></div>
                                     </div>
+                                    
                                     <div>
-                                        <div class="uk-panel">REJECTED</div>
+                                    <div class="uk-panel" style="text-transform: uppercase; font-weight: bold;">ACTION</div>
                                     </div>
+                                
                                     <div>
-                                        <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    <div class="uk-panel" style="text-transform: capitalize; font-weight: bold;">DETAILS</div>
                                     </div>
+                                
                                 </div>
 
-                                <div class="uk-child-width-1-3@s" uk-grid>
-                                    <div>
-                                        <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                        <div class="uk-panel">XX MONTH 2018</div>
-                                    </div>
-                                    <div>
-                                        <div class="uk-panel">REJECTED</div>
-                                    </div>
-                                    <div>
-                                        <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                    </div>
-                                </div>
-
-                                <div class="uk-child-width-1-3@s" uk-grid>
-                                    <div>
-                                        <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                        <div class="uk-panel">XX MONTH 2018</div>
-                                    </div>
-                                    <div>
-                                        <div class="uk-panel">VERIFIED</div>
-                                    </div>
-                                    <div>
-                                        <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                    </div>
+                                <div id="commentsHold" class="uk-child-width-1-3@s" uk-grid>
+                                
                                 </div>
                             </li>
                         </ul>
@@ -549,63 +571,7 @@
                    
             </div>
 
-            <div class="row" style="margin: 0% 10% 3% 10%;">
-
-                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
-                            <div>
-                                <center>
-                                <div class="uk-card uk-card-default uk-card-body">
-                                        <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="audience_category" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
-                                  </div>
-                                </center>
-                            </div>
-
-                            <div>
-                                <center>
-                                 <div class="uk-card uk-card-default uk-card-body">
-                                         <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="audience_attendance" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
-                                 </div>
-                                </center>
-                            </div>
-                        </div>
-            </div>
-
-            <div class="row" style="margin: 0% 10% 5% 10%;">
-                    
-                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
-                            <div>
-                                <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
-                                <table class="uk-table">
-                                        
-                                <thead>
-                                    <tr>
-                                        <th>Intended outreach communication mode</th>
-                                    </tr>
-                                </thead>
             
-                                <tbody id="modeTable">
-                                   
-                                </tbody>
-                                </table>
-                            </div>
-
-                            <div>
-                                    <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
-                                    <table class="uk-table">
-                                            
-                                        <thead>
-                                            <tr>
-                                                <th>Materials needed for the meeting</th>
-                                            </tr>
-                                        </thead>
-                
-                                        <tbody id="logisticsTable">
-                                            
-                                        </tbody>
-                                    </table>
-                            </div>
-                        </div>
-            </div>
 
             </div>
 
@@ -682,76 +648,174 @@
                   
        
                    <div class="row" style="margin: 3% 10% 0% 10%;">
-                           <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
 
                            <div class="uk-margin-medium-top">
                             <ul class="uk-flex-center" uk-tab>
-                                <li class="uk-active"><a href="#">Last Confirmed Dates</a></li>
-                                <li><a href="#">Confirmation Comments History</a></li>
+                                <li class="uk-active"><a href="#">REPORT DETAILS</a></li>
+                                <li><a href="#">VIEW COMMENTS</a></li>
                             </ul>
     
                             <ul class="uk-switcher uk-margin">
                                 <li>
-                                    <table class="uk-table uk-table-striped">
-                                        
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>DETAIL</th>
-                                                                            <th>DATE</th>
-                                                                        </tr>
-                                                                    </thead>
-                                        
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>EVENT PREVIOUSLY VERIFIED ON</td>
-                                                                            <td id="report_epv"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>EVENT PREVIOUSLY APPROVED ON</td>
-                                                                            <td id="report_epa"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                            </table>
+
+                                    <div class="row" style="margin: 0% 10% 3% 10%;">    
+                                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                            <div>
+                                                <center>
+                                                <div class="uk-card uk-card-default uk-card-body">
+                                                        <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="report_audience_category" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                    </div>
+                                                </center>
+                                            </div>
+                
+                                            <div>
+                                                <center>
+                                                    <div class="uk-card uk-card-default uk-card-body">
+                                                            <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="report_audience_attendance" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                    </div>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="row" style="margin: 0% 10% 5% 10%;">
+                                            
+                                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                            <div>
+                                                <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
+                                                <table class="uk-table">
+                                                        
+                                                <thead>
+                                                    <tr>
+                                                        <th>Intended outreach communication mode</th>
+                                                    </tr>
+                                                </thead>
+                            
+                                                <tbody id="report_modeTable">
+                                                    
+                                                </tbody>
+                                                </table>
+                                            </div>
+                
+                                            <div>
+                                                    <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
+                                                    <table class="uk-table">
+                                                            
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Materials needed for the meeting</th>
+                                                            </tr>
+                                                        </thead>
+                                
+                                                        <tbody id="report_logisticsTable">
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row" style="margin: 0% 10% 5% 10%;">    
+                                        <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                            <div>
+                                                <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
+                                                <table class="uk-table">
+                                                        
+                                                <thead>
+                                                    <tr>
+                                                        <th>Intended outreach communication mode</th>
+                                                    </tr>
+                                                </thead>
+                            
+                                                <tbody id="report_modeTable">
+                                                    
+                                                </tbody>
+                                                </table>
+                                            </div>
+                
+                                            <div>
+                                                <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
+                                                <table class="uk-table">
+                                                        
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Materials needed for the meeting</th>
+                                                        </tr>
+                                                    </thead>
+                            
+                                                    <tbody id="report_logisticsTable">
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <article class="uk-comment">
+                                            
+                                            <hr/>
+                                            
+                                            <dt>OBSERVATIONS</dt>
+                                            <div class="uk-margin">
+                                                <textarea id="report_observations" class="uk-textarea" rows="5" placeholder="Please typing in the team observations here.."></textarea>
+                                            </div>
+                            
+                                            <dt>TEAM CHALLENGES</dt>
+                                            <div class="uk-margin">
+                                                <textarea id="report_challenges" class="uk-textarea" rows="5" placeholder="Please typing in the team challenges here.."></textarea>
+                                            </div>
+                            
+                                            <dt>CONSUMER COMPLAINTS</dt>
+                                            <div class="uk-margin">
+                                                <textarea id="report_complaints"class="uk-textarea" rows="5" placeholder="Please typing in the consumer complaints here.."></textarea>
+                                            </div>
+                            
+                            
+                                            <br/>
+                                            <div>
+                                                <input id="input-id" type="file" name="files[]" class="file" multiple>
+                                            </div>
+                            
+                                            <br/>
+                                            <dt>PARTICIPATING TEAM MEMBERS ON OUTREACH</dt>
+                                            <small>Please add a comma ( , ) after each team member</small>
+                                            <br/>
+                                            <small>E.g. Kwadwo Obeng, Esther Addo, John Ativor, Mustapha Inusah</small>
+                                            <div class="uk-margin">
+                                                <textarea id="report_members" class="uk-textarea" rows="5" placeholder="Please type in team members that took part in this outreach here.."></textarea>
+                                            </div>
+                            
+                                        </article>
+                                    
                                 </li>
                                 <li>
-                                    <div class="uk-child-width-1-3@s" uk-grid>
-                                        <div>
-                                            <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                            <div class="uk-panel">XX MONTH 2018</div>
+                                        <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span><br/><br/>
+                                        <div class="uk-child-width-1-3@s" uk-grid>
+                                            
+                                            <div>
+                                            <div class="uk-panel" style="text-transform: capitalize; font-weight: bold;">USER</div>
+                                            <div class="uk-panel"></div>
+                                            </div>
+                                            
+                                            <div>
+                                            <div class="uk-panel" style="text-transform: uppercase; font-weight: bold;">ACTION</div>
+                                            </div>
+                                        
+                                            <div>
+                                            <div class="uk-panel" style="text-transform: capitalize; font-weight: bold;">DETAILS</div>
+                                            </div>
+                                        
                                         </div>
-                                        <div>
-                                            <div class="uk-panel">REJECTED</div>
+        
+                                        <div id="commentsAddReport1" class="uk-child-width-1-3@s" uk-grid>
+                                        
                                         </div>
-                                        <div>
-                                            <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                        </div>
-                                    </div>
-    
-                                    <div class="uk-child-width-1-3@s" uk-grid>
-                                        <div>
-                                            <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                            <div class="uk-panel">XX MONTH 2018</div>
-                                        </div>
-                                        <div>
-                                            <div class="uk-panel">REJECTED</div>
-                                        </div>
-                                        <div>
-                                            <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                        </div>
-                                    </div>
-    
-                                    <div class="uk-child-width-1-3@s" uk-grid>
-                                        <div>
-                                            <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                            <div class="uk-panel">XX MONTH 2018</div>
-                                        </div>
-                                        <div>
-                                            <div class="uk-panel">VERIFIED</div>
-                                        </div>
-                                        <div>
-                                            <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                        </div>
-                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -760,107 +824,15 @@
                         
                    </div>
        
-                   <div class="row" style="margin: 0% 10% 3% 10%;">
+                
        
-                               <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
-                                   <div>
-                                       <center>
-                                       <div class="uk-card uk-card-default uk-card-body">
-                                               <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="report_audience_category" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
-                                         </div>
-                                       </center>
-                                   </div>
-       
-                                   <div>
-                                       <center>
-                                        <div class="uk-card uk-card-default uk-card-body">
-                                                <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="report_audience_attendance" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
-                                        </div>
-                                       </center>
-                                   </div>
-                               </div>
-                   </div>
-       
-                   <div class="row" style="margin: 0% 10% 5% 10%;">
-                           
-                               <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
-                                   <div>
-                                       <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
-                                       <table class="uk-table">
-                                               
-                                       <thead>
-                                           <tr>
-                                               <th>Intended outreach communication mode</th>
-                                           </tr>
-                                       </thead>
                    
-                                       <tbody id="report_modeTable">
-                                          
-                                       </tbody>
-                                       </table>
-                                   </div>
-       
-                                   <div>
-                                           <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
-                                           <table class="uk-table">
-                                                   
-                                               <thead>
-                                                   <tr>
-                                                       <th>Materials needed for the meeting</th>
-                                                   </tr>
-                                               </thead>
-                       
-                                               <tbody id="report_logisticsTable">
-                                                   
-                                               </tbody>
-                                           </table>
-                                   </div>
-                               </div>
-                   </div>
 
 
-
-
-            <article class="uk-comment">
-                
-                <hr/>
-                
-                <dt>OBSERVATIONS</dt>
-                <div class="uk-margin">
-                    <textarea id="report_observations" class="uk-textarea" rows="5" placeholder="Please typing in the team observations here.."></textarea>
-                </div>
-
-                <dt>TEAM CHALLENGES</dt>
-                <div class="uk-margin">
-                    <textarea id="report_challenges" class="uk-textarea" rows="5" placeholder="Please typing in the team challenges here.."></textarea>
-                </div>
-
-                <dt>CONSUMER COMPLAINTS</dt>
-                <div class="uk-margin">
-                    <textarea id="report_complaints"class="uk-textarea" rows="5" placeholder="Please typing in the consumer complaints here.."></textarea>
-                </div>
-
-
-                <br/>
-                <div>
-                    <input id="input-id" type="file" name="files[]" class="file" multiple>
-                </div>
-
-                <br/>
-                <dt>PARTICIPATING TEAM MEMBERS ON OUTREACH</dt>
-                <small>Please add a comma ( , ) after each team member</small>
-                <br/>
-                <small>E.g. Kwadwo Obeng, Esther Addo, John Ativor, Mustapha Inusah</small>
-                <div class="uk-margin">
-                    <textarea id="report_members" class="uk-textarea" rows="5" placeholder="Please type in team members that took part in this outreach here.."></textarea>
-                </div>
 
 
 
                 </div>
-                </div>
-
-                </article>
                 
                 <div class="uk-modal-footer uk-text-right" id="reportverifyformdiv">
                     <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
@@ -1141,10 +1113,7 @@
                       
            
                        <div class="row" style="margin: 3% 10% 0% 10%;">
-                               <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
-
-
-
+                               
                                <div class="uk-margin-medium-top">
                                 <ul class="uk-flex-center" uk-tab>
                                     <li class="uk-active"><a href="#">Last Confirmed Dates</a></li>
@@ -1153,179 +1122,137 @@
         
                                 <ul class="uk-switcher uk-margin">
                                     <li>
-                                           
-                               <table class="uk-table uk-table-striped">
+
+                                    <div class="row" style="margin: 0% 10% 3% 10%;">
+                                            <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                                <div>
+                                                    <center>
+                                                    <div class="uk-card uk-card-default uk-card-body">
+                                                            <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="report_audience_category_1" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                      </div>
+                                                    </center>
+                                                </div>
+                    
+                                                <div>
+                                                    <center>
+                                                     <div class="uk-card uk-card-default uk-card-body">
+                                                             <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="report_audience_attendance_1" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                     </div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                </div>
+                    
+                                <div class="row" style="margin: 0% 10% 0% 10%;">
+                                        
+                                            <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                                <div>
+                                                    <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
+                                                    <table class="uk-table">
+                                                            
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Intended outreach communication mode</th>
+                                                        </tr>
+                                                    </thead>
                                 
-                                        <thead>
-                                            <tr>
-                                                <th>DETAIL</th>
-                                                <th>DATE</th>
-                                            </tr>
-                                        </thead>
-            
-                                        <tbody>
-                                            <tr>
-                                                <td>EVENT PREVIOUSLY VERIFIED ON</td>
-                                                <td id="report_epv_1"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>EVENT PREVIOUSLY APPROVED ON</td>
-                                                <td id="report_epa_1"></td>
-                                            </tr>
-                                        </tbody>
-                                </table>
+                                                    <tbody id="report_modeTable_1">
+                                                       
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                    
+                                                <div>
+                                                        <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
+                                                        <table class="uk-table">
+                                                                
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Materials needed for the meeting</th>
+                                                                </tr>
+                                                            </thead>
+                                    
+                                                            <tbody id="report_logisticsTable_1">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                </div>
+                                            </div>
+                                </div>
+         
+                                <hr/>
+         
+                                <div style="margin: 0% 10% 0% 10%;">
+         
+                                     <span style="font-size: 1.2em;"><i class="fa fa-street-view fa-lg"></i> Team Observations: </span>
+                                     <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_1s"></div>
+                                 
+                                     <br/ >
+         
+                                     <span style="font-size: 1.2em;"><i class="fa fa-exclamation fa-lg"></i> Team Challenges: </span>
+                                     <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_2s"></div>
+                 
+                                     <br/ >
+                 
+                                     <span style="font-size: 1.2em;"><i class="fa fa-exclamation-circle fa-lg"></i> Consumer Challenges: </span>
+                                     <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_4s"></div>
+                 
+                                     <br/ >
+         
+                                     <div style="margin: 20px 0px">
+                                         <b>
+                                             <small>REPORT CREATED ON:</small>
+                                             <small id="report_3s"></small>
+                                         </b>
+                                     </div>
+         
+                                </div>
+
+                                 <article class="uk-comment">
+
+                                    <div class="uk-comment-body" style="margin-top: 20px">
+                    
+                                        <center>
+                                                <dt>PHOTOS:</dt><br/>
+                                        <div id="report_photoss"></div>
+                                        </center>
+                    
+                                    </div>
+                             
+
+
+                                </article>
+
+
                                     </li>
                                     <li>
-                                        <div class="uk-child-width-1-3@s" uk-grid>
-                                            <div>
-                                                <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                                <div class="uk-panel">XX MONTH 2018</div>
+                                            <div class="uk-child-width-1-3@s" uk-grid>
+                                                    <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
+                                                    <div>
+                                                    <div class="uk-panel" style="text-transform: capitalize; font-weight: bold;">USER</div>
+                                                    <div class="uk-panel"></div>
+                                                    </div>
+                                                    
+                                                    <div>
+                                                    <div class="uk-panel" style="text-transform: uppercase; font-weight: bold;">ACTION</div>
+                                                    </div>
+                                                
+                                                    <div>
+                                                    <div class="uk-panel" style="text-transform: capitalize; font-weight: bold;">DETAILS</div>
+                                                    </div>
+                                                
+                                                </div>
+                                                
+                                            <div id="commentsViewReport2" class="uk-child-width-1-3@s" uk-grid>
+                                                    
                                             </div>
-                                            <div>
-                                                <div class="uk-panel">REJECTED</div>
-                                            </div>
-                                            <div>
-                                                <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                            </div>
-                                        </div>
-        
-                                        <div class="uk-child-width-1-3@s" uk-grid>
-                                            <div>
-                                                <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                                <div class="uk-panel">XX MONTH 2018</div>
-                                            </div>
-                                            <div>
-                                                <div class="uk-panel">REJECTED</div>
-                                            </div>
-                                            <div>
-                                                <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                            </div>
-                                        </div>
-        
-                                        <div class="uk-child-width-1-3@s" uk-grid>
-                                            <div>
-                                                <div class="uk-panel">FIRSTNAME LASTNAME</div>
-                                                <div class="uk-panel">XX MONTH 2018</div>
-                                            </div>
-                                            <div>
-                                                <div class="uk-panel">VERIFIED</div>
-                                            </div>
-                                            <div>
-                                                <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                            </div>
-                                        </div>
                                     </li>
                                 </ul>
                             </div>
-
-
-
-
-
-                              
+                   
                        </div>
            
-                       <div class="row" style="margin: 0% 10% 3% 10%;">
-                                   <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
-                                       <div>
-                                           <center>
-                                           <div class="uk-card uk-card-default uk-card-body">
-                                                   <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="report_audience_category_1" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
-                                             </div>
-                                           </center>
-                                       </div>
-           
-                                       <div>
-                                           <center>
-                                            <div class="uk-card uk-card-default uk-card-body">
-                                                    <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="report_audience_attendance_1" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
-                                            </div>
-                                           </center>
-                                       </div>
-                                   </div>
-                       </div>
-           
-                       <div class="row" style="margin: 0% 10% 0% 10%;">
-                               
-                                   <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
-                                       <div>
-                                           <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
-                                           <table class="uk-table">
-                                                   
-                                           <thead>
-                                               <tr>
-                                                   <th>Intended outreach communication mode</th>
-                                               </tr>
-                                           </thead>
-                       
-                                           <tbody id="report_modeTable_1">
-                                              
-                                           </tbody>
-                                           </table>
-                                       </div>
-           
-                                       <div>
-                                               <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
-                                               <table class="uk-table">
-                                                       
-                                                   <thead>
-                                                       <tr>
-                                                           <th>Materials needed for the meeting</th>
-                                                       </tr>
-                                                   </thead>
-                           
-                                                   <tbody id="report_logisticsTable_1">
-                                                       
-                                                   </tbody>
-                                               </table>
-                                       </div>
-                                   </div>
-                       </div>
-
-                       <hr/>
-
-                       <div style="margin: 0% 10% 0% 10%;">
-
-                            <span style="font-size: 1.2em;"><i class="fa fa-street-view fa-lg"></i> Team Observations: </span>
-                            <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_1s"></div>
-                        
-                            <br/ >
-
-                            <span style="font-size: 1.2em;"><i class="fa fa-exclamation fa-lg"></i> Team Challenges: </span>
-                            <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_2s"></div>
-        
-                            <br/ >
-        
-                            <span style="font-size: 1.2em;"><i class="fa fa-exclamation-circle fa-lg"></i> Consumer Challenges: </span>
-                            <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_4s"></div>
-        
-                            <br/ >
-
-                            <div style="margin: 20px 0px">
-                                <b>
-                                    <small>REPORT CREATED ON:</small>
-                                    <small id="report_3s"></small>
-                                </b>
-                            </div>
-
-                       </div>
-                       
-
     
-                <article class="uk-comment">
-    
-                    <div class="uk-comment-body" style="margin-top: 20px">
-    
-                        <center>
-                                <dt>PHOTOS:</dt><br/>
-                        <div id="report_photoss"></div>
-                        </center>
-    
-                    </div>
-         
-    
-    
-            </article>
         </div>
     
     
