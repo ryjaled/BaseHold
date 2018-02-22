@@ -152,7 +152,8 @@
 		}
 
 		function getComments($event_id){
-			$strQuery="select * from comments where event_id='$event_id'";
+			
+			$strQuery="select c.event_id,c.comment,action,c.comment_type,c.commenter_id,c.action_date,u.firstname,u.lastname from comments as c inner join users as u on u.userid = c.commenter_id where event_id='$event_id'";
       	return $this->query($strQuery);
 		}
 
