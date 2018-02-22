@@ -385,6 +385,10 @@
 		
 		$verify=$event->denyEvent($eventid,$comments,$level);
 
+		$commenter_id=$_REQUEST['commenter'];
+
+		$event->addComments($eventid,$comments,'deny','event',$commenter_id);
+
 		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not denied"}';
@@ -424,6 +428,10 @@
 		while ($row = $user->fetch()) {
 			$senderemail = $row['email'];	
 		}
+
+		$commenter_id=$_REQUEST['commenter'];
+
+		$event->addComments($eventid,$comments,'deny','report',$commenter_id);
 
 		$row=$event->denyNewReportEventUpdate($eventid);
 
@@ -1241,6 +1249,10 @@
 			$region=$row['region'];
 		 }
 
+		 $commenter_id=$_REQUEST['commenter'];
+
+		 $event->addComments($eventid,$approveComments,'approve','event',$commenter_id);
+
 		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
 
 		 echo json_encode($approve);
@@ -1264,10 +1276,15 @@
 
 		 $receipt=$event->getAReport($reportid);
 		 while($row = $event->fetch()){
+			$eventid=$row['event_id'];
 			$eventtitle=$row['eventtitle'];
 			$reporter=$row['creator'];
 			$region=$row['region'];
 		 }
+
+		 $commenter_id=$_REQUEST['commenter'];
+
+		 $event->addComments($eventid,$verificationComments,'approve','report',$commenter_id);
 
 		 $log->addEventApproveLog($eventtitle,$reporter,"has approved a report: ", $region);
 		 echo json_encode($approval);
@@ -1297,6 +1314,10 @@
 			$reporter=$row['creator'];
 			$region=$row['region'];
 		 }
+
+		$commenter_id=$_REQUEST['commenter'];
+
+		$event->addComments($eventid,$commentToVerify,'verify','event',$commenter_id);
 
 		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
 

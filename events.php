@@ -10,6 +10,11 @@
 		function events(){
 		}
 
+		function addComments($event_id,$comment,$action,$comment_type,$commenter_id){
+			$strQuery="insert into comments set event_id='$event_id',comment='$comment',action='$action',comment_type='$comment_type',commenter_id='$commenter_id' ";
+			return $this->query($strQuery);
+		}
+
 		function addTeamMembers($event_id,$name){
 			$strQuery="insert into reportmembers set
 							event_id='$event_id',
@@ -76,7 +81,7 @@
 			if ($level == 2) {
 				$strQuery="update events set is_verified='2', is_approved='0',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
 			}elseif ($level == 3) {
-				$strQuery="update events set is_verified='2', is_approved='2',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
+				$strQuery="update events set is_approved='2',verification_comments='',approved_comments='',verified_timestamp='',approved_timestamp='', nonapproval_comments='$comments' where event_id='$eventid'";
 			}
 
 			return $this->query($strQuery);
@@ -143,6 +148,11 @@
 
     	function getAnEvent($eventid){
 			$strQuery="SELECT e.approved_timestamp,e.audience_category,u.firstname,u.lastname,e.date_to_be_organized,e.event_id,e.eventtitle,e.eventtopic,e.expected_audience_attendance,e.is_approved,e.is_verified,e.logistics,e.mode_of_outreach,r.regionname,e.region,e.creator,e.town,e.approved_comments,e.verification_comments,e.verified_timestamp,e.nonapproval_comments,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where event_id = '$eventid'";
+      	return $this->query($strQuery);
+		}
+
+		function getComments($event_id){
+			$strQuery="select * from comments where event_id='$event_id'";
       	return $this->query($strQuery);
 		}
 
