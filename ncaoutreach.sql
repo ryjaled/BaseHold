@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 21, 2018 at 03:09 PM
+-- Generation Time: Feb 22, 2018 at 11:18 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -147,6 +147,44 @@ INSERT INTO `cities` (`city_id`, `name`, `state_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+-- Creation: Feb 22, 2018 at 08:13 AM
+--
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments` (
+  `comment_id` int(10) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `comment` varchar(300) NOT NULL,
+  `action` enum('approve','deny','verify') NOT NULL,
+  `comment_type` enum('event','report') NOT NULL,
+  `commenter_id` int(11) NOT NULL,
+  `action_date` timestamp NOT NULL
+) ;
+
+--
+-- RELATIONSHIPS FOR TABLE `comments`:
+--
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `event_id`, `comment`, `action`, `comment_type`, `commenter_id`, `action_date`) VALUES
+(1, 53, 'done', 'verify', 'event', 4, '2018-02-22 08:14:09'),
+(2, 53, 'donneeee', 'approve', 'event', 3, '2018-02-22 08:14:20'),
+(3, 53, 'doneee', 'approve', 'report', 4, '2018-02-22 08:14:53'),
+(4, 54, 'nope', 'deny', 'event', 4, '2018-02-22 08:18:16'),
+(5, 54, 'yes', 'verify', 'event', 4, '2018-02-22 08:18:38'),
+(6, 54, 'nopee', 'deny', 'event', 3, '2018-02-22 08:18:50'),
+(7, 54, 'yess', 'verify', 'event', 4, '2018-02-22 08:20:50'),
+(8, 54, 'yessss', 'approve', 'event', 3, '2018-02-22 08:21:00'),
+(9, 54, 'nopeee', 'deny', 'report', 4, '2018-02-22 08:21:31');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `eventlogs`
 --
 -- Creation: Feb 05, 2018 at 01:31 PM
@@ -280,7 +318,26 @@ INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `dat
 (148, 'sd', 5, 'added a future event', '2018-02-21 11:36:09', 2),
 (149, 'sd', 5, 'edited a future event', '2018-02-21 11:37:08', 2),
 (150, 'sd', 5, 'has verified an event: ', '2018-02-21 11:37:19', 2),
-(151, 'sd', 5, 'added a new report for: ', '2018-02-21 13:48:19', 2);
+(151, 'sd', 5, 'added a new report for: ', '2018-02-21 13:48:19', 2),
+(152, 'sd', 5, 'added a new report for: ', '2018-02-21 14:18:26', 2),
+(153, 'sd', 5, 'added a new report for: ', '2018-02-21 15:15:22', 2),
+(154, 'sd', 5, 'added a new report for: ', '2018-02-21 15:17:10', 2),
+(155, '23', 5, 'added a future event', '2018-02-22 07:39:49', 2),
+(156, '23', 5, 'has verified an event: ', '2018-02-22 07:42:21', 2),
+(157, '23', 5, 'has approved an event: ', '2018-02-22 07:43:22', 2),
+(158, '23', 5, 'added a new report for: ', '2018-02-22 07:44:05', 2),
+(159, '3', 5, 'added a future event', '2018-02-22 08:05:45', 2),
+(160, '3', 5, 'has verified an event: ', '2018-02-22 08:14:09', 2),
+(161, '3', 5, 'has approved an event: ', '2018-02-22 08:14:20', 2),
+(162, '3', 5, 'added a new report for: ', '2018-02-22 08:14:40', 2),
+(163, '3', 5, 'has approved a report: ', '2018-02-22 08:14:53', 2),
+(164, 'adf', 5, 'added a future event', '2018-02-22 08:17:34', 2),
+(165, 'adf', 5, 'edited a future event', '2018-02-22 08:18:24', 2),
+(166, 'adf', 5, 'has verified an event: ', '2018-02-22 08:18:38', 2),
+(167, 'adf', 5, 'edited a future event', '2018-02-22 08:20:32', 2),
+(168, 'adf', 5, 'has verified an event: ', '2018-02-22 08:20:50', 2),
+(169, 'adf', 5, 'has approved an event: ', '2018-02-22 08:21:00', 2),
+(170, 'adf', 5, 'added a new report for: ', '2018-02-22 08:21:18', 2);
 
 -- --------------------------------------------------------
 
@@ -328,7 +385,10 @@ CREATE TABLE `events` (
 INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `nonapproval_comments`, `verification_comments`, `approved_comments`, `creator`, `verified_timestamp`, `approved_timestamp`, `is_reported`, `misc_reasons`, `deny_status`) VALUES
 (49, 'sdf', 'sd', '2018-02-21 00:00:00', '2', 'sd', 'Pen(s),', 'Durbar,', 'Schools', '23', 1, 1, '', 'sd', 'sd', 5, '2018-02-21 10:55:07', '2018-02-21 10:58:10', 1, '', 0),
 (50, 'sd', 'sd', '2018-02-17 00:00:00', '2', 'sd', 'Notepad(s),', 'Road Show,', 'Religious Bodies', '3', 1, 1, 'sd', 'sd', 'd', 5, '2018-02-21 12:29:32', '2018-02-21 12:29:40', 1, '', 1),
-(51, 'sd', 'fdf', '2018-02-07 00:00:00', '2', 'ad', 'Notepad(s),', 'Durbar,', 'Corporate', '33', 2, 2, 'sd', '', '', 5, '', '', 0, '', 0);
+(51, 'sd', 'fdf', '2018-02-07 00:00:00', '2', 'ad', 'Notepad(s),', 'Durbar,', 'Corporate', '33', 2, 2, 'sd', '', '', 5, '', '', 0, '', 0),
+(52, '23', 'dfdsf', '2018-02-23 00:00:00', '2', 'adf', 'Mug(s),', 'Durbar,', 'Communities', '23', 1, 1, '', 'sds', '', 5, '2018-02-22 08:42:21', '2018-02-22 08:43:22', 1, '', 1),
+(53, '3', 'sd', '2018-02-24 00:00:00', '2', 'ds', 'Sound System(s),', 'Road Show,', 'Corporate', '12', 1, 1, '', 'done', 'donneeee', 5, '2018-02-22 09:14:09', '2018-02-22 09:14:20', 1, '', 0),
+(54, 'adf', 'adf', '2018-02-25 00:00:00', '2', 'ad', 'T-shirt(s),', 'Durbar,', 'Communities', '23', 1, 1, 'nopee', 'yess', 'yessss', 5, '2018-02-22 09:20:50', '2018-02-22 09:21:00', 1, '', 1);
 
 -- --------------------------------------------------------
 
@@ -394,7 +454,13 @@ INSERT INTO `reportmembers` (`report_members_id`, `event_id`, `role`, `name`) VA
 (71, 49, '', 'sd'),
 (72, 49, '', 's'),
 (73, 50, '', 'df'),
-(74, 50, '', 'sd');
+(74, 50, '', 'sd'),
+(75, 50, '', 'sd'),
+(76, 50, '', 'sd'),
+(77, 50, '', 'sd'),
+(78, 52, '', 'df'),
+(79, 53, '', 'sd'),
+(80, 54, '', 'sd');
 
 -- --------------------------------------------------------
 
@@ -433,7 +499,10 @@ CREATE TABLE `reports` (
 
 INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `nonapproval_comments`, `event_summary`, `picture_paths`, `folder_paths`, `team_members`, `date_reported`, `verified_timestamp`) VALUES
 (159, 49, 'sd', 'sd', 1, 'fg', '', 'sd', '[\"9uRzYv4.jpg\"]', '5_49', 's', '2018-02-21 10:21:41', '2018-02-21 11:21:52'),
-(161, 50, 'sd', 'sd', 2, '', 'sdsd', 'sd', '[\"1920x1080-px-Arrow-TV-series-arrows-computer-mice-1226519-wallhere.com.jpg\"]', '5_50', 'sd', '2018-02-21 13:48:19', '0000-00-00 00:00:00');
+(164, 50, 'sd', 'sd', 2, '', 'hi', 'sd', '[\"3.jpg\"]', '5_50', 'sd', '2018-02-21 15:17:10', '0000-00-00 00:00:00'),
+(165, 52, 'df', 'sd', 2, '', 'k', 'df', '[\"9uRzYv4.jpg\"]', '5_52', 'df', '2018-02-22 07:44:05', '0000-00-00 00:00:00'),
+(166, 53, 'df', 'ds', 1, 'doneee', '', 'df', '[\"1920x1080-px-global-warming-minimalism-1227340-wallhere.com.jpg\"]', '5_53', 'sd', '2018-02-22 08:14:40', '2018-02-22 09:14:53'),
+(167, 54, 'sd', 'd', 2, '', 'nopeee', 'sd', '[]', '5_54', 'sd', '2018-02-22 08:21:18', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -501,7 +570,7 @@ INSERT INTO `users` (`userid`, `firstname`, `lastname`, `email`, `password`, `re
 (2, 'Admin4', 'Account4', 'admin4@nca.org.gh', 'fc1ebc848e31e0a68e868432225e3c82', 1, '4', 'active'),
 (3, 'Admin3', 'Account3', 'admin3@nca.org.gh', '32cacb2f994f6b42183a1300d9a3e8d6', 3, '3', 'active'),
 (4, 'Admin2', 'Account2', 'admin2@nca.org.gh', 'c84258e9c39059a89ab77d846ddab909', 2, '2', 'active'),
-(5, 'Admin1', 'Account1', 'admin1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 7, '1', 'active'),
+(5, 'Admin1', 'Account1', 'brian.martey@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 7, '1', 'active'),
 (16, 'Brian ', 'Martey', 'bm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '1', 'active'),
 (17, 'Brian1', 'MArtey', 'bnmm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 3, '2', 'active'),
 (18, 'BB', 'Martey', 'bnmm1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '2', 'active'),
@@ -523,6 +592,12 @@ ALTER TABLE `audiences`
 --
 ALTER TABLE `cities`
   ADD PRIMARY KEY (`city_id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comment_id`);
 
 --
 -- Indexes for table `eventlogs`
@@ -580,6 +655,11 @@ ALTER TABLE `audiences`
 --
 ALTER TABLE `cities`
   MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comment_id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `eventlogs`
 --
