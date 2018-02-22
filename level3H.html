@@ -671,26 +671,83 @@
                 
                             <div class="row" style="margin: 3% 10% 0% 10%;">
                                     <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
-                                    <table class="uk-table uk-table-striped">
+
+                                    <div class="uk-margin-medium-top">
+                                        <ul class="uk-flex-center" uk-tab>
+                                            <li class="uk-active"><a href="#">Last Confirmed Dates</a></li>
+                                            <li><a href="#">Confirmation Comments History</a></li>
+                                        </ul>
                 
-                                            <thead>
-                                                <tr>
-                                                    <th>DETAIL</th>
-                                                    <th>DATE</th>
-                                                </tr>
-                                            </thead>
+                                        <ul class="uk-switcher uk-margin">
+                                            <li>           
+                                                
+                                             <table class="uk-table uk-table-striped">
+                                        
+                                                    <thead>
+                                                        <tr>
+                                                            <th>DETAIL</th>
+                                                            <th>DATE</th>
+                                                        </tr>
+                                                    </thead>
+                        
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>EVENT PREVIOUSLY VERIFIED ON</td>
+                                                            <td id="epv"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>EVENT PREVIOUSLY APPROVED ON</td>
+                                                            <td id="epa"></td>
+                                                        </tr>
+                                                    </tbody>
+                                            </table>
+                                            </li>
+                                            <li>
+                                                <div class="uk-child-width-1-3@s" uk-grid>
+                                                    <div>
+                                                        <div class="uk-panel">FIRSTNAME LASTNAME</div>
+                                                        <div class="uk-panel">XX MONTH 2018</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-panel">REJECTED</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                    </div>
+                                                </div>
                 
-                                            <tbody>
-                                                <tr>
-                                                    <td>EVENT PREVIOUSLY VERIFIED ON</td>
-                                                    <td id="epv"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>EVENT PREVIOUSLY APPROVED ON</td>
-                                                    <td id="epa"></td>
-                                                </tr>
-                                            </tbody>
-                                    </table>
+                                                <div class="uk-child-width-1-3@s" uk-grid>
+                                                    <div>
+                                                        <div class="uk-panel">FIRSTNAME LASTNAME</div>
+                                                        <div class="uk-panel">XX MONTH 2018</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-panel">REJECTED</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                    </div>
+                                                </div>
+                
+                                                <div class="uk-child-width-1-3@s" uk-grid>
+                                                    <div>
+                                                        <div class="uk-panel">FIRSTNAME LASTNAME</div>
+                                                        <div class="uk-panel">XX MONTH 2018</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-panel">VERIFIED</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+
+                                    
                             </div>
                 
                             <div class="row" style="margin: 0% 10% 3% 10%;">
@@ -848,112 +905,228 @@
 
     <!-- UI kit modal -->
     <div id="modal-overflow-2-report" class="uk-modal-container" uk-modal>
-        <div class="uk-modal-dialog">
+            <div class="uk-modal-dialog">
 
-            <button class="uk-modal-close-default" type="button" uk-close></button>
+                <button class="uk-modal-close-default" type="button" uk-close></button>
 
-            <div class="uk-modal-header">
-                <h2 class="uk-modal-title">Event Report Details</h2>
-            </div>
-          <div id="statusBannerReport">
-                        
+                <div class="uk-modal-header">
+                    <h2 style="margin: 0;" class="uk-modal-title">Event Report Details</h2>
+                    <small>REPORT CREATED ON:</small>
+                    <small id="report_3"></small>
                 </div>
 
-            <div class="uk-modal-body" uk-overflow-auto>
-
-                <article class="uk-comment">
-                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
-                        <div class="uk-width-auto">
-                            <!-- <img class="uk-comment-avatar" src="../docs/images/avatar.jpg" width="80" height="80" alt=""> -->
-                            <img src="images/NCA.png" class="w3-border" alt="NCA Icon" width="80" height="80">
-                        </div>
-                        <div class="uk-width-expand">
-                            <h4 class="uk-comment-title uk-margin-remove">
-                                <a id="report_eventtitle" class="uk-link-reset" href="#">Author: Admin1</a>
-                            </h4>
-                            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                <li>
-                                    <a href="#" id="report_date_organized">23 January 2018</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </header>
-
-                    <div class="row">
-                        <dl class="uk-description-list">
-                            <div class="col-sm-6">
-                                <dt>REGION</dt>
-                                <dd id="report_region"></dd>
-                            </div>
-                            <div class="col-sm-6">
-                                <dt>TOWN</dt>
-                                <dd id="report_town"></dd>
-                            </div>
-                        </dl>
-                    </div>
-
-                    <br/>
-
-                    <div class="uk-comment-body">
-                        <dt>SUMMARY</dt>
-                        <dd style="font-weight: 600" id="report_event_summary"></dd>
-                        <dd style="font-weight: 600" id="report_event_summary_2"></dd>
-                    </div>
-
-                    <center>
-                        <hr class="uk-divider-small" style="margin:5%;">
-                    </center>
-
-                    <div class="row">
-                        <dl class="uk-description-list">
-                            <div class="col-sm-6">
-                                <dt>AUDIENCE CATEGORY</dt>
-                                <dd id="report_audience_category"></dd>
-                            </div>
-                            <div class="col-sm-6">
-                                <dt>AUDIENCE ATTENDANCE ESTIMATE</dt>
-                                <dd id="report_audience_attendance"></dd>
-                            </div>
-                        </dl>
-                    </div>
-
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                        <dt>LOGISTICS UTILIZED</dt>
-                        <dd id="report_team_challenges"></dd>
-                    </div>
-
-                    <div class="uk-comment-body" style="margin-top: 20px">
-                        <dt>MODE OF COMMUNICATION USED</dt>
-                        <dd id="report_complaints_raised"></dd>
-
-                        <dt>TEAM OBSERVATIONS</dt>
-                        <dd id="report_1"></dd>
-
-                        <dt>CONSUMER CHALLENGES</dt>
-                        <dd id="report_2"></dd>
+                <div id="statusBannerReport">
+                
+                </div>
 
 
-                        <dt>TEAM CHALLENGES</dt>
-                        <dd id="report_4"></dd>
-
-                        <div style="margin: 20px 0px">
-                            <b>
-                                <small>REPORT CREATED ON:</small>
-                                <small id="report_3"></small>
-                            </b>
-                        </div>
-
+                <div class="uk-modal-body" uk-overflow-auto>
                         
-                        <center>
-                                <dt>PHOTOS:</dt><br/>
-                        <div id="report_photos"></div>
-                        </center>
+                        
+                                <div class="row">
+                                        <div style="color: black; margin-top: 0px; font-size: 1.0em;">
+                                                <span style="margin-left: 10%;"><i class="fa fa-globe fa-lg"></i> Region: <span id="report_region_2" style="margin-top: -50px; font-weight: bold; text-transform: uppercase;"></span></span>
+                            
+                                                <span style="margin-left: 40%;"><i class="fa fa-map-marker fa-lg"></i> Town: <span id="report_town_2" style="margin-top: -10px; font-weight: bold; text-transform: uppercase;"></span></span>
+                                        </div>
+                                </div>
+                        
+                                    <div class="row">
+                                        <div>
+                                            <div class="uk-inline">
+                                                <img src="images/skyback.png" alt="">
+                                                    <div class="uk-overlay uk-overlay-primary uk-position-cover">
+                                                    <center><p id="report_eventtitle_2" style="font-weight: 400px; font-size: 1.5em; text-transform: uppercase; color: white; margin-top: 10px;" >asdasdsasdasdasdjkasdn a sdjknfnasdfkj n  sdjfknsadkfjna </p></center>
+                                                    <center><p id="report_date_organized_2" style="font-size: 0.7em; text-transform: uppercase; color: white; margin-top: -15px;">23 january 2017</p></center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    
+                        
+                                    <div class="row" style="margin: 3% 10% 0% 10%;">
+                                            <span><i class="fa fa-clock-o fa-lg"></i> Confirmation History: </span>
 
+
+
+
+
+                                            <div class="uk-margin-medium-top">
+                                                <ul class="uk-flex-center" uk-tab>
+                                                    <li class="uk-active"><a href="#">Last Confirmed Dates</a></li>
+                                                    <li><a href="#">Confirmation Comments History</a></li>
+                                                </ul>
+                        
+                                                <ul class="uk-switcher uk-margin">
+                                                    <li>           
+                                                          <table class="uk-table uk-table-striped">
+                                                
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>DETAIL</th>
+                                                                        <th>DATE</th>
+                                                                    </tr>
+                                                                </thead>
+                                    
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>EVENT PREVIOUSLY VERIFIED ON</td>
+                                                                        <td id="report_epv_2"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>EVENT PREVIOUSLY APPROVED ON</td>
+                                                                        <td id="report_epa_2"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                        </table>
+                                                    </li>
+                                                    <li>
+                                                        <div class="uk-child-width-1-3@s" uk-grid>
+                                                            <div>
+                                                                <div class="uk-panel">FIRSTNAME LASTNAME</div>
+                                                                <div class="uk-panel">XX MONTH 2018</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="uk-panel">REJECTED</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="uk-child-width-1-3@s" uk-grid>
+                                                            <div>
+                                                                <div class="uk-panel">FIRSTNAME LASTNAME</div>
+                                                                <div class="uk-panel">XX MONTH 2018</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="uk-panel">REJECTED</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="uk-child-width-1-3@s" uk-grid>
+                                                            <div>
+                                                                <div class="uk-panel">FIRSTNAME LASTNAME</div>
+                                                                <div class="uk-panel">XX MONTH 2018</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="uk-panel">VERIFIED</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="uk-panel">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            
+                                    </div>
+                        
+                                    <div class="row" style="margin: 0% 10% 3% 10%;">
+                                                <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                                    <div>
+                                                        <center>
+                                                        <div class="uk-card uk-card-default uk-card-body">
+                                                                <span><i class="fa fa-industry fa-lg"></i><br/><br/> Audience Category: <br/><br/><span id="report_audience_category_2" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                            </div>
+                                                        </center>
+                                                    </div>
+                        
+                                                    <div>
+                                                        <center>
+                                                        <div class="uk-card uk-card-default uk-card-body">
+                                                                <span><i class="fa fa-bullhorn fa-lg"></i><br/><br/> Audience Attendance Estimate: <br/><br/><span id="report_audience_attendance_2" style="padding-top: 2%; font-size: 2.3em; font-weight: bold; text-transform: uppercase;"></span></span>
+                                                        </div>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                    </div>
+                        
+                                    <div class="row" style="margin: 0% 10% 0% 10%;">
+                                            
+                                                <div class="uk-child-width-1-2@s" uk-grid uk-height-match="target: > div > .uk-card; row: false">
+                                                    <div>
+                                                        <span><i class="fa fa-comments-o fa-lg"></i> Mode Of Outreach Communication: </span>
+                                                        <table class="uk-table">
+                                                                
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Intended outreach communication mode</th>
+                                                            </tr>
+                                                        </thead>
+                                    
+                                                        <tbody id="report_modeTable_2">
+                                                            
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+                        
+                                                    <div>
+                                                            <span><i class="fa fa-truck fa-lg"></i> Logistics Required: </span>
+                                                            <table class="uk-table">
+                                                                    
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Materials needed for the meeting</th>
+                                                                    </tr>
+                                                                </thead>
+                                        
+                                                                <tbody id="report_logisticsTable_2">
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                    </div>
+                                                </div> 
+                                    </div>
+            
+                                    <hr/>
+            
+                                    <div style="margin: 0% 10% 0% 10%;">
+            
+                                        <span style="font-size: 1.2em;"><i class="fa fa-street-view fa-lg"></i> Team Observations: </span>
+                                        <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_1"></div>
+                                    
+                                        <br/ >
+            
+                                        <span style="font-size: 1.2em;"><i class="fa fa-exclamation fa-lg"></i> Team Challenges: </span>
+                                        <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_2"></div>
+                    
+                                        <br/ >
+                    
+                                        <span style="font-size: 1.2em;"><i class="fa fa-exclamation-circle fa-lg"></i> Consumer Challenges: </span>
+                                        <div style="text-align: center; padding: 4%; margin: 1.5%; border-style: solid; border-width: 1px;" id="report_4"></div>
+                    
+                                        <br/ >
+            
+                                       
+            
+                                    </div>
+                                    
+            
+                
+                            <article class="uk-comment">
+                
+                                <div class="uk-comment-body" style="margin-top: 20px">
+                
+                                    
+                                    <center>
+                                            <dt>PHOTOS:</dt><br/>
+                                    <div id="report_photos"></div>
+                                    </center>
+                
+                                </div>
+                        
+                
+                
+                        </article>
                     </div>
 
-                </article>
-
-            </div>
 
 
             <div class="uk-modal-footer uk-text-right" id="approveformdivbuttons">

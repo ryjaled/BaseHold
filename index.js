@@ -2964,45 +2964,60 @@ function level3ReportViewComplete(xhr, status) {
 
   UIkit.modal('#modal-overflow-2-report').show();
 
-  document.getElementById('report_eventtitle').innerHTML=obj[0].eventtitle;
-  document.getElementById('report_date_organized').innerHTML=moment(dateOrganized).format('D MMMM Y');
-  document.getElementById('report_region').innerHTML=obj[0].regionname;
-  document.getElementById('report_town').innerHTML=obj[0].town;
-  document.getElementById('report_audience_category').innerHTML=obj[0].audience_category;
-  document.getElementById('report_audience_attendance').innerHTML=obj[0].expected_audience_attendance;
-  var logistics = obj[0].logistics; 
+  document.getElementById('report_eventtitle_2').innerHTML = obj[0].eventtitle;
+  document.getElementById('report_date_organized_2').innerHTML = moment(obj[0].date_to_be_organized).format('D MMMM Y');
+  document.getElementById('report_region_2').innerHTML = obj[0].regionname;
+  document.getElementById('report_town_2').innerHTML = obj[0].town;
+  document.getElementById('report_audience_category_2').innerHTML = obj[0].audience_category;
+  document.getElementById('report_audience_attendance_2').innerHTML = obj[0].expected_audience_attendance;
+  var logistics = obj[0].logistics;
   var strlenLogistics = obj[0].logistics.length;
-  document.getElementById('report_team_challenges').innerHTML=logistics.substring(0,strlenLogistics-1);
 
-  var mode = obj[0].mode_of_outreach; 
-  var strlenMode = obj[0].mode_of_outreach.length;
-  document.getElementById('report_complaints_raised').innerHTML=mode.substring(0,strlenMode-1);
+  // document.getElementById('team_challenges').innerHTML = logistics.substring(0, strlenLogistics - 1);
 
-  var dateVerfied = new Date(obj[0].verified_timestamp);
-  var dateApproved = new Date(obj[0].approved_timestamp);
+  var logisticsView = obj[0].logistics.split(',');
+  for(var i = 0; i < logisticsView.length; i++){
 
-  if((obj[0].verified_timestamp == "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('report_event_summary').innerHTML= "This event has not yet been verified nor approved.";
+        tabledata = "<tr>"+
+        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
+        "</tr>";
+    $('#report_logisticsTable_2').append(tabledata);
+
+
   }
-  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp == "") ){
-    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + ". This event is still pending approval.";
+
+  var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
+  for(var i = 0; i < modeOfOutreachView.length; i++){
+
+       
+          tabledata = "<tr>"+
+          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "</tr>";
+        $('#report_modeTable_2').append(tabledata);
+
   }
-  if((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "") ){
-    document.getElementById('report_event_summary').innerHTML= "This event has been previously verified on: "+ moment(dateVerfied).format('D MMMM Y') + " and approved on: "+ moment(dateApproved).format('D MMMM Y');;
+
+  if ((obj.verified_timestamp == "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('report_epv_2').innerHTML = "Not verified yet";
+    document.getElementById('report_epa_2').innerHTML = "Not approved yet";
   }
-  if((obj[0].reportverifiedtimestamp != "")){
-    document.getElementById('report_event_summary_2').innerHTML= "This report was approved on:"+obj[0].reportverifiedtimestamp;
+  if ((obj.verified_timestamp != "") && (obj[0].approved_timestamp == "")) {
+    document.getElementById('report_epv_2').innerHTML = moment(dateVerfied).format('D MMMM Y');
+    document.getElementById('report_epa_2').innerHTML = "Not approved yet.";
   }
-  if((obj[0].reportverifiedtimestamp == "")){
-    document.getElementById('report_event_summary_2').innerHTML= "This report has not been approved.";
+  if ((obj.verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
+    document.getElementById('report_epv_2').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
+    document.getElementById('report_epa_2').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
   }
+
+
+
 
   if(obj[0].reportapprove == 0){
-    alert("here");
-    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center>/div>");
+    $('#statusBannerReport').html("<div style='background-color: grey'><center style='color: white; font-weight: bold;'>Pending Approval</center></div>");
   }
   if(obj[0].reportapprove == 1){
-    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
+    $('#statusBannerReport').html("<div style='background-color: green'><center style='color: white; font-weight: bold;'>APPROVED</center><center style='color: white;'>Report verifier's comments: "+obj[0].reportverificationcomments+"</center></div>");
   }
   if(obj[0].reportapprove == 2){
     $('#statusBannerReport').html("<div style='background-color: red'><center style='color: white; font-weight: bold;'>REJECTED</center><center style='color: white;'> Verifiers comments: "+obj[0].reportverificationcomments+"</center></div>");
@@ -3013,10 +3028,55 @@ function level3ReportViewComplete(xhr, status) {
   console.log(obj[0].event_summary);
   document.getElementById('report_2').innerHTML=obj[0].complaints_raised;
   console.log(obj[0].eventcomplaints_raised_summary);
-  document.getElementById('report_3').innerHTML=moment(new Date(obj[0].date_reported)).format('D MMMM Y') ;
+  document.getElementById('report_3').innerHTML= moment(obj[0].date_reported).format('D MMMM Y') ;
   console.log(obj[0].date_reported);
   document.getElementById('report_4').innerHTML=obj[0].team_challenges;
   console.log(obj[0].team_challenges);
+
+
+  var picValues = "";
+  $('#report_photos').html("");
+
+  picValues = picValues + "<div class='uk-child-width-1-3@m' uk-grid uk-lightbox='animation: slide'>";
+
+    var jsonarray = JSON.parse(obj[0].picture_paths);
+    for(var i = 0; i < jsonarray.length; i++) {
+      var obj2 = jsonarray[i];
+
+      //obj2 contains picture names.
+      // $('#pictureContainer').html("<img src='uploads/"+5+"_"+as+"/"+"Awesome-Dining-Room-Colors-85-In-home-design-ideas-budget-with-Dining-Room-Colors.jpg'"+"/>");
+
+      var user_id = ""+obj[0].creator;
+      var event_header = "" + obj[0].event_id;
+      var picture_header = ""+obj2;
+
+      var fold_header = obj[0].folder_paths;
+      //alert(fold_header);
+
+
+      picValues = picValues + "<div>";
+      picValues = picValues + "<a onclick='#' class='uk-inline' href='uploads/"+fold_header+"/"+picture_header+"' caption='Outreach Photo'>";
+      picValues = picValues + "<img style='height: 40%; width: 40%;' src='uploads/"+fold_header+"/"+picture_header+"'>";
+      picValues = picValues + "</a>";
+      picValues = picValues + "</div>";
+
+
+    }
+
+  picValues = picValues + "</div>";
+
+  //$('#report_photos').html();
+  document.getElementById('report_photos').innerHTML = picValues;
+
+  if (obj[0].reportapprove == 0) {
+    approvebutton = "<button class='uk-button uk-button-default' type='button' style='background-color: green; color: white;' onclick='ApproveReportToggle("+obj[0].report_id+",0)'>Approve</button><button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>";
+    document.getElementById('approveformdivbuttons').innerHTML = approvebutton;
+  }else{
+    approvebutton = "<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>";
+    document.getElementById('approveformdivbuttons').innerHTML = approvebutton;
+  }
+  
+
 }
 
 function reactivateUsers(val) {
@@ -3621,5 +3681,3 @@ function searchdash() {
 /////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
-
-
