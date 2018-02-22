@@ -891,7 +891,7 @@ function deleteevent(pid) {
 function denyEvent() {
   var comments = $('#commentsForDeny').val();
 
-  var theUrl = "databasehandler.php?cmd=36&eventid=" + sessionStorage.denyeventId + "&comments=" + comments + "&level=" + sessionStorage.denyLevel;
+  var theUrl = "databasehandler.php?cmd=36&eventid=" + sessionStorage.denyeventId + "&comments=" + comments + "&level=" + sessionStorage.denyLevel + "&commenter=" + sessionStorage.userid;
   $.ajax(theUrl,
     {
       async: true,
@@ -929,47 +929,6 @@ function denyEventModal(id, verState) {
 
   event.preventDefault();
   UIkit.modal('#modal-overflow-deny-comments').show();
-
-}
-
-function denyReport() {
-  var comments = $('#commentsForRDeny').val();
-
-  var theUrl = "databasehandler.php?cmd=37&reportid=" + sessionStorage.denyreportId + "&comments=" + comments;
-  $.ajax(theUrl,
-    {
-      async: true,
-      complete: denyReportComplete
-    });
-
-  $('#commentsForRDeny').val("");
-}
-
-function denyReportComplete(xhr, status) {
-
-  console.log(xhr);
-
-  global7();
-
-  $.notify({
-    icon: "info_outline",
-    message: "Report Denied Successfully."
-
-  }, {
-      type: 'success',
-      timer: 2000,
-      placement: {
-        from: 'top',
-        align: 'right'
-      }
-    });
-}
-
-function denyReportModal(id) {
-  sessionStorage.denyreportId = id;
-
-  event.preventDefault();
-  UIkit.modal('#modal-overflow-rdeny-comments').show();
 
 }
 
@@ -2420,6 +2379,47 @@ function _level2cancel(){
   window.location.href="level2H.html";
 }
 
+function denyReport() {
+  var comments = $('#commentsForRDeny').val();
+
+  var theUrl = "databasehandler.php?cmd=37&reportid=" + sessionStorage.denyreportId + "&comments=" + comments + "&commenter=" + sessionStorage.userid;
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: denyReportComplete
+    });
+
+  $('#commentsForRDeny').val("");
+}
+
+function denyReportComplete(xhr, status) {
+
+  console.log(xhr);
+
+  global7();
+
+  $.notify({
+    icon: "info_outline",
+    message: "Report Denied Successfully."
+
+  }, {
+      type: 'success',
+      timer: 2000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
+
+function denyReportModal(id) {
+  sessionStorage.denyreportId = id;
+
+  event.preventDefault();
+  UIkit.modal('#modal-overflow-rdeny-comments').show();
+
+}
+
 function help() {
   verifier(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
 }
@@ -2711,7 +2711,7 @@ function verifyEventToggle(id, verState) {
 
 function verifyEvent() {
   var comments = $('#commentsForVerification').val();
-  var theUrl = "databasehandler.php?cmd=5&eventid=" + sessionStorage.verifyingId + "&verify=" + sessionStorage.verifyingState + "&verifycomments=" + comments;
+  var theUrl = "databasehandler.php?cmd=5&eventid=" + sessionStorage.verifyingId + "&verify=" + sessionStorage.verifyingState + "&verifycomments=" + comments + "&commenter=" + sessionStorage.userid;
   $.ajax(theUrl,
     {
       async: true,
@@ -2766,7 +2766,7 @@ function approveReport() {
 
   var comments = $('#commentsForReportApproval').val();
 
-  var theUrl = "databasehandler.php?cmd=28&reportid=" + sessionStorage.approvingReportId + "&approval=" + sessionStorage.approvingReportState + "&verificationComments=" + comments;
+  var theUrl = "databasehandler.php?cmd=28&reportid=" + sessionStorage.approvingReportId + "&approval=" + sessionStorage.approvingReportState + "&verificationComments=" + comments + "&commenter=" + sessionStorage.userid;
 
   $.ajax(theUrl,
     {
@@ -2792,7 +2792,7 @@ function approveEvent() {
 
   var comments = $('#commentsForApproval').val();
 
-  var theUrl = "databasehandler.php?cmd=4&eventid=" + sessionStorage.approvingId + "&approve=" + sessionStorage.approvingState + "&approveComments=" + comments;
+  var theUrl = "databasehandler.php?cmd=4&eventid=" + sessionStorage.approvingId + "&approve=" + sessionStorage.approvingState + "&approveComments=" + comments + "&commenter=" +sessionStorage.userid;
 
   $.ajax(theUrl,
     {

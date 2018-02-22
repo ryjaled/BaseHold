@@ -120,6 +120,9 @@
 		case 37:
 			denyReport();
 			break;
+		case 38:
+			getComments();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -385,6 +388,10 @@
 		
 		$verify=$event->denyEvent($eventid,$comments,$level);
 
+		$commenter_id=$_REQUEST['commenter'];
+
+		$event->addComments($eventid,$comments,'deny','event',$commenter_id);
+
 		//$log->addEventLog($eventtitle,$reporter," denied an event", $region);
 		if($verify==""){
 			echo '{"result":0,"message":"Event not denied"}';
@@ -424,6 +431,10 @@
 		while ($row = $user->fetch()) {
 			$senderemail = $row['email'];	
 		}
+
+		$commenter_id=$_REQUEST['commenter'];
+
+		$event->addComments($eventid,$comments,'deny','report',$commenter_id);
 
 		$row=$event->denyNewReportEventUpdate($eventid);
 
@@ -663,6 +674,25 @@
 				echo json_encode($moredata);
 
 
+	}
+
+	function getComments(){
+			$success="";
+			include("events.php");
+			$event = new events();
+
+			$eventid=$_REQUEST['eventid'];
+
+			$result = $event->getComments($eventid);
+
+			$data = array();
+
+			while($row = $event->fetch()){
+					$success="true";
+					array_push($data,$row);
+				}
+
+			echo json_encode($data);
 	}
 
 	function getDashGraphEventData(){
@@ -1241,6 +1271,10 @@
 			$region=$row['region'];
 		 }
 
+		 $commenter_id=$_REQUEST['commenter'];
+
+		 $event->addComments($eventid,$approveComments,'approve','event',$commenter_id);
+
 		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
 
 		 echo json_encode($approve);
@@ -1264,10 +1298,15 @@
 
 		 $receipt=$event->getAReport($reportid);
 		 while($row = $event->fetch()){
+			$eventid=$row['event_id'];
 			$eventtitle=$row['eventtitle'];
 			$reporter=$row['creator'];
 			$region=$row['region'];
 		 }
+
+		 $commenter_id=$_REQUEST['commenter'];
+
+		 $event->addComments($eventid,$verificationComments,'approve','report',$commenter_id);
 
 		 $log->addEventApproveLog($eventtitle,$reporter,"has approved a report: ", $region);
 		 echo json_encode($approval);
@@ -1297,6 +1336,10 @@
 			$reporter=$row['creator'];
 			$region=$row['region'];
 		 }
+
+		$commenter_id=$_REQUEST['commenter'];
+
+		$event->addComments($eventid,$commentToVerify,'verify','event',$commenter_id);
 
 		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
 
