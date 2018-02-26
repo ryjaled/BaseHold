@@ -3,7 +3,8 @@
 // Include the main TCPDF library (search for installation path).
 
 require_once('tcpdf_include.php');
-include("events.php");
+include("../events.php");
+include("../users.php");
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
@@ -16,7 +17,7 @@ class MYPDF extends TCPDF {
         // Set font
         $this->SetFont('helvetica', 'B', 20);
         // Title
-        //$this->Cell(0, 45, 'Report', 0, false, 'L', 0, '', 0, false, 'M', 'B');
+        //$this->Cell(0, 10, 'Report', 0, false, 'L', 0, '', 0, false, 'M', 'M');
     }
 
     // Page footer
@@ -26,10 +27,21 @@ class MYPDF extends TCPDF {
         // Set font
         $this->SetFont('helvetica', 'I', 8);
         // Page number
-        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 }
 
+$startdate=$_REQUEST['start'];
+$enddate=$_REQUEST['end'];
+$reporter=$_REQUEST['reporter'];
+
+$user = new users();
+$event = new events();
+
+$row=$user->getUser($reporter);
+while ($row = $user->fetch()) {
+    $name = $row['firstname'].' '.$row['lastname'];	
+}
 
 // create new PDF document
 //$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -37,8 +49,8 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Brian Martey');
-$pdf->SetTitle('Reports');
+$pdf->SetAuthor($name);
+$pdf->SetTitle('Outreach Report By '.$name);
 $pdf->SetSubject('Report Page');
 $pdf->SetKeywords('Report, Page, Reports');
 
@@ -82,8 +94,8 @@ $pdf->AddPage('L', 'A4');
 // writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
 // create some HTML content
-$html = '<h1>Outreach Report</h1>
-<h2><span style="font-size: small;">Please find the information below</span></h2><table border="1" cellpadding="4" width="100%">
+$html = '<h4>Outreach Report From <b>'.$startdate.'</b> to <b>'.$enddate.'</b></h4>';
+$html .='<table border="1" cellpadding="4" width="100%">
     <tr>
         <th width="15%" align="center">Areas</th>
         <th width="15%" align="center">Events</th>
@@ -91,19 +103,25 @@ $html = '<h1>Outreach Report</h1>
         <th width="15%" align="center">Complaints</th>
         <th width="20%" align="center">Observations</th>
         <th width="20%" align="center">Challenges</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td bgcolor="#cccccc" align="center" colspan="2">A1 ex<i>amp</i>le <a href="http://www.tcpdf.org">link</a> column span. One two tree four five six seven eight nine ten.<br />line after br<br /><small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla<ol><li>first<ol><li>sublist</li><li>sublist</li></ol></li><li>second</li></ol><small color="#FF0000" bgcolor="#FFFF00">small small small small small small small small small small small small small small small small small small small small</small></td>
-        <td>4B</td>
-    </tr>
-    <tr>
-        <td>ds</td>
-        <td bgcolor="#0000FF" color="yellow" align="center">A2 € &euro; &#8364; &amp; è &egrave;<br/>A2 € &euro; &#8364; &amp; è &egrave;</td>
-        <td bgcolor="#FFFF00" align="left"><font color="#FF0000">Red</font> Yellow BG</td>
-        <td>4C</td>
-    </tr>
-</table>';
+    </tr>';
+
+$converted_sdate = strtotime($startdate);
+$converted_edate = strtotime($enddate);
+$final_sdate = date("Y-m-d H:i:s", $converted_sdate);
+$final_edate = date("Y-m-d H:i:s", $converted_edate);
+
+$row=$event->getDashRegionFigures($final_sdate,$final_edate);
+while ($row = $event->fetch()) {
+    $html .= '<tr>
+                <td>'.$row['regname'].'</td>';
+                
+    $html .= '<td bgcolor="#cccccc" align="center" colspan="2">A1 ex<i>amp</i>le <a href="http://www.tcpdf.org">link</a> column span. One two tree four five six seven eight nine ten.<br />line after br<br /><small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla<ol><li>first<ol><li>sublist</li><li>sublist</li></ol></li><li>second</li></ol><small color="#FF0000" bgcolor="#FFFF00">small small small small small small small small small small small small small small small small small small small small</small></td>';
+
+    $html .= '<td>4B</td>
+            </tr>';
+}
+
+$html.='</table>';
 
 // output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');

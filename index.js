@@ -2220,66 +2220,64 @@ function loadEventReport(xhr, status){
 
 }
 
-
 function fetchCommentsLevel1AddReport(eventID){
   
-    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
-  
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: fetchCommentsLevel1AddReportComplete
-        });
-  
-  }
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: fetchCommentsLevel1AddReportComplete
+      });
+
+}
   
 function fetchCommentsLevel1AddReportComplete(xhr, status){
-    console.log(xhr);
-    var obj = JSON.parse(xhr.responseText);
-  
-    console.log("Comments:", obj);
-  
-    var commentInsert = ""
-    $('#commentHold').html("");
-    for(var i = 0; i < obj.length; i++){
-      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
-    }
-  
-  
-    for(var i = 0; i < obj.length; i++){
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
-      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
-      commentInsert = commentInsert + "</div>";
-      
-      commentInsert = commentInsert + "<div>";
-      
-      if(obj[i].action == "verify"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "approve"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "deny"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      commentInsert = commentInsert + "</div>";
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
-      commentInsert = commentInsert + "</div>";
-  
-    }
-  
-  
-  
-    // $('#commentsHold').html(commentInsert);
-    document.getElementById('commentsAddReport1').innerHTML = commentInsert;
-  
-  
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentHold').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
   }
 
+
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+    
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsAddReport1').innerHTML = commentInsert;
+
+
+}
 
 function level1ReportView(val) {
   fetchCommentsLevel1ViewReport(val)
@@ -2407,66 +2405,64 @@ function level1ReportViewComplete(xhr, status) {
   
 }
 
-
 function fetchCommentsLevel1ViewReport(eventID){
   
-    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: fetchCommentsLevel1ViewReportComplete
+      });
+
+}
   
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: fetchCommentsLevel1ViewReportComplete
-        });
-  
-  }
-  
-  function fetchCommentsLevel1ViewReportComplete(xhr, status){
-    console.log(xhr);
-    var obj = JSON.parse(xhr.responseText);
-  
-    console.log("Comments:", obj);
-  
-    var commentInsert = ""
-    $('#commentHold').html("");
-    for(var i = 0; i < obj.length; i++){
-      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
-    }
-  
-  
-    for(var i = 0; i < obj.length; i++){
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
-      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
-      commentInsert = commentInsert + "</div>";
-      
-      commentInsert = commentInsert + "<div>";
-      
-      if(obj[i].action == "verify"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "approve"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "deny"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      commentInsert = commentInsert + "</div>";
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
-      commentInsert = commentInsert + "</div>";
-  
-    }
-  
-  
-  
-    // $('#commentsHold').html(commentInsert);
-    document.getElementById('commentsViewReport2').innerHTML = commentInsert;
-  
-  
+function fetchCommentsLevel1ViewReportComplete(xhr, status){
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentHold').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
   }
 
+
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+    
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsViewReport2').innerHTML = commentInsert;
+
+
+}
 
 function loadViewEventReport(xhr, status) {
   var obj = JSON.parse(xhr.responseText);
@@ -2701,65 +2697,64 @@ function level2ViewComplete(xhr, status) {
 
 }
 
-
 function fetchCommentsLevel2View(eventID){
   
-    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
-  
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: fetchCommentsLevel2ViewComplete
-        });
-  
-  }
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: fetchCommentsLevel2ViewComplete
+      });
+
+}
   
 function fetchCommentsLevel2ViewComplete(xhr, status){
-    console.log(xhr);
-    var obj = JSON.parse(xhr.responseText);
-  
-    console.log("Comments:", obj);
-  
-    var commentInsert = ""
-    $('#commentHold').html("");
-    for(var i = 0; i < obj.length; i++){
-      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
-    }
-  
-  
-    for(var i = 0; i < obj.length; i++){
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
-      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
-      commentInsert = commentInsert + "</div>";
-      
-      commentInsert = commentInsert + "<div>";
-    
-      if(obj[i].action == "verify"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "approve"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "deny"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      commentInsert = commentInsert + "</div>";
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
-      commentInsert = commentInsert + "</div>";
-  
-    }
-  
-  
-  
-    // $('#commentsHold').html(commentInsert);
-    document.getElementById('commentsView2').innerHTML = commentInsert;
-  
-  
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentHold').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
   }
+
+
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+  
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsView2').innerHTML = commentInsert;
+
+
+}
 
 function level2ReportView(val) {
   console.log('modal to edit: ', val);
@@ -2897,65 +2892,63 @@ function level2ReportViewComplete(xhr, status) {
   
 }
 
-
 function fetchCommentsLevel2Report(eventID){
-    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
-  
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: fetchCommentsLevel2ReportComplete
-        });
-  
-  }
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: fetchCommentsLevel2ReportComplete
+      });
+
+}
   
 function fetchCommentsLevel2ReportComplete(xhr, status){
 
-    console.log(xhr);
-    var obj = JSON.parse(xhr.responseText);
-  
-    console.log("Comments:", obj);
-  
-    var commentInsert = ""
-    $('#commentHold').html("");
-    for(var i = 0; i < obj.length; i++){
-      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
-    }
-  
-  
-    for(var i = 0; i < obj.length; i++){
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
-      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
-      commentInsert = commentInsert + "</div>";
-      
-      commentInsert = commentInsert + "<div>";
-      if(obj[i].action == "verify"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "approve"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "deny"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      commentInsert = commentInsert + "</div>";
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
-      commentInsert = commentInsert + "</div>";
-  
-    }
-  
-  
-  
-    // $('#commentsHold').html(commentInsert);
-    document.getElementById('commentsViewReport2').innerHTML = commentInsert;
-  
-  
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentHold').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
   }
 
+
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsViewReport2').innerHTML = commentInsert;
+
+
+}
 
 function reportHelp() {
   reportApprover(sessionStorage.pullreportid, sessionStorage.pullverified, sessionStorage.pullapproved);
@@ -3205,67 +3198,102 @@ function level3ViewComplete(xhr, status) {
 
 }
 
-
 function fetchCommentsLevel3Event(eventID){
 
-    var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
-  
-      $.ajax(theUrl,
-        {
-          async: true,
-          complete: fetchCommentsLevel3EventComplete
-        });
-  
-  }
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
+
+  $.ajax(theUrl,
+    {
+      async: true,
+      complete: fetchCommentsLevel3EventComplete
+    });
+
+}
   
 function fetchCommentsLevel3EventComplete(xhr, status){
   
-    console.log(xhr);
-    var obj = JSON.parse(xhr.responseText);
-  
-    console.log("Comments:", obj);
-  
-    var commentInsert = ""
-    $('#commentHold').html("");
-    for(var i = 0; i < obj.length; i++){
-      console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
-    }
-  
-  
-    for(var i = 0; i < obj.length; i++){
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
-      commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
-      commentInsert = commentInsert + "</div>";
-      
-      commentInsert = commentInsert + "<div>";
-      if(obj[i].action == "verify"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "approve"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      if(obj[i].action == "deny"){
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-      }
-      commentInsert = commentInsert + "</div>";
-  
-      commentInsert = commentInsert + "<div>";
-      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
-      commentInsert = commentInsert + "</div>";
-  
-    }
-  
-  
-  
-    // $('#commentsHold').html(commentInsert);
-    document.getElementById('commentsView3').innerHTML = commentInsert;
-  
-  
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentHold').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
   }
 
 
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsView3').innerHTML = commentInsert;
+
+
+}
+
+function generateReport(){
+  if ($('#addnewdateselected').val() == "") {
+
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select Start Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else if ($('#addenddateselected').val() == "") {
+    $.notify({
+      icon: "info_outline",
+      message: "Please Select End Date."
+
+    }, {
+        type: 'danger',
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+  } else {
+    var sdate = $('#addnewdateselected').val();
+    var edate = $('#addenddateselected').val();
+    var url = "TCPDF-master/report.php?start=" + sdate + "&end=" + edate +"&reporter="+sessionStorage.userid;
+    var win = window.open(url, '_blank');
+    win.focus();
+    //location.href = "report.php?start=1&end=2&reporter=3";
+  }
+}
 
 function level3ReportView(val) {
   console.log('modal to edit: ', val);
@@ -3407,67 +3435,65 @@ function level3ReportViewComplete(xhr, status) {
 
 }
 
-
 function fetchCommentsLevel3Report(eventID){
   
-      var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
-    
-        $.ajax(theUrl,
-          {
-            async: true,
-            complete: fetchCommentsLevel3ReportComplete
-          });
-    
-    }
-    
-  function fetchCommentsLevel3ReportComplete(xhr, status){
-    
-      console.log(xhr);
-      var obj = JSON.parse(xhr.responseText);
-    
-      console.log("3Comments:", obj);
-    
-      var commentInsert = ""
-      $('#commentsReport3').html("");
-      for(var i = 0; i < obj.length; i++){
-        console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
-      }
-    
-    
-      for(var i = 0; i < obj.length; i++){
-    
-        commentInsert = commentInsert + "<div>";
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
-        commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
-        commentInsert = commentInsert + "</div>";
-        
-        commentInsert = commentInsert + "<div>";
-        if(obj[i].action == "verify"){
-          commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-        }
-        if(obj[i].action == "approve"){
-          commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-        }
-        if(obj[i].action == "deny"){
-          commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
-        }
-        commentInsert = commentInsert + "</div>";
-    
-        commentInsert = commentInsert + "<div>";
-        commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
-        commentInsert = commentInsert + "</div>";
-    
-      }
-    
-    
-    
-      // $('#commentsHold').html(commentInsert);
-      document.getElementById('commentsReport3').innerHTML = commentInsert;
-    
-    
-    }
-  
+  var theUrl = "databasehandler.php?cmd=38&eventid=" + eventID;
 
+    $.ajax(theUrl,
+      {
+        async: true,
+        complete: fetchCommentsLevel3ReportComplete
+      });
+
+}
+    
+function fetchCommentsLevel3ReportComplete(xhr, status){
+  
+  console.log(xhr);
+  var obj = JSON.parse(xhr.responseText);
+
+  console.log("3Comments:", obj);
+
+  var commentInsert = ""
+  $('#commentsReport3').html("");
+  for(var i = 0; i < obj.length; i++){
+    console.log(obj[i].firstname + " " + obj[i].lastname + " " + obj[i].action_date +  " " + obj[i].action + " " + obj[i].comment_type + " " + obj[i].comment);
+  }
+
+
+  for(var i = 0; i < obj.length; i++){
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].firstname+" "+obj[i].firstname+" </div>";
+    commentInsert = commentInsert + "<div class='uk-panel'> "+moment(obj[i].action_date).format('D MMMM Y hh:mm:ss')+" </div>";
+    commentInsert = commentInsert + "</div>";
+    
+    commentInsert = commentInsert + "<div>";
+    if(obj[i].action == "verify"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "approve"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: green'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    if(obj[i].action == "deny"){
+      commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: uppercase; color: red'> "+obj[i].action+" "+obj[i].comment_type+" </div>";
+    }
+    commentInsert = commentInsert + "</div>";
+
+    commentInsert = commentInsert + "<div>";
+    commentInsert = commentInsert + "<div class='uk-panel' style='text-transform: capitalize'> "+obj[i].comment+" </div>";
+    commentInsert = commentInsert + "</div>";
+
+  }
+
+
+
+  // $('#commentsHold').html(commentInsert);
+  document.getElementById('commentsReport3').innerHTML = commentInsert;
+
+
+}
+  
 function reactivateUsers(val) {
   console.log('users', val);
   var theUrl = "databasehandler.php?cmd=21&userid=" + val + "&myid=" + sessionStorage.userid;

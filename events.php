@@ -163,90 +163,100 @@
 		}
 
 		function getDashRegionFigures($fdate=false,$ldate=false){
-			$strQuery="select r.regionname as regname, count(e.region) as figures from events as e inner join region as r on r.region_id = e.region where e.is_approved = 1 ";
+			
+			$strQuery="select r.regionname as regname, count(e.region) as figures from events as e inner join region as r on r.region_id = e.region inner join reports as u on u.event_id = e.event_id where e.is_approved = 1 and u.is_approved = 1 ";
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			$strQuery.="group by e.region order by r.regionname ASC";
       	return $this->query($strQuery);
 		}
 
 		function getDashTotalAttendees($fdate=false,$ldate=false,$region=false){
-			$strQuery="select sum(expected_audience_attendance) as total from events where is_approved = 1 ";
+			$strQuery="select sum(e.expected_audience_attendance) as total from events as e inner join reports as r on r.event_id = e.event_id where e.is_approved = 1 and r.is_approved = 1 ";
 			if($region!=false){
-				$strQuery.="and region = '$region' ";
+				$strQuery.="and e.region = '$region' ";
 			}
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			return $this->query($strQuery);
 		}
 
 		function getDashTotalEvents($fdate=false,$ldate=false,$region=false){
-			$strQuery="select count(region) as total from events where is_approved = 1 ";
+			$strQuery="select count(e.region) as total from events as e inner join reports as r on r.event_id=e.event_id where e.is_approved = 1 and r.is_approved = 1 ";
 			if($region!=false){
-				$strQuery.="and region = '$region' ";
+				$strQuery.="and e.region = '$region' ";
 			}
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			return $this->query($strQuery);
 		}
 
 		function getDashGraphEventData($fdate=false,$ldate=false){
-			$strQuery="select count(DATE(date_to_be_organized)) as totals, DATE(date_to_be_organized) as date, date_to_be_organized from events where is_approved = 1 ";
+			$strQuery="select count(DATE(e.date_to_be_organized)) as totals, DATE(e.date_to_be_organized) as date, e.date_to_be_organized from events as e inner join reports as r on r.event_id = e.event_id where e.is_approved = 1 and r.is_approved = 1 ";
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
-			$strQuery.= "group by DATE(events.date_to_be_organized)";
+			$strQuery.= "group by DATE(e.date_to_be_organized)";
 			return $this->query($strQuery);
 		}
 
 		function getDashPieEventData($fdate=false,$ldate=false){
-			$strQuery="select count(audience_category) as totals, audience_category as audience from events where is_approved = 1 ";
+			$strQuery="select count(e.audience_category) as totals, e.audience_category as audience from events as e inner join reports as r on r.event_id=e.event_id where e.is_approved = 1 and r.is_approved = 1 ";
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
-			$strQuery.="group by audience_category";
+			$strQuery.="group by e.audience_category";
 			return $this->query($strQuery);
 		}
 
 		function getDashRegionNameData($fdate=false,$ldate=false){
-			$strQuery="select p.region as regnum, r.regionname as name from events as p inner join region as r on r.region_id = p.region where p.is_approved = 1 ";
+			$strQuery="select p.region as regnum, r.regionname as name from events as p inner join region as r on r.region_id = p.region inner join reports as u on u.event_id = p.event_id where p.is_approved = 1 and u.is_approved = 1 ";
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and p.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			$strQuery.="group by p.region ORDER by r.regionname asc";
 			return $this->query($strQuery);
 		}
 
 		function getDashRegionAudienceData($fdate=false,$ldate=false){
-			$strQuery="select audience_category from events where is_approved=1 ";
+			$strQuery="select e.audience_category from events as e inner join reports as r on r.event_id = e.event_id where e.is_approved=1 and r.is_approved=1 ";
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
-			$strQuery.="group by audience_category";
+			$strQuery.="group by e.audience_category";
 			return $this->query($strQuery);
 		}
 
 		function getDashRegionAudienceFullData($region,$aud,$fdate=false,$ldate=false){
-			$strQuery="select sum(expected_audience_attendance) as count from events where region = '$region' and audience_category = '$aud' and is_approved=1 ";
+			$strQuery="select sum(e.expected_audience_attendance) as count from events as e inner join reports as r on r.event_id = e.event_id where e.region = '$region' and e.audience_category = '$aud' and e.is_approved=1 and r.is_approved=1 ";
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.="and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			return $this->query($strQuery);
 		}
 
 		function getDashTopAudienceCategory($fdate=false,$ldate=false,$region=false){
-			$strQuery="select audience_category, count(audience_category) as total from events where is_approved=1 ";
+			$strQuery="select e.audience_category, count(e.audience_category) as total from events as e inner join reports as r on r.event_id = e.event_id where e.is_approved=1 and r.is_approved=1 ";
 			if($region!=false){
-				$strQuery.="and region = '$region' ";
+				$strQuery.="and e.region = '$region' ";
 			}
 			if(($fdate!=false) && ($ldate!=false)){
-				$strQuery.=" and date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+				$strQuery.=" and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
-			$strQuery.="group by audience_category order by count(audience_category) desc limit 1";
+			$strQuery.="group by e.audience_category order by count(e.audience_category) desc limit 1";
 			return $this->query($strQuery);
+		}
+
+		function getReportEventsPerRegions($region,$fdate=false,$ldate=false){
+			$strQuery="select e.eventtitle from events as e inner join reports as r on r.event_id = e.event_id where e.is_approved = 1 and e.region = '$region' and r.is_approved = '1' ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="order by e.date_to_be_organized ASC";
+      	return $this->query($strQuery);
 		}
 
 		/**
