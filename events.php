@@ -164,7 +164,7 @@
 
 		function getDashRegionFigures($fdate=false,$ldate=false){
 			
-			$strQuery="select r.regionname as regname, count(e.region) as figures from events as e inner join region as r on r.region_id = e.region inner join reports as u on u.event_id = e.event_id where e.is_approved = 1 and u.is_approved = 1 ";
+			$strQuery="select r.regionname as regname, count(e.region) as figures, e.region from events as e inner join region as r on r.region_id = e.region inner join reports as u on u.event_id = e.event_id where e.is_approved = 1 and u.is_approved = 1 ";
 			if(($fdate!=false) && ($ldate!=false)){
 				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
@@ -256,6 +256,16 @@
 				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
 			}
 			$strQuery.="order by e.date_to_be_organized ASC";
+      	return $this->query($strQuery);
+		}
+
+		function getReportRegionFigures($fdate=false,$ldate=false){
+			
+			$strQuery="select r.regionname as regname, count(e.region) as figures, e.region from events as e inner join region as r on r.region_id = e.region inner join reports as u on u.event_id = e.event_id where e.is_approved = 1 and u.is_approved = 1 ";
+			if(($fdate!=false) && ($ldate!=false)){
+				$strQuery.="and e.date_to_be_organized BETWEEN '$fdate' and '$ldate' ";
+			}
+			$strQuery.="group by e.region order by r.regionname ASC";
       	return $this->query($strQuery);
 		}
 

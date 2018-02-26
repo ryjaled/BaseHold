@@ -84,7 +84,7 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('dejavusans', '', 10);
+$pdf->SetFont('dejavusans', '', 8);
 
 // add a page
 //$pdf->AddPage();
@@ -97,11 +97,11 @@ $pdf->AddPage('L', 'A4');
 $html = '<h4>Outreach Report From <b>'.$startdate.'</b> to <b>'.$enddate.'</b></h4>';
 $html .='<table border="1" cellpadding="4" width="100%">
     <tr>
-        <th width="15%" align="center">Areas</th>
+        <th width="12%" align="center">Areas</th>
         <th width="15%" align="center">Events</th>
         <th width="15%" align="center">Members</th>
-        <th width="15%" align="center">Complaints</th>
-        <th width="20%" align="center">Observations</th>
+        <th width="19%" align="center">Complaints</th>
+        <th width="19%" align="center">Observations</th>
         <th width="20%" align="center">Challenges</th>
     </tr>';
 
@@ -110,15 +110,26 @@ $converted_edate = strtotime($enddate);
 $final_sdate = date("Y-m-d H:i:s", $converted_sdate);
 $final_edate = date("Y-m-d H:i:s", $converted_edate);
 
-$row=$event->getDashRegionFigures($final_sdate,$final_edate);
+$row=$event->getReportRegionFigures($final_sdate,$final_edate);
 while ($row = $event->fetch()) {
-    $html .= '<tr>
-                <td>'.$row['regname'].'</td>';
-                
-    $html .= '<td bgcolor="#cccccc" align="center" colspan="2">A1 ex<i>amp</i>le <a href="http://www.tcpdf.org">link</a> column span. One two tree four five six seven eight nine ten.<br />line after br<br /><small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla<ol><li>first<ol><li>sublist</li><li>sublist</li></ol></li><li>second</li></ol><small color="#FF0000" bgcolor="#FFFF00">small small small small small small small small small small small small small small small small small small small small</small></td>';
+    $html .= '<tr>';
+    $html .= '<td>'.$row['regname'].'</td>';
 
-    $html .= '<td>4B</td>
-            </tr>';
+    // $subtable = '<table cellpadding="4">';
+    // $innerrow=$event->getReportEventsPerRegions($row['region'],$final_sdate,$final_edate);
+    // $i = 1;
+    // while ($innerrow = $event->fetch()){
+    //     $subtable .='<tr><td><b>'.$i.'</b>- '.$innerrow['eventtitle'].'</td></tr>';
+    //     $i++;
+    // }
+    // $subtable .='</table>';
+
+    // $html .= '<td>'.$subtable.'</td>';          
+    //$html .= '<td bgcolor="#cccccc" colspan="5"><table cellpadding="4" width="100%"><tr><td width="17%">1</td><td width="17%">2</td><td width="22%">3</td><td width="22%">4</td><td width="22%">5</td></tr></table></td>';
+
+    $html .= '</tr>';
+
+    $subtable='';
 }
 
 $html.='</table>';
