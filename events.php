@@ -76,6 +76,11 @@
 			return $this->query($strQuery);
 		}
 
+		function deleteTeamMembers($eventid){
+			$strQuery="delete from reportmembers where event_id='$eventid' ";
+			return $this->query($strQuery);
+		}
+
 		function denyEvent($eventid,$comments,$level){
 
 			if ($level == 2) {
@@ -286,6 +291,12 @@
 		function getReportwithEventid($event_id){
 
 			$strQuery="select team_challenges, complaints_raised, is_approved, event_summary, picture_paths, folder_paths, team_members, report_id, date_reported,verification_comments,nonapproval_comments from reports where event_id='$event_id' ";
+			return $this->query($strQuery);
+		}
+
+		function getTeamMembers($event_id){
+
+			$strQuery="select name from reportmembers where event_id='$event_id' ";
 			return $this->query($strQuery);
 		}
 

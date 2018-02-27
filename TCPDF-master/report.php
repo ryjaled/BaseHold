@@ -111,40 +111,38 @@ $converted_sdate = strtotime($startdate);
 $converted_edate = strtotime($enddate);
 $final_sdate = date("Y-m-d H:i:s", $converted_sdate);
 $final_edate = date("Y-m-d H:i:s", $converted_edate);
-$counts = array();
 $names = array();
-$restnames = array();
-
-$innerrow=$event->getDashRegionFigures($final_sdate,$final_edate);
-while ($innerrow = $event->fetch()) {
-    $counts[] = $innerrow['figures'];
-    $names[] = '<td rowspan="'.$innerrow['figures'].'">'.$innerrow['regname'].'</td>';
-}
+$htmlnames ='';
 
 $bgcolor_num = 0;
 
 $row=$event->getReportRegionFigures($final_sdate,$final_edate);
 while ($row = $event->fetch()) {
-    // if ($bgcolor_num == 0) {
-    //     $html .= '<tr>';
-    //     $bgcolor_num = 1;
-    // }else{
-    //     $html .= '<tr bgcolor="#cccccc">';
-    //     $bgcolor_num = 0;
-    // }
-    //$html .= '<td>'.$row['regname'].'</td><td>'.$row['eventtitle'].'</td><td>'.$row['team_members'].'</td><td>'.$row['complaints_raised'].'</td><td>'.$row['event_summary'].'</td><td>'.$row['team_challenges'].'</td>';
-    $restnames[] = '<td>'.$row['eventtitle'].'</td><td>'.$row['team_members'].'</td><td>'.$row['complaints_raised'].'</td><td>'.$row['event_summary'].'</td><td>'.$row['team_challenges'].'</td>';
-    //$html .= '</tr>';
-}
+    if ($bgcolor_num == 0) {
+        $html .= '<tr>';
+        $bgcolor_num = 1;
+    }else{
+        $html .= '<tr bgcolor="#cccccc">';
+        $bgcolor_num = 0;
+    }
+    $html .= '<td>'.$row['regname'].'</td><td>'.$row['eventtitle'].'</td>';
 
-for ($i=0; $i < count($names); $i++) { 
-    $html .= '<tr>';
-    for ($j=0; $j < count($restnames); $j++) { 
-        if ($i == $j) {
-            $html .= $names[$i].$restnames[$j];
+    $names = explode(",", $row['team_members']);
+
+    for ($i=0; $i < count($names); $i++) {   
+        if ($i == (count($names) - 1 )) {
+            $htmlnames .= $names[$i];
+        }else{
+            $htmlnames .= $names[$i].'<br>';
         }
     }
+
+    $html .= '<td>'.$htmlnames.'</td>';
+
+    $html .= '<td>'.$row['complaints_raised'].'</td><td>'.$row['event_summary'].'</td><td>'.$row['team_challenges'].'</td>';
+    //$restnames[] = '<td>'.$row['eventtitle'].'</td><td>'.$row['team_members'].'</td><td>'.$row['complaints_raised'].'</td><td>'.$row['event_summary'].'</td><td>'.$row['team_challenges'].'</td>';
     $html .= '</tr>';
+    $htmlnames ='';
 }
 
 $html.='</table>';
