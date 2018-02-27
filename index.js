@@ -24,7 +24,7 @@ $().ready(function () {
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[6, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -141,12 +141,12 @@ $().ready(function () {
   var dataTable7 = $('#level2reportlist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '15%' },
-      { "targets": 1, width: '20%' },
+      { "targets": 0, width: '20%' },
+      { "targets": 1, width: '15%' },
       { "targets": 2, width: '15%' },
-      { "targets": 3, width: '10%' },
+      { "targets": 3, width: '15%' },
       { "targets": 4, width: "10%" },
-      { "targets": 5, width: "10%" },
+      { "targets": 5, width: "5%" },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
