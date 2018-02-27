@@ -109,27 +109,40 @@ $converted_sdate = strtotime($startdate);
 $converted_edate = strtotime($enddate);
 $final_sdate = date("Y-m-d H:i:s", $converted_sdate);
 $final_edate = date("Y-m-d H:i:s", $converted_edate);
+$counts = array();
+$names = array();
+$restnames = array();
+
+$innerrow=$event->getDashRegionFigures($final_sdate,$final_edate);
+while ($innerrow = $event->fetch()) {
+    $counts[] = $innerrow['figures'];
+    $names[] = '<td rowspan="'.$innerrow['figures'].'">'.$innerrow['regname'].'</td>';
+}
+
+$bgcolor_num = 0;
 
 $row=$event->getReportRegionFigures($final_sdate,$final_edate);
 while ($row = $event->fetch()) {
-    $html .= '<tr>';
-    $html .= '<td>'.$row['regname'].'</td>';
-
-    // $subtable = '<table cellpadding="4">';
-    // $innerrow=$event->getReportEventsPerRegions($row['region'],$final_sdate,$final_edate);
-    // $i = 1;
-    // while ($innerrow = $event->fetch()){
-    //     $subtable .='<tr><td><b>'.$i.'</b>- '.$innerrow['eventtitle'].'</td></tr>';
-    //     $i++;
+    // if ($bgcolor_num == 0) {
+    //     $html .= '<tr>';
+    //     $bgcolor_num = 1;
+    // }else{
+    //     $html .= '<tr bgcolor="#cccccc">';
+    //     $bgcolor_num = 0;
     // }
-    // $subtable .='</table>';
+    //$html .= '<td>'.$row['regname'].'</td><td>'.$row['eventtitle'].'</td><td>'.$row['team_members'].'</td><td>'.$row['complaints_raised'].'</td><td>'.$row['event_summary'].'</td><td>'.$row['team_challenges'].'</td>';
+    $restnames[] = '<td>'.$row['eventtitle'].'</td><td>'.$row['team_members'].'</td><td>'.$row['complaints_raised'].'</td><td>'.$row['event_summary'].'</td><td>'.$row['team_challenges'].'</td>';
+    //$html .= '</tr>';
+}
 
-    // $html .= '<td>'.$subtable.'</td>';          
-    //$html .= '<td bgcolor="#cccccc" colspan="5"><table cellpadding="4" width="100%"><tr><td width="17%">1</td><td width="17%">2</td><td width="22%">3</td><td width="22%">4</td><td width="22%">5</td></tr></table></td>';
-
+for ($i=0; $i < count($names); $i++) { 
+    $html .= '<tr>';
+    for ($j=0; $j < count($restnames); $j++) { 
+        if ($i == $j) {
+            $html .= $names[$i].$restnames[$j];
+        }
+    }
     $html .= '</tr>';
-
-    $subtable='';
 }
 
 $html.='</table>';
