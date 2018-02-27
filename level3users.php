@@ -20,9 +20,9 @@ $requestData= $_REQUEST;
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'fname',
-	1 => 'lname',
-	2 => 'email',
+   0 => 'fname',
+   1 => 'lname',
+   2 => 'email',
    3 => 'region',
    4 => 'level',
    5 => 'status',
@@ -66,12 +66,12 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
       case '2':
          $level = 'Regional Manager';
          break;
-		  case '3':
- 	       $level = 'Project Manager';
- 	       break;
-			case '4':
-		 		$level = 'Management';
-		 		break;
+	case '3':
+ 	   $level = 'Project Manager';
+ 	   break;
+      case '4':
+         $level = 'Management';
+         break;
 
       default:
          $level = 'Officer';

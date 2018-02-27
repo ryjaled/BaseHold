@@ -18,23 +18,15 @@ $requestData= $_REQUEST;
 
 $id=$_REQUEST['usersessionid'];
 $constant = 1;
-// if (isset($_SESSION['levelid'])){
-// 	$id = $_SESSION['levelid'];
-// 	echo $id;
-// }
-
-// if (isset($_COOKIE['userlevelid'])){
-// 	$id = $_COOKIE['userlevelid'];
-// }
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'evemtttile',
-    1 => 'regionname',
-    2 => 'user',
-    3 => 'verified_timestamp',
-    4 => 'is_approved',
-    5 => 'event_id'
+  0 => 'evemtttile',
+  1 => 'regionname',
+  2 => 'user',
+  3 => 'verified_timestamp',
+  4 => 'is_approved',
+  5 => 'event_id'
 );
 
 // getting total number records without any search

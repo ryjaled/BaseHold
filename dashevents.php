@@ -19,10 +19,10 @@ $requestData= $_REQUEST;
 $columns = array(
 // datatable column index  => database column name
 	0 => 'evemtttile',
-    1 => 'regionname',
-    2 => 'town',
-    3 => 'date_reported',
-    4 => 'event_id'
+   1 => 'regionname',
+   2 => 'town',
+   3 => 'date_reported',
+   4 => 'event_id'
 );
 
 // getting total number records without any search
