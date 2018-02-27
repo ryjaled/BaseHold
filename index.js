@@ -24,7 +24,7 @@ $().ready(function () {
       {className: 'mdl-data-table__cell--non-numeric'},
     ],
     "responsive": true,
-    "order": [[6, "desc"]],
+    "order": [[2, "desc"]],
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -141,12 +141,12 @@ $().ready(function () {
   var dataTable7 = $('#level2reportlist').DataTable({
     "autoWidth": false,
     "columnDefs": [
-      { "targets": 0, width: '15%' },
-      { "targets": 1, width: '20%' },
+      { "targets": 0, width: '20%' },
+      { "targets": 1, width: '15%' },
       { "targets": 2, width: '15%' },
-      { "targets": 3, width: '10%' },
+      { "targets": 3, width: '15%' },
       { "targets": 4, width: "10%" },
-      { "targets": 5, width: "10%" },
+      { "targets": 5, width: "5%" },
       { className: 'mdl-data-table__cell--non-numeric' },
     ],
     "responsive": true,
@@ -327,9 +327,7 @@ $().ready(function () {
   $('#addpendingdateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
   $('#penddateselected').datetimepicker({ format: 'dddd, D MMMM Y' });
 
-  document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
-
-  document.getElementById('pendingverifyformdiv').appendChild = "<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='pendingadd(" + obj[0].report_id + ")' type='button' class='btn btn-success' id='addpendingConfirm' data-toggle='modal' data-target='#verifypendingEvent'>Save</button>";
+  //document.getElementById('verifyformdiv').appendChild="<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button><button onclick='verifier("+obj[0].report_id+","+obj[0].is_verified+")' type='button' class='btn btn-success' id='addConfirm' data-toggle='modal' data-target='#verifyEvent'>Verify</button>";
  
 });
 
@@ -1829,7 +1827,7 @@ function level1EditComplete(xhr,status){
   var obj = JSON.parse(xhr.responseText);
   console.log('LOOK HERE' , obj);
 
-  document.getElementById('RegisterValidationDoc').reset();
+  document.getElementById('EditRegisterValidationDoc').reset();
 
  
   UIkit.modal('#edit-modal-overflow').show();
@@ -2690,8 +2688,8 @@ function level2ViewComplete(xhr, status) {
     document.getElementById('epa').innerHTML = "Not approved yet.";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('epv').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('epa').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
+    document.getElementById('epv').innerHTML = moment(obj[0].verified_timestamp).format('D MMMM Y');
+    document.getElementById('epa').innerHTML = moment(obj[0].approved_timestamp).format('D MMMM Y');
   }
 
 

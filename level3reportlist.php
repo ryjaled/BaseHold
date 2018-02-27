@@ -18,18 +18,10 @@ $requestData= $_REQUEST;
 
 $id=$_REQUEST['usersessionid'];
 $constant = 1;
-// if (isset($_SESSION['levelid'])){
-// 	$id = $_SESSION['levelid'];
-// 	echo $id;
-// }
-
-// if (isset($_COOKIE['userlevelid'])){
-// 	$id = $_COOKIE['userlevelid'];
-// }
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'evemtttile',
+	 0 => 'eventtitle',
     1 => 'regionname',
     2 => 'town',
     3 => 'date_reported',
@@ -45,7 +37,8 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 // $sql = "select report_id, eventtitle, date_organized, region from reports where reporter = '$id'";
 $sql = "select e.event_id,e.eventtitle,s.date_reported,r.regionname,e.town,e.creator,s.report_id FROM events as e inner join region as r on r.region_id= e.region inner join reports as s on s.event_id = e.event_id WHERE s.is_approved ='1'";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-	$sql.=" AND eventtitle LIKE '".$requestData['search']['value']."%'";
+	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' ";
+	$sql.=" OR regionname LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("level3list.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.

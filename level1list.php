@@ -39,7 +39,7 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id' order by e.event_id DESC";
+$sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organized,e.is_verified,e.is_approved,e.is_reported,e.deny_status FROM events as e inner join region as r on r.region_id = e.region WHERE creator='$id' ";// order by e.event_id DESC
 $query=mysqli_query($conn, $sql) or die("level1list.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
@@ -48,11 +48,11 @@ $sql = "SELECT e.event_id,r.regionname as region,e.eventtitle,e.date_to_be_organ
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND eventtitle LIKE '".$requestData['search']['value']."%' ";
 }
-$sql.="order by e.event_id DESC";
+//$sql.="order by e.event_id DESC";
 
 $query=mysqli_query($conn, $sql) or die("level1list.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result. 
-//$sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir']." LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+$sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir']." LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 /* $requestData['order'][0]['column'] contains column index, $requestData['order'][0]['dir'] contains order such as asc/desc  */	
 $query=mysqli_query($conn, $sql) or die("level1list.php: get information2");
 
