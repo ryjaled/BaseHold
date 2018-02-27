@@ -2688,8 +2688,8 @@ function level2ViewComplete(xhr, status) {
     document.getElementById('epa').innerHTML = "Not approved yet.";
   }
   if ((obj[0].verified_timestamp != "") && (obj[0].approved_timestamp != "")) {
-    document.getElementById('epv').innerHTML = moment(moment(obj[0].verified_timestamp).format('D MMMM Y')).format('D MMMM Y');
-    document.getElementById('epa').innerHTML = moment(moment(obj[0].approved_timestamp).format('D MMMM Y')).format('D MMMM Y');
+    document.getElementById('epv').innerHTML = moment(obj[0].verified_timestamp).format('D MMMM Y');
+    document.getElementById('epa').innerHTML = moment(obj[0].approved_timestamp).format('D MMMM Y');
   }
 
 

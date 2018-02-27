@@ -21,9 +21,9 @@ $constant = 1;
 
 $columns = array(
 // datatable column index  => database column name
-  0 => 'evemtttile',
+  0 => 'eventtitle',
   1 => 'regionname',
-  2 => 'user',
+  2 => 'firstname',
   3 => 'verified_timestamp',
   4 => 'is_approved',
   5 => 'event_id'
@@ -40,6 +40,7 @@ $sql = "SELECT e.event_id,e.eventtitle,e.is_verified,e.verified_timestamp,e.is_a
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
   $sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR firstname LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR regionname LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR lastname LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("level3list.php: get information1");

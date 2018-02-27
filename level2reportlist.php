@@ -18,36 +18,27 @@ $requestData= $_REQUEST;
 
 $id=$_REQUEST['userregion'];
 
-// if (isset($_SESSION['levelid'])){
-// 	$id = $_SESSION['levelid'];
-// 	echo $id;
-// }
-
-// if (isset($_COOKIE['userlevelid'])){
-// 	$id = $_COOKIE['userlevelid'];
-// }
-
 $columns = array(
 // datatable column index  => database column name
     0 => 'eventtitle',
     1 => 'regionname',
-    2 => 'user',
+    2 => 'firstname',
     3 => 'date_reported',
     4 => 'is_approved',
     5 => 'report_id'
 );
 
 // getting total number records without any search
-$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id' ORDER BY r.date_reported DESC";
+$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id' ";
 $query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
-$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id'";
+$sql = "select e.eventtitle,e.creator,u.firstname,u.lastname,g.regionname, r.is_approved, r.date_reported, r.report_id ,r.event_id from reports as r inner join events as e on e.event_id = r.event_id inner join users as u on u.userid = e.creator inner join region as g on g.region_id = e.region where e.region = '$id' ";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( eventtitle LIKE '".$requestData['search']['value']."%' )";
 }
-$sql.=" ORDER BY r.date_reported DESC";
+//$sql.=" ORDER BY r.date_reported DESC";
 
 $query=mysqli_query($conn, $sql) or die("level2reportlist.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
@@ -99,7 +90,6 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
         $buttonshow = "<div class='dropdown'><button href='#' class='btn-simple btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='true'><b class='caret'></b></button><ul class='dropdown-menu'><li><a onclick='level2ReportView({$row['report_id']})' href='#'>View Report Details</a></li></ul></div>";
       }
 
-    //$nestedData[] = $row['event_id'];
 	  $nestedData[] = $buttonshow;
     $data[] = $nestedData;
     

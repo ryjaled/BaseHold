@@ -39,7 +39,7 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "select e.event_id, e.eventtitle, e.date_to_be_organized, r.regionname as region, u.firstname as user, u.lastname, e.is_verified, e.is_approved from events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where e.region = '$id' ORDER BY e.date_to_be_organized DESC";
+$sql = "select e.event_id, e.eventtitle, e.date_to_be_organized, r.regionname as region, u.firstname as user, u.lastname, e.is_verified, e.is_approved from events as e inner join region as r on r.region_id = e.region inner join users as u on u.userid = e.creator where e.region = '$id' ";
 $query=mysqli_query($conn, $sql) or die("level2list.php: get information0");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
@@ -50,7 +50,7 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
   $sql.=" OR firstname LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR lastname LIKE '".$requestData['search']['value']."%' )";
 }
-$sql.=" ORDER BY e.date_to_be_organized DESC";
+//$sql.=" ORDER BY e.date_to_be_organized DESC";
 
 $query=mysqli_query($conn, $sql) or die("level2list.php: get information1");
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
