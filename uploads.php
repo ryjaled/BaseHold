@@ -8,7 +8,9 @@ $uploads_dir = 'uploads';
 
 if(!is_dir($uploads_dir."/".$folder)) {
     $old = umask(0);
-    mkdir($uploads_dir."/".$folder, 0777);
+    mkdir($uploads_dir."/".$folder, 0777, true);
+	chmod($uploads_dir, 0777);
+	chmod($uploads_dir."/".$folder, 0777);
     umask($old);
 }
 
