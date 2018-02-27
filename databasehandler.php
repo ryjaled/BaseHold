@@ -333,6 +333,7 @@
 			$eventid=$_REQUEST['eventid'];
 			$verify=$event->deleteReportwithEventid($eventid);
 			$verify=$event->addNewReportEventUpdate($eventid,0);
+			$verify=$event->deleteTeamMembers($eventid);
 		}elseif (isset($_REQUEST['reportid'])) {
 			$reportid=$_REQUEST['reportid'];
 			$verify=$event->getAReport($reportid);
@@ -348,6 +349,8 @@
 			for ($i=0; $i < count($filess); $i++) { 
 				unlink('uploads/'.$folder.'/'.$filess[$i]);
 			}
+
+			$verify=$event->deleteTeamMembers($eventid);
 		}
 
 		if($verify==""){
