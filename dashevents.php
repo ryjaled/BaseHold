@@ -18,7 +18,7 @@ $requestData= $_REQUEST;
 
 $columns = array(
 // datatable column index  => database column name
-	0 => 'evemtttile',
+	0 => 'eventtitle',
    1 => 'regionname',
    2 => 'town',
    3 => 'date_reported',
