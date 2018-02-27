@@ -12,9 +12,9 @@ class emails{
 
 	function denyemail($title,$date,$email){
 		//Email portion of the code
-		$account="niimmartei@gmail.com";
-		$password="Flipper1mum&dad";
-		$from="outreach@nca.org.gh";
+		$account="nca.outreach.gh@gmail.com";
+		$password="NCAUser2018";
+		$from="nca.outreach.gh@gmail.com";
 		$from_name="Outreach Platform";
 		$subject="Outreach Report Denial";
 		$message="The Outreach Report Recieved for <b>".$title."</b> dated for <b>".$date."</b> was Rejected.<br> Please view in the Application</a>.<br> Thank you. ";
