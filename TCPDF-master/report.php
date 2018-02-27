@@ -43,6 +43,8 @@ while ($row = $user->fetch()) {
     $name = $row['firstname'].' '.$row['lastname'];	
 }
 
+$todaysdate = date("Y/m/d");
+
 // create new PDF document
 //$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -50,7 +52,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor($name);
-$pdf->SetTitle('Outreach Report By '.$name);
+$pdf->SetTitle($todaysdate.': Outreach Report By '.$name);
 $pdf->SetSubject('Report Page');
 $pdf->SetKeywords('Report, Page, Reports');
 
@@ -156,7 +158,7 @@ $pdf->lastPage();
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 //Close and output PDF document
-$pdf->Output('example_006.pdf', 'I');
+$pdf->Output($todaysdate.': Outreach Report By '.$name, 'I');
 
 //============================================================+
 // END OF FILE
