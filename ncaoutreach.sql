@@ -1,45 +1,29 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 22, 2018 at 11:18 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Feb 28, 2018 at 10:54 AM
+-- Server version: 5.5.42
+-- PHP Version: 5.6.10
 
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ncaoutreach`
 --
-CREATE DATABASE IF NOT EXISTS `ncaoutreach` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE ncaoutreach;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `audiences`
 --
--- Creation: Jan 24, 2018 at 04:23 PM
---
 
-DROP TABLE IF EXISTS `audiences`;
 CREATE TABLE `audiences` (
   `aud_id` int(11) NOT NULL,
   `aud_name` varchar(250) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `audiences`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audiences`
@@ -59,19 +43,12 @@ INSERT INTO `audiences` (`aud_id`, `aud_name`) VALUES
 --
 -- Table structure for table `cities`
 --
--- Creation: Jan 24, 2018 at 04:23 PM
---
 
-DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `city_id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `state_id` int(11) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `cities`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cities`
@@ -149,10 +126,7 @@ INSERT INTO `cities` (`city_id`, `name`, `state_id`) VALUES
 --
 -- Table structure for table `comments`
 --
--- Creation: Feb 22, 2018 at 08:13 AM
---
 
-DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
   `comment_id` int(10) NOT NULL,
   `event_id` int(11) NOT NULL,
@@ -160,19 +134,15 @@ CREATE TABLE `comments` (
   `action` enum('approve','deny','verify') NOT NULL,
   `comment_type` enum('event','report') NOT NULL,
   `commenter_id` int(11) NOT NULL,
-  `action_date` timestamp NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `comments`:
---
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `comments`
 --
 
 INSERT INTO `comments` (`comment_id`, `event_id`, `comment`, `action`, `comment_type`, `commenter_id`, `action_date`) VALUES
-(1, 53, 'done', 'verify', 'event', 4, '2018-02-22 08:14:09'),
+(1, 53, 'doneasdkjfnasdjfansdf ljadsnf ja askdjfn klasasdadasdasdasd asdaksjnd kjan dskja nd', 'verify', 'event', 4, '2018-02-22 10:55:35'),
 (2, 53, 'donneeee', 'approve', 'event', 3, '2018-02-22 08:14:20'),
 (3, 53, 'doneee', 'approve', 'report', 4, '2018-02-22 08:14:53'),
 (4, 54, 'nope', 'deny', 'event', 4, '2018-02-22 08:18:16'),
@@ -180,29 +150,47 @@ INSERT INTO `comments` (`comment_id`, `event_id`, `comment`, `action`, `comment_
 (6, 54, 'nopee', 'deny', 'event', 3, '2018-02-22 08:18:50'),
 (7, 54, 'yess', 'verify', 'event', 4, '2018-02-22 08:20:50'),
 (8, 54, 'yessss', 'approve', 'event', 3, '2018-02-22 08:21:00'),
-(9, 54, 'nopeee', 'deny', 'report', 4, '2018-02-22 08:21:31');
+(9, 54, 'nopeee', 'deny', 'report', 4, '2018-02-22 08:21:31'),
+(10, 55, 'verify this event', 'verify', 'event', 4, '2018-02-22 11:08:04'),
+(11, 55, 'no', 'deny', 'event', 3, '2018-02-22 11:09:11'),
+(12, 55, 'ni', 'verify', 'event', 4, '2018-02-22 11:10:32'),
+(13, 55, 'ni', 'approve', 'event', 3, '2018-02-22 11:10:39'),
+(14, 55, 'ok', 'approve', 'report', 4, '2018-02-22 11:12:08'),
+(15, 56, 'as', 'verify', 'event', 4, '2018-02-22 11:15:23'),
+(16, 56, 'a', 'approve', 'event', 3, '2018-02-22 11:15:43'),
+(17, 59, 'We are now verifed!', 'verify', 'event', 18, '2018-02-27 14:29:32'),
+(18, 58, 'this is the second verify', 'verify', 'event', 17, '2018-02-27 14:29:53'),
+(19, 57, 'this is rejection', 'deny', 'event', 4, '2018-02-27 14:30:03'),
+(20, 57, 'third verify', 'verify', 'event', 4, '2018-02-27 14:31:10'),
+(21, 57, 'first approve', 'approve', 'event', 3, '2018-02-27 14:31:58'),
+(22, 58, 'second approve', 'approve', 'event', 3, '2018-02-27 14:32:13'),
+(23, 59, 'third reject', 'deny', 'event', 3, '2018-02-27 14:32:24'),
+(24, 57, 'this report has been approved 1', 'approve', 'report', 4, '2018-02-27 14:38:39'),
+(25, 58, 'reject this report', 'deny', 'report', 17, '2018-02-27 14:38:49'),
+(26, 60, 'first verify', 'verify', 'event', 18, '2018-02-27 16:36:36'),
+(27, 61, 'second verify', 'verify', 'event', 17, '2018-02-27 16:36:50'),
+(28, 62, 'denying the third', 'deny', 'event', 4, '2018-02-27 16:37:02'),
+(29, 62, 'verify the third', 'verify', 'event', 4, '2018-02-27 16:37:57'),
+(30, 60, 'approve first', 'approve', 'event', 3, '2018-02-27 16:38:16'),
+(31, 61, 'approve second', 'approve', 'event', 3, '2018-02-27 16:38:33'),
+(32, 62, 'denying again', 'deny', 'event', 3, '2018-02-27 16:38:41'),
+(33, 61, 'approving the report', 'approve', 'report', 17, '2018-02-27 16:43:02'),
+(34, 60, 'denying report', 'deny', 'report', 18, '2018-02-27 16:43:16');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `eventlogs`
 --
--- Creation: Feb 05, 2018 at 01:31 PM
---
 
-DROP TABLE IF EXISTS `eventlogs`;
 CREATE TABLE `eventlogs` (
   `eventlog_id` int(11) NOT NULL,
   `event_title` varchar(30) NOT NULL,
   `user_id` int(11) NOT NULL,
   `action` varchar(30) NOT NULL,
-  `date` timestamp NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `region` int(11) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `eventlogs`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `eventlogs`
@@ -337,17 +325,52 @@ INSERT INTO `eventlogs` (`eventlog_id`, `event_title`, `user_id`, `action`, `dat
 (167, 'adf', 5, 'edited a future event', '2018-02-22 08:20:32', 2),
 (168, 'adf', 5, 'has verified an event: ', '2018-02-22 08:20:50', 2),
 (169, 'adf', 5, 'has approved an event: ', '2018-02-22 08:21:00', 2),
-(170, 'adf', 5, 'added a new report for: ', '2018-02-22 08:21:18', 2);
+(170, 'adf', 5, 'added a new report for: ', '2018-02-22 08:21:18', 2),
+(171, 'Some title', 5, 'added a future event', '2018-02-22 11:06:40', 2),
+(172, 'Some title', 5, 'has verified an event: ', '2018-02-22 11:08:04', 2),
+(173, 'Some title', 5, 'edited a future event', '2018-02-22 11:10:25', 2),
+(174, 'Some title', 5, 'has verified an event: ', '2018-02-22 11:10:32', 2),
+(175, 'Some title', 5, 'has approved an event: ', '2018-02-22 11:10:39', 2),
+(176, 'Some title', 5, 'added a new report for: ', '2018-02-22 11:11:17', 2),
+(177, 'Some title', 5, 'has approved a report: ', '2018-02-22 11:12:08', 2),
+(178, 'sd', 5, 'edited a future event', '2018-02-22 11:13:35', 2),
+(179, 'def', 5, 'added a future event', '2018-02-22 11:14:29', 5),
+(180, 'def', 5, 'edited a future event', '2018-02-22 11:14:43', 2),
+(181, 'def', 5, 'has verified an event: ', '2018-02-22 11:15:23', 2),
+(182, 'def', 5, 'has approved an event: ', '2018-02-22 11:15:43', 2),
+(183, 'Brian event', 5, 'added a future event', '2018-02-27 14:24:03', 5),
+(184, 'Ryan Event', 5, 'added a future event', '2018-02-27 14:24:47', 2),
+(185, 'Osman Event', 5, 'added a future event', '2018-02-27 14:25:32', 1),
+(186, 'Osman Event', 5, 'has verified an event: ', '2018-02-27 14:29:32', 1),
+(187, 'Ryan Event', 5, 'has verified an event: ', '2018-02-27 14:29:53', 2),
+(188, 'New Brian event', 5, 'edited a future event', '2018-02-27 14:30:29', 5),
+(189, 'New Brian event', 5, 'has verified an event: ', '2018-02-27 14:31:10', 5),
+(190, 'New Brian event', 5, 'has approved an event: ', '2018-02-27 14:31:58', 5),
+(191, 'Ryan Event', 5, 'has approved an event: ', '2018-02-27 14:32:13', 2),
+(192, 'Osman Event', 5, 'edited a future event', '2018-02-27 14:34:31', 1),
+(193, 'New Brian event', 5, 'added a new report for: ', '2018-02-27 14:35:42', 5),
+(194, 'Ryan Event', 5, 'added a new report for: ', '2018-02-27 14:36:19', 2),
+(195, 'New Brian event', 5, 'has approved a report: ', '2018-02-27 14:38:39', 5),
+(196, 'First event', 5, 'added a future event', '2018-02-27 16:31:38', 1),
+(197, 'Second event', 5, 'added a future event', '2018-02-27 16:33:05', 2),
+(198, 'Third event', 5, 'added a future event', '2018-02-27 16:33:28', 5),
+(199, 'First event', 5, 'edited a future event', '2018-02-27 16:35:43', 1),
+(200, 'First event', 5, 'has verified an event: ', '2018-02-27 16:36:36', 1),
+(201, 'Second event', 5, 'has verified an event: ', '2018-02-27 16:36:50', 2),
+(202, 'Third event', 5, 'edited a future event', '2018-02-27 16:37:44', 5),
+(203, 'Third event', 5, 'has verified an event: ', '2018-02-27 16:37:57', 5),
+(204, 'First event', 5, 'has approved an event: ', '2018-02-27 16:38:16', 1),
+(205, 'Second event', 5, 'has approved an event: ', '2018-02-27 16:38:33', 2),
+(206, 'First event', 5, 'added a new report for: ', '2018-02-27 16:39:39', 1),
+(207, 'Second event', 5, 'added a new report for: ', '2018-02-27 16:42:34', 2),
+(208, 'Second event', 5, 'has approved a report: ', '2018-02-27 16:43:02', 2);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `events`
 --
--- Creation: Feb 21, 2018 at 02:09 PM
---
 
-DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
   `eventtitle` varchar(1000) NOT NULL,
@@ -370,13 +393,7 @@ CREATE TABLE `events` (
   `is_reported` int(11) NOT NULL DEFAULT '0',
   `misc_reasons` varchar(150) NOT NULL,
   `deny_status` int(10) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `events`:
---   `creator`
---       `users` -> `userid`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `events`
@@ -385,28 +402,29 @@ CREATE TABLE `events` (
 INSERT INTO `events` (`event_id`, `eventtitle`, `eventtopic`, `date_to_be_organized`, `region`, `town`, `logistics`, `mode_of_outreach`, `audience_category`, `expected_audience_attendance`, `is_verified`, `is_approved`, `nonapproval_comments`, `verification_comments`, `approved_comments`, `creator`, `verified_timestamp`, `approved_timestamp`, `is_reported`, `misc_reasons`, `deny_status`) VALUES
 (49, 'sdf', 'sd', '2018-02-21 00:00:00', '2', 'sd', 'Pen(s),', 'Durbar,', 'Schools', '23', 1, 1, '', 'sd', 'sd', 5, '2018-02-21 10:55:07', '2018-02-21 10:58:10', 1, '', 0),
 (50, 'sd', 'sd', '2018-02-17 00:00:00', '2', 'sd', 'Notepad(s),', 'Road Show,', 'Religious Bodies', '3', 1, 1, 'sd', 'sd', 'd', 5, '2018-02-21 12:29:32', '2018-02-21 12:29:40', 1, '', 1),
-(51, 'sd', 'fdf', '2018-02-07 00:00:00', '2', 'ad', 'Notepad(s),', 'Durbar,', 'Corporate', '33', 2, 2, 'sd', '', '', 5, '', '', 0, '', 0),
-(52, '23', 'dfdsf', '2018-02-23 00:00:00', '2', 'adf', 'Mug(s),', 'Durbar,', 'Communities', '23', 1, 1, '', 'sds', '', 5, '2018-02-22 08:42:21', '2018-02-22 08:43:22', 1, '', 1),
+(51, 'sd', 'fdf', '2018-02-07 00:00:00', '2', 'ad', 'Bus(es),Sound System(s),', 'PowerPoint Presentation,One-on-one,Durbar,', 'Corporate', '33', 0, 0, 'sd', '', '', 5, '', '', 0, '', 0),
+(52, '23', 'dfdsf', '2018-02-23 00:00:00', '2', 'adf', 'Mug(s),', 'Durbar,', 'Communities', '23', 1, 1, '', 'sds', '', 5, '2018-02-22 08:42:21', '2018-02-22 08:43:22', 0, '', 0),
 (53, '3', 'sd', '2018-02-24 00:00:00', '2', 'ds', 'Sound System(s),', 'Road Show,', 'Corporate', '12', 1, 1, '', 'done', 'donneeee', 5, '2018-02-22 09:14:09', '2018-02-22 09:14:20', 1, '', 0),
-(54, 'adf', 'adf', '2018-02-25 00:00:00', '2', 'ad', 'T-shirt(s),', 'Durbar,', 'Communities', '23', 1, 1, 'nopee', 'yess', 'yessss', 5, '2018-02-22 09:20:50', '2018-02-22 09:21:00', 1, '', 1);
+(54, 'adf', 'adf', '2018-02-25 00:00:00', '2', 'ad', 'T-shirt(s),', 'Durbar,', 'Communities', '23', 1, 1, 'nopee', 'yess', 'yessss', 5, '2018-02-22 09:20:50', '2018-02-22 09:21:00', 0, '', 0),
+(55, 'Some title', 'topics', '2018-02-23 00:00:00', '2', 'a town', 'Bus(es),Sound System(s),', 'PowerPoint Presentation,One-on-one,', 'Artisans', '33', 1, 1, 'no', 'ni', 'ni', 5, '2018-02-22 12:10:32', '2018-02-22 12:10:39', 1, '', 0),
+(56, 'def', 'asas', '2018-02-25 00:00:00', '2', 'as', 'Bus(es),Sound System(s),Mug(s),', 'PowerPoint Presentation,One-on-one,Durbar,', 'Communities', '43', 1, 1, '', 'as', 'a', 20, '2018-02-22 12:15:23', '2018-02-22 12:15:43', 0, 'something', 0),
+(57, 'New Brian event', 'Topics to be discussed', '2018-02-27 00:00:00', '5', 'Town', 'Bus(es),Sound System(s),', 'PowerPoint Presentation,One-on-one,', 'Religious Bodies', '1', 1, 1, 'this is rejection', 'third verify', 'first approve', 5, '2018-02-27 15:31:10', '2018-02-27 15:31:58', 1, '', 0),
+(58, 'Ryan Event', 'topics', '2018-02-27 00:00:00', '2', 'Town2', 'T-shirt(s),Notepad(s),', 'Road Show,Durbar,', 'Communities', '2', 1, 1, '', 'this is the second verify', 'second approve', 5, '2018-02-27 15:29:53', '2018-02-27 15:32:13', 1, '', 1),
+(59, 'Osman Event', 'topic3', '2018-02-27 00:00:00', '1', 'Town3', 'Bus(es),Sound System(s),Tape Measure(s),Towel(s),T-shirt(s),', 'PowerPoint Presentation,One-on-one,Small group meeting,', 'Corporate', '3', 0, 0, 'third reject', '', '', 5, '', '', 0, '', 0),
+(60, 'First event', 'topics', '2018-02-27 00:00:00', '1', 'ashanti', 'Bus(es),Sound System(s),Pen(s),Towel(s),Mug(s),', 'PowerPoint Presentation,One-on-one,Durbar,Small group meeting,', 'Artisans', '12', 1, 1, '', 'first verify', 'approve first', 5, '2018-02-27 17:36:36', '2018-02-27 17:38:16', 1, '', 1),
+(61, 'Second event', 'topic', '2018-02-27 00:00:00', '2', 'brong town', 'Bus(es),Sound System(s),', 'Road Show,Durbar,Small group meeting,', 'Corporate', '32', 1, 1, '', 'second verify', 'approve second', 5, '2018-02-27 17:36:50', '2018-02-27 17:38:33', 1, '', 0),
+(62, 'Third event', 'topic', '2018-02-27 00:00:00', '5', 'Greater town', 'Bus(es),Sound System(s),Flyer(s),Pen(s),', 'PowerPoint Presentation,One-on-one,Durbar,', 'Schools', '23', 1, 2, 'denying again', '', '', 5, '', '', 0, '', 0);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `region`
 --
--- Creation: Jan 24, 2018 at 04:23 PM
---
 
-DROP TABLE IF EXISTS `region`;
 CREATE TABLE `region` (
   `region_id` int(10) NOT NULL,
   `regionname` varchar(40) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `region`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `region`
@@ -429,22 +447,13 @@ INSERT INTO `region` (`region_id`, `regionname`) VALUES
 --
 -- Table structure for table `reportmembers`
 --
--- Creation: Feb 08, 2018 at 09:34 AM
---
 
-DROP TABLE IF EXISTS `reportmembers`;
 CREATE TABLE `reportmembers` (
   `report_members_id` int(10) NOT NULL,
   `event_id` int(10) NOT NULL,
   `role` varchar(20) NOT NULL,
   `name` varchar(30) NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `reportmembers`:
---   `event_id`
---       `reports` -> `report_id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reportmembers`
@@ -460,17 +469,24 @@ INSERT INTO `reportmembers` (`report_members_id`, `event_id`, `role`, `name`) VA
 (77, 50, '', 'sd'),
 (78, 52, '', 'df'),
 (79, 53, '', 'sd'),
-(80, 54, '', 'sd');
+(80, 54, '', 'sd'),
+(81, 55, '', 'hg'),
+(82, 55, '', 'kj'),
+(83, 57, '', 'Brian Martey'),
+(84, 57, '', ' Ryan Moujaled'),
+(85, 58, '', 'Ryan Moujaled'),
+(86, 58, '', ' Brian Martey'),
+(87, 60, '', 'Ryan'),
+(88, 60, '', ' Brian'),
+(89, 61, '', 'Ryan'),
+(90, 61, '', ' Brian');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `reports`
 --
--- Creation: Feb 19, 2018 at 02:12 PM
---
 
-DROP TABLE IF EXISTS `reports`;
 CREATE TABLE `reports` (
   `report_id` int(11) NOT NULL,
   `event_id` int(10) NOT NULL,
@@ -480,18 +496,12 @@ CREATE TABLE `reports` (
   `verification_comments` varchar(2000) NOT NULL,
   `nonapproval_comments` varchar(150) NOT NULL,
   `event_summary` varchar(2000) NOT NULL,
-  `picture_paths` varchar(55000) NOT NULL,
+  `picture_paths` mediumtext NOT NULL,
   `folder_paths` varchar(250) NOT NULL,
   `team_members` varchar(300) NOT NULL,
-  `date_reported` timestamp NOT NULL,
+  `date_reported` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `verified_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `reports`:
---   `event_id`
---       `events` -> `event_id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reports`
@@ -500,30 +510,26 @@ CREATE TABLE `reports` (
 INSERT INTO `reports` (`report_id`, `event_id`, `team_challenges`, `complaints_raised`, `is_approved`, `verification_comments`, `nonapproval_comments`, `event_summary`, `picture_paths`, `folder_paths`, `team_members`, `date_reported`, `verified_timestamp`) VALUES
 (159, 49, 'sd', 'sd', 1, 'fg', '', 'sd', '[\"9uRzYv4.jpg\"]', '5_49', 's', '2018-02-21 10:21:41', '2018-02-21 11:21:52'),
 (164, 50, 'sd', 'sd', 2, '', 'hi', 'sd', '[\"3.jpg\"]', '5_50', 'sd', '2018-02-21 15:17:10', '0000-00-00 00:00:00'),
-(165, 52, 'df', 'sd', 2, '', 'k', 'df', '[\"9uRzYv4.jpg\"]', '5_52', 'df', '2018-02-22 07:44:05', '0000-00-00 00:00:00'),
 (166, 53, 'df', 'ds', 1, 'doneee', '', 'df', '[\"1920x1080-px-global-warming-minimalism-1227340-wallhere.com.jpg\"]', '5_53', 'sd', '2018-02-22 08:14:40', '2018-02-22 09:14:53'),
-(167, 54, 'sd', 'd', 2, '', 'nopeee', 'sd', '[]', '5_54', 'sd', '2018-02-22 08:21:18', '0000-00-00 00:00:00');
+(168, 55, 'dfsfsdf', 'sdfsdf', 1, 'ok', '', 'nn', '[\"skyback.psd\",\"titleimageback.jpg\"]', '5_55', 'hg,kj', '2018-02-22 11:12:08', '2018-02-22 12:12:08'),
+(169, 57, 'some challenges1', 'some complaints1', 1, 'this report has been approved 1', '', 'some observations1', '[\"NCA.png\",\"NCA1.png\"]', '5_57', 'Brian Martey, Ryan Moujaled', '2018-02-27 14:38:39', '2018-02-27 15:38:39'),
+(170, 58, 'some challenge 2', 'some complaints 2', 2, '', 'reject this report', 'some observation2', '[\"dbtreesPhotoxpress_9939515.jpg\",\"sky_stars_background_points_85061_3840x1200.jpg\"]', '5_58', 'Ryan Moujaled, Brian Martey', '2018-02-27 14:38:49', '0000-00-00 00:00:00'),
+(171, 60, 'some challenges', 'some complaits', 2, '', 'denying report', 'some observations', '[\"NCA.png\",\"NCA1.png\"]', '5_60', 'Ryan, Brian', '2018-02-27 16:43:16', '0000-00-00 00:00:00'),
+(172, 61, 'some challenges 2', 'some complaints 2', 1, 'approving the report', '', 'some observations 2', '[\"dbtreesPhotoxpress_9939515.jpg\",\"sky_background_with_sun1-.jpg\"]', '5_61', 'Ryan, Brian', '2018-02-27 16:43:02', '2018-02-27 17:43:02');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `userlogs`
 --
--- Creation: Jan 24, 2018 at 04:23 PM
---
 
-DROP TABLE IF EXISTS `userlogs`;
 CREATE TABLE `userlogs` (
   `userlog_id` int(11) NOT NULL,
   `acted_id` int(11) NOT NULL,
   `acted_on_id` int(11) NOT NULL,
   `action` varchar(30) NOT NULL,
-  `date` timestamp NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `userlogs`:
---
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `userlogs`
@@ -542,10 +548,7 @@ INSERT INTO `userlogs` (`userlog_id`, `acted_id`, `acted_on_id`, `action`, `date
 --
 -- Table structure for table `users`
 --
--- Creation: Jan 24, 2018 at 04:23 PM
---
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userid` int(100) NOT NULL,
   `firstname` varchar(300) NOT NULL,
@@ -555,11 +558,7 @@ CREATE TABLE `users` (
   `region` int(10) NOT NULL,
   `level` varchar(300) NOT NULL,
   `status` enum('active','inactive') NOT NULL
-) ;
-
---
--- RELATIONSHIPS FOR TABLE `users`:
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -569,11 +568,11 @@ INSERT INTO `users` (`userid`, `firstname`, `lastname`, `email`, `password`, `re
 (1, 'Admin5', 'Account5', 'admin5@nca.org.gh', '26a91342190d515231d7238b0c5438e1', 2, '5', 'active'),
 (2, 'Admin4', 'Account4', 'admin4@nca.org.gh', 'fc1ebc848e31e0a68e868432225e3c82', 1, '4', 'active'),
 (3, 'Admin3', 'Account3', 'admin3@nca.org.gh', '32cacb2f994f6b42183a1300d9a3e8d6', 3, '3', 'active'),
-(4, 'Admin2', 'Account2', 'admin2@nca.org.gh', 'c84258e9c39059a89ab77d846ddab909', 2, '2', 'active'),
+(4, 'Admin2', 'Account2', 'admin2@nca.org.gh', 'c84258e9c39059a89ab77d846ddab909', 5, '2', 'active'),
 (5, 'Admin1', 'Account1', 'brian.martey@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 7, '1', 'active'),
 (16, 'Brian ', 'Martey', 'bm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '1', 'active'),
-(17, 'Brian1', 'MArtey', 'bnmm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 3, '2', 'active'),
-(18, 'BB', 'Martey', 'bnmm1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '2', 'active'),
+(17, 'Brian1', 'MArtey', 'bnmm@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 2, '2', 'active'),
+(18, 'BB', 'Guy', 'bnmm1@nca.org.gh', 'e00cf25ad42683b3df678c61f42c6bda', 1, '2', 'active'),
 (19, 'daf', 'df', 'bnmm@nca.org.gh', 'c84258e9c39059a89ab77d846ddab909', 4, '2', 'active'),
 (20, 'ryan', 'moujaled', 'ryan@nca.org.gh', '10c7ccc7a4f0aff03c915c485565b9da', 2, '1', 'active');
 
@@ -649,53 +648,58 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `audiences`
 --
 ALTER TABLE `audiences`
-  MODIFY `aud_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `aud_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20432;
+
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
 --
 -- AUTO_INCREMENT for table `eventlogs`
 --
 ALTER TABLE `eventlogs`
-  MODIFY `eventlog_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `eventlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+
 --
 -- AUTO_INCREMENT for table `region`
 --
 ALTER TABLE `region`
-  MODIFY `region_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `region_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `reportmembers`
 --
 ALTER TABLE `reportmembers`
-  MODIFY `report_members_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `report_members_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
 --
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+
 --
 -- AUTO_INCREMENT for table `userlogs`
 --
 ALTER TABLE `userlogs`
-  MODIFY `userlog_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userlog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT;COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `userid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
