@@ -1992,6 +1992,7 @@ function level1ViewComplete(xhr, status) {
   document.getElementById('town').innerHTML = obj[0].town;
   document.getElementById('audience_category').innerHTML = obj[0].audience_category;
   document.getElementById('audience_attendance').innerHTML = obj[0].expected_audience_attendance;
+  document.getElementById('event_topics').innerHTML = obj[0].eventtopic;
   var logistics = obj[0].logistics;
   var strlenLogistics = obj[0].logistics.length;
 
@@ -2000,23 +2001,24 @@ function level1ViewComplete(xhr, status) {
   var logisticsView = obj[0].logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
+    if(logisticsView[i] != ""){
         tabledata = "<tr>"+
-        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
+        "<td style='text-transform: uppercase'> "+(i+1)+". "+logisticsView[i]+"</td>"+
         "</tr>";
     $('#logisticsTable').append(tabledata);
-
+    }
 
   }
 
   var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
-       
+    if(modeOfOutreachView[i] != ""){
           tabledata = "<tr>"+
-          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "<td style='text-transform: uppercase'> "+(i+1)+". "+modeOfOutreachView[i]+"</td>"+
           "</tr>";
         $('#modeTable').append(tabledata);
-
+    }
 
   }
 
@@ -2311,6 +2313,11 @@ function level1ReportViewComplete(xhr, status) {
   document.getElementById('report_town_1').innerHTML = obj.town;
   document.getElementById('report_audience_category_1').innerHTML = obj.audience_category;
   document.getElementById('report_audience_attendance_1').innerHTML = obj.expected_audience_attendance;
+  document.getElementById('event_topic2').innerHTML = obj.eventtopic;
+  document.getElementById('members').innerHTML = obj.team_members;
+
+
+
   var logistics = obj.logistics;
   var strlenLogistics = obj.logistics.length;
 
@@ -2320,11 +2327,12 @@ function level1ReportViewComplete(xhr, status) {
   var logisticsView = obj.logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
+    if(logisticsView[i] != ""){
         tabledata = "<tr>"+
-        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
+        "<td style='text-transform: uppercase'> "+(i+1)+". "+logisticsView[i]+"</td>"+
         "</tr>";
     $('#report_logisticsTable_1').append(tabledata);
-
+    }
 
   }
 
@@ -2332,11 +2340,12 @@ function level1ReportViewComplete(xhr, status) {
   var modeOfOutreachView = obj.mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
-       
+    if(modeOfOutreachView[i] != ""){
           tabledata = "<tr>"+
-          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "<td style='text-transform: uppercase'> "+(i+1)+". "+modeOfOutreachView[i]+"</td>"+
           "</tr>";
         $('#report_modeTable_1').append(tabledata);
+    }
 
   }
 
@@ -2628,28 +2637,30 @@ function level2ViewComplete(xhr, status) {
   document.getElementById('town').innerHTML=obj[0].town;
   document.getElementById('audience_category').innerHTML=obj[0].audience_category;
   document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
-  
+  document.getElementById('event_topic2modal').innerHTML=obj[0].eventtopic;
+
 
   var logisticsView = obj[0].logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
+    if(logisticsView[i] != ""){
         tabledata = "<tr>"+
-        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
+        "<td style='text-transform: uppercase'> "+(i+1)+". "+logisticsView[i]+"</td>"+
         "</tr>";
     $('#logisticsTable').append(tabledata);
-
+    }
 
   }
 
   var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
-       
+    if(modeOfOutreachView[i] != ""){
           tabledata = "<tr>"+
-          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "<td style='text-transform: uppercase'> "+(i+1)+". "+modeOfOutreachView[i]+"</td>"+
           "</tr>";
         $('#modeTable').append(tabledata);
-
+    }
 
   }
 
@@ -2792,6 +2803,8 @@ function level2ReportViewComplete(xhr, status) {
   document.getElementById('report_town_2').innerHTML = obj[0].town;
   document.getElementById('report_audience_category_2').innerHTML = obj[0].audience_category;
   document.getElementById('report_audience_attendance_2').innerHTML = obj[0].expected_audience_attendance;
+  document.getElementById('event_topicsreport2').innerHTML = obj[0].eventtopic;
+  document.getElementById('membersrepo2').innerHTML = obj[0].team_members;
   var logistics = obj[0].logistics;
   var strlenLogistics = obj[0].logistics.length;
 
@@ -2800,24 +2813,25 @@ function level2ReportViewComplete(xhr, status) {
   var logisticsView = obj[0].logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
-        tabledata = "<tr>"+
-        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
-        "</tr>";
-    $('#report_logisticsTable_2').append(tabledata);
-
-
+    if(logisticsView[i] != ""){
+      tabledata = "<tr>"+
+      "<td style='text-transform: uppercase'> "+(i+1)+". "+logisticsView[i]+"</td>"+
+      "</tr>";
+     $('#report_logisticsTable_2').append(tabledata);
+    }
+      
   }
 
   $('#report_modeTable_2').html("");
   var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
-       
+    if(modeOfOutreachView[i] != ""){
           tabledata = "<tr>"+
-          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "<td style='text-transform: uppercase'> "+(i+1)+". "+modeOfOutreachView[i]+"</td>"+
           "</tr>";
         $('#report_modeTable_2').append(tabledata);
-
+    }
   }
 
 
@@ -3142,15 +3156,19 @@ function level3ViewComplete(xhr, status) {
   document.getElementById('town').innerHTML=obj[0].town;
   document.getElementById('audience_category').innerHTML=obj[0].audience_category;
   document.getElementById('audience_attendance').innerHTML=obj[0].expected_audience_attendance;
+  document.getElementById('event_topicslevel3').innerHTML=obj[0].eventtopic;
   
 
   var logisticsView = obj[0].logistics.split(',');
   for(var i = 0; i < logisticsView.length; i++){
 
-        tabledata = "<tr>"+
-        "<td style='text-transform: uppercase'>"+logisticsView[i]+"</td>"+
-        "</tr>";
-    $('#logisticsTable').append(tabledata);
+    if(logisticsView[i] != ""){
+      tabledata = "<tr>"+
+      "<td style='text-transform: uppercase'> "+(i+1)+". "+logisticsView[i]+"</td>"+
+      "</tr>";
+  $('#logisticsTable').append(tabledata);
+    }
+       
 
 
   }
@@ -3158,12 +3176,12 @@ function level3ViewComplete(xhr, status) {
   var modeOfOutreachView = obj[0].mode_of_outreach.split(',');
   for(var i = 0; i < modeOfOutreachView.length; i++){
 
-       
+    if(modeOfOutreachView[i] != ""){
           tabledata = "<tr>"+
-          "<td style='text-transform: uppercase'>"+modeOfOutreachView[i]+"</td>"+
+          "<td style='text-transform: uppercase'> "+(i+1)+". "+modeOfOutreachView[i]+"</td>"+
           "</tr>";
         $('#modeTable').append(tabledata);
-
+    }
 
   }
 
