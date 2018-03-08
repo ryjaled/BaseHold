@@ -2976,6 +2976,9 @@ function reportApprover(id, verifyCheck, approveCheck) {
 }
 
 function verifier(id, verifyCheck, approveCheck) {
+  if (approveCheck == 2) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
+  }
   if (approveCheck == 1) {
     $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button>");
   }
@@ -2984,6 +2987,9 @@ function verifier(id, verifyCheck, approveCheck) {
   }
   if ((approveCheck == 0) && (verifyCheck == 1)) {
     $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>UnVerify</button>");
+  }
+  if ((approveCheck == 0) && (verifyCheck == 2)) {
+    $('#verifyformdivbuttons').html("<button class='uk-button uk-button-default uk-modal-close' type='button'>Cancel</button><button onclick='verifyEventToggle(" + id + "," + verifyCheck + ")' class='uk-button uk-button-default uk-modal-close' type='button' style='background-color: green; color: white;'>Undo Reject</button>");
   }
 }
 
