@@ -1278,7 +1278,7 @@
 
 		 $event->addComments($eventid,$approveComments,'approve','event',$commenter_id);
 
-		 $log->addEventApproveLog($eventtitle,$reporter,"has approved an event: ", $region);
+		 $log->addEventApproveLog($eventtitle,$commenter_id,"has approved an event: ", $region);
 
 		 echo json_encode($approve);
 
@@ -1311,7 +1311,7 @@
 
 		 $event->addComments($eventid,$verificationComments,'approve','report',$commenter_id);
 
-		 $log->addEventApproveLog($eventtitle,$reporter,"has approved a report: ", $region);
+		 $log->addEventApproveLog($eventtitle,$commenter_id,"has approved a report: ", $region);
 		 echo json_encode($approval);
 
 	}
@@ -1344,7 +1344,7 @@
 
 		$event->addComments($eventid,$commentToVerify,'verify','event',$commenter_id);
 
-		$log->addEventVerifyLog($eventtitle,$reporter,"has verified an event: ", $region);
+		$log->addEventVerifyLog($eventtitle,$commentor_id,"has verified an event: ", $region);
 
 		echo json_encode($isVerify);
 
