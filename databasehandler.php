@@ -1242,6 +1242,25 @@
 
 	}
 
+	function resetPassword(){
+
+		 include("users.php");
+		 $user = new users();
+
+	 	 $myemail = $_REQUEST['myemail'];
+	 	 $confirmednewpassword = 
+
+	 	 $validation = $user->updatepassword($myemail,$confirmednewpassword);
+		 
+		 if($validation==false){
+				echo '{"result":0,"message":"Validation failed"}';
+		 }
+		 else{
+			 echo json_encode($validation);
+		 }
+
+	}
+
 	function transposeData($data){
 		$retData = array();
 			foreach ($data as $row => $columns) {
