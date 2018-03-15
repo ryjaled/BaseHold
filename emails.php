@@ -43,5 +43,38 @@ class emails{
 		}
 	}
 
+	function passresetemail($newpass,$email){
+		//Email portion of the code
+		$account="nca.outreach.gh@gmail.com";
+		$password="NCAUser2018";
+		$from="nca.outreach.gh@gmail.com";
+		$from_name="Outreach Platform";
+		$subject="Password Reset";
+		$message="Your New Password is: <b>".$newpass."</b>";
+
+		$mail = new PHPMailer;
+		$mail->IsSMTP();
+		$mail->CharSet = 'UTF-8';
+	    $mail->Host = "smtp.gmail.com";
+		$mail->SMTPAuth= true;
+		$mail->Port = 465; //587;
+		$mail->Username= $account;
+		$mail->Password= $password;
+		$mail->SMTPSecure = 'ssl';// 'tls';
+		$mail->From = $from;
+	    $mail->FromName= $from_name;
+		$mail->addAddress($email);	  
+		$mail->isHTML(true);                                 
+		$mail->Subject = $subject;
+		$mail->Body    = $message;
+
+		if(!$mail->send()) {
+		    echo 'Message could not be sent.';
+		    echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+		    echo 'Message has been sent. ';
+		}
+	}
+
 }
 ?>
