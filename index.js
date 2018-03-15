@@ -4116,3 +4116,39 @@ function searchdash() {
 /////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 4 FUNCTIONALITY///////////////////////////////////////
+
+
+function forgotPassword(){
+  alert("Her!");
+  window.location="newpassword.html";
+}
+
+function passwordResetter(){
+
+  var sendEmail = $('#useremailreset').val();
+
+  var theUrl = "databasehandler.php?cmd=39&myemail=" + sendEmail;
+  
+      $.ajax(theUrl,
+        {
+          async: true,
+          complete: passwordResetterComplete
+        });
+
+
+}
+
+function passwordResetterComplete(xhr,status){
+  $.notify({
+    icon: "info_outline",
+    message: "A new password will be sent to the email you entered shortly. Please use it to login."
+
+  }, {
+      type: 'success',
+      timer: 3000,
+      placement: {
+        from: 'top',
+        align: 'right'
+      }
+    });
+}
