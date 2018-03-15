@@ -86,7 +86,7 @@
 </head>
 
 <body onload="welcomeToHomeLevel1()">
-    <img src="images/outreachbanner.png" class="w3-border" alt="NCA Icon" style="width: 100%;">
+    <img src="images/outreachbannerfixed.png" class="w3-border" alt="NCA Icon" style="width: 100%;">
 
     <div class="wrapper wrapper-full-page">
 
@@ -109,7 +109,7 @@
                         Add an event or add a report, as well as view events you have created.
                       </div>
 
-
+                      <br/>
 
                     <div class="card card-login card-hidden card-nav-tabs">
                             <div class="header" style="background-color:#424242">
@@ -181,7 +181,7 @@
                                                 <input type="password" id="confirmednewpassword" name="addpendingtitle" class="form-control" name="title" type="text" required="true" />
                                             </div>
 
-                                            <button  id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="passwordreset()">Reset Passowrd</button>
+                                            <button  id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="passwordreset(event)">Reset Passowrd</button>
                                           </div>
 
 
@@ -390,8 +390,8 @@
                                                     <small>(required)</small> - Required fields</div>
 
 
-                                                <button type="submit" class="btn btn-default pull-left" onclick="clearaddfield()">Clear Fields</button>
-                                                <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="addnewevent()">Submit Event</button>
+                                                <button type="submit" class="btn btn-default pull-left" onclick="clearaddfield(event)">Clear Fields</button>
+                                                <button id="addeventinfo" type="submit" class="btn btn-twitter pull-right" onclick="addnewevent(event)">Submit Event</button>
                                             </div>
                                         </form>
 
@@ -1073,7 +1073,7 @@
 
 
                                 <button type="submit" class="btn btn-default pull-left" onclick="clearaddfield()">Clear Fields</button>
-                                <button id="addediteventinfo" type="submit" class="btn btn-twitter pull-right" onclick="editNewEvent()">Edit Event</button>
+                                <button id="addediteventinfo" type="submit" class="btn btn-twitter pull-right" onclick="editNewEvent(event)">Edit Event</button>
                             </div>
                         </form>
 

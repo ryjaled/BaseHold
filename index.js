@@ -792,8 +792,8 @@ function addlevel1userComplete(xhr, status) {
 
 }
 
-function addlevel2user() {
-  event.preventDefault();
+function addlevel2user(event) {
+event.preventDefault();
 
   var info = $("#AddUserForm").serialize();
   var useraddfname = $('#useraddfname').val();
@@ -856,7 +856,7 @@ function addlevel2userComplete(xhr, status) {
 
 }
 
-function clearaddfield() {
+function clearaddfield(event) {
   event.preventDefault();
   document.getElementById('RegisterValidationDoc').reset();
 }
@@ -871,7 +871,7 @@ function clearpendingfield() {
   document.getElementById('RegisterPendingValidationDoc').reset();
 }
 
-function clearuseraddfield() {
+function clearuseraddfield(event) {
   event.preventDefault();
   document.getElementById('AddUserForm').reset();
 }
@@ -1055,7 +1055,7 @@ function helpApproval() {
   toggleapprove(sessionStorage.pullapproved, sessionStorage.pullreportid);
 }
 
-function loginUser() {
+function loginUser(event) {
   event.preventDefault();
   var email = $('#useremail').val();
   var password = $('#userpassword').val();
@@ -1111,7 +1111,7 @@ function loginUserComplete(xhr, status) {
 
 }
 
-function passwordreset() {
+function passwordreset(event) {
   event.preventDefault();
 
   var currentpassword = $('#currentpassword').val();
@@ -1284,7 +1284,7 @@ function welcomeToHomeLevel4() {
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 /////////////LEVEL 1 FUNCTIONALITY///////////////////////////////////////
 
-function addnewevent(){
+function addnewevent(event){
   event.preventDefault();
 
   var userid = sessionStorage.getItem("userid");
@@ -1435,7 +1435,7 @@ function addneweventComplete(xhr,status){
 }
 
 function addReportModal(val) {
-
+  // event.preventDefault();
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
   sessionStorage.report_event_id = val;
   $.ajax(theUrl,
@@ -1595,7 +1595,7 @@ function deleteDeniedReportComplete(xhr, status) {
 
 }
 
-function editNewEvent() {
+function editNewEvent(event) {
 
   event.preventDefault();
 
@@ -1809,7 +1809,7 @@ function getregionsComplete(xhr, status) {
 
 }
 
-function level1Edit(val){
+function level1Edit(val, event){
   event.preventDefault();
 
   var theUrl = "databasehandler.php?cmd=6&eventid=" + val;
@@ -2127,7 +2127,7 @@ function fetchCommentsLevel1EventsComplete(xhr, status){
 function loadEventReport(xhr, status){
   var obj = JSON.parse(xhr.responseText);
 
-  event.preventDefault();
+  // event.preventDefault();
   console.log(obj);
 
   UIkit.modal('#modal-report').show();
@@ -2997,7 +2997,7 @@ function verifyEventToggle(id, verState) {
   sessionStorage.verifyingId = id;
   sessionStorage.verifyingState = verState;
 
-  event.preventDefault();
+  // event.preventDefault();
   UIkit.modal('#modal-overflow-comments').show();
 
 }
@@ -3048,7 +3048,6 @@ function ApproveReportToggle(id, approveState) {
   sessionStorage.approvingReportId = id;
   sessionStorage.approvingReportState = approveState;
 
-  event.preventDefault();
   UIkit.modal('#modal-overflow-report-comments').show();
 
 
@@ -3075,7 +3074,6 @@ function approveEventToggle(id, approveState) {
   sessionStorage.approvingId = id;
   sessionStorage.approvingState = approveState;
 
-  event.preventDefault();
   UIkit.modal('#modal-overflow-comments').show();
 
 
