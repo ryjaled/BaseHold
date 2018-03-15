@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: X-Requested-With, Content-Type');
 /* Database connection start */
 $servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "Admin@08";
 $dbname = "ncaoutreach";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed: " . mysqli_connect_error());
