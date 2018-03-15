@@ -4119,14 +4119,12 @@ function searchdash() {
 
 
 function forgotPassword(){
-  alert("Her!");
   window.location="newpassword.html";
 }
 
 function passwordResetter(){
-
+  $('#loading').val("loading...");
   var sendEmail = $('#useremailreset').val();
-
   var theUrl = "databasehandler.php?cmd=39&myemail=" + sendEmail;
   
       $.ajax(theUrl,
@@ -4134,21 +4132,23 @@ function passwordResetter(){
           async: true,
           complete: passwordResetterComplete
         });
-
-
 }
 
 function passwordResetterComplete(xhr,status){
+
+  
   $.notify({
     icon: "info_outline",
     message: "A new password will be sent to the email you entered shortly. Please use it to login."
-
-  }, {
+  },{
       type: 'success',
       timer: 3000,
       placement: {
         from: 'top',
         align: 'right'
       }
-    });
+  });
+  $('#loading').val("");
+  $('#useremailreset').val("");
+    // window.location="index.html";
 }
