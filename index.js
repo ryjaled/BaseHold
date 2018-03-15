@@ -4123,7 +4123,7 @@ function forgotPassword(){
 }
 
 function passwordResetter(){
-  $('#loading').val("loading...");
+  document.getElementById('loadingText').innerHTML="Sending new password to email above...";
   var sendEmail = $('#useremailreset').val();
   var theUrl = "databasehandler.php?cmd=39&myemail=" + sendEmail;
   
@@ -4148,7 +4148,7 @@ function passwordResetterComplete(xhr,status){
         align: 'right'
       }
   });
-  $('#loading').val("");
+  document.getElementById('loadingText').innerHTML="";
   $('#useremailreset').val("");
     // window.location="index.html";
 }
