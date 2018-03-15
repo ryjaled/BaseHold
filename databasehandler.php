@@ -123,6 +123,9 @@
 		case 38:
 			getComments();
 			break;
+		case 39:
+			resetPassword();
+			break;
 		default:
 			echo "wrong cmd";	//change to json message
 			break;
@@ -1226,6 +1229,13 @@
 		echo json_encode($validation);
 	}
 
+	function rand_string( $length ) {
+
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		return substr(str_shuffle($chars),0,$length);
+
+	}
+
 	function reassignEvent(){
 		include("events.php");
 		
@@ -1245,18 +1255,20 @@
 	function resetPassword(){
 
 		 include("users.php");
+		 include("emails.php");
 		 $user = new users();
+		 $email = new emails();
 
 	 	 $myemail = $_REQUEST['myemail'];
-	 	 $confirmednewpassword = 
+	 	 $confirmednewpassword = rand_string(8);
 
-	 	 $validation = $user->updatepassword($myemail,$confirmednewpassword);
+	 	 $validation = $user->resetpassword($myemail,$confirmednewpassword);
 		 
 		 if($validation==false){
 				echo '{"result":0,"message":"Validation failed"}';
 		 }
 		 else{
-			 echo json_encode($validation);
+			$row=$email->passresetemail($confirmednewpassword,$myemail);
 		 }
 
 	}
