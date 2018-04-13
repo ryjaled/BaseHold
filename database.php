@@ -15,7 +15,7 @@
 	*/
 	public function connect()
 	{
-		$this->conn=new mysqli("localhost","root","Admin@08","ncaoutreach");
+		$this->conn=new mysqli("localhost","root","root","ncaoutreach");
 		if($this->conn->connect_errno){
 			//no connection, exit
 			return false;
